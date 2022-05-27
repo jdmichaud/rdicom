@@ -1,0 +1,33 @@
+[package]
+name = "rdicom"
+version = "0.1.0"
+authors = ["jd <jean.daniel.michaud@gmail.com>"]
+edition = "2018"
+
+[lib]
+name = "rdicom"
+path = "src/lib.rs"
+# https://doc.rust-lang.org/reference/linkage.html
+# cdylib needed to compile to wasm target
+crate-type = ["staticlib", "rlib", "cdylib"]
+
+[[bin]]
+name = "scan"
+path = "src/scan.rs"
+
+[[bin]]
+name = "dump"
+path = "src/dump.rs"
+
+[[bin]]
+name = "test"
+path = "src/test.rs"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+structopt = "0.3.25"
+anyhow = "1.0.45"
+walkdir = "2.3.2"
+serde = { version = "1.0.137", features = ["derive"] }
+serde_yaml = "0.8"

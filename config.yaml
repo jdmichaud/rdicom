@@ -1,0 +1,15 @@
+indexing:
+  fields:
+    studies:
+      - StudyInstanceUID
+      - PatientName
+    series:
+      - SeriesInstanceUID
+      - BitsAllocated
+      - Columns
+      - NumberOfFrames
+      - Modality
+      - Rows
+      - PhotometricInterpretation
+      - PixelRepresentation
+    instances: []
