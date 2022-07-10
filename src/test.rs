@@ -25,7 +25,10 @@ fn main() -> Result<(), Box<dyn Error>> {
 
   if is_dicom_file(&opt.filepath) {
     let instance = Instance::from_buf_reader(BufReader::new(f))?;
-    println!("{:?}", instance.get_value(&0x0008114A.into()));
+    // println!("{:?}", instance.get_value(&0x00082112.into()));
+    // println!("{:?}", instance.get_value(&0x0008114A.into()));
+    println!("{:?}", instance.get_value(&0x00081250.into())?);
+    // println!("{:?}", instance.get_value(&0x7FE00000.into()));
   }
   Ok(())
 }

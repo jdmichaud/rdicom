@@ -1,3 +1,4 @@
+use core::str::Utf8Error;
 use std::error::Error;
 use std::fmt;
 
@@ -8,7 +9,7 @@ pub struct DicomError {
 
 impl DicomError {
   pub fn new(msg: &str) -> DicomError {
-    DicomError{details: msg.to_string()}
+    DicomError{ details: msg.to_string() }
   }
 }
 
@@ -21,5 +22,12 @@ impl fmt::Display for DicomError {
 impl Error for DicomError {
   fn description(&self) -> &str {
     &self.details
+  }
+}
+
+impl From<Utf8Error> for DicomError {
+  fn from(err: Utf8Error) -> Self {
+    // TODO: Improve this...
+    DicomError::new(&format!("{:?}", err))
   }
 }

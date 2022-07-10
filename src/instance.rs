@@ -4,6 +4,7 @@
 
 // https://radu-matei.com/blog/practical-guide-to-wasm-memory/#passing-arrays-to-rust-webassembly-modules
 
+use std::fs::File;
 use std::convert::TryInto;
 use std::borrow::Cow;
 use std::error::Error;
@@ -42,11 +43,11 @@ pub enum DicomValue<'a> {
   OW(&'a [u16]),
   PN(String),
   SeqEnd,
-  SeqItem,
+  SeqItem(Vec<DicomValue<'a>>),
   SeqItemEnd,
   SH(String),
   SL(i32),
-  SQ(Vec<DicomAttribute<'a>>),
+  SQ(Vec<DicomValue<'a>>),
   SS(i16),
   ST(String),
   TM(String),
@@ -111,7 +112,7 @@ impl<'a> ToString for DicomValue<'a> {
       DicomValue::SL(value) => format!("{}", value),
       // DicomValue::SQ(value),
       DicomValue::SS(value) => format!("{}", value),
-      DicomValue::UI(value) => format!("[{}]", value),
+      DicomValue::UI(value) => format!("{}", value),
       DicomValue::UL(value) => format!("{}", value),
       DicomValue::US(value) => format!("{}", value),
       _ => unimplemented!("No formatter for {:?}", self),
@@ -120,17 +121,34 @@ impl<'a> ToString for DicomValue<'a> {
 }
 
 impl<'a> DicomValue<'a> {
-  pub fn from_dicom_field<'b>(dicom_field: &DicomAttribute<'b>, instance: &'b Instance) -> DicomValue<'b> {
-    match (dicom_field.group, dicom_field.element) {
-      (0xFFFE, 0xE000) => DicomValue::SeqItem,
-      (0xFFFE, 0xE00D) => DicomValue::SeqItemEnd,
-      (0xFFFE, 0xE0DD) => DicomValue::SeqEnd,
-      _ => DicomValue::new(&dicom_field.vr, dicom_field.offset, dicom_field.length, &instance.buffer),
+  pub fn from_dicom_attribute<'b>(attribute: &DicomAttribute<'b>, instance: &'b Instance) -> DicomValue<'b> {
+    match attribute.vr.as_ref() {
+      "SQ" => {
+        let values = attribute.subattributes.iter()
+          .map(|attribute| DicomValue::from_dicom_attribute(&attribute, instance))
+          .collect::<_>();
+        DicomValue::new_sequence(values)
+      },
+      _ => match (attribute.group, attribute.element) {
+        (0xFFFE, 0xE000) => {
+          let values = attribute.subattributes.iter()
+            .map(|attribute| DicomValue::from_dicom_attribute(&attribute, instance))
+            .collect::<_>();
+          DicomValue::SeqItem(values)
+        },
+        (0xFFFE, 0xE00D) => DicomValue::SeqItemEnd,
+        (0xFFFE, 0xE0DD) => DicomValue::SeqEnd,
+        _ => DicomValue::new(&attribute.vr, attribute.data_offset, attribute.data_length, &instance.buffer),
+      }
     }
   }
 
-  fn new_sequence<'b>(fields: Vec<DicomAttribute<'b>>) -> DicomValue<'b> {
-    DicomValue::SQ(fields)
+  fn new_sequence<'b>(values: Vec<DicomValue<'b>>) -> DicomValue<'b> {
+    DicomValue::SQ(values)
+  }
+
+  fn new_sequence_item<'b>(values: Vec<DicomValue<'b>>) -> DicomValue<'b> {
+    DicomValue::SeqItem(values)
   }
 
   fn new<'b>(vr: &str, offset: usize, length: usize, buffer: &'b Vec<u8>) -> DicomValue<'b> {
@@ -289,17 +307,27 @@ pub struct DicomAttribute<'a> {
   pub group: u16,
   pub element: u16,
   pub vr: Cow<'a, str>,
-  pub length: usize,
   // Position of the tag content in the buffer after the VR and length
-  pub offset: usize,
+  pub data_offset: usize,
+  // Length of the data field. Always set to the correct length
+  pub data_length: usize,
+  // Length as read on the file
+  pub length: usize,
   pub tag: Tag,
+  pub subattributes: Vec<DicomAttribute<'a>>,
 }
 
 impl<'a> DicomAttribute<'a> {
-  pub fn new<S>(group: u16, element: u16, vr: S, offset: usize, length: usize,
-    tag: Tag) -> DicomAttribute<'a>
+  pub fn new<S>(group: u16, element: u16, vr: S, data_offset: usize, data_length: usize,
+    length: usize, tag: Tag) -> DicomAttribute<'a>
     where S: Into<Cow<'a, str>> {
-    DicomAttribute { group, element, vr: vr.into(), length, offset, tag }
+    Self::new_with_subattributes(group, element, vr.into(), data_offset, data_length, length, tag, vec![])
+  }
+
+  pub fn new_with_subattributes<S>(group: u16, element: u16, vr: S, data_offset: usize, data_length: usize,
+    length: usize, tag: Tag, subattributes: Vec<DicomAttribute<'a>>) -> DicomAttribute<'a>
+    where S: Into<Cow<'a, str>> {
+    DicomAttribute { group, element, vr: vr.into(), data_offset, data_length, length, tag, subattributes }
   }
 }
 
@@ -311,6 +339,11 @@ impl Instance {
     Instance::from(buffer)
   }
 
+  pub fn from_filepath(filepath: &str) -> Result<Self, Box<dyn Error>> {
+    let f = File::open(filepath).unwrap();
+    return Instance::from_buf_reader(BufReader::new(f));
+  }
+
   pub fn from(buffer: Vec<u8>) -> Result<Self, Box<dyn Error>> {
     // Check it's a DICOM file
     if !has_dicom_header(&buffer) {
@@ -320,7 +353,7 @@ impl Instance {
     let instance = Instance { buffer };
 
     if let Err(e) = instance.is_supported_type() {
-      Err(e)
+      Err(Box::new(e))
     } else {
       Ok(instance)
     }
@@ -335,124 +368,124 @@ impl Instance {
   //   }
   // }
 
-  pub fn get_value<'a>(self: &'a Self, tag: &Tag) -> Option<DicomValue> {
+  pub fn get_value<'a>(self: &'a Self, tag: &Tag) -> Result<Option<DicomValue>, DicomError> {
     // Fast forward the DICOM prefix
     // TODO: Deal with non-comformant DICOM files
-    println!("get_tab {:?}", tag);
+    // println!("get_value: {:?}", tag);
     let mut offset = 128 + "DICM".len();
     return loop {
-      println!("{:#06x} {:#06x}", offset, self.buffer.len());
-      let field = self.next_attribute(offset).unwrap();
-      offset = field.offset;
-
+      // println!("get_value: offset: {:#06x} buffer length: {:#06x}", offset, self.buffer.len());
+      let field = self.next_attribute(offset)?;
       if field.group == tag.group && field.element == tag.element {
-        let value = if field.vr == "SQ" {
-          let sequence_length = field.length;
-          // See http://dicom.nema.org/dicom/2013/output/chtml/part05/sect_7.5.html
-          // on what a sequence look like in a DICOM file.
-          let mut subfields: Vec<DicomAttribute<'a>> = vec![];
-          let start = offset;
-          // Advance until we find a SeqEnd
-          loop {
-            let subfield = self.next_attribute(offset).unwrap();
-            let value = DicomValue::from_dicom_field(&subfield, &self);
-            match value {
-              DicomValue::SeqEnd => {
-                // We found the end of the sequence, create a DicomAttribute with a Sequence container
-                break DicomValue::new_sequence(subfields);
-              }
-              _ => {
-                // Moving along the tags inside the sequence
-                let subfield_length = subfield.length;
-                let subfield_offset = subfield.offset;
-                offset = subfield_offset + subfield_length;
-                subfields.push(subfield);
-                if offset - start >= sequence_length {
-                  break DicomValue::new_sequence(subfields);
-                }
-              }
-            }
-          }
-        } else {
-          DicomValue::from_dicom_field(&field, &self)
-        };
-        break Some(value);
+        break Ok(Some(DicomValue::from_dicom_attribute(&field, &self)));
       }
-      println!("field.offset {} field.length {}", field.offset, field.length);
-      offset = field.offset + if field.length == 0xFFFFFFF { 0 } else { field.length };
+
+      offset = field.data_offset + if field.data_length == 0xFFFFFFFF { 0 } else { field.data_length };
       if offset >= self.buffer.len() {
-        println!("stop here {:#06x} {:#06x}", offset, self.buffer.len());
-        break None
+        break Ok(None)
       }
     };
   }
 
-  pub fn next_attribute<'a>(self: &'a Self, offset: usize) -> Option<DicomAttribute<'a>> {
+  pub fn next_attribute<'a>(self: &'a Self, offset: usize) -> Result<DicomAttribute<'a>, DicomError> {
     // group(u16),element(u16),vr(str[2]),length(u16)
+    // println!("next_attribute: {:#04x?}", offset);
     let mut offset = offset;
     if offset >= self.buffer.len() {
-      return None
+      return Err(DicomError::new(
+        &format!("Trying to read out of file bound (offset: {}, file size: {})", offset, self.buffer.len()))
+      );
     }
     let group = self.buffer[offset] as u16 | (self.buffer[offset + 1] as u16) << 8;
     let element = self.buffer[offset + 2] as u16 | (self.buffer[offset + 3] as u16) << 8;
-    println!("{:#06x?}:{:#06x?}", group, element);
+    // println!("next_attribute: {:#04x?} {:#06x?}:{:#06x?}", offset, group, element);
     offset += 4; // Skip group and element
     // Check if we have sequence related data element
     if group == 0xFFFE {
-      // Sequence delimiter items do not have VR and length and are always followed by 0xFFFFFFFF
-      let length = self.buffer[offset] as usize | (self.buffer[offset + 1] as usize) << 8;
+      // Sequence delimiter items can have a length or 0xFFFFFFFF like sequence themselves
+      let tmp: [u8; 4] = self.buffer[offset..offset + 4].try_into().unwrap();
+      let length = u32::from_le_bytes(tmp) as usize; // Can sometimes be equal to 0xFFFFFFFF
       offset += 4;
       return match element {
-        0xE000 => Some(DicomAttribute::new(group, element, "", offset, length, Item)),
-        0xE00D => Some(DicomAttribute::new(group, element, "", offset, length, ItemDelimitationItem)),
-        0xE0DD => Some(DicomAttribute::new(group, element, "", offset, length, SequenceDelimitationItem)),
-        _ => unimplemented!("unknown sequence related data element: {}", element),
+        0xE000 => {
+          let mut subattributes: Vec<DicomAttribute> = vec![];
+          let mut subattribute;
+          let mut suboffset = offset;
+          let mut item_length = 0;
+          while suboffset < (offset + length) {
+            subattribute = self.next_attribute(suboffset)?;
+            suboffset = subattribute.data_offset + subattribute.data_length;
+            item_length = (subattribute.data_offset + subattribute.data_length) - offset;
+            if subattribute.tag == ItemDelimitationItem {
+              break;
+            }
+            subattributes.push(subattribute);
+          }
+          Ok(DicomAttribute::new_with_subattributes(group, element, "", offset, item_length, length, Item, subattributes))
+        }
+        0xE00D => Ok(DicomAttribute::new(group, element, "", offset, length, length, ItemDelimitationItem)),
+        0xE0DD => Ok(DicomAttribute::new(group, element, "", offset, length, length, SequenceDelimitationItem)),
+        _ => Err(DicomError::new(&format!("unknown sequence related data element: {}", element))),
       }
     }
-    let vr = from_utf8(&self.buffer[offset..offset + 2])
-      .expect(&format!("Error while reading value representation at {:#06x} while the buffer length is {}", offset, self.buffer.len()));
+    let vr = from_utf8(&self.buffer[offset..offset + 2])?;
     offset += 2; // Skip VR
     let length: usize;
     if ["OB", "OD", "OF", "OL", "OW", "SQ", "UC", "UR", "UT", "UN"].contains(&vr) {
       // These VR types handles themselves differently. They have 2 reserved bytes
       // that need to be skipped and their data length is on 4 bytes.
       offset += 2; // Skip reserved byte
-      if vr == "SQ" { // Sequence are special types within those special types... yikes.
-        let tmp: [u8; 4] = self.buffer[offset..offset + 4].try_into().unwrap();
-        length = u32::from_le_bytes(tmp) as usize; // Can sometimes be equal to 0xFFFFFFFF
-        offset += 4;
-      } else {
-        length = self.buffer[offset] as usize |
-          (self.buffer[offset + 1] as usize) << 8 |
-          (self.buffer[offset + 2] as usize) << 16 |
-          (self.buffer[offset + 3] as usize) << 24;
-        offset += 4; // Skip length
+      let tmp: [u8; 4] = self.buffer[offset..offset + 4].try_into().unwrap();
+      length = u32::from_le_bytes(tmp) as usize; // Can sometimes be equal to 0xFFFFFFFF
+      offset += 4;
+      if vr == "SQ" || // Sequence are special types within those special types... yikes.
+         length == 0xFFFFFFFF { // https://github.com/pydicom/pydicom/issues/1140
+        // See http://dicom.nema.org/dicom/2013/output/chtml/part05/sect_7.5.html
+        // on what a sequence look like in a DICOM file.
+        let mut items: Vec<DicomAttribute> = vec![];
+        let mut item;
+        let mut suboffset = offset;
+        let mut item_length = 0;
+        // Go through the items in the sequence and fetch them recursively
+        while suboffset < (offset + length) {
+          item = self.next_attribute(suboffset)?;
+          suboffset = item.data_offset + item.data_length;
+          item_length = (item.data_offset + item.data_length) - offset;
+          if item.tag == SequenceDelimitationItem {
+            break;
+          }
+          items.push(item);
+        }
+        let tag = (((group as u32) << 16) | element as u32).into();
+        return Ok(DicomAttribute::new_with_subattributes(
+          group, element, vr, offset, item_length, length, tag, items,
+        ));
       }
     } else {
       length = self.buffer[offset] as usize | (self.buffer[offset + 1] as usize) << 8;
       offset = offset + 2;
     }
-    Some(DicomAttribute::new(group, element, vr, offset, length,
+    Ok(DicomAttribute::new(group, element, vr, offset, length, length,
       (((group as u32) << 16) | element as u32).into()))
   }
 
-  fn is_supported_type(self: &Self) -> Result<(), Box<dyn Error>> {
+  fn is_supported_type(self: &Self) -> Result<(), DicomError> {
     // Only supporting little-endian explicit VR for now.
-    if let Some(transfer_syntax_uid_field) = self.get_value(&0x00020010.into()) {
+    if let Some(transfer_syntax_uid_field) = self.get_value(&0x00020010.into())? {
       match transfer_syntax_uid_field {
         DicomValue::UI(transfer_syntax_uid) => {
           if vec!["1.2.840.10008.1.2.1", "1.2.840.10008.1.2.4.70"].contains(&&*transfer_syntax_uid) {
             Ok(())
           }
           else {
-            Err(Box::new(DicomError::new(
-              &format!("Unsupported Transfer Syntax UID: {}", transfer_syntax_uid))))
+            Err(DicomError::new(
+              &format!("Unsupported Transfer Syntax UID: {}", transfer_syntax_uid)))
           }
         }
-        _ => Err(Box::new(DicomError::new(&format!("Unexpected type"))))
+        _ => Err(DicomError::new(&format!("Unexpected type")))
       }
     } else {
-      Err(Box::new(DicomError::new("Transfer Syntax UID not found")))
+      Err(DicomError::new("Transfer Syntax UID not found"))
     }
   }
 }

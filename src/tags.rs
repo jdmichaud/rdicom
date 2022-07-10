@@ -1,7 +1,7 @@
 #![allow(dead_code)]
 #![allow(unused_variables)]
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct Tag {
   pub group: u16,
   pub element: u16,
