@@ -13,3 +13,4 @@ indexing:
       - PhotometricInterpretation
       - PixelRepresentation
     instances: []
+table_name: dicom_index

@@ -12,30 +12,17 @@ use std::error::Error;
 use structopt::StructOpt;
 use walkdir::WalkDir;
 use std::io::{self, Write};
-use serde::{Deserialize};
+use rusqlite::{Connection, Statement, ToSql};
+use serde_yaml;
 
 use rdicom::dicom_tags;
 use rdicom::instance::Instance;
 use rdicom::misc::is_dicom_file;
 
+mod config;
+
 const ESC: char = 27u8 as char;
-
-#[derive(Deserialize, Debug)]
-struct Fields {
-  studies: Vec<String>,
-  series: Vec<String>,
-  instances: Vec<String>,
-}
-
-#[derive(Deserialize, Debug)]
-struct Indexing {
-  fields: Fields,
-}
-
-#[derive(Deserialize, Debug)]
-struct Config {
-  indexing: Indexing,
-}
+const MEDIA_STORAGE_DIRECTORY_STORAGE: &str = "1.2.840.10008.1.3.10";
 
 fn path_is_folder(path: &str) -> Result<PathBuf, Box<dyn Error>> {
   let path_buf = PathBuf::from(path);
@@ -66,26 +53,30 @@ struct Opt {
     input_path: PathBuf,
     #[structopt(long)]
     csv_output: Option<PathBuf>,
+    #[structopt(long)]
+    sql_output: Option<PathBuf>,
 }
 
 trait IndexStore {
   fn write(&mut self, data: &HashMap<String, String>) -> Result<(), Box<dyn Error>>;
 }
 
-struct CSVIndexStore<W: Write> {
+#[derive(Debug)]
+struct CsvIndexStore<W: Write> {
   writer: W,
   fields: Vec<String>
 }
 
-impl<W: Write> CSVIndexStore<W> {
-  fn new(mut writer: W, fields: Vec<String>) -> Self {
+impl<W: Write> CsvIndexStore<W> {
+  fn new(mut writer: W, mut fields: Vec<String>) -> Self {
+    fields.push("filepath".to_string());
     let header = fields.iter().map(|s| String::from("\"") + s + "\"").collect::<Vec<String>>().join(",");
-    writeln!(writer, "{},\"filepath\"", header).unwrap();
-    CSVIndexStore { writer, fields }
+    writeln!(writer, "").unwrap();
+    CsvIndexStore { writer, fields }
   }
 }
 
-impl<W: Write> IndexStore for CSVIndexStore<W> {
+impl<W: Write> IndexStore for CsvIndexStore<W> {
   fn write(self: &mut Self, data: &HashMap<String, String>) -> Result<(), Box<dyn Error>> {
     for field in &self.fields {
       match write!(self.writer, "\"{}\",", data.get(field).unwrap_or(&"undefined".to_string())) {
@@ -93,7 +84,55 @@ impl<W: Write> IndexStore for CSVIndexStore<W> {
         Err(e) => return Err(Box::new(e)),
       }
     }
-    writeln!(self.writer, "\"{}\"", data.get("filepath").unwrap_or(&"undefined".to_string()))?;
+    writeln!(self.writer, "")?;
+    Ok(())
+  }
+}
+
+#[derive(Debug)]
+struct SqlIndexStore {
+  connection: Connection,
+  table_name: String,
+  fields: Vec<String>
+}
+
+impl SqlIndexStore {
+  fn new(filepath: &str, table_name: &str, mut fields: Vec<String>) -> Result<Self, Box<dyn Error>> {
+    fields.push("filepath".to_string());
+    let connection = Connection::open(filepath)?;
+    let table = fields.iter()
+      .map(|s| s.to_string() + " TEXT NON NULL")
+      .collect::<Vec<String>>().join(",");
+    connection.execute(
+      &format!("CREATE TABLE IF NOT EXISTS {} (
+        {}
+      );", table_name, table),
+      [],
+    )?;
+    Ok(SqlIndexStore { connection, table_name: String::from(table_name), fields })
+  }
+}
+
+impl IndexStore for SqlIndexStore {
+  fn write(self: &mut Self, data: &HashMap<String, String>) -> Result<(), Box<dyn Error>> {
+    let tmp: Vec<_> = self.fields.iter()
+      .map(|x| data.get(x).unwrap_or(&"undefined".to_owned()).clone())
+      .collect::<Vec<String>>();
+    let to_sql_fields: Vec<_> = tmp.iter()
+      .map(|x| x as &dyn ToSql)
+      .collect();
+    let column_names = self.fields.join(",");
+    let placeholders = (1..self.fields.len() + 1)
+      .map(|i| format!("?{}", i))
+      .collect::<Vec<String>>()
+      .join(",");
+    let mut statement = self.connection.prepare_cached(
+      &format!("INSERT INTO {} ({}) VALUES ({})", self.table_name, column_names, placeholders))?;
+    statement.execute(
+    // self.connection.execute(
+      // &format!("INSERT INTO {} ({}) VALUES ({})", self.table_name, column_names, placeholders),
+      &to_sql_fields[..],
+    )?;
     Ok(())
   }
 }
@@ -121,7 +160,7 @@ fn main() -> Result<(), Box<dyn Error>> {
   let opt = Opt::from_args();
   // Load the config
   let config_file = std::fs::read_to_string(&opt.config)?;
-  let config: Config = serde_yaml::from_str(&config_file)?;
+  let config: config::Config = serde_yaml::from_str(&config_file)?;
   // Create an vector of fields to write in the index
   let mut indexable_fields = config.indexing.fields.series.into_iter().chain(
     config.indexing.fields.studies.into_iter().chain(
@@ -129,33 +168,44 @@ fn main() -> Result<(), Box<dyn Error>> {
     ),
   ).collect::<Vec<String>>();
   // Create an index store depending on the options
-  let writer = if let Some(csv_output) = opt.csv_output {
-    Box::new(File::create(csv_output)?) as Box<dyn Write>
+  let mut index_store = if let Some(sql_output) = opt.sql_output {
+    let filepath = &sql_output.to_string_lossy().to_string();
+    Box::new(SqlIndexStore::new(filepath, &config.table_name, indexable_fields.to_vec()).unwrap()) as Box<dyn IndexStore>
   } else {
-    Box::new(io::stdout()) as Box<dyn Write>
+    let writer = if let Some(csv_output) = opt.csv_output {
+      Box::new(File::create(csv_output)?) as Box<dyn Write>
+    } else {
+      Box::new(io::stdout()) as Box<dyn Write>
+    };
+    Box::new(CsvIndexStore::new(writer, indexable_fields.to_vec())) as Box<dyn IndexStore>
   };
-  let mut index_store = CSVIndexStore::new(writer, indexable_fields.to_vec());
   // Walk all the files in the provided input folder
   let _ = walk(&opt.input_path.to_string_lossy(), &mut move |filepath: &Path| {
     // For each file, check it is a dicom file, load it and parse the requested fields
     if is_dicom_file(&filepath.to_string_lossy()) {
       match Instance::from_filepath(&filepath.to_string_lossy().to_string()) {
         Ok(instance) => {
-          let mut data = HashMap::<String, String>::new();
-          // We want the filepath in the index by default
-          data.insert("filepath".to_string(), filepath.to_string_lossy().to_string());
-          for field in indexable_fields.iter() {
-            match instance.get_value(&field.into()) {
-              Ok(result) => {
-                let value = if let Some(value) = result { value.to_string() } else { "undefined".to_string() };
-                // Fill the hash map with the requested field
-                data.insert(field.to_string(), value);
+          match instance.get_value(&"MediaStorageSOPClassUID".into()) {
+            // Ignore DICOMDIR files
+            Ok(Some(sop_class_uid)) if sop_class_uid.to_string() != MEDIA_STORAGE_DIRECTORY_STORAGE => {
+              let mut data = HashMap::<String, String>::new();
+              // We want the filepath in the index by default
+              data.insert("filepath".to_string(), filepath.to_string_lossy().to_string());
+              for field in indexable_fields.iter() {
+                match instance.get_value(&field.into()) {
+                  Ok(result) => {
+                    let value = if let Some(value) = result { value.to_string() } else { "undefined".to_string() };
+                    // Fill the hash map with the requested field
+                    data.insert(field.to_string(), value);
+                  }
+                  Err(e) => eprintln!("{:?}", e),
+                }
               }
-              Err(e) => eprintln!("{:?}", e),
-            }
+              // Provide the hash map to the index store
+              index_store.write(&data).unwrap();
+            },
+            _ => (),
           }
-          // Provide the hash map to the index store
-          index_store.write(&data).unwrap();
         },
         Err(e) => eprintln!("{:?}", e),
       }
