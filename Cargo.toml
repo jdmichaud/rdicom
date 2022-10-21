@@ -2,7 +2,7 @@
 name = "rdicom"
 version = "0.1.0"
 authors = ["jd <jean.daniel.michaud@gmail.com>"]
-edition = "2018"
+edition = "2021"
 
 [lib]
 name = "rdicom"
@@ -48,3 +48,10 @@ tokio = { version = "1", features = ["full"] }
 # scan = ["dep:structopt", "dep:walkdir", "dep:serde", "dep:serde_yaml", "dep:rusqlite"]
 # test = ["dep:structopt"]
 # serve = ["dep:structopt", "dep:serde", "dep:serde_yaml", "dep:rusqlite", "dep:warp", "dep:tokio"]
+
+[profile.release] # A profile to try to minimize the size
+panic = "abort" # Abort on Panic
+strip = true
+opt-level = "z" # Optimize For Size
+lto = true # Enable Link Time Optimization (LTO)
+codegen-units = 1 # Reduce Parallel Code Generation Units to Increase Optimization

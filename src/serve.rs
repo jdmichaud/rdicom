@@ -1,18 +1,21 @@
 #![allow(unused_variables)]
 #![allow(dead_code)]
 
+use std::convert::TryInto;
+use rdicom::error::DicomError;
 use std::convert::Infallible;
 use std::collections::HashMap;
 use std::error::Error;
 use structopt::StructOpt;
 use std::path::PathBuf;
 use warp::{Filter, reject, Rejection};
-use std::net::{IpAddr};
+use std::net::IpAddr;
 use std::str::FromStr;
 use serde::{de, Deserialize, Deserializer, Serialize};
 use serde_json;
 use std::fmt;
 use rusqlite::{Connection, params};
+use warp::http::header::{CONTENT_TYPE, HeaderMap};
 
 use rdicom::tags::Tag;
 
@@ -83,6 +86,24 @@ fn unique_identifier() -> impl Filter<Extract = (String,), Error = Rejection> + 
   })
 }
 
+fn search_terms() -> impl Filter<Extract = (HashMap<Tag, String>,), Error = Rejection> + Copy {
+  warp::query::<HashMap<String, String>>().and_then(|q: HashMap<String, String>| async move {
+    if true {
+      Ok(q.into_iter()
+        .filter_map(|(k, v)| if let Some(tag) = TryInto::<Tag>::try_into(&k).ok() {
+          Some((tag, v))
+        } else {
+          None
+        })
+        // .map(|(k, v)| ((&k).try_into().unwrap(), v))
+        .collect::<HashMap<Tag, String>>())
+    } else { // TODO: Without the else clause, rust complains. Need to figure out why.
+      Err(reject::custom(NotAUniqueIdentifier))
+    }
+  })
+}
+
+
 // For some reason, serde can't deserialize an array of String, so we provide a
 // custom function that do so.
 fn deserialize_array<'de, D>(deserializer: D) -> Result<Option<Vec<String>>, D::Error>
@@ -101,7 +122,6 @@ where
     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E>
     where
       E: de::Error {
-      println!("{:?}", v);
       Ok(Some(v.split(',').map(|s| String::from(s)).collect::<Vec<String>>()))
     }
   }
@@ -110,7 +130,7 @@ where
 
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Deserialize)]
 struct QidoQueryParameters {
   limit: Option<usize>,
   offset: Option<usize>,
@@ -127,7 +147,7 @@ enum AnnotationType {
   TECHNIQUE,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Deserialize)]
 struct WadoQueryParameters {
   annotation: Option<Vec<AnnotationType>>,
   quality: Option<f32>,
@@ -135,33 +155,93 @@ struct WadoQueryParameters {
   window: Option<Vec<i32>>,
 }
 
-// Return to key representation of a dicom tag as described in:
-// https://www.dicomstandard.org/docs/librariesprovider2/dicomdocuments/dicom/wp-content/uploads/2018/04/dicomweb-cheatsheet.pdf
-fn tag_to_key(tag: &Tag) -> String {
-  format!("{}{}", tag.group, tag.element)
-}
-
-fn query(connection: &Connection, query: &str) -> Vec<HashMap<String, String>> {
-  let column_names = connection.prepare("PRAGME table_info(dicom_index)").and_then(|mut stmt| {
+// Retrieves the column present in the index
+fn get_indexed_fields(connection: &Connection) -> Vec<String> {
+  connection.prepare("PRAGMA table_info(dicom_index);").and_then(|mut stmt| {
     Ok(stmt.query_map(params![], |row| {
       Ok(row.get(1))
     })?.map(|x| x.unwrap().unwrap()).collect::<Vec<String>>())
-  }).unwrap_or(vec![]);
-
-  connection.prepare(query).and_then(|mut stmt| {
-    Ok(stmt.query_map(params![], |row| {
-      let mut entry = HashMap::new();
-      for (index, column_name) in column_names.iter().enumerate() {
-        let value: String = row.get(index).unwrap();
-        entry.insert(column_name.to_owned(), value);
-      }
-      Ok(entry)
-    })?.map(|x| x.unwrap()).collect::<_>())
-  }).unwrap_or(vec![])
+  }).unwrap()
 }
 
-fn get_studies(connection: &Connection, params: &QidoQueryParameters) -> Vec<String> {
-  query(&connection, "SELECT * FROM dicom_index;");
+// Performs an arbitrary query on the connection
+fn query(connection: &Connection, query: &str) -> Vec<HashMap<String, String>> {
+  connection.prepare(query).and_then(|mut stmt| {
+    Ok(stmt.query_map(params![], |row| {
+      let mut entries = HashMap::new();
+      for (index, column_name) in get_indexed_fields(connection).iter().enumerate() {
+        let value: String = row.get(index).unwrap();
+        if value != "undefined" {
+          entries.insert(column_name.to_owned(), value);
+        }
+      }
+      Ok(entries)
+    })?.map(|x| x.unwrap()).collect::<_>())
+  }).unwrap()
+}
+
+fn map_to_entry(tag_map: &HashMap<String, String>) -> String {
+  format!("{{ {} }}", tag_map.iter()
+    .map(|(key, value)| {
+      // Try to convert the column name to a tag
+      let tag_result: Result<Tag, DicomError> = key.try_into();
+      match tag_result {
+        Ok(tag) => format!(
+          // We have a Dicom that we will format according to the DicomWeb standard
+          // "00080030": {
+          //   "vr": "TM",
+          //   "Value": ["131600.0000"]
+          // },
+          "\"{:04x}{:04x}\": {{ \"vr\": \"{}\", \"Value\": [ \"{}\" ] }}",
+          tag.group, tag.element, tag.vr, value,
+        ),
+        // Otherwise, just dump the key in the object
+        _ => format!("\"{key}\": \"{value}\""),
+      }
+    })
+    .collect::<Vec<String>>()
+    .join(",")
+  )
+}
+
+fn create_where_clause(params: &QidoQueryParameters, search_terms: &HashMap<Tag, String>,
+  indexed_fields: &Vec<String>) -> String {
+  // limit
+  // offset
+  // fuzzymatching
+  // includefield
+  let limit = params.limit.unwrap_or(u32::MAX as usize);
+  let offset = params.offset.unwrap_or(0);
+  let fuzzymatching = params.fuzzymatching.unwrap_or(false);
+
+  let where_clause = search_terms.iter()
+    .filter(|(field, _)| indexed_fields.contains(&field.name.to_owned()))
+    .fold(String::new(), |mut acc, (field, value)| {
+      if acc.len() == 0 {
+        acc += "WHERE ";
+      }
+      acc + &format!("{}{}{}{}", field.name,
+        if fuzzymatching { " LIKE '%" } else { "='" },
+        value,
+        if fuzzymatching { "%'" } else { "'" },)
+    });
+  format!("{where_clause} LIMIT {limit} OFFSET {offset}")
+}
+
+fn get_studies(connection: &Connection, params: &QidoQueryParameters,
+  search_terms: &HashMap<Tag, String>) -> Vec<HashMap<String, String>> {
+  let indexed_fields = get_indexed_fields(connection);
+  // First retrieve the indexed fields
+  let indexed = query(&connection,
+    &format!("SELECT DISTINCT StudyInstanceUID, * FROM dicom_index {};",
+      create_where_clause(params, search_terms, &indexed_fields)));
+  // Get the includefields not present in the index
+  if let Some(includefield) = params.includefield {
+    
+  }
+  // Then enrich them with the fields from the DICOM fields
+  // TODO
+  return indexed;
 }
 
 fn get_series(params: &QidoQueryParameters) -> Vec<String> {
@@ -189,14 +269,25 @@ fn get_instance(ui: &str) -> HashMap<String, String> {
  */
 fn get_query_api(sqlfile: String)
   -> impl Filter<Extract = impl warp::Reply, Error = Rejection> + Clone {
+  // No literal constructor for HeaderMap, so have to allocate them here...
+  let mut json_headers = HeaderMap::new();
+  json_headers.insert(CONTENT_TYPE, "application/dicom+json; charset=utf-8".parse().unwrap());
+
   // GET {s}/studies?... Query for studies
   let studies = warp::path("studies")
     .and(warp::path::end())
     .and(warp::query::<QidoQueryParameters>())
+    .and(search_terms())
     .and(with_db(sqlfile))
-    .map(|params: QidoQueryParameters, connection: Connection| {
-      serde_json::to_string(&get_studies(&connection, &params)).unwrap()
-    });
+    .map(|qido_params: QidoQueryParameters, search_terms: HashMap<Tag, String>, connection: Connection| {
+      // serde_json::to_string(&get_studies(&connection, &qido_params)).unwrap()
+      format!("[{}]", get_studies(&connection, &qido_params, &search_terms).iter()
+        .map(|study| map_to_entry(study))
+        .collect::<Vec<String>>()
+        .join(",")
+      )
+    })
+    .with(warp::reply::with::headers(json_headers));
 
   // GET {s}/studies/{study}/series?...  Query for series in a study
   let series = warp::path("series")

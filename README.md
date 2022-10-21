@@ -20,5 +20,5 @@ The library `crate-type` must be set to `cdylib` in `Cargo.toml`.
 
 From this file to can create the `dicom-tags` with `generate-dicom-tags.sh`:
 ```bash
-
+./generate-dicom-tags.sh data-elements.csv > src/dicom_tags.rs
 ```

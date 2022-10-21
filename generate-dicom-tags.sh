@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ $# -ne 2 ]
+if [ $# -ne 1 ]
 then
   echo "error: expected one parameter"
   echo "usage: $0 data-elements.csv"
@@ -11,7 +11,10 @@ echo '#![allow(dead_code)]'
 echo '#![allow(unused_variables)]'
 echo '#![allow(non_upper_case_globals)]'
 echo ''
+echo 'use std::convert::TryFrom;'
+echo ''
 echo 'use crate::tags::Tag;'
+echo 'use crate::error::DicomError;'
 echo ''
 
 cat $1 | \
@@ -32,59 +35,62 @@ do
   fi
 done
 
-echo "impl From<&str> for Tag {"
-echo "  fn from(field_name: &str) -> Self {"
-echo "    match field_name {"
+echo "impl TryFrom<&str> for Tag {"
+echo "  type Error = DicomError;"
+echo ""
+echo "  fn try_from(field_name: &str) -> Result<Self, Self::Error> {"
+echo "    match field_name.to_uppercase().as_str() {"
 cat $1 | \
 while IFS=',' read -r -a array
 do
   if [[ "${array[0]}" != *"x"* ]];
   then
-    echo "      \"${array[1]}\" => ${array[1]},"
+    # to upper case
+    echo "      \"${array[0]^^}\" => Ok(${array[1]}),"
+    echo "      \"${array[1]^^}\" => Ok(${array[1]}),"
   fi
 done
-echo "      _ => unimplemented!(\"Unknown field: {}\", field_name),"
+echo "      _ => Err(DicomError::new(&format!(\"Unknown field: {}\", field_name))),"
 echo "    }"
 echo "  }"
 echo "}"
 echo ""
 
-echo "impl From<&String> for Tag {"
-echo "  fn from(field_name: &String) -> Self {"
-echo "    match field_name.as_str() {"
+echo "impl TryFrom<&String> for Tag {"
+echo "  type Error = DicomError;"
+echo ""
+echo "  fn try_from(field_name: &String) -> Result<Self, Self::Error> {"
+echo "    match field_name.to_uppercase().as_str() {"
 cat $1 | \
 while IFS=',' read -r -a array
 do
   if [[ "${array[0]}" != *"x"* ]];
   then
-    echo "      \"${array[1]}\" => ${array[1]},"
+    # to upper case
+    echo "      \"${array[0]^^}\" => Ok(${array[1]}),"
+    echo "      \"${array[1]^^}\" => Ok(${array[1]}),"
   fi
 done
-echo "      _ => unimplemented!(\"Unknown field: {}\", field_name),"
+echo "      _ => Err(DicomError::new(&format!(\"Unknown field: {}\", field_name))),"
 echo "    }"
 echo "  }"
 echo "}"
 echo ""
 
-echo "impl From<u32> for Tag {"
-echo "  fn from(field: u32) -> Self {"
+echo "impl TryFrom<u32> for Tag {"
+echo "  type Error = DicomError;"
+echo ""
+echo "  fn try_from(field: u32) -> Result<Self, Self::Error> {"
 echo "    match field {"
 cat $1 | \
 while IFS=',' read -r -a array
 do
   if [[ "${array[0]}" != *"x"* ]];
   then
-    echo "      0x${array[0]} => ${array[1]},"
+    echo "      0x${array[0]} => Ok(${array[1]}),"
   fi
 done
-echo "      _ => Tag {"
-echo "        group: ((field & 0xFFFF0000) >> 16) as u16,"
-echo "        element: (field & 0x0000FFFF) as u16,"
-echo "        name: \"Unknown Tag & Data\","
-echo "        vr: \"\","
-echo "        vm: std::ops::Range { start: 0, end: 0 },"
-echo "        description: \"Unknown Tag & Data\","
-echo "      },"
+echo "      _ => Err(DicomError::new(&format!(\"Unknown tag: {}\", field))),"
 echo "    }"
 echo "  }"
 echo "}"

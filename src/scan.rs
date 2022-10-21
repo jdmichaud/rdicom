@@ -2,7 +2,7 @@
 #![allow(unused_variables)]
 #![allow(unused_imports)]
 
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::io::BufReader;
 use std::fs::File;
 use std::path::Path;
@@ -138,20 +138,13 @@ impl IndexStore for SqlIndexStore {
 }
 
 fn walk(input_path: &str, f: &mut dyn FnMut(&Path) -> ()) -> Result<(), Box<dyn Error>> {
-  let mut count = 0;
   for result in WalkDir::new(input_path) {
     let entry = result?;
     let filepath = entry.path();
-    let wheel = "-\\|/";
     if filepath.is_file() {
       f(filepath);
-      let w = wheel.as_bytes()[count / 10 % 4] as char;
-      eprint!("{}[2K\r{} {}", ESC, w, filepath.display());
-      io::stdout().flush().unwrap();
-      count += 1;
     }
   }
-  eprintln!("{}[2K\r{} files found", ESC, count);
   Ok(())
 }
 
@@ -179,37 +172,68 @@ fn main() -> Result<(), Box<dyn Error>> {
     };
     Box::new(CsvIndexStore::new(writer, indexable_fields.to_vec())) as Box<dyn IndexStore>
   };
+  // There sets will be used for a fancy display
+  let mut count = 0;
+  let mut study_set: HashSet<String> = HashSet::new();
+  let mut series_set: HashSet<String> = HashSet::new();
+  let mut modality_set: HashSet<String> = HashSet::new();
   // Walk all the files in the provided input folder
   let _ = walk(&opt.input_path.to_string_lossy(), &mut move |filepath: &Path| {
+    count += 1;
     // For each file, check it is a dicom file, load it and parse the requested fields
     if is_dicom_file(&filepath.to_string_lossy()) {
       match Instance::from_filepath(&filepath.to_string_lossy().to_string()) {
         Ok(instance) => {
-          match instance.get_value(&"MediaStorageSOPClassUID".into()) {
+          match instance.get_value(&"MediaStorageSOPClassUID".try_into().unwrap()) {
             // Ignore DICOMDIR files
             Ok(Some(sop_class_uid)) if sop_class_uid.to_string() != MEDIA_STORAGE_DIRECTORY_STORAGE => {
               let mut data = HashMap::<String, String>::new();
               // We want the filepath in the index by default
               data.insert("filepath".to_string(), filepath.to_string_lossy().to_string());
               for field in indexable_fields.iter() {
-                match instance.get_value(&field.into()) {
+                match instance.get_value(&field.try_into().unwrap()) {
                   Ok(result) => {
                     let value = if let Some(value) = result { value.to_string() } else { "undefined".to_string() };
                     // Fill the hash map with the requested field
                     data.insert(field.to_string(), value);
                   }
-                  Err(e) => eprintln!("{:?}", e),
+                  Err(e) => {
+                    print!("\r\x1b[2K");
+                    io::stdout().flush().unwrap();
+                    eprintln!("{:?}", e);
+                  }
                 }
               }
               // Provide the hash map to the index store
               index_store.write(&data).unwrap();
+
+              // Fancy display
+              if let Some(study_instance_uid) = data.get("StudyInstanceUID") {
+                study_set.insert(study_instance_uid.clone());
+              }
+              if let Some(series_instance_uid) = data.get("SeriesInstanceUID") {
+                series_set.insert(series_instance_uid.clone());
+              }
+              if let Ok(Some(modality)) = instance.get_value(&"Modality".try_into().unwrap()) {
+                modality_set.insert(modality.to_string().clone());
+              }
+              let wheel = "-\\|/";
+              let w = wheel.as_bytes()[count / 10 % 4] as char;
+              print!("{} [{}] files scanned with [{}] studies and [{}] series found with following modalities {:?}\r",
+                w, count, study_set.len(), series_set.len(), modality_set);
+              io::stdout().flush().unwrap();
             },
             _ => (),
           }
         },
-        Err(e) => eprintln!("{:?}", e),
+        Err(e) => {
+          print!("\r\x1b[2K");
+          io::stdout().flush().unwrap();
+          eprintln!("{:?}", e);
+        }
       }
     }
   });
+  println!("{} DICOM files scanned", count);
   Ok(())
 }

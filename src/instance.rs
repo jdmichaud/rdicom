@@ -169,7 +169,7 @@ impl<'a> DicomValue<'a> {
       ),
       "AT" => {
         let tmp: [u8; 4] = buffer[offset..offset + 4].try_into().unwrap();
-        DicomValue::AT(u32::from_le_bytes(tmp).into())
+        DicomValue::AT(u32::from_le_bytes(tmp).try_into().unwrap())
       },
       "CS" => DicomValue::CS(
         from_utf8(&buffer[offset..offset + length])
@@ -456,7 +456,7 @@ impl Instance {
           }
           items.push(item);
         }
-        let tag = (((group as u32) << 16) | element as u32).into();
+        let tag = (((group as u32) << 16) | element as u32).try_into()?;
         return Ok(DicomAttribute::new_with_subattributes(
           group, element, vr, offset, item_length, length, tag, items,
         ));
@@ -466,12 +466,20 @@ impl Instance {
       offset = offset + 2;
     }
     Ok(DicomAttribute::new(group, element, vr, offset, length, length,
-      (((group as u32) << 16) | element as u32).into()))
+      (((group as u32) << 16) | element as u32).try_into().unwrap_or(Tag {
+        group,
+        element,
+        name: "Unknown Tag & Data",
+        vr: "",
+        vm: std::ops::Range { start: 0, end: 0 },
+        description: "Unknown Tag & Data",
+      }))
+    )
   }
 
   fn is_supported_type(self: &Self) -> Result<(), DicomError> {
     // Only supporting little-endian explicit VR for now.
-    if let Some(transfer_syntax_uid_field) = self.get_value(&0x00020010.into())? {
+    if let Some(transfer_syntax_uid_field) = self.get_value(&0x00020010.try_into().unwrap())? {
       match transfer_syntax_uid_field {
         DicomValue::UI(transfer_syntax_uid) => {
           if vec!["1.2.840.10008.1.2.1", "1.2.840.10008.1.2.4.70"].contains(&&*transfer_syntax_uid) {

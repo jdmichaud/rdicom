@@ -1,7 +1,9 @@
 #![allow(dead_code)]
 #![allow(unused_variables)]
 
-#[derive(Debug, PartialEq)]
+use core::hash;
+
+#[derive(Debug, PartialEq, Eq)]
 pub struct Tag {
   pub group: u16,
   pub element: u16,
@@ -11,3 +13,9 @@ pub struct Tag {
   pub description: &'static str,
 }
 
+impl hash::Hash for Tag {
+  fn hash<H: hash::Hasher>(&self, state: &mut H) {
+      self.group.hash(state);
+      self.element.hash(state);
+  }
+}
