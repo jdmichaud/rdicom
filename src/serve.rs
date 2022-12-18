@@ -59,14 +59,16 @@ fn file_exists(path: &str) -> Result<PathBuf, Box<dyn Error>> {
     }
 }
 
+/// A simple DICOMWeb server
 #[derive(Debug, StructOpt)]
 struct Opt {
-    #[structopt(short, long)]
-    port: Option<u16>,
-
-    #[structopt(short, long)]
-    host: Option<String>,
-
+    /// Port to listen to
+    #[structopt(default_value = "8080", short, long)]
+    port: u16,
+    /// Host to serve
+    #[structopt(default_value = "127.0.0.1", short="o", long)]
+    host: String,
+    /// Sqlite database
     #[structopt(short, long, parse(try_from_str = file_exists))]
     sqlfile: PathBuf,
 }
@@ -507,12 +509,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
     .with(log)
   ;
 
-  let host = opt.host.unwrap_or(String::from("127.0.0.1"));
-  let port = opt.port.unwrap_or(8080);
-
+  let host = opt.host;
   println!("Serving HTTP on {} port {} (http://{}:{}/) with database {:?} ...",
-    host, port, host, port, &opt.sqlfile);
-  warp::serve(routes).run((IpAddr::from_str(&host).unwrap(), port)).await;
+    host, opt.port, host, opt.port, &opt.sqlfile);
+  warp::serve(routes).run((IpAddr::from_str(&host).unwrap(), opt.port)).await;
 
   Ok(())
 }

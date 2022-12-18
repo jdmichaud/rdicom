@@ -16,7 +16,9 @@ use rdicom::instance::DicomValue;
 use rdicom::dicom_tags::{Item, SequenceDelimitationItem};
 
 #[derive(Debug, StructOpt)]
+/// A dcmdump clone based on rdicom
 struct Opt {
+  /// DICOM input file to be dumped
   filepath: String,
 }
 
