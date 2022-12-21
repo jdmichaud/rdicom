@@ -168,6 +168,7 @@ fn get_indexed_fields(connection: &Connection) -> Vec<String> {
 
 // Performs an arbitrary query on the connection
 fn query(connection: &Connection, query: &str) -> Vec<HashMap<String, String>> {
+  println!("query {}", query);
   connection.prepare(query).and_then(|mut stmt| {
     Ok(stmt.query_map(params![], |row| {
       let mut entries = HashMap::new();
@@ -234,12 +235,22 @@ fn get_studies(connection: &Connection, params: &QidoQueryParameters,
   search_terms: &HashMap<Tag, String>) -> Vec<HashMap<String, String>> {
   let indexed_fields = get_indexed_fields(connection);
   // First retrieve the indexed fields
-  let indexed = query(&connection,
+  let mut indexed = query(&connection,
     &format!("SELECT DISTINCT StudyInstanceUID, * FROM dicom_index {};",
       create_where_clause(params, search_terms, &indexed_fields)));
+  // println!("indexed {:?}", indexed);
   // Get the includefields not present in the index
-  if let Some(includefield) = params.includefield {
-    
+  if let Some(includefield) = &params.includefield {
+    let fields_to_fetch: Vec<String> = includefield.iter()
+      .filter(|field| !indexed_fields.contains(field))
+      .map(|field| field.clone())
+      .collect::<_>();
+    println!("fields_to_fetch {:?}", fields_to_fetch);
+    // indexed.into_iter().for_each(|entry| {
+    //   fields_to_fetch.iter().for_each(|field| {
+    //     entry
+    //   });
+    // });
   }
   // Then enrich them with the fields from the DICOM fields
   // TODO
