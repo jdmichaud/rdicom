@@ -14,10 +14,12 @@ use std::str::FromStr;
 use serde::{de, Deserialize, Deserializer, Serialize};
 use serde_json;
 use std::fmt;
-use rusqlite::{Connection, params};
+use sqlite::{Connection, State};
 use warp::http::header::{CONTENT_TYPE, HeaderMap};
 
 use rdicom::tags::Tag;
+use rdicom::instance::Instance;
+use rdicom::misc::is_dicom_file;
 
 mod config;
 
@@ -159,28 +161,28 @@ struct WadoQueryParameters {
 
 // Retrieves the column present in the index
 fn get_indexed_fields(connection: &Connection) -> Vec<String> {
-  connection.prepare("PRAGMA table_info(dicom_index);").and_then(|mut stmt| {
-    Ok(stmt.query_map(params![], |row| {
-      Ok(row.get(1))
-    })?.map(|x| x.unwrap().unwrap()).collect::<Vec<String>>())
-  }).unwrap()
+  connection
+    .prepare("PRAGMA table_info(dicom_index);")
+    .unwrap()
+    .into_iter()
+    .map(|row| String::from(row.unwrap().read::<&str, _>(1)))
+    .collect::<Vec<String>>()
 }
 
 // Performs an arbitrary query on the connection
 fn query(connection: &Connection, query: &str) -> Vec<HashMap<String, String>> {
-  println!("query {}", query);
-  connection.prepare(query).and_then(|mut stmt| {
-    Ok(stmt.query_map(params![], |row| {
-      let mut entries = HashMap::new();
-      for (index, column_name) in get_indexed_fields(connection).iter().enumerate() {
-        let value: String = row.get(index).unwrap();
-        if value != "undefined" {
-          entries.insert(column_name.to_owned(), value);
-        }
-      }
-      Ok(entries)
-    })?.map(|x| x.unwrap()).collect::<_>())
-  }).unwrap()
+  let mut statement = connection.prepare(query).unwrap();
+  let mut result: Vec<HashMap<String, String>> = Vec::new();
+  while let Ok(State::Row) = statement.next() {
+    let column_names = statement.column_names();
+    let mut entries = HashMap::new();
+    for column_name in column_names {
+      entries.insert(column_name.to_owned(), statement.read::<String, _>(&**column_name).unwrap());
+    }
+    result.push(entries);
+  }
+
+  return result;
 }
 
 fn map_to_entry(tag_map: &HashMap<String, String>) -> String {
@@ -235,7 +237,7 @@ fn get_studies(connection: &Connection, params: &QidoQueryParameters,
   search_terms: &HashMap<Tag, String>) -> Vec<HashMap<String, String>> {
   let indexed_fields = get_indexed_fields(connection);
   // First retrieve the indexed fields
-  let mut indexed = query(&connection,
+  let indexed = query(&connection,
     &format!("SELECT DISTINCT StudyInstanceUID, * FROM dicom_index {};",
       create_where_clause(params, search_terms, &indexed_fields)));
   // println!("indexed {:?}", indexed);
@@ -246,14 +248,22 @@ fn get_studies(connection: &Connection, params: &QidoQueryParameters,
       .map(|field| field.clone())
       .collect::<_>();
     println!("fields_to_fetch {:?}", fields_to_fetch);
-    // indexed.into_iter().for_each(|entry| {
-    //   fields_to_fetch.iter().for_each(|field| {
-    //     entry
-    //   });
-    // });
+    indexed.iter().for_each(|entry| {
+      let filepath = entry.get("filepath").unwrap();
+      if is_dicom_file(filepath) {
+        match Instance::from_filepath(filepath) {
+          Ok(instance) => {
+            fields_to_fetch.iter().for_each(|field| {
+              if let Ok(Some(field_value)) = instance.get_value(&field.try_into().unwrap()) {
+                entry.insert(field.to_string(), field_value.to_string());
+              }
+            });
+          },
+          Err(_) => todo!()
+        }
+      }
+    });
   }
-  // Then enrich them with the fields from the DICOM fields
-  // TODO
   return indexed;
 }
 

@@ -12,7 +12,7 @@ use std::error::Error;
 use structopt::StructOpt;
 use walkdir::WalkDir;
 use std::io::{self, Write};
-use rusqlite::{Connection, Statement, ToSql};
+use sqlite::{Connection};
 use serde_yaml;
 
 use rdicom::dicom_tags;
@@ -94,7 +94,6 @@ impl<W: Write> IndexStore for CsvIndexStore<W> {
   }
 }
 
-#[derive(Debug)]
 struct SqlIndexStore {
   connection: Connection,
   table_name: String,
@@ -108,36 +107,25 @@ impl SqlIndexStore {
     let table = fields.iter()
       .map(|s| s.to_string() + " TEXT NON NULL")
       .collect::<Vec<String>>().join(",");
-    connection.execute(
-      &format!("CREATE TABLE IF NOT EXISTS {} (
-        {}
-      );", table_name, table),
-      [],
-    )?;
+    connection.execute(&format!("CREATE TABLE IF NOT EXISTS {} ({});", table_name, table))?;
     Ok(SqlIndexStore { connection, table_name: String::from(table_name), fields })
   }
 }
 
 impl IndexStore for SqlIndexStore {
   fn write(self: &mut Self, data: &HashMap<String, String>) -> Result<(), Box<dyn Error>> {
-    let tmp: Vec<_> = self.fields.iter()
+    let values: Vec<_> = self.fields.iter()
       .map(|x| data.get(x).unwrap_or(&"undefined".to_owned()).clone())
+      .map(|x| format!("\"{}\"", x))
       .collect::<Vec<String>>();
-    let to_sql_fields: Vec<_> = tmp.iter()
-      .map(|x| x as &dyn ToSql)
-      .collect();
     let column_names = self.fields.join(",");
     let placeholders = (1..self.fields.len() + 1)
       .map(|i| format!("?{}", i))
       .collect::<Vec<String>>()
       .join(",");
-    let mut statement = self.connection.prepare_cached(
-      &format!("INSERT INTO {} ({}) VALUES ({})", self.table_name, column_names, placeholders))?;
-    statement.execute(
-    // self.connection.execute(
-      // &format!("INSERT INTO {} ({}) VALUES ({})", self.table_name, column_names, placeholders),
-      &to_sql_fields[..],
-    )?;
+    let query = &format!("INSERT INTO {} ({}) VALUES ({})",
+      self.table_name, column_names, values.join(","));
+    self.connection.execute(query)?;
     Ok(())
   }
 }
