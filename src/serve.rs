@@ -79,6 +79,10 @@ struct Opt {
 struct NotAUniqueIdentifier;
 impl reject::Reject for NotAUniqueIdentifier {}
 
+#[derive(Debug)]
+struct InvalidParameter { message: String }
+impl reject::Reject for InvalidParameter {}
+
 /// Extract a UI, or reject with NotAUniqueIdentifier.
 fn unique_identifier() -> impl Filter<Extract = (String,), Error = Rejection> + Copy {
   warp::path::param().and_then(|ui: String| async {
@@ -90,7 +94,9 @@ fn unique_identifier() -> impl Filter<Extract = (String,), Error = Rejection> + 
   })
 }
 
-fn search_terms() -> impl Filter<Extract = (HashMap<Tag, String>,), Error = Rejection> + Copy {
+// Convert all the query parameters that can convert to a DICOM field (00200010=1.2.3.4.5) to
+// an <Tag, String> entry in a HashMap.
+fn query_param_to_search_terms() -> impl Filter<Extract = (HashMap<Tag, String>,), Error = Rejection> + Copy {
   warp::query::<HashMap<String, String>>().and_then(|q: HashMap<String, String>| async move {
     if true {
       Ok(q.into_iter()
@@ -160,17 +166,19 @@ struct WadoQueryParameters {
 }
 
 // Retrieves the column present in the index
-fn get_indexed_fields(connection: &Connection) -> Vec<String> {
-  connection
-    .prepare("PRAGMA table_info(dicom_index);")
-    .unwrap()
+fn get_indexed_fields(connection: &Connection) -> Result<Vec<String>, Box<dyn Error>> {
+  Ok(connection
+    .prepare("PRAGMA table_info(dicom_index);")?
     .into_iter()
+    // TODO: get rid of this unwrap
     .map(|row| String::from(row.unwrap().read::<&str, _>(1)))
-    .collect::<Vec<String>>()
+    .collect::<Vec<String>>())
 }
 
 // Performs an arbitrary query on the connection
 fn query(connection: &Connection, query: &str) -> Vec<HashMap<String, String>> {
+  println!("query {:?}", query);
+  // TODO: Remove unwrap
   let mut statement = connection.prepare(query).unwrap();
   let mut result: Vec<HashMap<String, String>> = Vec::new();
   while let Ok(State::Row) = statement.next() {
@@ -224,6 +232,8 @@ fn create_where_clause(params: &QidoQueryParameters, search_terms: &HashMap<Tag,
     .fold(String::new(), |mut acc, (field, value)| {
       if acc.len() == 0 {
         acc += "WHERE ";
+      } else {
+        acc += " AND ";
       }
       acc + &format!("{}{}{}{}", field.name,
         if fuzzymatching { " LIKE '%" } else { "='" },
@@ -233,46 +243,58 @@ fn create_where_clause(params: &QidoQueryParameters, search_terms: &HashMap<Tag,
   format!("{where_clause} LIMIT {limit} OFFSET {offset}")
 }
 
-fn get_studies(connection: &Connection, params: &QidoQueryParameters,
-  search_terms: &HashMap<Tag, String>) -> Vec<HashMap<String, String>> {
-  let indexed_fields = get_indexed_fields(connection);
+fn get_entries(connection: &Connection, params: &QidoQueryParameters,
+  search_terms: &HashMap<Tag, String>, entry_type: &str)
+  -> Result<Vec<HashMap<String, String>>, Box<dyn Error>> {
+  let indexed_fields = get_indexed_fields(connection)?;
   // First retrieve the indexed fields
-  let indexed = query(&connection,
-    &format!("SELECT DISTINCT StudyInstanceUID, * FROM dicom_index {};",
+  let mut entries = query(&connection,
+    &format!("SELECT DISTINCT {}, * FROM dicom_index {};", entry_type,
       create_where_clause(params, search_terms, &indexed_fields)));
-  // println!("indexed {:?}", indexed);
+  // println!("entries {:?}", entries);
   // Get the includefields not present in the index
   if let Some(includefield) = &params.includefield {
     let fields_to_fetch: Vec<String> = includefield.iter()
       .filter(|field| !indexed_fields.contains(field))
       .map(|field| field.clone())
       .collect::<_>();
-    println!("fields_to_fetch {:?}", fields_to_fetch);
-    indexed.iter().for_each(|entry| {
-      let filepath = entry.get("filepath").unwrap();
-      if is_dicom_file(filepath) {
-        match Instance::from_filepath(filepath) {
-          Ok(instance) => {
-            fields_to_fetch.iter().for_each(|field| {
-              if let Ok(Some(field_value)) = instance.get_value(&field.try_into().unwrap()) {
-                entry.insert(field.to_string(), field_value.to_string());
+    // println!("fields_to_fetch {:?}", fields_to_fetch);
+    if fields_to_fetch.len() > 0 {
+      for i in 0..entries.len() {
+        if let Some(filepath) = entries[i].get("filepath") {
+          if is_dicom_file(filepath) {
+            let toto = filepath.clone();
+            let instance = Instance::from_filepath(filepath)?;
+            for field in &fields_to_fetch {
+              println!("fetching {:?} from {:?}", field, toto);
+              let tmp: &str = &field; // TODO: Why do I need this tmp? Get rid of it.
+              let dicom_field = &(tmp).try_into()?;
+              if let Some(field_value) = instance.get_value(dicom_field)? {
+                // println!("fetched value {:?}", field_value);
+                entries[i].insert(field.to_string(), field_value.to_string());
               }
-            });
-          },
-          Err(_) => todo!()
+            }
+          }
         }
       }
-    });
+    }
   }
-  return indexed;
+  return Ok(entries);
 }
 
-fn get_series(params: &QidoQueryParameters) -> Vec<String> {
-  vec![]
+fn get_studies(connection: &Connection, params: &QidoQueryParameters,
+  search_terms: &HashMap<Tag, String>) -> Result<Vec<HashMap<String, String>>, Box<dyn Error>> {
+  get_entries(connection, params, search_terms, "StudyInstanceUID")
 }
 
-fn get_instances(params: &QidoQueryParameters) -> Vec<String> {
-  vec![]
+fn get_series(connection: &Connection, params: &QidoQueryParameters,
+  search_terms: &HashMap<Tag, String>) -> Result<Vec<HashMap<String, String>>, Box<dyn Error>> {
+  get_entries(connection, params, search_terms, "SeriesInstanceUID")
+}
+
+fn get_instances(connection: &Connection, params: &QidoQueryParameters,
+  search_terms: &HashMap<Tag, String>) -> Result<Vec<HashMap<String, String>>, Box<dyn Error>> {
+  get_entries(connection, params, search_terms, "filepath")
 }
 
 fn get_study(ui: &str) -> HashMap<String, String> {
@@ -287,6 +309,18 @@ fn get_instance(ui: &str) -> HashMap<String, String> {
   HashMap::from([(String::from("link"), ui.to_string())])
 }
 
+fn generate_json_response(data: &Vec<HashMap<String, String>>) -> String {
+  format!("[{}]", data.iter()
+    .map(|study| map_to_entry(study))
+    .collect::<Vec<String>>()
+    .join(",")
+  )
+}
+
+fn with_db<'a>(sqlfile: String) -> impl Filter<Extract = (Connection,), Error = Infallible> + Clone + 'a {
+    warp::any().map(move || Connection::open(&sqlfile).unwrap())
+}
+
 /**
  * https://www.dicomstandard.org/using/dicomweb/query-qido-rs/
  */
@@ -296,55 +330,89 @@ fn get_query_api(sqlfile: String)
   let mut json_headers = HeaderMap::new();
   json_headers.insert(CONTENT_TYPE, "application/dicom+json; charset=utf-8".parse().unwrap());
 
-  // GET {s}/studies?... Query for studies
+  // GET {s}/studies?... Query for all the studies
   let studies = warp::path("studies")
     .and(warp::path::end())
     .and(warp::query::<QidoQueryParameters>())
-    .and(search_terms())
-    .and(with_db(sqlfile))
-    .map(|qido_params: QidoQueryParameters, search_terms: HashMap<Tag, String>, connection: Connection| {
-      // serde_json::to_string(&get_studies(&connection, &qido_params)).unwrap()
-      format!("[{}]", get_studies(&connection, &qido_params, &search_terms).iter()
-        .map(|study| map_to_entry(study))
-        .collect::<Vec<String>>()
-        .join(",")
-      )
+    .and(query_param_to_search_terms())
+    .and(with_db(sqlfile.clone()))
+    .and_then(|qido_params: QidoQueryParameters, search_terms: HashMap<Tag, String>, connection: Connection| async move {
+      match get_studies(&connection, &qido_params, &search_terms) {
+        // Have to specify the type annotation here, see: https://stackoverflow.com/a/67413956/2603925
+        Ok(studies) => Ok::<_, warp::Rejection>(generate_json_response(&studies)),
+        // TODO: Can't use ? in the and_then handler because we can convert automatically from
+        // DicomError to Reject. See: https://stackoverflow.com/a/65175925/2603925
+        Err(e) => Err(warp::reject::custom(InvalidParameter { message: e.to_string() }))
+      }
     })
-    .with(warp::reply::with::headers(json_headers));
+    .with(warp::reply::with::headers(json_headers.clone()));
 
-  // GET {s}/studies/{study}/series?...  Query for series in a study
+  // GET {s}/series?... Query for all the series
   let series = warp::path("series")
     .and(warp::path::end())
     .and(warp::query::<QidoQueryParameters>())
-    .map(|params: QidoQueryParameters| {
-      serde_json::to_string(&get_series(&params)).unwrap()
-    });
+    .and(query_param_to_search_terms())
+    .and(with_db(sqlfile.clone()))
+    .and_then(|qido_params: QidoQueryParameters, search_terms: HashMap<Tag, String>, connection: Connection| async move {
+      match get_series(&connection, &qido_params, &search_terms) {
+        Ok(series) => Ok::<_, warp::Rejection>(generate_json_response(&series)),
+        Err(e) => Err(warp::reject::custom(InvalidParameter { message: e.to_string() }))
+      }
+    })
+    .with(warp::reply::with::headers(json_headers.clone()));
 
-  // GET {s}/studies/{study}/series/{series}/instances?... Query for instances in a series
+  // GET {s}/instances?... Query for all the instances
   let instances = warp::path("instances")
     .and(warp::path::end())
     .and(warp::query::<QidoQueryParameters>())
-    .map(|params: QidoQueryParameters| {
-      serde_json::to_string(&get_instances(&params)).unwrap()
-    });
+    .and(query_param_to_search_terms())
+    .and(with_db(sqlfile.clone()))
+    .and_then(|qido_params: QidoQueryParameters, search_terms: HashMap<Tag, String>, connection: Connection| async move {
+      match get_instances(&connection, &qido_params, &search_terms) {
+        Ok(instances) => Ok::<_, warp::Rejection>(generate_json_response(&instances)),
+        Err(e) => Err(warp::reject::custom(InvalidParameter { message: e.to_string() }))
+      }
+    })
+    .with(warp::reply::with::headers(json_headers.clone()));
 
+  // GET {s}/studies/{study}/series?...  Query for series in a study
   let studies_series = warp::path("studies")
     .and(unique_identifier())
     .and(warp::path("series"))
+    .and(warp::path::end())
     .and(warp::query::<QidoQueryParameters>())
-    .map(|study_uid: String, params: QidoQueryParameters| {
-      serde_json::to_string(&get_instance(&study_uid)).unwrap()
-    });
+    .and(query_param_to_search_terms())
+    .and(with_db(sqlfile.clone()))
+    .and_then(|study_uid: String, qido_params: QidoQueryParameters,
+      mut search_terms: HashMap<Tag, String>, connection: Connection| async move {
+      search_terms.insert(Tag::try_from("StudyInstanceUID").unwrap(), study_uid);
+      match get_studies(&connection, &qido_params, &search_terms) {
+        Ok(studies) => Ok::<_, warp::Rejection>(generate_json_response(&studies)),
+        Err(e) => Err(warp::reject::custom(InvalidParameter { message: e.to_string() }))
+      }
+    })
+    .with(warp::reply::with::headers(json_headers.clone()));
 
+  // GET {s}/studies/{study}/series/{series}/instances?... Query for instances in a series
   let studies_series_instances = warp::path("studies")
     .and(unique_identifier())
     .and(warp::path("series"))
     .and(unique_identifier())
     .and(warp::path("instances"))
+    .and(warp::path::end())
     .and(warp::query::<QidoQueryParameters>())
-    .map(|study_uid: String, series_uid: String, params: QidoQueryParameters| {
-      serde_json::to_string(&get_instances(&params)).unwrap()
-    });
+    .and(query_param_to_search_terms())
+    .and(with_db(sqlfile.clone()))
+    .and_then(|study_uid: String, series_uid: String, qido_params: QidoQueryParameters,
+      mut search_terms: HashMap<Tag, String>, connection: Connection| async move {
+      search_terms.insert(Tag::try_from("StudyInstanceUID").unwrap(), study_uid);
+      search_terms.insert(Tag::try_from("SeriesInstanceUID").unwrap(), series_uid);
+      match get_studies(&connection, &qido_params, &search_terms) {
+        Ok(studies) => Ok::<_, warp::Rejection>(generate_json_response(&studies)),
+        Err(e) => Err(warp::reject::custom(InvalidParameter { message: e.to_string() }))
+      }
+    })
+    .with(warp::reply::with::headers(json_headers.clone()));
 
   warp::get()
     .and(studies)
@@ -352,10 +420,6 @@ fn get_query_api(sqlfile: String)
     .or(instances)
     .or(studies_series)
     .or(studies_series_instances)
-}
-
-fn with_db<'a>(sqlfile: String) -> impl Filter<Extract = (Connection,), Error = Infallible> + Clone + 'a {
-    warp::any().map(move || Connection::open(&sqlfile).unwrap())
 }
 
 /**
@@ -520,7 +584,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
   // GET /
   let root = warp::get().and(warp::path::end()).map(|| "DICOM Web Server");
   let log = warp::log::custom(|info| {
-    eprintln!("{} {} {}", info.method(), info.path(), info.status());
+    eprintln!("{} {} => {} (in {:?})", info.method(), info.path(), info.status(), info.elapsed());
   });
 
   let routes = root

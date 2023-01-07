@@ -15,7 +15,7 @@ impl DicomError {
 
 impl fmt::Display for DicomError {
   fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-    write!(f,"{}",self.details)
+    write!(f, "{}", self.details)
   }
 }
 
