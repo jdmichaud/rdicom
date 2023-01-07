@@ -1,4 +1,5 @@
-2022-12-21 (in progress) extract data for the includefields from the DICOM files
+2022-01-07 minimal QIDO queries support
+2022-12-21 extract data for the includefields from the DICOM files
 2022-12-18 Improve help messages of various executables
            host and port default values now set by structopt
 2022-12-17 In order to build an actual statically linked binary, need to set .cargo/config.toml with

@@ -3,6 +3,12 @@ indexing:
     studies:
       - StudyInstanceUID
       - PatientName
+      - PatientID
+      - PatientBirthDate
+      - AccessionNumber
+      - ReferringPhysicianName
+      - StudyDate
+      - StudyDescription
     series:
       - SeriesInstanceUID
       - BitsAllocated
@@ -12,5 +18,7 @@ indexing:
       - Rows
       - PhotometricInterpretation
       - PixelRepresentation
-    instances: []
+      - PerformedProcedureStepStartDate
+    instances:
+      - SOPInstanceUID
 table_name: dicom_index
