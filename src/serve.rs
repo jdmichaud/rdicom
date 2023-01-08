@@ -9,13 +9,13 @@ use std::error::Error;
 use structopt::StructOpt;
 use std::path::PathBuf;
 use warp::{Filter, reject, Rejection};
+use warp::http::header::{CONTENT_TYPE, HeaderMap, HeaderValue};
 use std::net::IpAddr;
 use std::str::FromStr;
 use serde::{de, Deserialize, Deserializer, Serialize};
 use serde_json;
 use std::fmt;
 use sqlite::{Connection, State};
-use warp::http::header::{CONTENT_TYPE, HeaderMap};
 
 use rdicom::tags::Tag;
 use rdicom::instance::Instance;
@@ -80,8 +80,8 @@ struct NotAUniqueIdentifier;
 impl reject::Reject for NotAUniqueIdentifier {}
 
 #[derive(Debug)]
-struct InvalidParameter { message: String }
-impl reject::Reject for InvalidParameter {}
+struct ApplicationError { message: String }
+impl reject::Reject for ApplicationError {}
 
 /// Extract a UI, or reject with NotAUniqueIdentifier.
 fn unique_identifier() -> impl Filter<Extract = (String,), Error = Rejection> + Copy {
@@ -268,7 +268,7 @@ fn get_entries(connection: &Connection, params: &QidoQueryParameters,
             for field in &fields_to_fetch {
               println!("fetching {:?} from {:?}", field, toto);
               let tmp: &str = &field; // TODO: Why do I need this tmp? Get rid of it.
-              let dicom_field = &(tmp).try_into()?;
+              let dicom_field = &(tmp).try_into()?; // TODO: Convert field before opening files to fail faster
               if let Some(field_value) = instance.get_value(dicom_field)? {
                 // println!("fetched value {:?}", field_value);
                 entries[i].insert(field.to_string(), field_value.to_string());
@@ -321,6 +321,29 @@ fn with_db<'a>(sqlfile: String) -> impl Filter<Extract = (Connection,), Error = 
     warp::any().map(move || Connection::open(&sqlfile).unwrap())
 }
 
+fn get_store_api(sqlfile: String)
+  -> impl Filter<Extract = impl warp::Reply, Error = Rejection> + Clone {
+  // POST  ../studies  Store instances.
+  let store_instances = warp::path("studies")
+    .and(warp::path::end())
+    .map(|| {
+      warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED)
+    })
+    ;
+  // POST  ../studies/{study}  Store instances for a specific study.
+  let store_instances_in_study = warp::path("studies")
+    .and(unique_identifier())
+    .and(warp::path::end())
+    .map(|study_uid: String| {
+      warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED)
+    })
+    ;
+
+  warp::post()
+    .and(store_instances)
+    .or(store_instances_in_study)
+}
+
 /**
  * https://www.dicomstandard.org/using/dicomweb/query-qido-rs/
  */
@@ -342,10 +365,11 @@ fn get_query_api(sqlfile: String)
         Ok(studies) => Ok::<_, warp::Rejection>(generate_json_response(&studies)),
         // TODO: Can't use ? in the and_then handler because we can convert automatically from
         // DicomError to Reject. See: https://stackoverflow.com/a/65175925/2603925
-        Err(e) => Err(warp::reject::custom(InvalidParameter { message: e.to_string() }))
+        Err(e) => Err(warp::reject::custom(ApplicationError { message: e.to_string() }))
       }
     })
-    .with(warp::reply::with::headers(json_headers.clone()));
+    .with(warp::reply::with::headers(json_headers.clone()))
+    ;
 
   // GET {s}/series?... Query for all the series
   let series = warp::path("series")
@@ -356,10 +380,11 @@ fn get_query_api(sqlfile: String)
     .and_then(|qido_params: QidoQueryParameters, search_terms: HashMap<Tag, String>, connection: Connection| async move {
       match get_series(&connection, &qido_params, &search_terms) {
         Ok(series) => Ok::<_, warp::Rejection>(generate_json_response(&series)),
-        Err(e) => Err(warp::reject::custom(InvalidParameter { message: e.to_string() }))
+        Err(e) => Err(warp::reject::custom(ApplicationError { message: e.to_string() }))
       }
     })
-    .with(warp::reply::with::headers(json_headers.clone()));
+    .with(warp::reply::with::headers(json_headers.clone()))
+    ;
 
   // GET {s}/instances?... Query for all the instances
   let instances = warp::path("instances")
@@ -370,10 +395,11 @@ fn get_query_api(sqlfile: String)
     .and_then(|qido_params: QidoQueryParameters, search_terms: HashMap<Tag, String>, connection: Connection| async move {
       match get_instances(&connection, &qido_params, &search_terms) {
         Ok(instances) => Ok::<_, warp::Rejection>(generate_json_response(&instances)),
-        Err(e) => Err(warp::reject::custom(InvalidParameter { message: e.to_string() }))
+        Err(e) => Err(warp::reject::custom(ApplicationError { message: e.to_string() }))
       }
     })
-    .with(warp::reply::with::headers(json_headers.clone()));
+    .with(warp::reply::with::headers(json_headers.clone()))
+    ;
 
   // GET {s}/studies/{study}/series?...  Query for series in a study
   let studies_series = warp::path("studies")
@@ -388,10 +414,11 @@ fn get_query_api(sqlfile: String)
       search_terms.insert(Tag::try_from("StudyInstanceUID").unwrap(), study_uid);
       match get_studies(&connection, &qido_params, &search_terms) {
         Ok(studies) => Ok::<_, warp::Rejection>(generate_json_response(&studies)),
-        Err(e) => Err(warp::reject::custom(InvalidParameter { message: e.to_string() }))
+        Err(e) => Err(warp::reject::custom(ApplicationError { message: e.to_string() }))
       }
     })
-    .with(warp::reply::with::headers(json_headers.clone()));
+    .with(warp::reply::with::headers(json_headers.clone()))
+    ;
 
   // GET {s}/studies/{study}/series/{series}/instances?... Query for instances in a series
   let studies_series_instances = warp::path("studies")
@@ -409,7 +436,7 @@ fn get_query_api(sqlfile: String)
       search_terms.insert(Tag::try_from("SeriesInstanceUID").unwrap(), series_uid);
       match get_studies(&connection, &qido_params, &search_terms) {
         Ok(studies) => Ok::<_, warp::Rejection>(generate_json_response(&studies)),
-        Err(e) => Err(warp::reject::custom(InvalidParameter { message: e.to_string() }))
+        Err(e) => Err(warp::reject::custom(ApplicationError { message: e.to_string() }))
       }
     })
     .with(warp::reply::with::headers(json_headers.clone()));
@@ -430,9 +457,19 @@ fn get_retrieve_api(sqlfile: String)
   // GET {s}/studies/{study} Retrieve entire study
   let studies = warp::path("studies")
     .and(unique_identifier())
+    .and(warp::filters::header::value("accept"))
     .and(warp::path::end())
-    .map(|study_uid: String| {
-      serde_json::to_string(&get_study(&study_uid)).unwrap()
+    // TODO: Find a way to return Not Implemented if the accept header is not application/json
+    // .and_then(|study_uid: String, accept_header: HeaderValue| async move {
+    //   if accept_header != "application/json" && accept_header != "application/dicom+json" {
+    //     let message = String::from("Only 'application/json' or 'application/dicom+json' accept header are supported");
+    //     Ok(warp::reply::with_status(message, warp::http::StatusCode::NOT_IMPLEMENTED))
+    //   } else {
+    //     Err(warp::reject::reject())
+    //   }
+    // });
+    .and_then(|study_uid: String, accept_header: HeaderValue| async move {
+      Ok::<_, warp::Rejection>(serde_json::to_string("").unwrap())
     });
   // GET {s}/studies/{study}/rendered  Retrieve rendered study
   let studies_rendered = warp::path("studies")
@@ -441,7 +478,7 @@ fn get_retrieve_api(sqlfile: String)
     .and(warp::query::<WadoQueryParameters>())
     .and(warp::path::end())
     .map(|study_uid: String, params: WadoQueryParameters| {
-      serde_json::to_string("").unwrap()
+      warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED)
     });
   // GET {s}/studies/{study}/series/{series} Retrieve entire series
   let studies_series = warp::path("studies")
@@ -450,7 +487,7 @@ fn get_retrieve_api(sqlfile: String)
     .and(unique_identifier())
     .and(warp::path::end())
     .map(|study_uid: String, series_uid: String| {
-      serde_json::to_string("").unwrap()
+      warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED)
     });
   // GET {s}/studies/{study}/series/{series}/rendered  Retrieve rendered series
   let studies_series_rendered = warp::path("studies")
@@ -461,7 +498,7 @@ fn get_retrieve_api(sqlfile: String)
     .and(warp::query::<WadoQueryParameters>())
     .and(warp::path::end())
     .map(|study_uid: String, series_uid: String, params: WadoQueryParameters| {
-      serde_json::to_string("").unwrap()
+      warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED)
     });
   // GET {s}/studies/{study}/series/{series}/metadata  Retrieve series metadata
   let studies_series_metadata = warp::path("studies")
@@ -471,14 +508,14 @@ fn get_retrieve_api(sqlfile: String)
     .and(warp::path("metadata"))
     .and(warp::path::end())
     .map(|study_uid: String, series_uid: String| {
-      serde_json::to_string("").unwrap()
+      warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED)
     });
 
   let series = warp::path("series")
     .and(unique_identifier())
     .and(warp::path::end())
     .map(|study_uid: String| {
-      serde_json::to_string(&get_study(&study_uid)).unwrap()
+      warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED)
     });
   let series_rendered = warp::path("series")
     .and(unique_identifier())
@@ -486,7 +523,7 @@ fn get_retrieve_api(sqlfile: String)
     .and(warp::query::<WadoQueryParameters>())
     .and(warp::path::end())
     .map(|study_uid: String, params: WadoQueryParameters| {
-      serde_json::to_string("").unwrap()
+      warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED)
     });
 
   // GET {s}/studies/{study}/series/{series}/instances/{instance}  Retrieve instance
@@ -498,7 +535,7 @@ fn get_retrieve_api(sqlfile: String)
     .and(unique_identifier())
     .and(warp::path::end())
     .map(|study_uid: String, series_uid: String, instance_uid: String| {
-      serde_json::to_string("").unwrap()
+      warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED)
     });
   // GET {s}/studies/{study}/series/{series}/instances/{instance}/rendered Retrieve rendered instance
   let studies_series_instances_rendered = warp::path("studies")
@@ -511,7 +548,7 @@ fn get_retrieve_api(sqlfile: String)
     .and(warp::query::<WadoQueryParameters>())
     .and(warp::path::end())
     .map(|study_uid: String, series_uid: String, instance_uid: String, params: WadoQueryParameters| {
-      serde_json::to_string("").unwrap()
+      warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED)
     });
   // GET {s}/studies/{study}/series/{series}/instances/{instance}/metadata Retrieve instance metadata
   let studies_series_instances_metadata = warp::path("studies")
@@ -523,14 +560,14 @@ fn get_retrieve_api(sqlfile: String)
     .and(warp::path("metadata"))
     .and(warp::path::end())
     .map(|study_uid: String, series_uid: String, instance_uid: String| {
-      serde_json::to_string("").unwrap()
+      warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED)
     });
 
   let instance = warp::path("instances")
     .and(unique_identifier())
     .and(warp::path::end())
     .map(|instance_uid: String| {
-      serde_json::to_string(&get_instance(&instance_uid)).unwrap()
+      warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED)
     });
 
   let instance_rendered = warp::path("instances")
@@ -539,7 +576,7 @@ fn get_retrieve_api(sqlfile: String)
     .and(warp::query::<WadoQueryParameters>())
     .and(warp::path::end())
     .map(|instance_uid: String, params: WadoQueryParameters| {
-      serde_json::to_string(&get_instance(&instance_uid)).unwrap()
+      warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED)
     });
 
   // GET {s}/studies/{study}/series/{series}/instances/{instance}/frames/{frames}  Retrieve frames in an instance
@@ -551,7 +588,7 @@ fn get_retrieve_api(sqlfile: String)
     .and(unique_identifier())
     .and(warp::path::end())
     .map(|study_uid: String, series_uid: String, instance_uid: String| {
-      serde_json::to_string("").unwrap()
+      warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED)
     });
 
   // GET {s}/{bulkdataURIReference}
@@ -571,6 +608,77 @@ fn get_retrieve_api(sqlfile: String)
     .or(instance_rendered)
 }
 
+fn get_delete_api(sqlfile: String)
+  -> impl Filter<Extract = impl warp::Reply, Error = Rejection> + Clone {
+
+  // DELETE   ../studies/{study}  Delete all instances for a specific study.
+  let delete_all_instances_from_study = warp::path("studies")
+    .and(unique_identifier())
+    .and(warp::path::end())
+    .map(|study_uid: String| {
+      warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED)
+    })
+    ;
+  // DELETE   ../studies/{study}/series/{series}  Delete all instances for a specific series within a study.
+  let delete_all_instance_from_series = warp::path("studies")
+    .and(unique_identifier())
+    .and(warp::path("series"))
+    .and(unique_identifier())
+    .and(warp::path::end())
+    .map(|study_uid: String, series_uid: String| {
+      warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED)
+    })
+    ;
+  // DELETE  ../studies/{study}/series/{series}/instances/{instance}   Delete a specific instance within a series.
+  let delete_instance = warp::path("studies")
+    .and(unique_identifier())
+    .and(warp::path("series"))
+    .and(unique_identifier())
+    .and(warp::path("instances"))
+    .and(unique_identifier())
+    .and(warp::path::end())
+    .map(|study_uid: String, series_uid: String, instance_uid: String| {
+      warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED)
+    })
+    ;
+
+  warp::delete()
+    .and(delete_all_instances_from_study)
+    .or(delete_all_instance_from_series)
+    .or(delete_instance)
+}
+
+
+// This function receives a `Rejection` and tries to return a custom
+// value, otherwise simply passes the rejection along.
+async fn handle_rejection(err: Rejection) -> Result<impl warp::Reply, Infallible> {
+  let code;
+  let message: String;
+
+  if err.is_not_found() {
+      code = warp::http::StatusCode::NOT_FOUND;
+      message = String::from("not found");
+  } else if let Some(invalid_parameter) = err.find::<ApplicationError>() {
+      code = warp::http::StatusCode::BAD_REQUEST;
+      message = invalid_parameter.message.clone();
+  } else if let Some(_) = err.find::<NotAUniqueIdentifier>() {
+      code = warp::http::StatusCode::BAD_REQUEST;
+      message = String::from("path parameter is not a DICOM unique identifier");
+  } else if let Some(_) = err.find::<warp::reject::MethodNotAllowed>() {
+      // We can handle a specific error, here METHOD_NOT_ALLOWED,
+      // and render it however we want
+      code = warp::http::StatusCode::METHOD_NOT_ALLOWED;
+      message = String::from("method not allowed");
+  } else {
+      // We should have expected this... Just log and say its a 500
+      code = warp::http::StatusCode::INTERNAL_SERVER_ERROR;
+      message = format!("unhandled rejection: {:?}", err);
+  }
+
+  eprintln!("error: {:?}", err);
+  Ok(warp::reply::with_status(message, code))
+}
+
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
   // Retrieve options
@@ -588,10 +696,13 @@ async fn main() -> Result<(), Box<dyn Error>> {
   });
 
   let routes = root
+    .or(get_store_api(sqlfile.clone()))
     .or(get_query_api(sqlfile.clone()))
     .or(get_retrieve_api(sqlfile.clone()))
+    .or(get_delete_api(sqlfile.clone()))
     .with(warp::cors().allow_any_origin())
     .with(log)
+    .recover(handle_rejection)
   ;
 
   let host = opt.host;

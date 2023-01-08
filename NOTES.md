@@ -1,3 +1,8 @@
+2022-01-08 Add Store and delete and return Not Implemented.
+           Been using the following page to recoup info on DICOMWeb:
+           https://learn.microsoft.com/en-us/azure/healthcare-apis/dicom/dicom-services-conformance-statement
+2022-01-07 Tried to deal with temporary accept header limitation for WADO. Only JSON support for now.
+           Can't make a filter work to early exit if header is incorrect.
 2022-01-07 minimal QIDO queries support
 2022-12-21 extract data for the includefields from the DICOM files
 2022-12-18 Improve help messages of various executables

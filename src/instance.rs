@@ -340,7 +340,7 @@ impl Instance {
   }
 
   pub fn from_filepath(filepath: &str) -> Result<Self, Box<dyn Error>> {
-    let f = File::open(filepath).unwrap();
+    let f = File::open(filepath)?;
     return Instance::from_buf_reader(BufReader::new(f));
   }
 
