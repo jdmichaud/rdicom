@@ -1,5 +1,14 @@
 # rdicom
 
+`ridcom` is set of tools for DICOM written in rust. It contains:
+- A rust library for parsing DICOM files.
+- A indexing tool to recursively parse a set of DICOM files and generate an index (sqlite or csv).
+- A dicom-web server based on the index generated.
+
+⚠️ `rdicom` is not ready for production and only partially implement the DICOM
+file format and the dicom-web API. Moreover its implementation is far from being
+optimised.
+
 ## Contributes
 
 In order to build rdicom in webassembly, ensure the wasi target is installed locally:
