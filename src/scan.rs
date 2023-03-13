@@ -103,10 +103,10 @@ struct SqlIndexStore {
 impl SqlIndexStore {
   fn new(filepath: &str, table_name: &str, mut fields: Vec<String>) -> Result<Self, Box<dyn Error>> {
     fields.push("filepath".to_string());
-    let connection = Connection::open(filepath)?;
     let table = fields.iter()
       .map(|s| s.to_string() + " TEXT NON NULL")
       .collect::<Vec<String>>().join(",");
+    let connection = Connection::open(filepath)?;
     connection.execute(&format!("CREATE TABLE IF NOT EXISTS {} ({});", table_name, table))?;
     Ok(SqlIndexStore { connection, table_name: String::from(table_name), fields })
   }

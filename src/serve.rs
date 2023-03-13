@@ -71,8 +71,11 @@ struct Opt {
     #[structopt(default_value = "127.0.0.1", short="o", long)]
     host: String,
     /// Sqlite database
-    #[structopt(short, long, parse(try_from_str = file_exists))]
+    #[structopt(short, long)]
     sqlfile: PathBuf,
+    /// Database config (necessary to create a database or add to the database)
+    #[structopt(short, long, parse(try_from_str = file_exists))]
+    config: Option<PathBuf>,
 }
 
 #[derive(Debug)]
@@ -112,7 +115,6 @@ fn query_param_to_search_terms() -> impl Filter<Extract = (HashMap<Tag, String>,
     }
   })
 }
-
 
 // For some reason, serde can't deserialize an array of String, so we provide a
 // custom function that do so.
@@ -217,6 +219,7 @@ fn map_to_entry(tag_map: &HashMap<String, String>) -> String {
   )
 }
 
+// Create an SQL where clause based on the search_term and query parameters.
 fn create_where_clause(params: &QidoQueryParameters, search_terms: &HashMap<Tag, String>,
   indexed_fields: &Vec<String>) -> String {
   // limit
@@ -243,13 +246,18 @@ fn create_where_clause(params: &QidoQueryParameters, search_terms: &HashMap<Tag,
   format!("{where_clause} LIMIT {limit} OFFSET {offset}")
 }
 
+/**
+ * Retrieve the fields from the index according to the search terms and enrich
+ * the data from the index with the data from the DICOM files if necessary.
+ */
 fn get_entries(connection: &Connection, params: &QidoQueryParameters,
   search_terms: &HashMap<Tag, String>, entry_type: &str)
   -> Result<Vec<HashMap<String, String>>, Box<dyn Error>> {
   let indexed_fields = get_indexed_fields(connection)?;
-  // First retrieve the indexed fields
+  // First retrieve the indexed fields present in the DB
   let mut entries = query(&connection,
     &format!("SELECT DISTINCT {}, * FROM dicom_index {};", entry_type,
+      // Will restrict the data to what is being searched
       create_where_clause(params, search_terms, &indexed_fields)));
   // println!("entries {:?}", entries);
   // Get the includefields not present in the index
@@ -265,6 +273,7 @@ fn get_entries(connection: &Connection, params: &QidoQueryParameters,
           if is_dicom_file(filepath) {
             let toto = filepath.clone();
             let instance = Instance::from_filepath(filepath)?;
+            // Go through those missing fields from the index and enrich the date from the index
             for field in &fields_to_fetch {
               println!("fetching {:?} from {:?}", field, toto);
               let tmp: &str = &field; // TODO: Why do I need this tmp? Get rid of it.
@@ -322,7 +331,7 @@ fn with_db<'a>(sqlfile: String) -> impl Filter<Extract = (Connection,), Error = 
 }
 
 fn get_store_api(sqlfile: String)
-  -> impl Filter<Extract = impl warp::Reply, Error = Rejection> + Clone {
+  -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
   // POST  ../studies  Store instances.
   let store_instances = warp::path("studies")
     .and(warp::path::end())
@@ -348,7 +357,7 @@ fn get_store_api(sqlfile: String)
  * https://www.dicomstandard.org/using/dicomweb/query-qido-rs/
  */
 fn get_query_api(sqlfile: String)
-  -> impl Filter<Extract = impl warp::Reply, Error = Rejection> + Clone {
+  -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
   // No literal constructor for HeaderMap, so have to allocate them here...
   let mut json_headers = HeaderMap::new();
   json_headers.insert(CONTENT_TYPE, "application/dicom+json; charset=utf-8".parse().unwrap());
@@ -453,7 +462,7 @@ fn get_query_api(sqlfile: String)
  * https://www.dicomstandard.org/using/dicomweb/retrieve-wado-rs-and-wado-uri/
  */
 fn get_retrieve_api(sqlfile: String)
-  -> impl Filter<Extract = impl warp::Reply, Error = Rejection> + Clone {
+  -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
   // GET {s}/studies/{study} Retrieve entire study
   let studies = warp::path("studies")
     .and(unique_identifier())
@@ -609,7 +618,7 @@ fn get_retrieve_api(sqlfile: String)
 }
 
 fn get_delete_api(sqlfile: String)
-  -> impl Filter<Extract = impl warp::Reply, Error = Rejection> + Clone {
+  -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
 
   // DELETE   ../studies/{study}  Delete all instances for a specific study.
   let delete_all_instances_from_study = warp::path("studies")
@@ -679,15 +688,55 @@ async fn handle_rejection(err: Rejection) -> Result<impl warp::Reply, Infallible
   Ok(warp::reply::with_status(message, code))
 }
 
+// If configuration was provided, we check the database respects the config.
+// If no configuration was provided, we check the database exists with a
+// a 'dicom_index' table.
+fn check_db(opt: &Opt) -> Result<(), Box<dyn Error>> {
+  let sqlfile = opt.sqlfile.to_string_lossy().to_string();
+
+  return match &opt.config {
+    Some(filepath) => {
+      // Load the config
+      let config_file = std::fs::read_to_string(filepath)?;
+      let config: config::Config = serde_yaml::from_str(&config_file)?;
+      let connection = Connection::open(&sqlfile)?;
+      if query(&connection, &format!(
+        "SELECT name FROM sqlite_master WHERE type='table' AND name='{}';", config.table_name)).is_empty() {
+        // We will create the requested table with the appropriate fields
+        let mut indexable_fields = config.indexing.fields.series.into_iter().chain(
+          config.indexing.fields.studies.into_iter().chain(
+            config.indexing.fields.instances.into_iter(),
+          ),
+        ).collect::<Vec<String>>();
+        indexable_fields.push("filepath".to_string());
+        let table = indexable_fields.iter()
+          .map(|s| s.to_string() + " TEXT NON NULL")
+          .collect::<Vec<String>>().join(",");
+
+        connection.execute(&format!("CREATE TABLE IF NOT EXISTS {} ({});", config.table_name, table))?;
+      }
+      Ok(())
+    },
+    None => {
+      // Check the database exists and that the dicom_index table also exists.
+      // If not, we need the config to tell us how to create that table.
+      let connection = Connection::open(&sqlfile)?;
+      return if query(&connection, &format!(
+        "SELECT name FROM sqlite_master WHERE type='table' AND name='{}';", "dicom_index")).is_empty() {
+        Err(format!("{} table does not exist in provided database", "dicom_index").into())
+      } else {
+        Ok(())
+      }
+    }
+  }
+}
+
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
   // Retrieve options
   let opt = Opt::from_args();
-  // Load the config
-  // let config_file = std::fs::read_to_string(&opt.config)?;
-  // let config: config::Config = serde_yaml::from_str(&config_file)?;
 
-  let sqlfile = opt.sqlfile.to_string_lossy().to_string();
+  check_db(&opt)?;
 
   // GET /
   let root = warp::get().and(warp::path::end()).map(|| "DICOM Web Server");
@@ -695,6 +744,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     eprintln!("{} {} => {} (in {:?})", info.method(), info.path(), info.status(), info.elapsed());
   });
 
+  let sqlfile = opt.sqlfile.to_string_lossy().to_string();
   let routes = root
     .or(get_store_api(sqlfile.clone()))
     .or(get_query_api(sqlfile.clone()))
