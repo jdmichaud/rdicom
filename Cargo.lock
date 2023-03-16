@@ -647,6 +647,7 @@ dependencies = [
  "serde_json",
  "serde_yaml",
  "sqlite",
+ "sqlite3-src",
  "structopt",
  "tokio",
  "walkdir",
