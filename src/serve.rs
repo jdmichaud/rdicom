@@ -1,6 +1,7 @@
 #![allow(unused_variables)]
 #![allow(dead_code)]
 
+use warp::http::Response;
 use std::convert::TryInto;
 use rdicom::error::DicomError;
 use std::convert::Infallible;
@@ -731,6 +732,53 @@ fn check_db(opt: &Opt) -> Result<(), Box<dyn Error>> {
   }
 }
 
+fn get_accept_format<'a>(accept: &'a str, availables: &'a [&'a str]) -> Option<&'a str> {
+  let accepts = accept.split(",").collect::<Vec<&str>>();
+  for available in availables {
+    if accepts.contains(available) {
+      return Some(available);
+    }
+  }
+  return None;
+}
+
+fn capabilities() -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
+  let capabilities = warp::filters::header::value("accept")
+    .map(|accept_header: HeaderValue| {
+      let accept_header = accept_header.to_str().unwrap();
+      return if let Some(accept) = get_accept_format(accept_header, &["application/json", "application/vnd.sun.wadl+xml"]) {
+        match accept {
+          "application/json" => {
+            Response::builder()
+              .header(warp::http::header::CONTENT_ENCODING, accept)
+              .status(warp::http::StatusCode::OK)
+              .body(serde_json::to_string("{}").unwrap())
+          },
+          "application/vnd.sun.wadl+xml" => {
+            Response::builder()
+              .status(warp::http::StatusCode::NOT_IMPLEMENTED)
+              .body(format!("Unsupported accept header {}, only 'application/json' accept header are supported", accept))
+          },
+          _ => {
+            Response::builder()
+              .status(warp::http::StatusCode::NOT_IMPLEMENTED)
+              .body(format!("Unsupported accept header {}, only 'application/json' accept header are supported", accept))
+          },
+        }
+      } else {
+        Response::builder()
+          .status(warp::http::StatusCode::NOT_IMPLEMENTED)
+          .body(format!("Unsupported accept header {}, only 'application/json' accept header are supported", accept_header))
+      }
+    });
+
+  return warp::path::end()
+  // OPTIONS /
+    .and(warp::options().and(capabilities))
+  // GET /
+    .or(warp::get().and(capabilities));
+}
+
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
   // Retrieve options
@@ -738,14 +786,16 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
   check_db(&opt)?;
 
-  // GET /
-  let root = warp::get().and(warp::path::end()).map(|| "DICOM Web Server");
   let log = warp::log::custom(|info| {
     eprintln!("{} {} => {} (in {:?})", info.method(), info.path(), info.status(), info.elapsed());
   });
 
+  // GET /
+  let root = warp::get().and(warp::path::end()).map(|| "DICOM Web Server");
+
   let sqlfile = opt.sqlfile.to_string_lossy().to_string();
   let routes = root
+    .or(capabilities())
     .or(get_store_api(sqlfile.clone()))
     .or(get_query_api(sqlfile.clone()))
     .or(get_retrieve_api(sqlfile.clone()))
