@@ -1,7 +1,8 @@
 # To build a fully static executable
 # see https://stackoverflow.com/a/67616507/2603925
-# Does not work anymore since 1.68.0
 [build]
+rustflags = ["-C", "target-feature=+crt-static"]
+target = "x86_64-unknown-linux-gnu"
 # rustflags = ["-C", "target-feature=+crt-static"]
-# target = "x86_64-unknown-linux-gnu"
+# target = "x86_64-unknown-linux-musl"
 

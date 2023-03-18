@@ -61,3 +61,7 @@ strip = true
 opt-level = "z" # Optimize For Size
 lto = true # Enable Link Time Optimization (LTO)
 codegen-units = 1 # Reduce Parallel Code Generation Units to Increase Optimization
+
+[profile.release-with-debug]
+inherits = "release"
+debug = true
