@@ -2,6 +2,7 @@
 #![allow(dead_code)]
 
 use warp::http::Response;
+use once_cell::sync::Lazy;
 use std::convert::TryInto;
 use rdicom::error::DicomError;
 use std::convert::Infallible;
@@ -166,6 +167,87 @@ struct WadoQueryParameters {
   quality: Option<f32>,
   viewport: Option<Vec<usize>>,
   window: Option<Vec<i32>>,
+}
+
+mod capabilities {
+
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
+struct Optn {
+  value: String,
+}
+
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
+struct Param {
+  name: String,
+  style: String,
+  required: String,
+  #[serde(skip_serializing_if = "Option::is_none")]
+  default: Option<String>,
+  #[serde(skip_serializing_if = "Option::is_none")]
+  href: Option<String>,
+  #[serde(skip_serializing_if = "Option::is_none")]
+  options: Option<Vec<Optn>>,
+}
+
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
+struct Request {
+  param: Vec<Param>,
+}
+
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
+struct Representation {
+  #[serde(rename = "mediaType")]
+  media_type: String,
+}
+
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
+enum Status {
+  #[serde(rename = "200")]
+  OK,
+  #[serde(rename = "206")]
+  PartialContent,
+  #[serde(rename = "501")]
+  Unimplemented,
+}
+
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
+struct Response {
+  status: Status,
+  representation: Representation,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+struct Method {
+  name: String,
+  id: String,
+  #[serde(rename = "request")]
+  requests: Vec<Request>,
+  #[serde(rename = "response")]
+  responses: Vec<Response>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+struct Resource {
+  path: String,
+  method: Method,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+struct Resources {
+  base: String,
+  resource: Vec<Resource>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Application {
+  resources: Resources,
+}
+
+// Embed the capabilities description in the executable
+pub const CAPABILITIES_STR: &'static str = include_str!("capabilities.xml");
+
 }
 
 // Retrieves the column present in the index
@@ -742,22 +824,25 @@ fn get_accept_format<'a>(accept: &'a str, availables: &'a [&'a str]) -> Option<&
   return None;
 }
 
-fn capabilities() -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
-  let capabilities = warp::filters::header::value("accept")
-    .map(|accept_header: HeaderValue| {
+fn capabilities(application: &'static capabilities::Application) -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
+  let handlers = warp::filters::header::value("accept")
+    .map(move |accept_header: HeaderValue| {
       let accept_header = accept_header.to_str().unwrap();
-      return if let Some(accept) = get_accept_format(accept_header, &["application/json", "application/vnd.sun.wadl+xml"]) {
+      println!("accept_header {}", accept_header);
+      return if let Some(accept) = get_accept_format(accept_header, &["", "*/*", "application/json", "application/vnd.sun.wadl+xml"]) {
         match accept {
-          "application/json" => {
+          "application/json" | "" | "*/*" => { // I'd rather return the XML format by default but serde_xml_rs is buggy
             Response::builder()
               .header(warp::http::header::CONTENT_ENCODING, accept)
               .status(warp::http::StatusCode::OK)
-              .body(serde_json::to_string("{}").unwrap())
+              .body(serde_json::to_string(&application).unwrap())
           },
           "application/vnd.sun.wadl+xml" => {
             Response::builder()
-              .status(warp::http::StatusCode::NOT_IMPLEMENTED)
-              .body(format!("Unsupported accept header {}, only 'application/json' accept header are supported", accept))
+              .header(warp::http::header::CONTENT_ENCODING, accept)
+              .status(warp::http::StatusCode::OK)
+              // TODO: XML API broken because of https://github.com/RReverser/serde-xml-rs/issues/186
+              .body(serde_xml_rs::to_string(&application).unwrap())
           },
           _ => {
             Response::builder()
@@ -774,9 +859,9 @@ fn capabilities() -> impl Filter<Extract = (impl warp::Reply,), Error = Rejectio
 
   return warp::path::end()
   // OPTIONS /
-    .and(warp::options().and(capabilities))
+    .and(warp::options().and(handlers))
   // GET /
-    .or(warp::get().and(capabilities));
+    .or(warp::get().and(handlers));
 }
 
 #[tokio::main]
@@ -790,17 +875,32 @@ async fn main() -> Result<(), Box<dyn Error>> {
     eprintln!("{} {} => {} (in {:?})", info.method(), info.path(), info.status(), info.elapsed());
   });
 
+  let server_header: &'static str = concat!("rdicomweb/", env!("CARGO_PKG_VERSION"));
+  let mut headers = HeaderMap::new();
+  headers.insert("server", HeaderValue::from_static(server_header));
+
+  // static APPLICATION: Lazy<capabilities::Application> = Lazy::new(||
+  //   serde_xml_rs::from_str(&capabilities::CAPABILITIES_STR).unwrap());
+
+  static APPLICATION: Lazy<capabilities::Application> = Lazy::new(|| {
+    let mut de = serde_xml_rs::Deserializer::new_from_reader(capabilities::CAPABILITIES_STR.as_bytes())
+      .non_contiguous_seq_elements(true);
+    capabilities::Application::deserialize(&mut de).unwrap()
+    // serde_xml_rs::from_str(&capabilities::CAPABILITIES_STR).unwrap()
+  });
+
   // GET /
-  let root = warp::get().and(warp::path::end()).map(|| "DICOM Web Server");
+  let root = warp::get().and(warp::path("about")).map(move || server_header);
 
   let sqlfile = opt.sqlfile.to_string_lossy().to_string();
   let routes = root
-    .or(capabilities())
+    .or(capabilities(&APPLICATION))
     .or(get_store_api(sqlfile.clone()))
     .or(get_query_api(sqlfile.clone()))
     .or(get_retrieve_api(sqlfile.clone()))
     .or(get_delete_api(sqlfile.clone()))
     .with(warp::cors().allow_any_origin())
+    .with(warp::reply::with::headers(headers))
     .with(log)
     .recover(handle_rejection)
   ;
@@ -808,7 +908,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
   let host = opt.host;
   println!("Serving HTTP on {} port {} (http://{}:{}/) with database {:?} ...",
     host, opt.port, host, opt.port, &opt.sqlfile);
-  warp::serve(routes).run((IpAddr::from_str(&host).unwrap(), opt.port)).await;
+  warp::serve(routes).run((IpAddr::from_str(&host)?, opt.port)).await;
 
   Ok(())
 }

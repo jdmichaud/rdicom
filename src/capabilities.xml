@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<application>
+  <resources base="/">
+    <resource path="studies">
+      <method name="GET" id="searchStudies">
+        <request>
+          <param name="Accept" style="header" required="false" default="*/*" href="#accept-header">
+            <option value="application/json"/>
+          </param>
+
+          <param name="attributeID" type="xsd:string" style="query" required="false"/>
+          <param name="includefield" type="xsd:string" style="query" required="false"/>
+          <param name="fuzzymatching" style="query" required="false" default="all">
+            <option value="true"/>
+            <option value="false"/>
+          </param>
+          <param name="limit" type="xsd:int" style="query" required="false"/>
+          <param name="offset" type="xsd:int" style="query" required="false"/>
+        </request>
+
+        <response status="200">
+          <representation mediaType="#accept-header"/>
+        </response>
+        <response status="206">
+          <representation mediaType="#accept-header"/>
+        </response>
+      </method>
+    </resource>
+
+    <resource path="studies/{study}/series">
+      <method name="GET" id="searchSeries">
+        <request>
+          <param name="Accept" style="header" required="false" default="*/*" href="#accept-header">
+            <option value="application/json"/>
+          </param>
+
+          <param name="attributeID" type="xsd:string" style="query" required="false"/>
+          <param name="includefield" type="xsd:string" style="query" required="false"/>
+          <param name="fuzzymatching" style="query" required="false" default="all">
+            <option value="true"/>
+            <option value="false"/>
+          </param>
+          <param name="limit" type="xsd:int" style="query" required="false"/>
+          <param name="offset" type="xsd:int" style="query" required="false"/>
+        </request>
+
+        <response status="200">
+          <representation mediaType="#accept-header"/>
+        </response>
+        <response status="206">
+          <representation mediaType="#accept-header"/>
+        </response>
+      </method>
+    </resource>
+
+    <resource path="studies/{study}/series/{series}/instances">
+      <method name="GET" id="searchInstances">
+        <request>
+          <param name="Accept" style="header" required="false" default="*/*" href="#accept-header">
+            <option value="application/json"/>
+          </param>
+
+          <param name="attributeID" type="xsd:string" style="query" required="false"/>
+          <param name="includefield" type="xsd:string" style="query" required="false"/>
+          <param name="fuzzymatching" style="query" required="false" default="all">
+            <option value="true"/>
+            <option value="false"/>
+          </param>
+          <param name="limit" type="xsd:int" style="query" required="false"/>
+          <param name="offset" type="xsd:int" style="query" required="false"/>
+        </request>
+
+        <response status="200">
+          <representation mediaType="#accept-header"/>
+        </response>
+        <response status="206">
+          <representation mediaType="#accept-header"/>
+        </response>
+      </method>
+    </resource>
+
+  </resources>
+</application>
