@@ -1,10 +1,43 @@
 <?xml version="1.0"?>
 <application>
   <resources base="/">
+    <resource path="capabilities">
+      <method name="OPTIONS" id="optionsCapabilities">
+        <request>
+          <param name="Accept" style="header" required="false" default="*/*" href="#accept-header">
+            <option value="*/*"/>
+            <option value="application/json"/>
+            <option value="application/dicom+json"/>
+          </param>
+        </request>
+        <response status="200">
+          <representation mediaType="#accept-header"/>
+        </response>
+        <response status="304">
+          <representation mediaType="#accept-header"/>
+        </response>
+      </method>
+      <method name="GET" id="getCapabilities">
+        <request>
+          <param name="Accept" style="header" required="false" default="*/*" href="#accept-header">
+            <option value="*/*"/>
+            <option value="application/json"/>
+            <option value="application/dicom+json"/>
+          </param>
+        </request>
+        <response status="200">
+          <representation mediaType="#accept-header"/>
+        </response>
+        <response status="304">
+          <representation mediaType="#accept-header"/>
+        </response>
+      </method>
+    </resource>
     <resource path="studies">
       <method name="GET" id="searchStudies">
         <request>
           <param name="Accept" style="header" required="false" default="*/*" href="#accept-header">
+            <option value="*/*"/>
             <option value="application/json"/>
           </param>
 
@@ -25,12 +58,42 @@
           <representation mediaType="#accept-header"/>
         </response>
       </method>
+      <method name="POST" id="postStudies">
+        <request>
+          <param name="Content-Type" style="header" required="false" default="application/json">
+            <option value="application/json"/>
+          </param>
+          <param name="Content-Length" style="header" type="xsd:int" required="false"/>
+          <param name="Transfer-Encoding" style="header" type="xsd:string" required="false"/>
+        </request>
+        <response status="200"></response>
+        <response status="202"></response>
+        <response status="400"></response>
+        <response status="409"></response>
+        <response status="415"></response>
+      </method>
     </resource>
-
+    <resource path="studies/{study}">
+      <method name="POST" id="postStudy">
+        <request>
+          <param name="Content-Type" style="header" required="false" default="application/json">
+            <option value="application/json"/>
+          </param>
+          <param name="Content-Length" style="header" type="xsd:int" required="false"/>
+          <param name="Transfer-Encoding" style="header" type="xsd:string" required="false"/>
+        </request>
+        <response status="200"></response>
+        <response status="202"></response>
+        <response status="400"></response>
+        <response status="409"></response>
+        <response status="415"></response>
+      </method>
+    </resource>
     <resource path="studies/{study}/series">
       <method name="GET" id="searchSeries">
         <request>
           <param name="Accept" style="header" required="false" default="*/*" href="#accept-header">
+            <option value="*/*"/>
             <option value="application/json"/>
           </param>
 
@@ -52,11 +115,11 @@
         </response>
       </method>
     </resource>
-
     <resource path="studies/{study}/series/{series}/instances">
       <method name="GET" id="searchInstances">
         <request>
           <param name="Accept" style="header" required="false" default="*/*" href="#accept-header">
+            <option value="*/*"/>
             <option value="application/json"/>
           </param>
 

@@ -173,6 +173,10 @@ mod capabilities {
 
 use serde::{Deserialize, Serialize};
 
+/*
+ * Below are the structures used to represent capabilities.
+ */
+
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
 struct Optn {
   value: String,
@@ -206,8 +210,18 @@ struct Representation {
 enum Status {
   #[serde(rename = "200")]
   OK,
+  #[serde(rename = "202")]
+  Accepted,
   #[serde(rename = "206")]
   PartialContent,
+  #[serde(rename = "304")]
+  NotModified,
+  #[serde(rename = "400")]
+  BadRequest,
+  #[serde(rename = "409")]
+  Conflict,
+  #[serde(rename = "415")]
+  UnsupportedMediaType,
   #[serde(rename = "501")]
   Unimplemented,
 }
@@ -215,7 +229,8 @@ enum Status {
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
 struct Response {
   status: Status,
-  representation: Representation,
+  #[serde(skip_serializing_if = "Option::is_none")]
+  representation: Option<Representation>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -231,7 +246,8 @@ struct Method {
 #[derive(Debug, Serialize, Deserialize)]
 struct Resource {
   path: String,
-  method: Method,
+  #[serde(rename = "method")]
+  methods: Vec<Method>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -362,7 +378,7 @@ fn get_entries(connection: &Connection, params: &QidoQueryParameters,
               let tmp: &str = &field; // TODO: Why do I need this tmp? Get rid of it.
               let dicom_field = &(tmp).try_into()?; // TODO: Convert field before opening files to fail faster
               if let Some(field_value) = instance.get_value(dicom_field)? {
-                // println!("fetched value {:?}", field_value);
+                // TODO: Manage nested fields
                 entries[i].insert(field.to_string(), field_value.to_string());
               }
             }
@@ -771,9 +787,10 @@ async fn handle_rejection(err: Rejection) -> Result<impl warp::Reply, Infallible
   Ok(warp::reply::with_status(message, code))
 }
 
-// If configuration was provided, we check the database respects the config.
+// If configuration was provided, we check respects the config. If the database
+// does not exists we create it with respect to the provided config.
 // If no configuration was provided, we check the database exists with a
-// a 'dicom_index' table.
+// 'dicom_index' table.
 fn check_db(opt: &Opt) -> Result<(), Box<dyn Error>> {
   let sqlfile = opt.sqlfile.to_string_lossy().to_string();
 
@@ -806,7 +823,9 @@ fn check_db(opt: &Opt) -> Result<(), Box<dyn Error>> {
       let connection = Connection::open(&sqlfile)?;
       return if query(&connection, &format!(
         "SELECT name FROM sqlite_master WHERE type='table' AND name='{}';", "dicom_index")).is_empty() {
-        Err(format!("{} table does not exist in provided database", "dicom_index").into())
+        Err(format!("{} table does not exist in provided database. \
+          To create a database from scratch you must provide a configuration file (--config)",
+          "dicom_index").into())
       } else {
         Ok(())
       }
@@ -828,7 +847,6 @@ fn capabilities(application: &'static capabilities::Application) -> impl Filter<
   let handlers = warp::filters::header::value("accept")
     .map(move |accept_header: HeaderValue| {
       let accept_header = accept_header.to_str().unwrap();
-      println!("accept_header {}", accept_header);
       return if let Some(accept) = get_accept_format(accept_header, &["", "*/*", "application/json", "application/vnd.sun.wadl+xml"]) {
         match accept {
           "application/json" | "" | "*/*" => { // I'd rather return the XML format by default but serde_xml_rs is buggy
@@ -857,11 +875,14 @@ fn capabilities(application: &'static capabilities::Application) -> impl Filter<
       }
     });
 
+  // Fresh for a week.
+  let cache_header = warp::reply::with::default_header(warp::http::header::CACHE_CONTROL, "max-age=604800");
+
   return warp::path::end()
   // OPTIONS /
-    .and(warp::options().and(handlers))
+    .and(warp::options().and(handlers)).with(cache_header.clone())
   // GET /
-    .or(warp::get().and(handlers));
+    .or(warp::get().and(handlers)).with(cache_header);
 }
 
 #[tokio::main]
@@ -869,6 +890,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
   // Retrieve options
   let opt = Opt::from_args();
 
+  // Check the the status of the database and the option are coherent.
   check_db(&opt)?;
 
   let log = warp::log::custom(|info| {
@@ -894,11 +916,11 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
   let sqlfile = opt.sqlfile.to_string_lossy().to_string();
   let routes = root
-    .or(capabilities(&APPLICATION))
     .or(get_store_api(sqlfile.clone()))
     .or(get_query_api(sqlfile.clone()))
     .or(get_retrieve_api(sqlfile.clone()))
     .or(get_delete_api(sqlfile.clone()))
+    .or(capabilities(&APPLICATION))
     .with(warp::cors().allow_any_origin())
     .with(warp::reply::with::headers(headers))
     .with(log)
