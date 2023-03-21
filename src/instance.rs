@@ -78,6 +78,13 @@ pub enum DicomValue<'a> {
   UT(String),
 }
 
+fn utf8_error_to_dicom_error(err: Utf8Error, tag: &str, offset: usize) -> DicomError {
+  match err.error_len() {
+    Some(l) => DicomError::new(&format!("UTF8 error: an unexpected byte was encountered while decoding an {} tag at {:#x} + {}", tag, offset, l)),
+    None => DicomError::new(&format!("UTF8 error: the end of the input was reached unexpectedly while decoding an {} tag at {:#x}", tag, offset)),
+  }
+}
+
 impl<'a> ToString for DicomValue<'a> {
   fn to_string(&self) -> String {
     match self {
@@ -175,13 +182,15 @@ impl<'a> DicomValue<'a> {
   fn new<'b>(vr: &str, offset: usize, length: usize, buffer: &'b Vec<u8>) -> Result<DicomValue<'b>, DicomError> {
     Ok(match vr {
       "AE" => DicomValue::AE(
-        from_utf8(&buffer[offset..offset + length])?
+        from_utf8(&buffer[offset..offset + length])
+          .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
           .trim_matches(char::from(0))
           .trim()
           .to_string()
       ),
       "AS" => DicomValue::AS(
-        from_utf8(&buffer[offset..offset + length])?
+        from_utf8(&buffer[offset..offset + length])
+          .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
           .trim_matches(char::from(0))
           .trim()
           .to_string()
@@ -191,25 +200,29 @@ impl<'a> DicomValue<'a> {
         DicomValue::AT(u32::from_le_bytes(tmp).try_into()?)
       },
       "CS" => DicomValue::CS(
-        from_utf8(&buffer[offset..offset + length])?
+        from_utf8(&buffer[offset..offset + length])
+          .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
           .trim_matches(char::from(0))
           .trim()
           .to_string()
       ),
       "DA" => DicomValue::DA(
-        from_utf8(&buffer[offset..offset + length])?
+        from_utf8(&buffer[offset..offset + length])
+          .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
           .trim_matches(char::from(0))
           .trim()
           .to_string()
       ),
       "DS" => DicomValue::DS(
-        from_utf8(&buffer[offset..offset + length])?
+        from_utf8(&buffer[offset..offset + length])
+          .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
           .trim_matches(char::from(0))
           .trim()
           .to_string()
       ),
       "DT" => DicomValue::DT(
-        from_utf8(&buffer[offset..offset + length])?
+        from_utf8(&buffer[offset..offset + length])
+          .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
           .trim_matches(char::from(0))
           .trim()
           .to_string()
@@ -223,19 +236,22 @@ impl<'a> DicomValue<'a> {
         DicomValue::FL(f32::from_le_bytes(tmp))
       }
       "IS" => DicomValue::IS(
-        from_utf8(&buffer[offset..offset + length])?
+        from_utf8(&buffer[offset..offset + length])
+          .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
           .trim_matches(char::from(0))
           .trim()
           .to_string()
       ),
       "LO" => DicomValue::LO(
-        from_utf8(&buffer[offset..offset + length])?
+        from_utf8(&buffer[offset..offset + length])
+          .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
           .trim_matches(char::from(0))
           .trim()
           .to_string()
       ),
       "LT" => DicomValue::LT(
-        from_utf8(&buffer[offset..offset + length])?
+        from_utf8(&buffer[offset..offset + length])
+          .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
           .trim_matches(char::from(0))
           .trim()
           .to_string()
@@ -248,13 +264,15 @@ impl<'a> DicomValue<'a> {
         DicomValue::OW(owslice)
       },
       "PN" => DicomValue::PN(
-        from_utf8(&buffer[offset..offset + length])?
+        from_utf8(&buffer[offset..offset + length])
+          .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
           .trim_matches(char::from(0))
           .trim()
           .to_string()
       ),
       "SH" => DicomValue::SH(
-        from_utf8(&buffer[offset..offset + length])?
+        from_utf8(&buffer[offset..offset + length])
+          .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
           .trim_matches(char::from(0))
           .trim()
           .to_string()
@@ -270,19 +288,22 @@ impl<'a> DicomValue<'a> {
         (buffer[offset + 1] as i16) << 8
       ),
       "ST" => DicomValue::ST(
-        from_utf8(&buffer[offset..offset + length])?
+        from_utf8(&buffer[offset..offset + length])
+          .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
           .trim_matches(char::from(0))
           .trim()
           .to_string()
       ),
       "TM" => DicomValue::TM(
-        from_utf8(&buffer[offset..offset + length])?
+        from_utf8(&buffer[offset..offset + length])
+          .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
           .trim_matches(char::from(0))
           .trim()
           .to_string()
       ),
       "UI" => DicomValue::UI(
-        from_utf8(&buffer[offset..offset + length])?
+        from_utf8(&buffer[offset..offset + length])
+          .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
           .trim_matches(char::from(0))
           .trim()
           .to_string()
@@ -298,7 +319,8 @@ impl<'a> DicomValue<'a> {
         (buffer[offset + 1] as u16) << 8
       ),
       "UT" => DicomValue::UT(
-        from_utf8(&buffer[offset..offset + length])?
+        from_utf8(&buffer[offset..offset + length])
+          .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
           .trim_matches(char::from(0))
           .trim()
           .to_string()
@@ -434,7 +456,8 @@ impl Instance {
         _ => Err(DicomError::new(&format!("unknown sequence related data element: {}", element))),
       }
     }
-    let vr = from_utf8(&self.buffer[offset..offset + 2])?;
+    let vr = from_utf8(&self.buffer[offset..offset + 2])
+      .map_err(|err| utf8_error_to_dicom_error(err, "tag", offset))?;
     offset += 2; // Skip VR
     let length: usize;
     if ["OB", "OD", "OF", "OL", "OW", "SQ", "UC", "UR", "UT", "UN"].contains(&vr) {
@@ -497,7 +520,9 @@ impl Instance {
           }
           else {
             Err(DicomError::new(
-              &format!("Unsupported Transfer Syntax UID: {}", transfer_syntax_uid)))
+              &format!("Unsupported Transfer Syntax UID: {} ({})",
+                transfer_syntax_uid,
+                get_transfer_syntax_uid_label(&transfer_syntax_uid).unwrap_or("Unknown transfer syntax uid"))))
           }
         }
         _ => Err(DicomError::new(&format!("Unexpected type")))
@@ -507,3 +532,82 @@ impl Instance {
     }
   }
 }
+
+fn get_transfer_syntax_uid_label(transfer_syntax_uid: &str) -> Result<&str, DicomError> {
+  match transfer_syntax_uid {
+    "1.2.840.10008.1.2" => Ok("Implicit VR Endian: Default Transfer Syntax for DICOM"),
+    "1.2.840.10008.1.2.1" => Ok("Explicit VR Little Endian"),
+    "1.2.840.10008.1.2.1.99" => Ok("Deflated Explicit VR Little Endian"),
+    "1.2.840.10008.1.2.2" => Ok("Explicit VR Big Endian"),
+    "1.2.840.10008.1.2.4.50" => Ok("JPEG Baseline (Process 1)"),
+    "1.2.840.10008.1.2.4.51" => Ok("JPEG Baseline (Processes 2 & 4)"),
+    "1.2.840.10008.1.2.4.52" => Ok("JPEG Extended (Processes 3 & 5)"),
+    "1.2.840.10008.1.2.4.53" => Ok("JPEG Spectral Selection, Nonhierarchical (Processes 6 & 8)"),
+    "1.2.840.10008.1.2.4.54" => Ok("JPEG Spectral Selection, Nonhierarchical (Processes 7 & 9)"),
+    "1.2.840.10008.1.2.4.55" => Ok("JPEG Full Progression, Nonhierarchical (Processes 10 & 12)"),
+    "1.2.840.10008.1.2.4.56" => Ok("JPEG Full Progression, Nonhierarchical (Processes 11 & 13)"),
+    "1.2.840.10008.1.2.4.57" => Ok("JPEG Lossless, Nonhierarchical (Processes 14)"),
+    "1.2.840.10008.1.2.4.58" => Ok("JPEG Lossless, Nonhierarchical (Processes 15)"),
+    "1.2.840.10008.1.2.4.59" => Ok("JPEG Extended, Hierarchical (Processes 16 & 18)"),
+    "1.2.840.10008.1.2.4.60" => Ok("JPEG Extended, Hierarchical (Processes 17 & 19)"),
+    "1.2.840.10008.1.2.4.61" => Ok("JPEG Spectral Selection, Hierarchical (Processes 20 & 22)"),
+    "1.2.840.10008.1.2.4.62" => Ok("JPEG Spectral Selection, Hierarchical (Processes 21 & 23)"),
+    "1.2.840.10008.1.2.4.63" => Ok("JPEG Full Progression, Hierarchical (Processes 24 & 26)"),
+    "1.2.840.10008.1.2.4.64" => Ok("JPEG Full Progression, Hierarchical (Processes 25 & 27)"),
+    "1.2.840.10008.1.2.4.65" => Ok("JPEG Lossless, Nonhierarchical (Process 28)"),
+    "1.2.840.10008.1.2.4.66" => Ok("JPEG Lossless, Nonhierarchical (Process 29)"),
+    "1.2.840.10008.1.2.4.70" => Ok("JPEG Lossless, Nonhierarchical, First- Order Prediction (Processes 14 [Selection Value 1])"),
+    "1.2.840.10008.1.2.4.80" => Ok("JPEG-LS Lossless Image Compression"),
+    "1.2.840.10008.1.2.4.81" => Ok("JPEG-LS Lossy (Near- Lossless) Image Compression"),
+    "1.2.840.10008.1.2.4.90" => Ok("JPEG 2000 Image Compression (Lossless Only)"),
+    "1.2.840.10008.1.2.4.91" => Ok("JPEG 2000 Image Compression"),
+    "1.2.840.10008.1.2.4.92" => Ok("JPEG 2000 Part 2 Multicomponent Image Compression (Lossless Only)"),
+    "1.2.840.10008.1.2.4.93" => Ok("JPEG 2000 Part 2 Multicomponent Image Compression"),
+    "1.2.840.10008.1.2.4.94" => Ok("JPIP Referenced"),
+    "1.2.840.10008.1.2.4.95" => Ok("JPIP Referenced Deflate"),
+    "1.2.840.10008.1.2.5" => Ok("RLE Lossless"),
+    "1.2.840.10008.1.2.6.1" => Ok("RFC 2557 MIME Encapsulation"),
+    "1.2.840.10008.1.2.4.100" => Ok("MPEG2 Main Profile Main Level"),
+    "1.2.840.10008.1.2.4.102" => Ok("MPEG-4 AVC/H.264 High Profile / Level 4.1"),
+    "1.2.840.10008.1.2.4.103" => Ok("MPEG-4 AVC/H.264 BD-compatible High Profile / Level 4.1"),
+    _ => Err(DicomError::new(&format!("Unknown transfer_syntax_uid: {}", transfer_syntax_uid)))
+  }
+}
+
+// HashMap::from([
+//   ("1.2.840.10008.1.2", "Implicit VR Endian: Default Transfer Syntax for DICOM"),
+//   ("1.2.840.10008.1.2.1", "Explicit VR Little Endian"),
+//   ("1.2.840.10008.1.2.1.99", "Deflated Explicit VR Little Endian"),
+//   ("1.2.840.10008.1.2.2", "Explicit VR Big Endian"),
+//   ("1.2.840.10008.1.2.4.50", "JPEG Baseline (Process 1)"),
+//   ("1.2.840.10008.1.2.4.51", "JPEG Baseline (Processes 2 & 4)"),
+//   ("1.2.840.10008.1.2.4.52", "JPEG Extended (Processes 3 & 5)"),
+//   ("1.2.840.10008.1.2.4.53", "JPEG Spectral Selection, Nonhierarchical (Processes 6 & 8)"),
+//   ("1.2.840.10008.1.2.4.54", "JPEG Spectral Selection, Nonhierarchical (Processes 7 & 9)"),
+//   ("1.2.840.10008.1.2.4.55", "JPEG Full Progression, Nonhierarchical (Processes 10 & 12)"),
+//   ("1.2.840.10008.1.2.4.56", "JPEG Full Progression, Nonhierarchical (Processes 11 & 13)"),
+//   ("1.2.840.10008.1.2.4.57", "JPEG Lossless, Nonhierarchical (Processes 14)"),
+//   ("1.2.840.10008.1.2.4.58", "JPEG Lossless, Nonhierarchical (Processes 15)"),
+//   ("1.2.840.10008.1.2.4.59", "JPEG Extended, Hierarchical (Processes 16 & 18)"),
+//   ("1.2.840.10008.1.2.4.60", "JPEG Extended, Hierarchical (Processes 17 & 19)"),
+//   ("1.2.840.10008.1.2.4.61", "JPEG Spectral Selection, Hierarchical (Processes 20 & 22)"),
+//   ("1.2.840.10008.1.2.4.62", "JPEG Spectral Selection, Hierarchical (Processes 21 & 23)"),
+//   ("1.2.840.10008.1.2.4.63", "JPEG Full Progression, Hierarchical (Processes 24 & 26)"),
+//   ("1.2.840.10008.1.2.4.64", "JPEG Full Progression, Hierarchical (Processes 25 & 27)"),
+//   ("1.2.840.10008.1.2.4.65", "JPEG Lossless, Nonhierarchical (Process 28)"),
+//   ("1.2.840.10008.1.2.4.66", "JPEG Lossless, Nonhierarchical (Process 29)"),
+//   ("1.2.840.10008.1.2.4.70", "JPEG Lossless, Nonhierarchical, First- Order Prediction (Processes 14 [Selection Value 1])"),
+//   ("1.2.840.10008.1.2.4.80", "JPEG-LS Lossless Image Compression"),
+//   ("1.2.840.10008.1.2.4.81", "JPEG-LS Lossy (Near- Lossless) Image Compression"),
+//   ("1.2.840.10008.1.2.4.90", "JPEG 2000 Image Compression (Lossless Only)"),
+//   ("1.2.840.10008.1.2.4.91", "JPEG 2000 Image Compression"),
+//   ("1.2.840.10008.1.2.4.92", "JPEG 2000 Part 2 Multicomponent Image Compression (Lossless Only)"),
+//   ("1.2.840.10008.1.2.4.93", "JPEG 2000 Part 2 Multicomponent Image Compression"),
+//   ("1.2.840.10008.1.2.4.94", "JPIP Referenced"),
+//   ("1.2.840.10008.1.2.4.95", "JPIP Referenced Deflate"),
+//   ("1.2.840.10008.1.2.5", "RLE Lossless"),
+//   ("1.2.840.10008.1.2.6.1", "RFC 2557 MIME Encapsulation"),
+//   ("1.2.840.10008.1.2.4.100", "MPEG2 Main Profile Main Level"),
+//   ("1.2.840.10008.1.2.4.102", "MPEG-4 AVC/H.264 High Profile / Level 4.1"),
+//   ("1.2.840.10008.1.2.4.103", "MPEG-4 AVC/H.264 BD-compatible High Profile / Level 4.1"),
+// ]);

@@ -25,7 +25,7 @@ use std::fmt;
 
 #[derive(Debug)]
 pub struct DicomError {
-  details: String
+  pub details: String
 }
 
 impl DicomError {
@@ -48,8 +48,10 @@ impl Error for DicomError {
 
 impl From<Utf8Error> for DicomError {
   fn from(err: Utf8Error) -> Self {
-    // TODO: Improve this...
-    DicomError::new(&format!("{:?}", err))
+    match err.error_len() {
+      Some(l) => DicomError::new(&format!("UTF8 error: an unexpected byte was encountered at {}", l)),
+      None => DicomError::new(&format!("UTF8 error: the end of the input was reached unexpectedly")),
+    }
   }
 }
 
