@@ -52482,7 +52482,7 @@ impl TryFrom<u32> for Tag {
       0xFFFEE000 => Ok(Item),
       0xFFFEE00D => Ok(ItemDelimitationItem),
       0xFFFEE0DD => Ok(SequenceDelimitationItem),
-      _ => Err(DicomError::new(&format!("Unknown tag: {}", field))),
+      _ => Err(DicomError::new(&format!("Unknown tag: {:08x}", field))),
     }
   }
 }

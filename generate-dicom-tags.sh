@@ -130,7 +130,7 @@ do
     echo "      0x${array[0]} => Ok(${array[1]}),"
   fi
 done
-echo "      _ => Err(DicomError::new(&format!(\"Unknown tag: {}\", field))),"
+echo "      _ => Err(DicomError::new(&format!(\"Unknown tag: {:08x}\", field))),"
 echo "    }"
 echo "  }"
 echo "}"

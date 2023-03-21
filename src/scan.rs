@@ -213,7 +213,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                   Err(e) => {
                     print!("\r\x1b[2K");
                     io::stdout().flush().unwrap();
-                    eprintln!("{:?}", e);
+                    eprintln!("{}: {:?}", filepath.to_string_lossy(), e);
                   }
                 }
               }
