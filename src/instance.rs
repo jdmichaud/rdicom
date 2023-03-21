@@ -488,7 +488,11 @@ impl Instance {
     if let Some(transfer_syntax_uid_field) = self.get_value(&0x00020010.try_into().unwrap())? {
       match transfer_syntax_uid_field {
         DicomValue::UI(transfer_syntax_uid) => {
-          if vec!["1.2.840.10008.1.2.1", "1.2.840.10008.1.2.4.70"].contains(&&*transfer_syntax_uid) {
+          if !vec![
+            "1.2.840.10008.1.2",      // Implicit VR Endian: Default Transfer Syntax for DICOM
+            "1.2.840.10008.1.2.1.99", // Deflated Explicit VR Little Endian
+            "1.2.840.10008.1.2.2",    // Explicit VR Big Endian
+            ].contains(&transfer_syntax_uid.as_str()) {
             Ok(())
           }
           else {
