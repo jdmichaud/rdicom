@@ -24,6 +24,7 @@
 
 // https://radu-matei.com/blog/practical-guide-to-wasm-memory/#passing-arrays-to-rust-webassembly-modules
 
+use core::str::Utf8Error;
 use std::fs::File;
 use std::convert::TryInto;
 use std::borrow::Cow;
@@ -141,26 +142,26 @@ impl<'a> ToString for DicomValue<'a> {
 }
 
 impl<'a> DicomValue<'a> {
-  pub fn from_dicom_attribute<'b>(attribute: &DicomAttribute<'b>, instance: &'b Instance) -> DicomValue<'b> {
-    match attribute.vr.as_ref() {
+  pub fn from_dicom_attribute<'b>(attribute: &DicomAttribute<'b>, instance: &'b Instance) -> Result<DicomValue<'b>, DicomError> {
+    Ok(match attribute.vr.as_ref() {
       "SQ" => {
-        let values = attribute.subattributes.iter()
+        let values: Result<Vec<_>, _> = attribute.subattributes.iter()
           .map(|attribute| DicomValue::from_dicom_attribute(&attribute, instance))
           .collect::<_>();
-        DicomValue::new_sequence(values)
+        DicomValue::new_sequence(values?)
       },
       _ => match (attribute.group, attribute.element) {
         (0xFFFE, 0xE000) => {
-          let values = attribute.subattributes.iter()
+          let values: Result<Vec<_>, _> = attribute.subattributes.iter()
             .map(|attribute| DicomValue::from_dicom_attribute(&attribute, instance))
             .collect::<_>();
-          DicomValue::SeqItem(values)
+          DicomValue::SeqItem(values?)
         },
         (0xFFFE, 0xE00D) => DicomValue::SeqItemEnd,
         (0xFFFE, 0xE0DD) => DicomValue::SeqEnd,
-        _ => DicomValue::new(&attribute.vr, attribute.data_offset, attribute.data_length, &instance.buffer),
+        _ => DicomValue::new(&attribute.vr, attribute.data_offset, attribute.data_length, &instance.buffer)?,
       }
-    }
+    })
   }
 
   fn new_sequence<'b>(values: Vec<DicomValue<'b>>) -> DicomValue<'b> {
@@ -171,79 +172,70 @@ impl<'a> DicomValue<'a> {
     DicomValue::SeqItem(values)
   }
 
-  fn new<'b>(vr: &str, offset: usize, length: usize, buffer: &'b Vec<u8>) -> DicomValue<'b> {
-    match vr {
+  fn new<'b>(vr: &str, offset: usize, length: usize, buffer: &'b Vec<u8>) -> Result<DicomValue<'b>, DicomError> {
+    Ok(match vr {
       "AE" => DicomValue::AE(
-        from_utf8(&buffer[offset..offset + length])
-          .unwrap()
+        from_utf8(&buffer[offset..offset + length])?
           .trim_matches(char::from(0))
           .trim()
           .to_string()
       ),
       "AS" => DicomValue::AS(
-        from_utf8(&buffer[offset..offset + length])
-          .unwrap()
+        from_utf8(&buffer[offset..offset + length])?
           .trim_matches(char::from(0))
           .trim()
           .to_string()
       ),
       "AT" => {
-        let tmp: [u8; 4] = buffer[offset..offset + 4].try_into().unwrap();
-        DicomValue::AT(u32::from_le_bytes(tmp).try_into().unwrap())
+        let tmp: [u8; 4] = buffer[offset..offset + 4].try_into()?;
+        DicomValue::AT(u32::from_le_bytes(tmp).try_into()?)
       },
       "CS" => DicomValue::CS(
-        from_utf8(&buffer[offset..offset + length])
-          .unwrap()
+        from_utf8(&buffer[offset..offset + length])?
           .trim_matches(char::from(0))
           .trim()
           .to_string()
       ),
       "DA" => DicomValue::DA(
-        from_utf8(&buffer[offset..offset + length])
-          .unwrap()
+        from_utf8(&buffer[offset..offset + length])?
           .trim_matches(char::from(0))
           .trim()
           .to_string()
       ),
       "DS" => DicomValue::DS(
-        from_utf8(&buffer[offset..offset + length])
-          .unwrap()
+        from_utf8(&buffer[offset..offset + length])?
           .trim_matches(char::from(0))
           .trim()
           .to_string()
       ),
       "DT" => DicomValue::DT(
-        from_utf8(&buffer[offset..offset + length])
-          .unwrap()
+        from_utf8(&buffer[offset..offset + length])?
           .trim_matches(char::from(0))
           .trim()
           .to_string()
       ),
       "FD" => {
-        let tmp: [u8; 8] = buffer[offset..offset + 8].try_into().unwrap();
+        let tmp: [u8; 8] = buffer[offset..offset + 8].try_into()?;
         DicomValue::FD(f64::from_le_bytes(tmp))
       }
       "FL" => {
-        let tmp: [u8; 4] = buffer[offset..offset + 4].try_into().unwrap();
+        let tmp: [u8; 4] = buffer[offset..offset + 4].try_into()?;
         DicomValue::FL(f32::from_le_bytes(tmp))
       }
       "IS" => DicomValue::IS(
-        from_utf8(&buffer[offset..offset + length])
-          .unwrap()
+        from_utf8(&buffer[offset..offset + length])?
           .trim_matches(char::from(0))
           .trim()
           .to_string()
       ),
       "LO" => DicomValue::LO(
-        from_utf8(&buffer[offset..offset + length])
-          .unwrap()
+        from_utf8(&buffer[offset..offset + length])?
           .trim_matches(char::from(0))
           .trim()
           .to_string()
       ),
       "LT" => DicomValue::LT(
-        from_utf8(&buffer[offset..offset + length])
-          .unwrap()
+        from_utf8(&buffer[offset..offset + length])?
           .trim_matches(char::from(0))
           .trim()
           .to_string()
@@ -253,18 +245,16 @@ impl<'a> DicomValue<'a> {
         let (_, owslice, _) = unsafe {
           buffer[offset..offset + length].align_to::<u16>()
         };
-        return DicomValue::OW(owslice);
+        DicomValue::OW(owslice)
       },
       "PN" => DicomValue::PN(
-        from_utf8(&buffer[offset..offset + length])
-          .unwrap()
+        from_utf8(&buffer[offset..offset + length])?
           .trim_matches(char::from(0))
           .trim()
           .to_string()
       ),
       "SH" => DicomValue::SH(
-        from_utf8(&buffer[offset..offset + length])
-          .unwrap()
+        from_utf8(&buffer[offset..offset + length])?
           .trim_matches(char::from(0))
           .trim()
           .to_string()
@@ -280,22 +270,19 @@ impl<'a> DicomValue<'a> {
         (buffer[offset + 1] as i16) << 8
       ),
       "ST" => DicomValue::ST(
-        from_utf8(&buffer[offset..offset + length])
-          .unwrap()
+        from_utf8(&buffer[offset..offset + length])?
           .trim_matches(char::from(0))
           .trim()
           .to_string()
       ),
       "TM" => DicomValue::TM(
-        from_utf8(&buffer[offset..offset + length])
-          .unwrap()
+        from_utf8(&buffer[offset..offset + length])?
           .trim_matches(char::from(0))
           .trim()
           .to_string()
       ),
       "UI" => DicomValue::UI(
-        from_utf8(&buffer[offset..offset + length])
-          .unwrap()
+        from_utf8(&buffer[offset..offset + length])?
           .trim_matches(char::from(0))
           .trim()
           .to_string()
@@ -311,14 +298,13 @@ impl<'a> DicomValue<'a> {
         (buffer[offset + 1] as u16) << 8
       ),
       "UT" => DicomValue::UT(
-        from_utf8(&buffer[offset..offset + length])
-          .unwrap()
+        from_utf8(&buffer[offset..offset + length])?
           .trim_matches(char::from(0))
           .trim()
           .to_string()
       ),
       _ => unimplemented!("Value representation \"{}\" not implemented", vr),
-    }
+    })
   }
 }
 
@@ -352,28 +338,28 @@ impl<'a> DicomAttribute<'a> {
 }
 
 impl Instance {
-  pub fn from_buf_reader<T: Read>(mut buf_reader: BufReader<T>) -> Result<Self, Box<dyn Error>> {
+  pub fn from_buf_reader<T: Read>(mut buf_reader: BufReader<T>) -> Result<Self, DicomError> {
     // Read the whole file into a buffer
     let mut buffer: Vec<u8> = vec![];
     buf_reader.read_to_end(&mut buffer)?;
     Instance::from(buffer)
   }
 
-  pub fn from_filepath(filepath: &str) -> Result<Self, Box<dyn Error>> {
+  pub fn from_filepath(filepath: &str) -> Result<Self, DicomError> {
     let f = File::open(filepath)?;
     return Instance::from_buf_reader(BufReader::new(f));
   }
 
-  pub fn from(buffer: Vec<u8>) -> Result<Self, Box<dyn Error>> {
+  pub fn from(buffer: Vec<u8>) -> Result<Self, DicomError> {
     // Check it's a DICOM file
     if !has_dicom_header(&buffer) {
-      return Err(Box::new(DicomError::new("Not a DICOM file")));
+      return Err(DicomError::new("Not a DICOM file"));
     }
 
     let instance = Instance { buffer };
 
     if let Err(e) = instance.is_supported_type() {
-      Err(Box::new(e))
+      Err(e)
     } else {
       Ok(instance)
     }
@@ -397,7 +383,7 @@ impl Instance {
       // println!("get_value: offset: {:#06x} buffer length: {:#06x}", offset, self.buffer.len());
       let field = self.next_attribute(offset)?;
       if field.group == tag.group && field.element == tag.element {
-        break Ok(Some(DicomValue::from_dicom_attribute(&field, &self)));
+        break Ok(Some(DicomValue::from_dicom_attribute(&field, &self)?));
       }
 
       offset = field.data_offset + if field.data_length == 0xFFFFFFFF { 0 } else { field.data_length };

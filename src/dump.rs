@@ -100,7 +100,7 @@ fn get_tag_sequence<'b, 'a>(instance: &'a Instance, field: &DicomAttribute<'a>, 
       return result;
     },
     _ => {
-      let value = DicomValue::from_dicom_attribute(&field, &instance);
+      let value = DicomValue::from_dicom_attribute(&field, &instance).unwrap();
       match value {
         DicomValue::AE(value) |
         DicomValue::AS(value) |

@@ -18,6 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+use core::array::TryFromSliceError;
 use core::str::Utf8Error;
 use std::error::Error;
 use std::fmt;
@@ -47,6 +48,20 @@ impl Error for DicomError {
 
 impl From<Utf8Error> for DicomError {
   fn from(err: Utf8Error) -> Self {
+    // TODO: Improve this...
+    DicomError::new(&format!("{:?}", err))
+  }
+}
+
+impl From<TryFromSliceError> for DicomError {
+  fn from(err: TryFromSliceError) -> Self {
+    // TODO: Improve this...
+    DicomError::new(&format!("{:?}", err))
+  }
+}
+
+impl From<std::io::Error> for DicomError {
+  fn from(err: std::io::Error) -> Self {
     // TODO: Improve this...
     DicomError::new(&format!("{:?}", err))
   }
