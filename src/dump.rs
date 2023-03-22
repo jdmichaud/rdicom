@@ -22,6 +22,7 @@
 #![allow(unused_variables)]
 #![allow(unused_imports)]
 
+use rdicom::error::DicomError;
 use rdicom::instance::DicomAttribute;
 use std::error::Error;
 use std::io::BufReader;
@@ -166,8 +167,7 @@ fn get_tag_sequence<'b, 'a>(instance: &'a Instance, field: &DicomAttribute<'a>, 
   result
 }
 
-fn main() -> Result<(), Box<dyn Error>> {
-  let opt = Opt::from_args();
+fn dump(opt: &Opt) -> Result<(), DicomError> {
   let f = File::open(&opt.filepath)?;
 
   if is_dicom_file(&opt.filepath) {
@@ -201,4 +201,12 @@ fn main() -> Result<(), Box<dyn Error>> {
     }
   }
   Ok(())
+}
+
+fn main() {
+  let opt = Opt::from_args();
+  if let Err(e) = dump(&opt) {
+    eprintln!("error: {}", e.details);
+    std::process::exit(1)
+  }
 }
