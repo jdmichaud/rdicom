@@ -37,11 +37,13 @@ use std::str::FromStr;
 use serde::{de, Deserialize, Deserializer, Serialize};
 use serde_json;
 use std::fmt;
-use sqlite::{Connection, State};
+use sqlite::{Connection};
 
 use rdicom::tags::Tag;
 use rdicom::instance::Instance;
 use rdicom::misc::is_dicom_file;
+
+mod db;
 
 mod config;
 
@@ -296,24 +298,6 @@ fn get_indexed_fields(connection: &Connection) -> Result<Vec<String>, Box<dyn Er
     .collect::<Vec<String>>())
 }
 
-// Performs an arbitrary query on the connection
-fn query(connection: &Connection, query: &str) -> Vec<HashMap<String, String>> {
-  println!("query {:?}", query);
-  // TODO: Remove unwrap
-  let mut statement = connection.prepare(query).unwrap();
-  let mut result: Vec<HashMap<String, String>> = Vec::new();
-  while let Ok(State::Row) = statement.next() {
-    let column_names = statement.column_names();
-    let mut entries = HashMap::new();
-    for column_name in column_names {
-      entries.insert(column_name.to_owned(), statement.read::<String, _>(&**column_name).unwrap());
-    }
-    result.push(entries);
-  }
-
-  return result;
-}
-
 fn map_to_entry(tag_map: &HashMap<String, String>) -> String {
   format!("{{ {} }}", tag_map.iter()
     .map(|(key, value)| {
@@ -374,7 +358,7 @@ fn get_entries(connection: &Connection, params: &QidoQueryParameters,
   -> Result<Vec<HashMap<String, String>>, Box<dyn Error>> {
   let indexed_fields = get_indexed_fields(connection)?;
   // First retrieve the indexed fields present in the DB
-  let mut entries = query(&connection,
+  let mut entries = db::query(&connection,
     &format!("SELECT DISTINCT {}, * FROM dicom_index {};", entry_type,
       // Will restrict the data to what is being searched
       create_where_clause(params, search_terms, &indexed_fields)));
@@ -820,7 +804,7 @@ fn check_db(opt: &Opt) -> Result<(), Box<dyn Error>> {
       let config_file = std::fs::read_to_string(filepath)?;
       let config: config::Config = serde_yaml::from_str(&config_file)?;
       let connection = Connection::open(&sqlfile)?;
-      if query(&connection, &format!(
+      if db::query(&connection, &format!(
         "SELECT name FROM sqlite_master WHERE type='table' AND name='{}';", config.table_name)).is_empty() {
         // We will create the requested table with the appropriate fields
         let mut indexable_fields = config.indexing.fields.series.into_iter().chain(
@@ -841,7 +825,7 @@ fn check_db(opt: &Opt) -> Result<(), Box<dyn Error>> {
       // Check the database exists and that the dicom_index table also exists.
       // If not, we need the config to tell us how to create that table.
       let connection = Connection::open(&sqlfile)?;
-      return if query(&connection, &format!(
+      return if db::query(&connection, &format!(
         "SELECT name FROM sqlite_master WHERE type='table' AND name='{}';", "dicom_index")).is_empty() {
         Err(format!("{} table does not exist in provided database. \
           To create a database from scratch you must provide a configuration file (--config)",

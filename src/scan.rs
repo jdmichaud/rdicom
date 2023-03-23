@@ -40,6 +40,7 @@ use rdicom::instance::Instance;
 use rdicom::misc::is_dicom_file;
 
 mod config;
+mod db;
 
 const ESC: char = 27u8 as char;
 const MEDIA_STORAGE_DIRECTORY_STORAGE: &str = "1.2.840.10008.1.3.10";
@@ -133,19 +134,37 @@ impl SqlIndexStore {
 }
 
 impl IndexStore for SqlIndexStore {
+  // Look for the entry in the DB, update it if present, create it otherwise. This makes
+  // scan reentrant when using an SQL store.
   fn write(self: &mut Self, data: &HashMap<String, String>) -> Result<(), Box<dyn Error>> {
-    let values: Vec<_> = self.fields.iter()
-      .map(|x| data.get(x).unwrap_or(&"undefined".to_owned()).clone())
-      .map(|x| format!("\"{}\"", x))
-      .collect::<Vec<String>>();
-    let column_names = self.fields.join(",");
-    let placeholders = (1..self.fields.len() + 1)
-      .map(|i| format!("?{}", i))
+    // Check if the UIDs are not already present in the database
+    let uid_fields = self.fields.iter().filter(|f| f.to_uppercase().ends_with("UID"));
+    let constraints = uid_fields
+      .map(|f| format!("{}=\"{}\"", f, data.get(f).unwrap_or(&"undefined".to_string())))
       .collect::<Vec<String>>()
-      .join(",");
-    let query = &format!("INSERT INTO {} ({}) VALUES ({})",
-      self.table_name, column_names, values.join(","));
-    self.connection.execute(query)?;
+      .join(" AND ");
+    let already_present = db::query(&self.connection, &format!(
+        "SELECT * FROM {} WHERE {};", self.table_name, constraints)).len() > 0;
+
+    if already_present {
+      // The entry already exists, update it
+      let sets = self.fields.iter()
+        .map(|f| format!("{}=\"{}\"", f, data.get(f).unwrap_or(&"undefined".to_string())))
+        .collect::<Vec<String>>()
+        .join(",");
+      let query = &format!("UPDATE {} SET {} WHERE {};", self.table_name, sets, constraints);
+      self.connection.execute(query)?;
+    } else {
+      // No entry, create a new one
+      let values: Vec<_> = self.fields.iter()
+        .map(|x| data.get(x).unwrap_or(&"undefined".to_owned()).clone())
+        .map(|x| format!("\"{}\"", x))
+        .collect::<Vec<String>>();
+      let column_names = self.fields.join(",");
+      let query = &format!("INSERT INTO {} ({}) VALUES ({});",
+        self.table_name, column_names, values.join(","));
+      self.connection.execute(query)?;
+    }
     Ok(())
   }
 }
