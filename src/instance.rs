@@ -570,7 +570,7 @@ impl Instance {
       match transfer_syntax_uid_field {
         DicomValue::UI(transfer_syntax_uid) => {
           if !vec![
-            "1.2.840.10008.1.2",      // Implicit VR Endian: Default Transfer Syntax for DICOM
+            "1.2.840.10008.1.2",      // Implicit VR Little Endian: Default Transfer Syntax for DICOM
             "1.2.840.10008.1.2.1.99", // Deflated Explicit VR Little Endian
             "1.2.840.10008.1.2.2",    // Explicit VR Big Endian
             ].contains(&transfer_syntax_uid.as_str()) {
@@ -593,7 +593,7 @@ impl Instance {
 
 fn get_transfer_syntax_uid_label(transfer_syntax_uid: &str) -> Result<&str, DicomError> {
   match transfer_syntax_uid {
-    "1.2.840.10008.1.2" => Ok("Implicit VR Endian: Default Transfer Syntax for DICOM"),
+    "1.2.840.10008.1.2" => Ok("Implicit VR Little Endian: Default Transfer Syntax for DICOM"),
     "1.2.840.10008.1.2.1" => Ok("Explicit VR Little Endian"),
     "1.2.840.10008.1.2.1.99" => Ok("Deflated Explicit VR Little Endian"),
     "1.2.840.10008.1.2.2" => Ok("Explicit VR Big Endian"),
