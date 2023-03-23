@@ -80,8 +80,10 @@ pub enum DicomValue<'a> {
 
 fn utf8_error_to_dicom_error(err: Utf8Error, tag: &str, offset: usize) -> DicomError {
   match err.error_len() {
-    Some(l) => DicomError::new(&format!("UTF8 error: an unexpected byte was encountered while decoding an {} tag at {:#x} + {}", tag, offset, l)),
-    None => DicomError::new(&format!("UTF8 error: the end of the input was reached unexpectedly while decoding an {} tag at {:#x}", tag, offset)),
+    Some(l) => DicomError::new(&format!("UTF8 error: an unexpected byte was encountered while \
+      decoding an {} tag at {:#x} + {}", tag, offset, l)),
+    None => DicomError::new(&format!("UTF8 error: the end of the input was reached unexpectedly \
+      while decoding an {} tag at {:#x}", tag, offset)),
   }
 }
 
@@ -149,7 +151,8 @@ impl<'a> ToString for DicomValue<'a> {
 }
 
 impl<'a> DicomValue<'a> {
-  pub fn from_dicom_attribute<'b>(attribute: &DicomAttribute<'b>, instance: &'b Instance) -> Result<DicomValue<'b>, DicomError> {
+  pub fn from_dicom_attribute<'b>(attribute: &DicomAttribute<'b>, instance: &'b Instance)
+    -> Result<DicomValue<'b>, DicomError> {
     Ok(match attribute.vr.as_ref() {
       "SQ" => {
         let values: Result<Vec<_>, _> = attribute.subattributes.iter()
@@ -415,6 +418,53 @@ impl Instance {
     };
   }
 
+  // https://dicom.nema.org/medical/dicom/current/output/chtml/part05/sect_A.4.html
+  fn retrieve_next_data_element<'a>(self: &'a Self, offset: usize, items: &mut Vec<DicomAttribute>,
+    item_length: &mut usize) -> Result<(), DicomError> {
+    let original_offset = offset;
+    let mut offset = offset;
+    if offset >= self.buffer.len() {
+      return Err(DicomError::new(
+        &format!("Trying to read out of file bound (offset: {}, file size: {})", offset, self.buffer.len()))
+      );
+    }
+    let group = self.buffer[offset] as u16 | (self.buffer[offset + 1] as u16) << 8;
+    let element = self.buffer[offset + 2] as u16 | (self.buffer[offset + 3] as u16) << 8;
+    offset += 4;
+    if group == 0xFFFE && element == 0xE000 {
+      let length = {
+        let tmp: [u8; 4] = self.buffer[offset..offset + 4].try_into().unwrap();
+        offset += 4;
+        u32::from_le_bytes(tmp) as usize
+      };
+      let data: &[u32] = if length != 0 {
+        let tmp: &[u8] = self.buffer[offset..offset + length].try_into().unwrap();
+        offset += length;
+        unsafe { std::mem::transmute(tmp) } // Basic Offset Table data is 32bits unsigned
+      } else { &[] };
+
+      let tag = (((group as u32) << 16) | element as u32).try_into().unwrap_or(Tag {
+        group,
+        element,
+        name: "Unknown Tag & Data",
+        vr: "",
+        vm: std::ops::Range { start: 0, end: 0 },
+        description: "Unknown Tag & Data",
+      });
+      items.push(DicomAttribute::new(group, element, "OB", offset, length, length, tag));
+      self.retrieve_next_data_element(offset, items, item_length)?;
+    }
+    else if group == 0xFFFE && element == 0xE0DD {
+      offset += 4;
+      items.push(DicomAttribute::new(group, element, "", offset, 4, 4, SequenceDelimitationItem));
+    } else {
+      return Err(DicomError::new(&format!("Expecting sequence items in an ecapsulated pixel data field")));
+    }
+
+    *item_length += offset - original_offset;
+    return Ok(());
+  }
+
   pub fn next_attribute<'a>(self: &'a Self, offset: usize) -> Result<DicomAttribute<'a>, DicomError> {
     // group(u16),element(u16),vr(str[2]),length(u16)
     // println!("next_attribute: {:#04x?}", offset);
@@ -428,7 +478,7 @@ impl Instance {
     let element = self.buffer[offset + 2] as u16 | (self.buffer[offset + 3] as u16) << 8;
     // println!("next_attribute: {:#04x?} {:#06x?}:{:#06x?}", offset, group, element);
     offset += 4; // Skip group and element
-    // Check if we have sequence related data element
+    // Check if we have a sequence related data element
     if group == 0xFFFE {
       // Sequence delimiter items can have a length or 0xFFFFFFFF like sequence themselves
       let tmp: [u8; 4] = self.buffer[offset..offset + 4].try_into().unwrap();
@@ -449,7 +499,8 @@ impl Instance {
             }
             subattributes.push(subattribute);
           }
-          Ok(DicomAttribute::new_with_subattributes(group, element, "", offset, item_length, length, Item, subattributes))
+          Ok(DicomAttribute::new_with_subattributes(group, element, "", offset, item_length,
+            length, Item, subattributes))
         }
         0xE00D => Ok(DicomAttribute::new(group, element, "", offset, length, length, ItemDelimitationItem)),
         0xE0DD => Ok(DicomAttribute::new(group, element, "", offset, length, length, SequenceDelimitationItem)),
@@ -459,6 +510,16 @@ impl Instance {
     let vr = from_utf8(&self.buffer[offset..offset + 2])
       .map_err(|err| utf8_error_to_dicom_error(err, "tag", offset))?;
     offset += 2; // Skip VR
+    // Create tag based on group and element or generate a synthetic "unknown" tag
+    let tag = (((group as u32) << 16) | element as u32).try_into().unwrap_or(Tag {
+      group,
+      element,
+      name: "Unknown Tag & Data",
+      vr: "",
+      vm: std::ops::Range { start: 0, end: 0 },
+      description: "Unknown Tag & Data",
+    });
+
     let length: usize;
     if ["OB", "OD", "OF", "OL", "OW", "SQ", "UC", "UR", "UT", "UN"].contains(&vr) {
       // These VR types handles themselves differently. They have 2 reserved bytes
@@ -469,23 +530,29 @@ impl Instance {
       offset += 4;
       if vr == "SQ" || // Sequence are special types within those special types... yikes.
          length == 0xFFFFFFFF { // https://github.com/pydicom/pydicom/issues/1140
-        // See http://dicom.nema.org/dicom/2013/output/chtml/part05/sect_7.5.html
-        // on what a sequence look like in a DICOM file.
         let mut items: Vec<DicomAttribute> = vec![];
-        let mut item;
-        let mut suboffset = offset;
         let mut item_length = 0;
-        // Go through the items in the sequence and fetch them recursively
-        while suboffset < (offset + length) {
-          item = self.next_attribute(suboffset)?;
-          suboffset = item.data_offset + item.data_length;
-          item_length = (item.data_offset + item.data_length) - offset;
-          if item.tag == SequenceDelimitationItem {
-            break;
+        if group == 0x7FE0 && element == 0x0010 {
+          // https://dicom.nema.org/medical/dicom/current/output/chtml/part05/sect_A.4.html
+          // We treat here the case of encapsulated pixel data
+          // return Err(DicomError::new(&format!("Encapsulated pixel data not supported")));
+          self.retrieve_next_data_element(offset, &mut items, &mut item_length)?;
+        } else {
+          // See http://dicom.nema.org/dicom/2013/output/chtml/part05/sect_7.5.html
+          // on what a sequence look like in a DICOM file.
+          let mut item;
+          let mut suboffset = offset;
+          // Go through the items in the sequence and fetch them recursively
+          while suboffset < (offset + length) {
+            item = self.next_attribute(suboffset)?;
+            suboffset = item.data_offset + item.data_length;
+            item_length = (item.data_offset + item.data_length) - offset;
+            if item.tag == SequenceDelimitationItem {
+              break;
+            }
+            items.push(item);
           }
-          items.push(item);
         }
-        let tag = (((group as u32) << 16) | element as u32).try_into()?;
         return Ok(DicomAttribute::new_with_subattributes(
           group, element, vr, offset, item_length, length, tag, items,
         ));
@@ -494,16 +561,7 @@ impl Instance {
       length = self.buffer[offset] as usize | (self.buffer[offset + 1] as usize) << 8;
       offset = offset + 2;
     }
-    Ok(DicomAttribute::new(group, element, vr, offset, length, length,
-      (((group as u32) << 16) | element as u32).try_into().unwrap_or(Tag {
-        group,
-        element,
-        name: "Unknown Tag & Data",
-        vr: "",
-        vm: std::ops::Range { start: 0, end: 0 },
-        description: "Unknown Tag & Data",
-      }))
-    )
+    Ok(DicomAttribute::new(group, element, vr, offset, length, length, tag))
   }
 
   fn is_supported_type(self: &Self) -> Result<(), DicomError> {
