@@ -263,7 +263,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     }
   }
 
-  println!("{} files scanned with {} studies and {} series found with following modalities {:?} and {} errors",
+  println!("{} files scanned with {} studies and {} series found with following modalities {:?} and {} errors      ",
     count, study_set.len(), series_set.len(), modality_set, error_count);
   Ok(())
 }
