@@ -44,9 +44,10 @@ use crate::dicom_tags::SequenceDelimitationItem;
 #[derive(Debug)]
 pub struct Instance {
   pub buffer: Vec<u8>,
+  pub implicit: bool,
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum DicomValue<'a> {
   AE(String),
   AS(String),
@@ -76,8 +77,10 @@ pub enum DicomValue<'a> {
   UL(u32),
   US(u16),
   UT(String),
+  UN(&'a [u8]),
 }
 
+// Convert Utf8Error to DicomError with a nice error message.
 fn utf8_error_to_dicom_error(err: Utf8Error, tag: &str, offset: usize) -> DicomError {
   match err.error_len() {
     Some(l) => DicomError::new(&format!("UTF8 error: an unexpected byte was encountered while \
@@ -105,6 +108,7 @@ impl<'a> ToString for DicomValue<'a> {
       DicomValue::DT(value) => format!("{}", value),
       DicomValue::FD(value) => format!("{}", value),
       DicomValue::FL(value) => format!("{}", value),
+      DicomValue::UN(value) |
       DicomValue::OB(value) => {
         let mut result = String::with_capacity(40);
         let mut it = (*value).into_iter().peekable();
@@ -328,6 +332,7 @@ impl<'a> DicomValue<'a> {
           .trim()
           .to_string()
       ),
+      "UN" => DicomValue::UN(&buffer[offset..offset + length]),
       _ => unimplemented!("Value representation \"{}\" not implemented", vr),
     })
   }
@@ -377,16 +382,19 @@ impl Instance {
 
   pub fn from(buffer: Vec<u8>) -> Result<Self, DicomError> {
     // Check it's a DICOM file
+    // TODO: Manage headerless DICOM files
     if !has_dicom_header(&buffer) {
       return Err(DicomError::new("Not a DICOM file"));
     }
 
-    let instance = Instance { buffer };
+    let mut instance = Instance { buffer, implicit: false };
 
-    if let Err(e) = instance.is_supported_type() {
-      Err(e)
-    } else {
-      Ok(instance)
+    match instance.is_supported_type() {
+      Err(e) => Err(e),
+      Ok(transfer_syntax_uid) => {
+        instance.implicit = transfer_syntax_uid == "1.2.840.10008.1.2";
+        Ok(instance)
+      },
     }
   }
 
@@ -465,6 +473,28 @@ impl Instance {
     return Ok(());
   }
 
+  fn get_implicit_vr<'a>(self: &'a Self, tag: &Tag) -> Result<&'a str, DicomError> {
+    // Finding the implicit VR is not straightforward. This is DICOM after all...
+    // https://dicom.nema.org/medical/dicom/2017a/output/chtml/part05/chapter_A.html
+    if tag.group == 0x7FE0 && tag.element == 0x0010 { // PixelData
+      return Ok("OW");
+    }
+    if tag.group == 0x0028 && tag.element == 0x0106 { // SmallestImagePixelValue
+      // DICOM makes some fields' value representation depend on the value of other field AND
+      // make these value respresentation implicit. What an awful mess...
+      let unsigned = self.get_value(&0x00280103.try_into().unwrap())? == Some(DicomValue::US(0));
+      return if unsigned { Ok("US") } else { Ok("SS") };
+    }
+    if tag.group == 0x0028 && tag.element == 0x0107 { // LargestImagePixelValue
+      let unsigned = self.get_value(&0x00280103.try_into().unwrap())? == Some(DicomValue::US(0));
+      return if unsigned { Ok("US") } else { Ok("SS") };
+    }
+    if tag.group == 0x0008 && tag.element == 0x0000 { // GenericGroupLength
+      return Ok("UL");
+    }
+    return Ok(tag.vr);
+  }
+
   pub fn next_attribute<'a>(self: &'a Self, offset: usize) -> Result<DicomAttribute<'a>, DicomError> {
     // group(u16),element(u16),vr(str[2]),length(u16)
     // println!("next_attribute: {:#04x?}", offset);
@@ -507,24 +537,31 @@ impl Instance {
         _ => Err(DicomError::new(&format!("unknown sequence related data element: {}", element))),
       }
     }
-    let vr = from_utf8(&self.buffer[offset..offset + 2])
-      .map_err(|err| utf8_error_to_dicom_error(err, "tag", offset))?;
-    offset += 2; // Skip VR
     // Create tag based on group and element or generate a synthetic "unknown" tag
     let tag = (((group as u32) << 16) | element as u32).try_into().unwrap_or(Tag {
       group,
       element,
       name: "Unknown Tag & Data",
-      vr: "",
+      vr: "UN",
       vm: std::ops::Range { start: 0, end: 0 },
       description: "Unknown Tag & Data",
     });
+    let vr = if group == 0x0002 || !self.implicit {
+      offset += 2; // Skip VR
+      from_utf8(&self.buffer[offset - 2..offset])
+        .map_err(|err| utf8_error_to_dicom_error(err, "tag", offset - 2))?
+    } else {
+      self.get_implicit_vr(&tag)?
+    };
 
     let length: usize;
     if ["OB", "OD", "OF", "OL", "OW", "SQ", "UC", "UR", "UT", "UN"].contains(&vr) {
       // These VR types handles themselves differently. They have 2 reserved bytes
       // that need to be skipped and their data length is on 4 bytes.
-      offset += 2; // Skip reserved byte
+      // https://dicom.nema.org/dicom/2013/output/chtml/part05/chapter_7.html#sect_7.1.2
+      if group == 0x0002 || !self.implicit {
+        offset += 2; // Skip reserved byte
+      }
       let tmp: [u8; 4] = self.buffer[offset..offset + 4].try_into().unwrap();
       length = u32::from_le_bytes(tmp) as usize; // Can sometimes be equal to 0xFFFFFFFF
       offset += 4;
@@ -558,23 +595,31 @@ impl Instance {
         ));
       }
     } else {
-      length = self.buffer[offset] as usize | (self.buffer[offset + 1] as usize) << 8;
-      offset = offset + 2;
+      length = if group == 0x0002 || !self.implicit {
+        offset = offset + 2;
+        self.buffer[offset - 2] as usize | (self.buffer[offset - 1] as usize) << 8
+      } else {
+        offset = offset + 4;
+        self.buffer[offset - 4] as usize |
+          (self.buffer[offset - 3] as usize) << 8 |
+          (self.buffer[offset - 2] as usize) << 16 |
+          (self.buffer[offset - 1] as usize) << 24
+      }
     }
     Ok(DicomAttribute::new(group, element, vr, offset, length, length, tag))
   }
 
-  fn is_supported_type(self: &Self) -> Result<(), DicomError> {
+  fn is_supported_type(self: &Self) -> Result<String, DicomError> {
     // Only supporting little-endian explicit VR for now.
     if let Some(transfer_syntax_uid_field) = self.get_value(&0x00020010.try_into().unwrap())? {
       match transfer_syntax_uid_field {
         DicomValue::UI(transfer_syntax_uid) => {
           if !vec![
-            "1.2.840.10008.1.2",      // Implicit VR Little Endian: Default Transfer Syntax for DICOM
+            // "1.2.840.10008.1.2",      // Implicit VR Little Endian: Default Transfer Syntax for DICOM
             "1.2.840.10008.1.2.1.99", // Deflated Explicit VR Little Endian
             "1.2.840.10008.1.2.2",    // Explicit VR Big Endian
             ].contains(&transfer_syntax_uid.as_str()) {
-            Ok(())
+            Ok(transfer_syntax_uid)
           }
           else {
             Err(DicomError::new(

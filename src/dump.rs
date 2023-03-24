@@ -194,7 +194,7 @@ fn dump(opt: &Opt) -> Result<(), DicomError> {
         header = false;
         println!("");
         println!("# Dicom-Data-Set");
-        println!("# Used TransferSyntax: Little Endian Explicit");
+        println!("# Used TransferSyntax: Little Endian {}", if instance.implicit { "Implicit" } else { "Explicit" });
       }
       println!("{}({:04x},{:04x}) {} {: <40} # {: >3},{: >2} {}",
         " ".repeat(level * 2), group, element, vr, value, length, multiplicity, tag_name);
