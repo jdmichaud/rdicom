@@ -144,7 +144,7 @@ impl IndexStore for SqlIndexStore {
       .collect::<Vec<String>>()
       .join(" AND ");
     let already_present = db::query(&self.connection, &format!(
-        "SELECT * FROM {} WHERE {};", self.table_name, constraints)).len() > 0;
+        "SELECT * FROM {} WHERE {};", self.table_name, constraints))?.len() > 0;
 
     if already_present {
       // The entry already exists, update it
@@ -231,7 +231,12 @@ fn main() -> Result<(), Box<dyn Error>> {
                   }
                 }
                 // Provide the hash map to the index store
-                index_store.write(&data).unwrap();
+                if let Err(e) = index_store.write(&data) {
+                  print!("\r\x1b[2K");
+                  io::stdout().flush().unwrap();
+                  eprintln!("{}: {:?}", filepath.to_string_lossy(), e);
+                  error_count += 1;
+                }
 
                 // Fancy display
                 if let Some(study_instance_uid) = data.get("StudyInstanceUID") {

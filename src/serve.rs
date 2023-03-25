@@ -361,7 +361,7 @@ fn get_entries(connection: &Connection, params: &QidoQueryParameters,
   let mut entries = db::query(&connection,
     &format!("SELECT DISTINCT {}, * FROM dicom_index {};", entry_type,
       // Will restrict the data to what is being searched
-      create_where_clause(params, search_terms, &indexed_fields)));
+      create_where_clause(params, search_terms, &indexed_fields)))?;
   // println!("entries {:?}", entries);
   // Get the includefields not present in the index
   if let Some(includefield) = &params.includefield {
@@ -805,7 +805,7 @@ fn check_db(opt: &Opt) -> Result<(), Box<dyn Error>> {
       let config: config::Config = serde_yaml::from_str(&config_file)?;
       let connection = Connection::open(&sqlfile)?;
       if db::query(&connection, &format!(
-        "SELECT name FROM sqlite_master WHERE type='table' AND name='{}';", config.table_name)).is_empty() {
+        "SELECT name FROM sqlite_master WHERE type='table' AND name='{}';", config.table_name))?.is_empty() {
         // We will create the requested table with the appropriate fields
         let mut indexable_fields = config.indexing.fields.series.into_iter().chain(
           config.indexing.fields.studies.into_iter().chain(
@@ -826,7 +826,7 @@ fn check_db(opt: &Opt) -> Result<(), Box<dyn Error>> {
       // If not, we need the config to tell us how to create that table.
       let connection = Connection::open(&sqlfile)?;
       return if db::query(&connection, &format!(
-        "SELECT name FROM sqlite_master WHERE type='table' AND name='{}';", "dicom_index")).is_empty() {
+        "SELECT name FROM sqlite_master WHERE type='table' AND name='{}';", "dicom_index"))?.is_empty() {
         Err(format!("{} table does not exist in provided database. \
           To create a database from scratch you must provide a configuration file (--config)",
           "dicom_index").into())
