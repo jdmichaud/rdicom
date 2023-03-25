@@ -72,15 +72,14 @@ struct Opt {
     /// YAML configuration file containing the list of files to be indexed from the DICOM assets.
     #[structopt(short, long, parse(try_from_str = file_exists))]
     config: PathBuf,
-    /// Path to a folder containing DICOM assets. Will be scanned recursively.
-    #[structopt(short, long, parse(try_from_str = path_is_folder))]
-    input_path: PathBuf,
     /// CSV output file
     #[structopt(long)]
     csv_output: Option<PathBuf>,
     /// SQL output file
     #[structopt(long)]
     sql_output: Option<PathBuf>,
+    /// Path to a folder containing DICOM assets. Will be scanned recursively.
+    input_path: PathBuf,
 }
 
 trait IndexStore {
