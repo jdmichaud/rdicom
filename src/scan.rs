@@ -250,8 +250,8 @@ fn main() -> Result<(), Box<dyn Error>> {
                 }
                 let wheel = "-\\|/";
                 let w = wheel.as_bytes()[count / 10 % 4] as char;
-                print!("{} [{}] files scanned with [{}] studies and [{}] series found with following modalities {:?} [{}] errors\r",
-                  w, count, study_set.len(), series_set.len(), modality_set, error_count);
+                print!("{} [{}] files scanned with [{}] studies and [{}] series found and [{}] errors\r",
+                  w, count, study_set.len(), series_set.len(), error_count);
                 io::stdout().flush().unwrap();
               },
               _ => (),
