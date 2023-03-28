@@ -23,3 +23,4 @@ pub mod error;
 pub mod misc;
 pub mod tags;
 pub mod dicom_tags;
+pub mod dicom_representation;
