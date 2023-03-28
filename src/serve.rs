@@ -206,8 +206,11 @@ struct Optn {
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
 struct Param {
+  #[serde(rename = "@name")]
   name: String,
+  #[serde(rename = "@style")]
   style: String,
+  #[serde(rename = "@required")]
   required: String,
   #[serde(skip_serializing_if = "Option::is_none")]
   default: Option<String>,
@@ -224,7 +227,7 @@ struct Request {
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
 struct Representation {
-  #[serde(rename = "mediaType")]
+  #[serde(rename = "@mediaType")]
   media_type: String,
 }
 
@@ -250,6 +253,7 @@ enum Status {
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
 struct Response {
+  #[serde(rename = "@status")]
   status: Status,
   #[serde(skip_serializing_if = "Option::is_none")]
   representation: Option<Representation>,
@@ -257,7 +261,9 @@ struct Response {
 
 #[derive(Debug, Serialize, Deserialize)]
 struct Method {
+  #[serde(rename = "@name")]
   name: String,
+  #[serde(rename = "@id")]
   id: String,
   #[serde(rename = "request")]
   requests: Vec<Request>,
@@ -267,6 +273,7 @@ struct Method {
 
 #[derive(Debug, Serialize, Deserialize)]
 struct Resource {
+  #[serde(rename = "@path")]
   path: String,
   #[serde(rename = "method")]
   methods: Vec<Method>,
@@ -274,6 +281,7 @@ struct Resource {
 
 #[derive(Debug, Serialize, Deserialize)]
 struct Resources {
+  #[serde(rename = "@base")]
   base: String,
   resource: Vec<Resource>,
 }
@@ -837,45 +845,45 @@ fn check_db(opt: &Opt) -> Result<(), Box<dyn Error>> {
   }
 }
 
-fn get_accept_format<'a>(accept: &'a str, availables: &'a [&'a str]) -> Option<&'a str> {
+fn get_accept_format<'a>(accept: &'a str, availables: &'a [&'a str]) -> Result<&'a str, DicomError> {
   let accepts = accept.split(",").collect::<Vec<&str>>();
   for available in availables {
     if accepts.contains(available) {
-      return Some(available);
+      return Ok(available);
     }
   }
-  return None;
+  return Err(DicomError::new(
+    &format!("Unsupported accept header {}, only {:?} accept header are supported",
+            accept, availables)));
 }
 
 fn capabilities(application: &'static capabilities::Application) -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
   let handlers = warp::filters::header::value("accept")
     .map(move |accept_header: HeaderValue| {
       let accept_header = accept_header.to_str().unwrap();
-      return if let Some(accept) = get_accept_format(accept_header, &["", "*/*", "application/json", "application/vnd.sun.wadl+xml"]) {
-        match accept {
-          "application/json" | "" | "*/*" => { // I'd rather return the XML format by default but serde_xml_rs is buggy
-            Response::builder()
-              .header(warp::http::header::CONTENT_ENCODING, accept)
-              .status(warp::http::StatusCode::OK)
-              .body(serde_json::to_string(&application).unwrap())
-          },
-          "application/vnd.sun.wadl+xml" => {
-            Response::builder()
-              .header(warp::http::header::CONTENT_ENCODING, accept)
-              .status(warp::http::StatusCode::OK)
-              // TODO: XML API broken because of https://github.com/RReverser/serde-xml-rs/issues/186
-              .body(serde_xml_rs::to_string(&application).unwrap())
-          },
-          _ => {
-            Response::builder()
-              .status(warp::http::StatusCode::NOT_IMPLEMENTED)
-              .body(format!("Unsupported accept header {}, only 'application/json' accept header are supported", accept))
-          },
-        }
-      } else {
-        Response::builder()
+      match get_accept_format(accept_header, &[
+        "", "*/*", "application/vnd.sun.wadl+xml", "application/xml", "application/json"]
+      ) {
+        Ok(accept) => {
+          match accept {
+            "application/vnd.sun.wadl+xml" | "application/xml" | "" | "*/*" => {
+              Response::builder()
+                .header(warp::http::header::CONTENT_ENCODING, accept)
+                .status(warp::http::StatusCode::OK)
+                .body(quick_xml::se::to_string(&application).unwrap())
+            },
+            "application/json" => {
+              Response::builder()
+                .header(warp::http::header::CONTENT_ENCODING, accept)
+                .status(warp::http::StatusCode::OK)
+                .body(serde_json::to_string(&application).unwrap())
+            },
+            _ => unreachable!(),
+          }
+        },
+        Err(e) => Response::builder()
           .status(warp::http::StatusCode::NOT_IMPLEMENTED)
-          .body(format!("Unsupported accept header {}, only 'application/json' accept header are supported", accept_header))
+          .body(e.details),
       }
     });
 
@@ -905,14 +913,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
   let mut headers = HeaderMap::new();
   headers.insert("server", HeaderValue::from_static(server_header));
 
-  // static APPLICATION: Lazy<capabilities::Application> = Lazy::new(||
-  //   serde_xml_rs::from_str(&capabilities::CAPABILITIES_STR).unwrap());
-
   static APPLICATION: Lazy<capabilities::Application> = Lazy::new(|| {
-    let mut de = serde_xml_rs::Deserializer::new_from_reader(capabilities::CAPABILITIES_STR.as_bytes())
-      .non_contiguous_seq_elements(true);
-    capabilities::Application::deserialize(&mut de).unwrap()
-    // serde_xml_rs::from_str(&capabilities::CAPABILITIES_STR).unwrap()
+    quick_xml::de::from_str(capabilities::CAPABILITIES_STR).unwrap()
   });
 
   // GET /
