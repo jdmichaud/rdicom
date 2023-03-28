@@ -426,6 +426,10 @@ impl Instance {
     };
   }
 
+  pub fn iter(&self) -> InstanceIter<'_> {
+    InstanceIter::new(self)
+  }
+
   // https://dicom.nema.org/medical/dicom/current/output/chtml/part05/sect_A.4.html
   fn retrieve_next_data_element<'a>(self: &'a Self, offset: usize, items: &mut Vec<DicomAttribute>,
     item_length: &mut usize) -> Result<(), DicomError> {
@@ -473,26 +477,36 @@ impl Instance {
     return Ok(());
   }
 
-  fn get_implicit_vr<'a>(self: &'a Self, tag: &Tag) -> Result<&'a str, DicomError> {
+  // This "correct" the tag based on observed behavior in the wild.
+  // TODO: The design of this function is questionable and force the use of a
+  // mutable tag which I rather avoid. But its existence seems unavoidable due
+  // to the broken nature of the implicit DICOM transfer syntax.
+  fn get_implicit_vr<'a>(self: &'a Self, tag: &mut Tag) -> Result<(), DicomError> {
     // Finding the implicit VR is not straightforward. This is DICOM after all...
     // https://dicom.nema.org/medical/dicom/2017a/output/chtml/part05/chapter_A.html
     if tag.group == 0x7FE0 && tag.element == 0x0010 { // PixelData
-      return Ok("OW");
+      tag.vr = "OW";
+      tag.name = "PixelData";
     }
     if tag.group == 0x0028 && tag.element == 0x0106 { // SmallestImagePixelValue
       // DICOM makes some fields' value representation depend on the value of other field AND
       // make these value respresentation implicit. What an awful mess...
       let unsigned = self.get_value(&0x00280103.try_into().unwrap())? == Some(DicomValue::US(0));
-      return if unsigned { Ok("US") } else { Ok("SS") };
+      if unsigned { tag.vr = "US" } else { tag.vr = "SS" };
+      tag.name = "SmallestImagePixelValue";
     }
     if tag.group == 0x0028 && tag.element == 0x0107 { // LargestImagePixelValue
       let unsigned = self.get_value(&0x00280103.try_into().unwrap())? == Some(DicomValue::US(0));
-      return if unsigned { Ok("US") } else { Ok("SS") };
+      if unsigned { tag.vr = "US" } else { tag.vr = "SS" };
+      tag.name = "LargestImagePixelValue";
     }
-    if tag.group == 0x0008 && tag.element == 0x0000 { // GenericGroupLength
-      return Ok("UL");
+    if tag.element == 0x0000 { // GenericGroupLength
+      // So apparently, all tag with element = 0 are GenericGroupLength.
+      tag.vr = "UL";
+      tag.name = "GenericGroupLength";
     }
-    return Ok(tag.vr);
+
+    return Ok(());
   }
 
   pub fn next_attribute<'a>(self: &'a Self, offset: usize) -> Result<DicomAttribute<'a>, DicomError> {
@@ -538,7 +552,7 @@ impl Instance {
       }
     }
     // Create tag based on group and element or generate a synthetic "unknown" tag
-    let tag = (((group as u32) << 16) | element as u32).try_into().unwrap_or(Tag {
+    let mut tag = (((group as u32) << 16) | element as u32).try_into().unwrap_or(Tag {
       group,
       element,
       name: "Unknown Tag & Data",
@@ -551,7 +565,8 @@ impl Instance {
       from_utf8(&self.buffer[offset - 2..offset])
         .map_err(|err| utf8_error_to_dicom_error(err, "tag", offset - 2))?
     } else {
-      self.get_implicit_vr(&tag)?
+      self.get_implicit_vr(&mut tag)?;
+      tag.vr
     };
 
     let length: usize;
@@ -677,40 +692,30 @@ fn get_transfer_syntax_uid_label(transfer_syntax_uid: &str) -> Result<&str, Dico
   }
 }
 
-// HashMap::from([
-//   ("1.2.840.10008.1.2", "Implicit VR Endian: Default Transfer Syntax for DICOM"),
-//   ("1.2.840.10008.1.2.1", "Explicit VR Little Endian"),
-//   ("1.2.840.10008.1.2.1.99", "Deflated Explicit VR Little Endian"),
-//   ("1.2.840.10008.1.2.2", "Explicit VR Big Endian"),
-//   ("1.2.840.10008.1.2.4.50", "JPEG Baseline (Process 1)"),
-//   ("1.2.840.10008.1.2.4.51", "JPEG Baseline (Processes 2 & 4)"),
-//   ("1.2.840.10008.1.2.4.52", "JPEG Extended (Processes 3 & 5)"),
-//   ("1.2.840.10008.1.2.4.53", "JPEG Spectral Selection, Nonhierarchical (Processes 6 & 8)"),
-//   ("1.2.840.10008.1.2.4.54", "JPEG Spectral Selection, Nonhierarchical (Processes 7 & 9)"),
-//   ("1.2.840.10008.1.2.4.55", "JPEG Full Progression, Nonhierarchical (Processes 10 & 12)"),
-//   ("1.2.840.10008.1.2.4.56", "JPEG Full Progression, Nonhierarchical (Processes 11 & 13)"),
-//   ("1.2.840.10008.1.2.4.57", "JPEG Lossless, Nonhierarchical (Processes 14)"),
-//   ("1.2.840.10008.1.2.4.58", "JPEG Lossless, Nonhierarchical (Processes 15)"),
-//   ("1.2.840.10008.1.2.4.59", "JPEG Extended, Hierarchical (Processes 16 & 18)"),
-//   ("1.2.840.10008.1.2.4.60", "JPEG Extended, Hierarchical (Processes 17 & 19)"),
-//   ("1.2.840.10008.1.2.4.61", "JPEG Spectral Selection, Hierarchical (Processes 20 & 22)"),
-//   ("1.2.840.10008.1.2.4.62", "JPEG Spectral Selection, Hierarchical (Processes 21 & 23)"),
-//   ("1.2.840.10008.1.2.4.63", "JPEG Full Progression, Hierarchical (Processes 24 & 26)"),
-//   ("1.2.840.10008.1.2.4.64", "JPEG Full Progression, Hierarchical (Processes 25 & 27)"),
-//   ("1.2.840.10008.1.2.4.65", "JPEG Lossless, Nonhierarchical (Process 28)"),
-//   ("1.2.840.10008.1.2.4.66", "JPEG Lossless, Nonhierarchical (Process 29)"),
-//   ("1.2.840.10008.1.2.4.70", "JPEG Lossless, Nonhierarchical, First- Order Prediction (Processes 14 [Selection Value 1])"),
-//   ("1.2.840.10008.1.2.4.80", "JPEG-LS Lossless Image Compression"),
-//   ("1.2.840.10008.1.2.4.81", "JPEG-LS Lossy (Near- Lossless) Image Compression"),
-//   ("1.2.840.10008.1.2.4.90", "JPEG 2000 Image Compression (Lossless Only)"),
-//   ("1.2.840.10008.1.2.4.91", "JPEG 2000 Image Compression"),
-//   ("1.2.840.10008.1.2.4.92", "JPEG 2000 Part 2 Multicomponent Image Compression (Lossless Only)"),
-//   ("1.2.840.10008.1.2.4.93", "JPEG 2000 Part 2 Multicomponent Image Compression"),
-//   ("1.2.840.10008.1.2.4.94", "JPIP Referenced"),
-//   ("1.2.840.10008.1.2.4.95", "JPIP Referenced Deflate"),
-//   ("1.2.840.10008.1.2.5", "RLE Lossless"),
-//   ("1.2.840.10008.1.2.6.1", "RFC 2557 MIME Encapsulation"),
-//   ("1.2.840.10008.1.2.4.100", "MPEG2 Main Profile Main Level"),
-//   ("1.2.840.10008.1.2.4.102", "MPEG-4 AVC/H.264 High Profile / Level 4.1"),
-//   ("1.2.840.10008.1.2.4.103", "MPEG-4 AVC/H.264 BD-compatible High Profile / Level 4.1"),
-// ]);
+pub struct InstanceIter<'a> {
+  instance: &'a Instance,
+  offset: usize,
+}
+
+impl<'a> InstanceIter<'a> {
+  fn new(instance: &'a Instance) -> Self {
+    // TODO: Deal with DICOM with broken headers
+    return InstanceIter { instance: instance, offset: 128 + "DICM".len() };
+  }
+}
+
+impl<'a> Iterator for InstanceIter<'a> {
+  type Item = Result<DicomAttribute<'a>, DicomError>;
+
+  fn next(&mut self) -> std::option::Option<<Self as Iterator>::Item> {
+    if self.offset < self.instance.buffer.len() {
+      match self.instance.next_attribute(self.offset) {
+        Ok(attribute) => {
+          self.offset = attribute.data_offset + attribute.data_length;
+          Some(Ok(attribute))
+        },
+        Err(e) => Some(Err(e)),
+      }
+    } else { None }
+  }
+}
