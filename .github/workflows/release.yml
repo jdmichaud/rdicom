@@ -1,0 +1,27 @@
+name: Publish
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    name: Publish binaries
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build
+      run: cargo build --release --locked
+    - name: Compress
+      run: tar zcvf rdicom-tools-x86_64-unknown-linux-gnu.tar.gz target/x86_64-unknown-linux-gnu/release/scan target/x86_64-unknown-linux-gnu/release/serve
+    - name: Upload scan
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: rdicom-tools-x86_64-unknown-linux-gnu.tar.gz
+        asset_name: rdicom-tools-x86_64-unknown-linux-gnu.tar.gz
+        tag: ${{ github.ref }}
+        overwrite: true
+        body: "rdicom tools"
