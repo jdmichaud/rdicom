@@ -30,6 +30,7 @@ use std::fs::metadata;
 use std::path::PathBuf;
 use std::error::Error;
 use structopt::StructOpt;
+use structopt::clap::AppSettings;
 use walkdir::WalkDir;
 use std::io::{self, Write};
 use sqlite::{Connection};
@@ -44,6 +45,27 @@ mod db;
 
 const ESC: char = 27u8 as char;
 const MEDIA_STORAGE_DIRECTORY_STORAGE: &str = "1.2.840.10008.1.3.10";
+
+/// Scan a folder for DICOM assets and create an index file in CSV or SQL format.
+#[derive(Debug, StructOpt)]
+#[structopt(
+  name = format!("dump {} ({} {})", env!("GIT_HASH"), env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION")),
+  no_version,
+  global_settings = &[AppSettings::DisableVersion]
+)]
+struct Opt {
+    /// YAML configuration file containing the list of files to be indexed from the DICOM assets.
+    #[structopt(short, long, parse(try_from_str = file_exists))]
+    config: PathBuf,
+    /// CSV output file
+    #[structopt(long)]
+    csv_output: Option<PathBuf>,
+    /// SQL output file
+    #[structopt(long)]
+    sql_output: Option<PathBuf>,
+    /// Path to a folder containing DICOM assets. Will be scanned recursively.
+    input_path: PathBuf,
+}
 
 fn path_is_folder(path: &str) -> Result<PathBuf, Box<dyn Error>> {
   let path_buf = PathBuf::from(path);
@@ -64,22 +86,6 @@ fn file_exists(path: &str) -> Result<PathBuf, Box<dyn Error>> {
     } else {
         Err(format!("{} does not exists", path).into())
     }
-}
-
-#[derive(Debug, StructOpt)]
-/// Scan a folder for DICOM assets and create an index file in CSV or SQL format.
-struct Opt {
-    /// YAML configuration file containing the list of files to be indexed from the DICOM assets.
-    #[structopt(short, long, parse(try_from_str = file_exists))]
-    config: PathBuf,
-    /// CSV output file
-    #[structopt(long)]
-    csv_output: Option<PathBuf>,
-    /// SQL output file
-    #[structopt(long)]
-    sql_output: Option<PathBuf>,
-    /// Path to a folder containing DICOM assets. Will be scanned recursively.
-    input_path: PathBuf,
 }
 
 trait IndexStore {

@@ -38,6 +38,7 @@ use serde::{de, Deserialize, Deserializer, Serialize};
 use serde_json;
 use std::fmt;
 use sqlite::{Connection};
+use structopt::clap::AppSettings;
 
 use rdicom::tags::Tag;
 use rdicom::instance::Instance;
@@ -75,7 +76,6 @@ mod config;
   // r"^/studies/(?P<StudyInstanceUID>[^/?#]*)/series/(?P<SeriesInstanceUID>[^/?#]*)/thumbnail$",
   // r"^/studies/(?P<StudyInstanceUID>[^/?#]*)/thumbnail$"
 
-
 fn file_exists(path: &str) -> Result<PathBuf, Box<dyn Error>> {
     let path_buf = PathBuf::from(path);
     if path_buf.exists() {
@@ -87,19 +87,26 @@ fn file_exists(path: &str) -> Result<PathBuf, Box<dyn Error>> {
 
 /// A simple DICOMWeb server
 #[derive(Debug, StructOpt)]
+#[structopt(
+  name = format!("dump {} ({} {})", env!("GIT_HASH"), env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION")),
+  no_version,
+  global_settings = &[AppSettings::DisableVersion]
+)]
 struct Opt {
-    /// Port to listen to
-    #[structopt(default_value = "8080", short, long)]
-    port: u16,
-    /// Host to serve
-    #[structopt(default_value = "127.0.0.1", short="o", long)]
-    host: String,
-    /// Sqlite database
-    #[structopt(short, long)]
-    sqlfile: PathBuf,
-    /// Database config (necessary to create a database or add to the database)
-    #[structopt(short, long, parse(try_from_str = file_exists))]
-    config: Option<PathBuf>,
+  /// Port to listen to
+  #[structopt(default_value = "8080", short, long)]
+  port: u16,
+  /// Host to serve
+  #[structopt(default_value = "127.0.0.1", short="o", long)]
+  host: String,
+  /// Sqlite database
+  #[structopt(short, long)]
+  sqlfile: PathBuf,
+  /// Database config (necessary to create a database or add to the database)
+  #[structopt(short, long, parse(try_from_str = file_exists))]
+  config: Option<PathBuf>,
+  // #[structopt(short="V", long)]
+  // version: bool,
 }
 
 #[derive(Debug)]

@@ -30,14 +30,20 @@ use std::fs::File;
 use std::io::{self};
 
 use structopt::StructOpt;
+use structopt::clap::AppSettings;
 
 use rdicom::instance::Instance;
 use rdicom::misc::is_dicom_file;
 use rdicom::instance::DicomValue;
 use rdicom::dicom_tags::{Item, SequenceDelimitationItem};
 
-#[derive(Debug, StructOpt)]
 /// A dcmdump clone based on rdicom
+#[derive(Debug, StructOpt)]
+#[structopt(
+  name = format!("dump {} ({} {})", env!("GIT_HASH"), env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION")),
+  no_version,
+  global_settings = &[AppSettings::DisableVersion]
+)]
 struct Opt {
   /// DICOM input file to be dumped
   filepath: String,
