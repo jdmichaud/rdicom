@@ -35,12 +35,12 @@ use structopt::clap::AppSettings;
 // A simplified dcm2json clone
 #[derive(Debug, StructOpt)]
 #[structopt(
-  name = format!("dump {} ({} {})", env!("GIT_HASH"), env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION")),
+  name = format!("dcm2json {} ({} {})", env!("GIT_HASH"), env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION")),
   no_version,
   global_settings = &[AppSettings::DisableVersion]
 )]
 struct Opt {
-  /// DICOM input file to be converted to XML
+  /// DICOM input file to be converted to JSON
   filepath: String,
 }
 

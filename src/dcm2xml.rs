@@ -34,7 +34,7 @@ use structopt::clap::AppSettings;
 // A simplified dcm2xml clone
 #[derive(Debug, StructOpt)]
 #[structopt(
-  name = format!("dump {} ({} {})", env!("GIT_HASH"), env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION")),
+  name = format!("dcm2xml {} ({} {})", env!("GIT_HASH"), env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION")),
   no_version,
   global_settings = &[AppSettings::DisableVersion]
 )]

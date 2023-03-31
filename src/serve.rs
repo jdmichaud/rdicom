@@ -88,7 +88,7 @@ fn file_exists(path: &str) -> Result<PathBuf, Box<dyn Error>> {
 /// A simple DICOMWeb server
 #[derive(Debug, StructOpt)]
 #[structopt(
-  name = format!("dump {} ({} {})", env!("GIT_HASH"), env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION")),
+  name = format!("serve {} ({} {})", env!("GIT_HASH"), env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION")),
   no_version,
   global_settings = &[AppSettings::DisableVersion]
 )]

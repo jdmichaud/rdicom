@@ -49,7 +49,7 @@ const MEDIA_STORAGE_DIRECTORY_STORAGE: &str = "1.2.840.10008.1.3.10";
 /// Scan a folder for DICOM assets and create an index file in CSV or SQL format.
 #[derive(Debug, StructOpt)]
 #[structopt(
-  name = format!("dump {} ({} {})", env!("GIT_HASH"), env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION")),
+  name = format!("scan {} ({} {})", env!("GIT_HASH"), env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION")),
   no_version,
   global_settings = &[AppSettings::DisableVersion]
 )]
