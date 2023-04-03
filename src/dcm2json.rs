@@ -21,12 +21,9 @@
 #![allow(dead_code)]
 #![allow(unused_variables)]
 
-use rdicom::dicom_representation::dcm2native_dicom_model;
-use rdicom::dicom_representation::DicomAttributeJson;
-use rdicom::dicom_representation::NativeDicomModel;
+use rdicom::dicom_representation::dcm2json;
 use rdicom::error::DicomError;
 use rdicom::misc::is_dicom_file;
-use std::collections::HashMap;
 use std::error::Error;
 use std::fs::File;
 use structopt::StructOpt;
@@ -47,8 +44,8 @@ struct Opt {
 fn main() -> Result<(), Box<dyn Error>> {
   let opt = Opt::from_args();
   let f = File::open(&opt.filepath)?;
-  let result: Result<NativeDicomModel, Box<dyn Error>> = if is_dicom_file(&opt.filepath) {
-    dcm2native_dicom_model(f)
+  let result: Result<_, Box<dyn Error>> = if is_dicom_file(&opt.filepath) {
+    dcm2json(f)
   } else {
     Err(Box::new(DicomError::new(&format!(
       "{} is not a dicom file",
@@ -57,22 +54,7 @@ fn main() -> Result<(), Box<dyn Error>> {
   };
 
   match result {
-    Ok(result) => {
-      // We need this because the xml structure is different from the json one.
-      let mut jsonresult = HashMap::new();
-      for dicom_attribute in result.dicom_attributes {
-        jsonresult.insert(
-          dicom_attribute.tag,
-          DicomAttributeJson {
-            vr: dicom_attribute.vr,
-            keyword: dicom_attribute.keyword,
-            private_creator: dicom_attribute.private_creator,
-            payload: dicom_attribute.payload,
-          },
-        );
-      }
-      println!("{}", serde_json::to_string(&jsonresult)?);
-    }
+    Ok(result) => println!("{}", serde_json::to_string(&result)?),
     Err(e) => eprintln!("error: {}", e),
   }
   Ok(())

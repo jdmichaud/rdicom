@@ -68,3 +68,10 @@ impl From<std::io::Error> for DicomError {
     DicomError::new(&format!("{:?}", err))
   }
 }
+
+impl From<std::num::ParseIntError> for DicomError {
+  fn from(err: std::num::ParseIntError) -> Self {
+    // TODO: Improve this...
+    DicomError::new(&format!("{:?}", err))
+  }
+}
