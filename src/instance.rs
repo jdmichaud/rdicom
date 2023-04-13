@@ -63,6 +63,7 @@ pub enum DicomValue<'a> {
   LT(String),
   OB(&'a [u8]),
   OW(&'a [u16]),
+  // TODO: Manage different type of PersonName (Phonetic and Ideographic)
   PN(String),
   SeqEnd,
   SeqItem(Vec<DicomValue<'a>>),
@@ -590,7 +591,7 @@ impl Instance {
           // return Err(DicomError::new(&format!("Encapsulated pixel data not supported")));
           self.retrieve_next_data_element(offset, &mut items, &mut item_length)?;
         } else {
-          // See http://dicom.nema.org/dicom/2013/output/chtml/part05/sect_7.5.html
+          // See https://dicom.nema.org/dicom/2013/output/chtml/part05/sect_7.5.html
           // on what a sequence look like in a DICOM file.
           let mut item;
           let mut suboffset = offset;

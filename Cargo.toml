@@ -39,6 +39,10 @@ path = "src/dcm2xml.rs"
 name = "dcm2json"
 path = "src/dcm2json.rs"
 
+[[bin]]
+name = "json2dcm"
+path = "src/json2dcm.rs"
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
