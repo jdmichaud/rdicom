@@ -282,7 +282,6 @@ fn main() -> Result<(), Box<dyn Error>> {
   writer.write(&meta_info_header.as_slice())?;
   // Write the rest of the dicom attributes
   for (tag, attribute) in result.iter() {
-    println!("{} {:?}", tag, attribute.vr);
     serialize(&mut writer, DicomAttribute {
       tag: tag.to_string(),
       vr: attribute.vr,

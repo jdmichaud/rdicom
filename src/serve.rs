@@ -389,11 +389,9 @@ fn get_entries(connection: &Connection, params: &QidoQueryParameters,
       for i in 0..entries.len() {
         if let Some(filepath) = entries[i].get("filepath") {
           if is_dicom_file(filepath) {
-            let toto = filepath.clone();
             let instance = Instance::from_filepath(filepath)?;
             // Go through those missing fields from the index and enrich the date from the index
             for field in &fields_to_fetch {
-              println!("fetching {:?} from {:?}", field, toto);
               let tmp: &str = &field; // TODO: Why do I need this tmp? Get rid of it.
               let dicom_field = &(tmp).try_into()?; // TODO: Convert field before opening files to fail faster
               if let Some(field_value) = instance.get_value(dicom_field)? {
