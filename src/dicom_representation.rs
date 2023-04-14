@@ -30,6 +30,7 @@ use std::error::Error;
 use std::fs::File;
 use crate::error::DicomError;
 use serde::{Deserialize, Serialize};
+// TODO: Remove that external dependency if possible
 use base64::{Engine as _, engine::general_purpose};
 
 #[derive(Debug, Serialize, Deserialize, Copy, Clone)]
@@ -384,17 +385,16 @@ pub fn to_xml_dicom_attribute(instance: &Instance, dicom_attribute: &instance::D
       Some(Payload::Value(vec![ValuePayload::String(general_purpose::STANDARD.encode(content8))]))
     },
     DicomValue::IS(value) => {
-      if let Ok(value) = value.parse::<i64>() {
-        Some(Payload::Value(vec![ValuePayload::Numeral(value as f64)]))
-      } else {
-        None
-      }
+      Some(Payload::Value(value.iter()
+        .filter_map(|v| v.parse::<i64>().ok())
+        .map(|v| ValuePayload::Numeral(v as f64))
+        .collect::<Vec<ValuePayload>>()))
     },
     DicomValue::SL(value) => Some(Payload::Value(vec![ValuePayload::Numeral(value.into())])),
     DicomValue::SS(value) => Some(Payload::Value(vec![ValuePayload::Numeral(value.into())])),
     DicomValue::UL(value) => Some(Payload::Value(vec![ValuePayload::Numeral(value.into())])),
     DicomValue::US(value) => Some(Payload::Value(vec![ValuePayload::Numeral(value.into())])),
-    DicomValue::PN(value) => Some(Payload::Value(vec![ValuePayload::PersonName(PersonName::Alphabetic(NameVariant::Name(value)))])),
+    DicomValue::PN(value) => Some(Payload::Value(vec![ValuePayload::PersonName(PersonName::Alphabetic(NameVariant::Name(value[0].clone())))])),
     DicomValue::SQ(_) |
     DicomValue::SeqItem(_) => {
       let dicom_attributes: Result<Vec<DicomAttribute>, DicomError> = dicom_attribute.subattributes.iter().map(|da| {
@@ -439,17 +439,16 @@ pub fn to_json_dicom_attribute(instance: &Instance, dicom_attribute: &instance::
       Some(Payload::Value(vec![ValuePayload::String(general_purpose::STANDARD.encode(content8))]))
     },
     DicomValue::IS(value) => {
-      if let Ok(value) = value.parse::<i64>() {
-        Some(Payload::Value(vec![ValuePayload::Numeral(value as f64)]))
-      } else {
-        None
-      }
+      Some(Payload::Value(value.iter()
+        .filter_map(|v| v.parse::<i64>().ok())
+        .map(|v| ValuePayload::Numeral(v as f64))
+        .collect::<Vec<ValuePayload>>()))
     },
     DicomValue::SL(value) => Some(Payload::Value(vec![ValuePayload::Numeral(value.into())])),
     DicomValue::SS(value) => Some(Payload::Value(vec![ValuePayload::Numeral(value.into())])),
     DicomValue::UL(value) => Some(Payload::Value(vec![ValuePayload::Numeral(value.into())])),
     DicomValue::US(value) => Some(Payload::Value(vec![ValuePayload::Numeral(value.into())])),
-    DicomValue::PN(value) => Some(Payload::Value(vec![ValuePayload::PersonName(PersonName::Alphabetic(NameVariant::Name(value)))])),
+    DicomValue::PN(value) => Some(Payload::Value(vec![ValuePayload::PersonName(PersonName::Alphabetic(NameVariant::Name(value[0].clone())))])),
     DicomValue::SQ(_) => {
       let mut values = Vec::<ValuePayload>::new();
       for da in &dicom_attribute.subattributes {

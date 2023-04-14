@@ -24,7 +24,7 @@
 
 // https://radu-matei.com/blog/practical-guide-to-wasm-memory/#passing-arrays-to-rust-webassembly-modules
 
-use core::str::Utf8Error;
+use std::str::Utf8Error;
 use std::fs::File;
 use std::convert::TryInto;
 use std::borrow::Cow;
@@ -49,35 +49,35 @@ pub struct Instance {
 
 #[derive(Debug, PartialEq)]
 pub enum DicomValue<'a> {
-  AE(String),
-  AS(String),
+  AE(Vec<String>),
+  AS(Vec<String>),
   AT(Tag),
-  CS(String),
-  DA(String),
-  DS(String),
-  DT(String),
-  FD(f64),
-  FL(f32),
-  IS(String),
-  LO(String),
-  LT(String),
+  CS(Vec<String>),
+  DA(Vec<String>),
+  DS(Vec<String>),
+  DT(Vec<String>),
+  FD(&'a [f64]),
+  FL(&'a [f32]),
+  IS(Vec<String>),
+  LO(Vec<String>),
+  LT(Vec<String>),
   OB(&'a [u8]),
   OW(&'a [u16]),
   // TODO: Manage different type of PersonName (Phonetic and Ideographic)
-  PN(String),
+  PN(Vec<String>),
   SeqEnd,
   SeqItem(Vec<DicomValue<'a>>),
   SeqItemEnd,
-  SH(String),
+  SH(Vec<String>),
   SL(i32),
   SQ(Vec<DicomValue<'a>>),
   SS(i16),
-  ST(String),
-  TM(String),
+  ST(Vec<String>),
+  TM(Vec<String>),
   UI(String),
   UL(u32),
   US(u16),
-  UT(String),
+  UT(Vec<String>),
   UN(&'a [u8]),
 }
 
@@ -104,11 +104,11 @@ impl<'a> ToString for DicomValue<'a> {
       DicomValue::SH(value) |
       DicomValue::ST(value) |
       DicomValue::TM(value) |
-      DicomValue::UT(value) => format!("{}", value),
-      DicomValue::DS(value) => format!("{}", value),
-      DicomValue::DT(value) => format!("{}", value),
-      DicomValue::FD(value) => format!("{}", value),
-      DicomValue::FL(value) => format!("{}", value),
+      DicomValue::UT(value) => format!("{}", value.join("\\")),
+      DicomValue::DS(value) => format!("{}", value.join("\\")),
+      DicomValue::DT(value) => format!("{}", value.join("\\")),
+      DicomValue::FD(value) => format!("{}", value.iter().map(|f| f.to_string()).collect::<Vec<_>>().join("\\")),
+      DicomValue::FL(value) => format!("{}", value.iter().map(|f| f.to_string()).collect::<Vec<_>>().join("\\")),
       DicomValue::UN(value) |
       DicomValue::OB(value) => {
         let mut result = String::with_capacity(40);
@@ -140,7 +140,7 @@ impl<'a> ToString for DicomValue<'a> {
         }
         result
       },
-      DicomValue::PN(value) => format!("{}", value),
+      DicomValue::PN(value) => format!("{}", value.join("\\")),
       // DicomValue::SeqEnd,
       // DicomValue::SeqItem,
       // DicomValue::SeqItemEnd,
@@ -153,6 +153,26 @@ impl<'a> ToString for DicomValue<'a> {
       _ => unimplemented!("No formatter for {:?}", self),
     }
   }
+}
+
+fn to_string_array<'b>(vr: &str, offset: usize, length: usize, buffer: &'b Vec<u8>) -> Result<Vec<String>, DicomError> {
+  Ok(from_utf8(&buffer[offset..offset + length])
+    .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
+    .trim_matches(char::from(0))
+    .trim()
+    .split("\\")
+    .map(str::to_string)
+    .collect()
+  )
+}
+
+fn to_string<'b>(vr: &str, offset: usize, length: usize, buffer: &'b Vec<u8>) -> Result<String, DicomError> {
+  Ok(from_utf8(&buffer[offset..offset + length])
+    .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
+    .trim_matches(char::from(0))
+    .trim()
+    .to_string()
+  )
 }
 
 impl<'a> DicomValue<'a> {
@@ -189,81 +209,37 @@ impl<'a> DicomValue<'a> {
 
   fn new<'b>(vr: &str, offset: usize, length: usize, buffer: &'b Vec<u8>) -> Result<DicomValue<'b>, DicomError> {
     Ok(match vr {
-      "AE" => DicomValue::AE(
-        from_utf8(&buffer[offset..offset + length])
-          .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
-          .trim_matches(char::from(0))
-          .trim()
-          .to_string()
-      ),
-      "AS" => DicomValue::AS(
-        from_utf8(&buffer[offset..offset + length])
-          .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
-          .trim_matches(char::from(0))
-          .trim()
-          .to_string()
-      ),
+      "AE" => DicomValue::AE(to_string_array(vr, offset, length, buffer)?),
+      "AS" => DicomValue::AS(to_string_array(vr, offset, length, buffer)?),
       "AT" => {
         let tmp: [u8; 4] = buffer[offset..offset + 4].try_into()?;
         DicomValue::AT(u32::from_le_bytes(tmp).try_into()?)
       },
-      "CS" => DicomValue::CS(
-        from_utf8(&buffer[offset..offset + length])
-          .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
-          .trim_matches(char::from(0))
-          .trim()
-          .to_string()
-      ),
-      "DA" => DicomValue::DA(
-        from_utf8(&buffer[offset..offset + length])
-          .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
-          .trim_matches(char::from(0))
-          .trim()
-          .to_string()
-      ),
-      "DS" => DicomValue::DS(
-        from_utf8(&buffer[offset..offset + length])
-          .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
-          .trim_matches(char::from(0))
-          .trim()
-          .to_string()
-      ),
-      "DT" => DicomValue::DT(
-        from_utf8(&buffer[offset..offset + length])
-          .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
-          .trim_matches(char::from(0))
-          .trim()
-          .to_string()
-      ),
+      "CS" => DicomValue::CS(to_string_array(vr, offset, length, buffer)?),
+      "DA" => DicomValue::DA(to_string_array(vr, offset, length, buffer)?),
+      "DS" => DicomValue::DS(to_string_array(vr, offset, length, buffer)?),
+      "DT" => DicomValue::DT(to_string_array(vr, offset, length, buffer)?),
       "FD" => {
-        let tmp: [u8; 8] = buffer[offset..offset + 8].try_into()?;
-        DicomValue::FD(f64::from_le_bytes(tmp))
+        // let tmp: [u8; 4] = buffer[offset..offset + 4].try_into()?;
+        // DicomValue::FL(f32::from_le_bytes(tmp))
+        let fdslice: &[f64] = unsafe {
+          // We create a slice of f64 from a slice of u8. Safe as long as
+          // 1. The size from the DICOM file is correct
+          // 2. We deal only with little endian
+          // This allows to avoid parsing and copying data. Speed and memory over safety here.
+          std::slice::from_raw_parts(buffer[offset..offset + length].as_ptr() as *const f64, length / std::mem::size_of::<f64>())
+        };
+        DicomValue::FD(fdslice)
       }
       "FL" => {
-        let tmp: [u8; 4] = buffer[offset..offset + 4].try_into()?;
-        DicomValue::FL(f32::from_le_bytes(tmp))
+        let flslice: &[f32] = unsafe {
+          std::slice::from_raw_parts(buffer[offset..offset + length].as_ptr() as *const f32, length / std::mem::size_of::<f32>())
+        };
+        DicomValue::FL(flslice)
       }
-      "IS" => DicomValue::IS(
-        from_utf8(&buffer[offset..offset + length])
-          .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
-          .trim_matches(char::from(0))
-          .trim()
-          .to_string()
-      ),
-      "LO" => DicomValue::LO(
-        from_utf8(&buffer[offset..offset + length])
-          .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
-          .trim_matches(char::from(0))
-          .trim()
-          .to_string()
-      ),
-      "LT" => DicomValue::LT(
-        from_utf8(&buffer[offset..offset + length])
-          .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
-          .trim_matches(char::from(0))
-          .trim()
-          .to_string()
-      ),
+      "IS" => DicomValue::IS(to_string_array(vr, offset, length, buffer)?),
+      "LO" => DicomValue::LO(to_string_array(vr, offset, length, buffer)?),
+      "LT" => DicomValue::LT(to_string_array(vr, offset, length, buffer)?),
       "OB" => DicomValue::OB(&buffer[offset..offset + length]),
       "OW" => {
         let (_, owslice, _) = unsafe {
@@ -271,20 +247,8 @@ impl<'a> DicomValue<'a> {
         };
         DicomValue::OW(owslice)
       },
-      "PN" => DicomValue::PN(
-        from_utf8(&buffer[offset..offset + length])
-          .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
-          .trim_matches(char::from(0))
-          .trim()
-          .to_string()
-      ),
-      "SH" => DicomValue::SH(
-        from_utf8(&buffer[offset..offset + length])
-          .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
-          .trim_matches(char::from(0))
-          .trim()
-          .to_string()
-      ),
+      "PN" => DicomValue::PN(to_string_array(vr, offset, length, buffer)?),
+      "SH" => DicomValue::SH(to_string_array(vr, offset, length, buffer)?),
       "SL" => DicomValue::SL(
         buffer[offset] as i32 |
         (buffer[offset + 1] as i32) << 8 |
@@ -295,27 +259,9 @@ impl<'a> DicomValue<'a> {
         buffer[offset] as i16 |
         (buffer[offset + 1] as i16) << 8
       ),
-      "ST" => DicomValue::ST(
-        from_utf8(&buffer[offset..offset + length])
-          .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
-          .trim_matches(char::from(0))
-          .trim()
-          .to_string()
-      ),
-      "TM" => DicomValue::TM(
-        from_utf8(&buffer[offset..offset + length])
-          .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
-          .trim_matches(char::from(0))
-          .trim()
-          .to_string()
-      ),
-      "UI" => DicomValue::UI(
-        from_utf8(&buffer[offset..offset + length])
-          .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
-          .trim_matches(char::from(0))
-          .trim()
-          .to_string()
-      ),
+      "ST" => DicomValue::ST(to_string_array(vr, offset, length, buffer)?),
+      "TM" => DicomValue::TM(to_string_array(vr, offset, length, buffer)?),
+      "UI" => DicomValue::UI(to_string(vr, offset, length, buffer)?),
       "UL" => DicomValue::UL(
         buffer[offset] as u32 |
         (buffer[offset + 1] as u32) << 8 |
@@ -326,13 +272,7 @@ impl<'a> DicomValue<'a> {
         buffer[offset] as u16 |
         (buffer[offset + 1] as u16) << 8
       ),
-      "UT" => DicomValue::UT(
-        from_utf8(&buffer[offset..offset + length])
-          .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
-          .trim_matches(char::from(0))
-          .trim()
-          .to_string()
-      ),
+      "UT" => DicomValue::UT(to_string_array(vr, offset, length, buffer)?),
       "UN" => DicomValue::UN(&buffer[offset..offset + length]),
       _ => unimplemented!("Value representation \"{}\" not implemented", vr),
     })

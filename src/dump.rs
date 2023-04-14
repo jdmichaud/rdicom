@@ -109,20 +109,8 @@ fn get_tag_sequence<'b, 'a>(instance: &'a Instance, field: &DicomAttribute<'a>, 
     _ => {
       let value = DicomValue::from_dicom_attribute(&field, &instance).unwrap();
       match value {
-        DicomValue::AE(value) |
-        DicomValue::AS(value) |
-        DicomValue::DA(value) |
-        DicomValue::IS(value) |
-        DicomValue::LO(value) |
-        DicomValue::LT(value) |
-        DicomValue::PN(value) |
-        DicomValue::SH(value) |
-        DicomValue::ST(value) |
-        DicomValue::TM(value) |
-        DicomValue::DT(value) |
-        DicomValue::UI(value) |
-        DicomValue::UT(value) => {
-          let mut display_value = value.to_string();
+        DicomValue::UI(payload) => {
+          let mut display_value = payload.to_string();
           if display_value.len() > 66 {
             display_value.replace_range(66.., "...");
           }
@@ -134,16 +122,28 @@ fn get_tag_sequence<'b, 'a>(instance: &'a Instance, field: &DicomAttribute<'a>, 
           result.push((field.group, field.element, field.vr.to_string(), display_value,
             format!("{}", field.data_length), multiplicity, field.tag.name, level));
         },
-        DicomValue::CS(value) |
-        DicomValue::DS(value) => {
-          let mut display_value = value.to_string();
+        DicomValue::AE(payload) |
+        DicomValue::AS(payload) |
+        DicomValue::DA(payload) |
+        DicomValue::IS(payload) |
+        DicomValue::LO(payload) |
+        DicomValue::LT(payload) |
+        DicomValue::PN(payload) |
+        DicomValue::SH(payload) |
+        DicomValue::ST(payload) |
+        DicomValue::TM(payload) |
+        DicomValue::DT(payload) |
+        DicomValue::CS(payload) |
+        DicomValue::UT(payload) |
+        DicomValue::DS(payload) => {
+          let mut display_value = payload.join("\\");
           if display_value.len() > 66 {
             display_value.replace_range(66.., "...");
           }
           let (display_value, multiplicity) = if display_value == "" {
             ("(no value available)".to_string(), 0)
           } else {
-            (format!("[{}]", display_value), display_value.matches("\\").count() + 1)
+            (format!("[{}]", display_value), payload.len())
           };
           result.push((field.group, field.element, field.vr.to_string(), display_value,
             format!("{}", field.data_length), multiplicity, field.tag.name, level));
@@ -156,6 +156,26 @@ fn get_tag_sequence<'b, 'a>(instance: &'a Instance, field: &DicomAttribute<'a>, 
         },
         DicomValue::SeqEnd => {
           panic!("Unexpected SeqEnd");
+        },
+        DicomValue::FD(payload) => {
+          let display_value = value.to_string();
+          let (display_value, multiplicity) = if display_value == "" {
+            ("(no value available)".to_string(), 0)
+          } else {
+            (display_value, payload.len())
+          };
+          result.push((field.group, field.element, field.vr.to_string(), display_value,
+            format!("{}", field.data_length), multiplicity, field.tag.name, level));
+        },
+        DicomValue::FL(payload) => {
+          let display_value = value.to_string();
+          let (display_value, multiplicity) = if display_value == "" {
+            ("(no value available)".to_string(), 0)
+          } else {
+            (display_value, payload.len())
+          };
+          result.push((field.group, field.element, field.vr.to_string(), display_value,
+            format!("{}", field.data_length), multiplicity, field.tag.name, level));
         },
         _ => {
           let display_value = value.to_string();
