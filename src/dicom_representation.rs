@@ -169,7 +169,7 @@ impl TryFrom<&Payload> for String {
         Ok(vec.iter()
           .map(|entry| match entry {
             ValuePayload::String(s) => s.clone(),
-            ValuePayload::Numeral(n) => { println!("{}", n); n.to_string() },
+            ValuePayload::Numeral(n) => n.to_string(),
             _ => todo!(),
           })
           .collect::<Vec<String>>()
@@ -243,29 +243,31 @@ impl TryFrom<Payload> for i32 {
   }
 }
 
-impl TryFrom<Payload> for f32 {
+impl TryFrom<Payload> for Vec<f32> {
   type Error = DicomError;
 
   fn try_from(payload: Payload) -> Result<Self, Self::Error> {
     match payload {
-      Payload::Value(value) => match &value[0] {
-        ValuePayload::Numeral(f32_value) => Ok(*f32_value as f32),
-        _ => Err(DicomError::new("Payload is not a f32")),
-      },
+      Payload::Value(value) => value.iter()
+        .map(|v| match v {
+          ValuePayload::Numeral(f32_value) => Ok(*f32_value as f32),
+          _ => Err(DicomError::new("Payload is not a f32")),
+        }).collect(),
       _ => Err(DicomError::new("Payload is not a f32")),
     }
   }
 }
 
-impl TryFrom<Payload> for f64 {
+impl TryFrom<Payload> for Vec<f64> {
   type Error = DicomError;
 
   fn try_from(payload: Payload) -> Result<Self, Self::Error> {
     match payload {
-      Payload::Value(value) => match &value[0] {
-        ValuePayload::Numeral(f64_value) => Ok(*f64_value as f64),
-        _ => Err(DicomError::new("Payload is not a f64")),
-      },
+      Payload::Value(value) => value.iter()
+        .map(|v| match v {
+          ValuePayload::Numeral(f64_value) => Ok(*f64_value as f64),
+          _ => Err(DicomError::new("Payload is not a f64")),
+        }).collect(),
       _ => Err(DicomError::new("Payload is not a f64")),
     }
   }

@@ -167,31 +167,37 @@ fn serialize<W: std::io::Write>(writer: &mut BufWriter<W>, dicom_attribute: Dico
         let value: u32 = payload.try_into()?;
         writer.write(&(std::mem::size_of_val(&value) as u16).to_le_bytes())?;
         writer.write(&(value.to_le_bytes()))?;
-        length += 2 + &std::mem::size_of_val(&value);
+        length += 2 + std::mem::size_of_val(&value);
       },
       ValueRepresentation::SS => {
         let value: i16 = payload.try_into()?;
         writer.write(&(std::mem::size_of_val(&value) as u16).to_le_bytes())?;
         writer.write(&value.to_le_bytes())?;
-        length += 2 + &std::mem::size_of_val(&value);
+        length += 2 + std::mem::size_of_val(&value);
       },
       ValueRepresentation::US => {
         let value: u16 = payload.try_into()?;
         writer.write(&(std::mem::size_of_val(&value) as u16).to_le_bytes())?;
         writer.write(&value.to_le_bytes())?;
-        length += 2 + &std::mem::size_of_val(&value);
+        length += 2 + std::mem::size_of_val(&value);
       },
       ValueRepresentation::FL => {
-        let value: f32 = payload.try_into()?;
-        writer.write(&(std::mem::size_of_val(&value) as u16).to_le_bytes())?;
-        writer.write(&value.to_le_bytes())?;
-        length += 2 + &std::mem::size_of_val(&value);
+        let value: Vec<f32> = payload.try_into()?;
+        let data_length = std::mem::size_of_val(&value[0]) * value.len();
+        writer.write(&(data_length as u16).to_le_bytes())?;
+        for v in value {
+          writer.write(&v.to_le_bytes())?;
+        }
+        length += 2 + data_length;
       },
       ValueRepresentation::FD => {
-        let value: f64 = payload.try_into()?;
-        writer.write(&(std::mem::size_of_val(&value) as u16).to_le_bytes())?;
-        writer.write(&value.to_le_bytes())?;
-        length += 2 + &std::mem::size_of_val(&value);
+        let value: Vec<f64> = payload.try_into()?;
+        let data_length = std::mem::size_of_val(&value[0]) * value.len();
+        writer.write(&(data_length as u16).to_le_bytes())?;
+        for v in value {
+          writer.write(&v.to_le_bytes())?;
+        }
+        length += 2 + data_length;
       },
       // TODO: No DicomValue equivalent for now
       ValueRepresentation::UR |
@@ -221,13 +227,7 @@ fn serialize<W: std::io::Write>(writer: &mut BufWriter<W>, dicom_attribute: Dico
   Ok(length)
 }
 
-fn main() -> Result<(), Box<dyn Error>> {
-  let opt = Opt::from_args();
-  let inputfile = File::open(&opt.jsonfilepath)?;
-  let mut result: BTreeMap<String, DicomAttributeJson> = serde_json::from_reader(BufReader::new(inputfile))?;
-
-  let outputfile = File::create(&opt.dcmfilepath)?;
-  let mut writer = BufWriter::new(outputfile);
+fn json2dcm<W: std::io::Write>(writer: &mut BufWriter<W>, json: &BTreeMap<String, DicomAttributeJson>) -> Result<(), Box<dyn Error>> {
   // Write the DICOM header
   writer.write(&[0; 0x80])?;
   writer.write(&[b'D', b'I', b'C', b'M'])?;
@@ -237,7 +237,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut meta_info_header_writer = BufWriter::new(&mut meta_info_header);
   // (0002,0002) UI =SecondaryCaptureImageStorage            #  26, 1 MediaStorageSOPClassUID
     let sop_class_uid = String::try_from(
-      &result.get_mut("00080016").ok_or("Missing SOPClassUID")?.payload.clone().ok_or("Missing SOPClassUID")?
+      &json.get("00080016").ok_or("Missing SOPClassUID")?.payload.clone().ok_or("Missing SOPClassUID")?
     )?;
     let mut written = serialize(&mut meta_info_header_writer, DicomAttribute {
       tag: "00020002".to_string(),
@@ -247,7 +247,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     })?;
   // (0002,0003) UI [1.2.826.0.1.3680043.8.1055.1.20111103112244831.30826609.78057758] #  64, 1 MediaStorageSOPInstanceUID
     let sop_instance_uid = String::try_from(
-      &result.get_mut("00080018").ok_or("Missing SOPInstanceUID")?.payload.clone().ok_or("Missing SOPInstanceUID")?
+      &json.get("00080018").ok_or("Missing SOPInstanceUID")?.payload.clone().ok_or("Missing SOPInstanceUID")?
     )?;
     written += serialize(&mut meta_info_header_writer, DicomAttribute {
       tag: "00020003".to_string(),
@@ -271,7 +271,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     })?;
     meta_info_header_writer.flush()?;
     // Write FileMetaInformationGroupLength
-    serialize(&mut writer, DicomAttribute {
+    serialize(writer, DicomAttribute {
       tag: "00020000".to_string(),
       vr: ValueRepresentation::UL,
       payload: Some(Payload::Value(vec![ValuePayload::Numeral(written as f64)])),
@@ -281,8 +281,8 @@ fn main() -> Result<(), Box<dyn Error>> {
   // Write the other meta information
   writer.write(&meta_info_header.as_slice())?;
   // Write the rest of the dicom attributes
-  for (tag, attribute) in result.iter() {
-    serialize(&mut writer, DicomAttribute {
+  for (tag, attribute) in json.iter() {
+    serialize(writer, DicomAttribute {
       tag: tag.to_string(),
       vr: attribute.vr,
       payload: attribute.payload.clone(), // TODO: get rid of clone here
@@ -291,4 +291,14 @@ fn main() -> Result<(), Box<dyn Error>> {
   }
   writer.flush()?;
   Ok(())
+}
+
+fn main() -> Result<(), Box<dyn Error>> {
+  let opt = Opt::from_args();
+  let inputfile = File::open(&opt.jsonfilepath)?;
+  let json: BTreeMap<String, DicomAttributeJson> = serde_json::from_reader(BufReader::new(inputfile))?;
+
+  let outputfile = File::create(&opt.dcmfilepath)?;
+  let mut writer = BufWriter::new(outputfile);
+  json2dcm(&mut writer, &json)
 }
