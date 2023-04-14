@@ -309,18 +309,30 @@ impl<'a> DicomAttribute<'a> {
 }
 
 impl Instance {
+  /**
+   * Returns an instance from a BufReader.
+   * The entire BufReader will be read before returning the instance.
+   */
   pub fn from_buf_reader<T: Read>(mut buf_reader: BufReader<T>) -> Result<Self, DicomError> {
     // Read the whole file into a buffer
     let mut buffer: Vec<u8> = vec![];
+    // TODO: Do not read the whole buffer. Use an abstraction in order to allow
+    // opening file that would not hold in memory.
     buf_reader.read_to_end(&mut buffer)?;
     Instance::from(buffer)
   }
 
+  /**
+   * Returns an instance from a file path.
+   */
   pub fn from_filepath(filepath: &str) -> Result<Self, DicomError> {
     let f = File::open(filepath)?;
     return Instance::from_buf_reader(BufReader::new(f));
   }
 
+  /**
+   * Returns an instance from a Vec<u8>.
+   */
   pub fn from(buffer: Vec<u8>) -> Result<Self, DicomError> {
     // Check it's a DICOM file
     // TODO: Manage headerless DICOM files
@@ -348,6 +360,10 @@ impl Instance {
   //   }
   // }
 
+  /**
+   * Returns the value of a particular DICOM tag.
+   * If the tag is not present in the instance, return Ok(None).
+   */
   pub fn get_value<'a>(self: &'a Self, tag: &Tag) -> Result<Option<DicomValue>, DicomError> {
     // Fast forward the DICOM prefix
     // TODO: Deal with non-comformant DICOM files
@@ -367,6 +383,9 @@ impl Instance {
     };
   }
 
+  /**
+   * Iterates over the DicomAttribute within the Instance.
+   */
   pub fn iter(&self) -> InstanceIter<'_> {
     InstanceIter::new(self)
   }
@@ -450,6 +469,9 @@ impl Instance {
     return Ok(());
   }
 
+  /**
+   * Returns the next attribute.
+   */
   pub fn next_attribute<'a>(self: &'a Self, offset: usize) -> Result<DicomAttribute<'a>, DicomError> {
     // group(u16),element(u16),vr(str[2]),length(u16)
     // println!("next_attribute: {:#04x?}", offset);
