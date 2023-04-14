@@ -1,3 +1,28 @@
+2022-04-14 Been working on various format translation between binary DICOM, json
+           and xml.
+           This lead to the creation of `dicom_representation.rs` which contains
+           the data structure to represent xml and json.
+           Unfortunately, DICOM defines the xml and json format differently. As
+           a consequence we need two slightly different data structure depending
+           on whether we coming from or going to json or xml.
+           The differences are mainly:
+           1. json will represent a DICOM instance as an object which keys are
+           the DICOM tags (xxxx,yyyy) and the values are the attribute content.
+           Whereas xml will treat a DICOM instance as an array where each entry
+           contains its DICOM tag as a field in the dicom attribute. As a
+           consequence, a DicomAttribute node can not be represented the same way
+           for json and xml, that is why two object exists: DicomAttribute and
+           DicomAttributeJson.
+           2. json represents sequences as subobject inside the Value field of a
+           dicom attribute whereas xml represents sequences as a particular tag
+           (Item) inside the attribute directly. For this reason, the enum entry
+           `Payload::Item` is used to represent sequences in xml and the enum
+           entry `ValuePayload::Sequence` is used for json.
+           Both representation are not compatible with each other even though it
+           is always possible to generate json or xml from both structures but
+           they would not be valid according to the DICOM standard.
+           As a consequence of these discrepencies, translation functions are
+           necessary to go from one representation to another.
 2022-01-08 Add Store and delete and return Not Implemented.
            Been using the following page to recoup info on DICOMWeb:
            https://learn.microsoft.com/en-us/azure/healthcare-apis/dicom/dicom-services-conformance-statement
