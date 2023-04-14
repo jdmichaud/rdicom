@@ -27,6 +27,7 @@ then
   exit 1
 fi
 
+echo '// @generated'
 echo '// Copyright (c) 2023 Jean-Daniel Michaud'
 echo '//'
 echo '// Permission is hereby granted, free of charge, to any person obtaining a copy'

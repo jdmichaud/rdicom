@@ -1,10 +1,21 @@
 fn get_git_hash() -> String {
   use std::process::Command;
 
-  let branch_output = Command::new("git").arg("rev-parse").arg("--abbrev-ref").arg("HEAD").output().unwrap();
+  let branch_output = Command::new("git")
+    .arg("rev-parse")
+    .arg("--abbrev-ref")
+    .arg("HEAD")
+    .output()
+    .unwrap();
   let branch_output = String::from_utf8_lossy(&branch_output.stdout);
   let branch = branch_output.lines().next().unwrap();
-  let commit_output = Command::new("git").arg("rev-parse").arg("--verify").arg("--short").arg("HEAD").output().unwrap();
+  let commit_output = Command::new("git")
+    .arg("rev-parse")
+    .arg("--verify")
+    .arg("--short")
+    .arg("HEAD")
+    .output()
+    .unwrap();
   let commit_output = String::from_utf8_lossy(&commit_output.stdout);
   let commit = commit_output.lines().next().unwrap();
   format!("{}-{}", branch, commit)

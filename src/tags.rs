@@ -35,7 +35,7 @@ pub struct Tag {
 
 impl hash::Hash for Tag {
   fn hash<H: hash::Hasher>(&self, state: &mut H) {
-      self.group.hash(state);
-      self.element.hash(state);
+    self.group.hash(state);
+    self.element.hash(state);
   }
 }

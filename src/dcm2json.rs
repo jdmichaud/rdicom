@@ -26,8 +26,8 @@ use rdicom::error::DicomError;
 use rdicom::misc::is_dicom_file;
 use std::error::Error;
 use std::fs::File;
-use structopt::StructOpt;
 use structopt::clap::AppSettings;
+use structopt::StructOpt;
 
 // A simplified dcm2json clone
 #[derive(Debug, StructOpt)]

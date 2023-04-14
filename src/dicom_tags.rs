@@ -24,8 +24,8 @@
 
 use std::convert::TryFrom;
 
-use crate::tags::Tag;
 use crate::error::DicomError;
+use crate::tags::Tag;
 
 pub const FileMetaInformationGroupLength: Tag = Tag {
   group: 0x0002,
@@ -33766,11 +33766,17 @@ impl TryFrom<&str> for Tag {
       "00041141" => Ok(FileSetDescriptorFileID),
       "FILESETDESCRIPTORFILEID" => Ok(FileSetDescriptorFileID),
       "00041142" => Ok(SpecificCharacterSetOfFileSetDescriptorFile),
-      "SPECIFICCHARACTERSETOFFILESETDESCRIPTORFILE" => Ok(SpecificCharacterSetOfFileSetDescriptorFile),
+      "SPECIFICCHARACTERSETOFFILESETDESCRIPTORFILE" => {
+        Ok(SpecificCharacterSetOfFileSetDescriptorFile)
+      }
       "00041200" => Ok(OffsetOfTheFirstDirectoryRecordOfTheRootDirectoryEntity),
-      "OFFSETOFTHEFIRSTDIRECTORYRECORDOFTHEROOTDIRECTORYENTITY" => Ok(OffsetOfTheFirstDirectoryRecordOfTheRootDirectoryEntity),
+      "OFFSETOFTHEFIRSTDIRECTORYRECORDOFTHEROOTDIRECTORYENTITY" => {
+        Ok(OffsetOfTheFirstDirectoryRecordOfTheRootDirectoryEntity)
+      }
       "00041202" => Ok(OffsetOfTheLastDirectoryRecordOfTheRootDirectoryEntity),
-      "OFFSETOFTHELASTDIRECTORYRECORDOFTHEROOTDIRECTORYENTITY" => Ok(OffsetOfTheLastDirectoryRecordOfTheRootDirectoryEntity),
+      "OFFSETOFTHELASTDIRECTORYRECORDOFTHEROOTDIRECTORYENTITY" => {
+        Ok(OffsetOfTheLastDirectoryRecordOfTheRootDirectoryEntity)
+      }
       "00041212" => Ok(FileSetConsistencyFlag),
       "FILESETCONSISTENCYFLAG" => Ok(FileSetConsistencyFlag),
       "00041220" => Ok(DirectoryRecordSequence),
@@ -33780,7 +33786,9 @@ impl TryFrom<&str> for Tag {
       "00041410" => Ok(RecordInUseFlag),
       "RECORDINUSEFLAG" => Ok(RecordInUseFlag),
       "00041420" => Ok(OffsetOfReferencedLowerLevelDirectoryEntity),
-      "OFFSETOFREFERENCEDLOWERLEVELDIRECTORYENTITY" => Ok(OffsetOfReferencedLowerLevelDirectoryEntity),
+      "OFFSETOFREFERENCEDLOWERLEVELDIRECTORYENTITY" => {
+        Ok(OffsetOfReferencedLowerLevelDirectoryEntity)
+      }
       "00041430" => Ok(DirectoryRecordType),
       "DIRECTORYRECORDTYPE" => Ok(DirectoryRecordType),
       "00041432" => Ok(PrivateRecordUID),
@@ -33962,7 +33970,9 @@ impl TryFrom<&str> for Tag {
       "00081060" => Ok(NameOfPhysiciansReadingStudy),
       "NAMEOFPHYSICIANSREADINGSTUDY" => Ok(NameOfPhysiciansReadingStudy),
       "00081062" => Ok(PhysiciansReadingStudyIdentificationSequence),
-      "PHYSICIANSREADINGSTUDYIDENTIFICATIONSEQUENCE" => Ok(PhysiciansReadingStudyIdentificationSequence),
+      "PHYSICIANSREADINGSTUDYIDENTIFICATIONSEQUENCE" => {
+        Ok(PhysiciansReadingStudyIdentificationSequence)
+      }
       "00081070" => Ok(OperatorsName),
       "OPERATORSNAME" => Ok(OperatorsName),
       "00081072" => Ok(OperatorIdentificationSequence),
@@ -33998,7 +34008,9 @@ impl TryFrom<&str> for Tag {
       "0008114A" => Ok(ReferencedInstanceSequence),
       "REFERENCEDINSTANCESEQUENCE" => Ok(ReferencedInstanceSequence),
       "0008114B" => Ok(ReferencedRealWorldValueMappingInstanceSequence),
-      "REFERENCEDREALWORLDVALUEMAPPINGINSTANCESEQUENCE" => Ok(ReferencedRealWorldValueMappingInstanceSequence),
+      "REFERENCEDREALWORLDVALUEMAPPINGINSTANCESEQUENCE" => {
+        Ok(ReferencedRealWorldValueMappingInstanceSequence)
+      }
       "00081150" => Ok(ReferencedSOPClassUID),
       "REFERENCEDSOPCLASSUID" => Ok(ReferencedSOPClassUID),
       "00081155" => Ok(ReferencedSOPInstanceUID),
@@ -34030,7 +34042,9 @@ impl TryFrom<&str> for Tag {
       "00081199" => Ok(ReferencedSOPSequence),
       "REFERENCEDSOPSEQUENCE" => Ok(ReferencedSOPSequence),
       "00081200" => Ok(StudiesContainingOtherReferencedInstancesSequence),
-      "STUDIESCONTAININGOTHERREFERENCEDINSTANCESSEQUENCE" => Ok(StudiesContainingOtherReferencedInstancesSequence),
+      "STUDIESCONTAININGOTHERREFERENCEDINSTANCESSEQUENCE" => {
+        Ok(StudiesContainingOtherReferencedInstancesSequence)
+      }
       "00081250" => Ok(RelatedSeriesSequence),
       "RELATEDSERIESSEQUENCE" => Ok(RelatedSeriesSequence),
       "00082110" => Ok(LossyImageCompressionRetired),
@@ -34094,23 +34108,35 @@ impl TryFrom<&str> for Tag {
       "00082246" => Ok(TransducerOrientationModifierSequence),
       "TRANSDUCERORIENTATIONMODIFIERSEQUENCE" => Ok(TransducerOrientationModifierSequence),
       "00082251" => Ok(AnatomicStructureSpaceOrRegionCodeSequenceTrial),
-      "ANATOMICSTRUCTURESPACEORREGIONCODESEQUENCETRIAL" => Ok(AnatomicStructureSpaceOrRegionCodeSequenceTrial),
+      "ANATOMICSTRUCTURESPACEORREGIONCODESEQUENCETRIAL" => {
+        Ok(AnatomicStructureSpaceOrRegionCodeSequenceTrial)
+      }
       "00082253" => Ok(AnatomicPortalOfEntranceCodeSequenceTrial),
       "ANATOMICPORTALOFENTRANCECODESEQUENCETRIAL" => Ok(AnatomicPortalOfEntranceCodeSequenceTrial),
       "00082255" => Ok(AnatomicApproachDirectionCodeSequenceTrial),
-      "ANATOMICAPPROACHDIRECTIONCODESEQUENCETRIAL" => Ok(AnatomicApproachDirectionCodeSequenceTrial),
+      "ANATOMICAPPROACHDIRECTIONCODESEQUENCETRIAL" => {
+        Ok(AnatomicApproachDirectionCodeSequenceTrial)
+      }
       "00082256" => Ok(AnatomicPerspectiveDescriptionTrial),
       "ANATOMICPERSPECTIVEDESCRIPTIONTRIAL" => Ok(AnatomicPerspectiveDescriptionTrial),
       "00082257" => Ok(AnatomicPerspectiveCodeSequenceTrial),
       "ANATOMICPERSPECTIVECODESEQUENCETRIAL" => Ok(AnatomicPerspectiveCodeSequenceTrial),
       "00082258" => Ok(AnatomicLocationOfExaminingInstrumentDescriptionTrial),
-      "ANATOMICLOCATIONOFEXAMININGINSTRUMENTDESCRIPTIONTRIAL" => Ok(AnatomicLocationOfExaminingInstrumentDescriptionTrial),
+      "ANATOMICLOCATIONOFEXAMININGINSTRUMENTDESCRIPTIONTRIAL" => {
+        Ok(AnatomicLocationOfExaminingInstrumentDescriptionTrial)
+      }
       "00082259" => Ok(AnatomicLocationOfExaminingInstrumentCodeSequenceTrial),
-      "ANATOMICLOCATIONOFEXAMININGINSTRUMENTCODESEQUENCETRIAL" => Ok(AnatomicLocationOfExaminingInstrumentCodeSequenceTrial),
+      "ANATOMICLOCATIONOFEXAMININGINSTRUMENTCODESEQUENCETRIAL" => {
+        Ok(AnatomicLocationOfExaminingInstrumentCodeSequenceTrial)
+      }
       "0008225A" => Ok(AnatomicStructureSpaceOrRegionModifierCodeSequenceTrial),
-      "ANATOMICSTRUCTURESPACEORREGIONMODIFIERCODESEQUENCETRIAL" => Ok(AnatomicStructureSpaceOrRegionModifierCodeSequenceTrial),
+      "ANATOMICSTRUCTURESPACEORREGIONMODIFIERCODESEQUENCETRIAL" => {
+        Ok(AnatomicStructureSpaceOrRegionModifierCodeSequenceTrial)
+      }
       "0008225C" => Ok(OnAxisBackgroundAnatomicStructureCodeSequenceTrial),
-      "ONAXISBACKGROUNDANATOMICSTRUCTURECODESEQUENCETRIAL" => Ok(OnAxisBackgroundAnatomicStructureCodeSequenceTrial),
+      "ONAXISBACKGROUNDANATOMICSTRUCTURECODESEQUENCETRIAL" => {
+        Ok(OnAxisBackgroundAnatomicStructureCodeSequenceTrial)
+      }
       "00083001" => Ok(AlternateRepresentationSequence),
       "ALTERNATEREPRESENTATIONSEQUENCE" => Ok(AlternateRepresentationSequence),
       "00083010" => Ok(IrradiationEventUID),
@@ -34176,7 +34202,9 @@ impl TryFrom<&str> for Tag {
       "00100101" => Ok(PatientPrimaryLanguageCodeSequence),
       "PATIENTPRIMARYLANGUAGECODESEQUENCE" => Ok(PatientPrimaryLanguageCodeSequence),
       "00100102" => Ok(PatientPrimaryLanguageModifierCodeSequence),
-      "PATIENTPRIMARYLANGUAGEMODIFIERCODESEQUENCE" => Ok(PatientPrimaryLanguageModifierCodeSequence),
+      "PATIENTPRIMARYLANGUAGEMODIFIERCODESEQUENCE" => {
+        Ok(PatientPrimaryLanguageModifierCodeSequence)
+      }
       "00100200" => Ok(QualityControlSubject),
       "QUALITYCONTROLSUBJECT" => Ok(QualityControlSubject),
       "00100201" => Ok(QualityControlSubjectTypeCodeSequence),
@@ -34296,7 +34324,9 @@ impl TryFrom<&str> for Tag {
       "00120081" => Ok(ClinicalTrialProtocolEthicsCommitteeName),
       "CLINICALTRIALPROTOCOLETHICSCOMMITTEENAME" => Ok(ClinicalTrialProtocolEthicsCommitteeName),
       "00120082" => Ok(ClinicalTrialProtocolEthicsCommitteeApprovalNumber),
-      "CLINICALTRIALPROTOCOLETHICSCOMMITTEEAPPROVALNUMBER" => Ok(ClinicalTrialProtocolEthicsCommitteeApprovalNumber),
+      "CLINICALTRIALPROTOCOLETHICSCOMMITTEEAPPROVALNUMBER" => {
+        Ok(ClinicalTrialProtocolEthicsCommitteeApprovalNumber)
+      }
       "00120083" => Ok(ConsentForClinicalTrialUseSequence),
       "CONSENTFORCLINICALTRIALUSESEQUENCE" => Ok(ConsentForClinicalTrialUseSequence),
       "00120084" => Ok(DistributionType),
@@ -34392,9 +34422,13 @@ impl TryFrom<&str> for Tag {
       "00142228" => Ok(TransformedAxisUnits),
       "TRANSFORMEDAXISUNITS" => Ok(TransformedAxisUnits),
       "0014222A" => Ok(CoordinateSystemTransformRotationAndScaleMatrix),
-      "COORDINATESYSTEMTRANSFORMROTATIONANDSCALEMATRIX" => Ok(CoordinateSystemTransformRotationAndScaleMatrix),
+      "COORDINATESYSTEMTRANSFORMROTATIONANDSCALEMATRIX" => {
+        Ok(CoordinateSystemTransformRotationAndScaleMatrix)
+      }
       "0014222C" => Ok(CoordinateSystemTransformTranslationMatrix),
-      "COORDINATESYSTEMTRANSFORMTRANSLATIONMATRIX" => Ok(CoordinateSystemTransformTranslationMatrix),
+      "COORDINATESYSTEMTRANSFORMTRANSLATIONMATRIX" => {
+        Ok(CoordinateSystemTransformTranslationMatrix)
+      }
       "00143011" => Ok(InternalDetectorFrameTime),
       "INTERNALDETECTORFRAMETIME" => Ok(InternalDetectorFrameTime),
       "00143012" => Ok(NumberOfFramesIntegrated),
@@ -34738,7 +34772,9 @@ impl TryFrom<&str> for Tag {
       "00181017" => Ok(HardcopyDeviceManufacturer),
       "HARDCOPYDEVICEMANUFACTURER" => Ok(HardcopyDeviceManufacturer),
       "00181018" => Ok(SecondaryCaptureDeviceManufacturerModelName),
-      "SECONDARYCAPTUREDEVICEMANUFACTURERMODELNAME" => Ok(SecondaryCaptureDeviceManufacturerModelName),
+      "SECONDARYCAPTUREDEVICEMANUFACTURERMODELNAME" => {
+        Ok(SecondaryCaptureDeviceManufacturerModelName)
+      }
       "00181019" => Ok(SecondaryCaptureDeviceSoftwareVersions),
       "SECONDARYCAPTUREDEVICESOFTWAREVERSIONS" => Ok(SecondaryCaptureDeviceSoftwareVersions),
       "0018101A" => Ok(HardcopyDeviceSoftwareVersion),
@@ -35538,7 +35574,9 @@ impl TryFrom<&str> for Tag {
       "00189155" => Ok(ParallelReductionFactorOutOfPlane),
       "PARALLELREDUCTIONFACTOROUTOFPLANE" => Ok(ParallelReductionFactorOutOfPlane),
       "00189159" => Ok(SpectroscopyAcquisitionOutOfPlanePhaseSteps),
-      "SPECTROSCOPYACQUISITIONOUTOFPLANEPHASESTEPS" => Ok(SpectroscopyAcquisitionOutOfPlanePhaseSteps),
+      "SPECTROSCOPYACQUISITIONOUTOFPLANEPHASESTEPS" => {
+        Ok(SpectroscopyAcquisitionOutOfPlanePhaseSteps)
+      }
       "00189166" => Ok(BulkMotionStatus),
       "BULKMOTIONSTATUS" => Ok(BulkMotionStatus),
       "00189168" => Ok(ParallelReductionFactorSecondInPlane),
@@ -35576,7 +35614,9 @@ impl TryFrom<&str> for Tag {
       "00189184" => Ok(TaggingDelay),
       "TAGGINGDELAY" => Ok(TaggingDelay),
       "00189185" => Ok(RespiratoryMotionCompensationTechniqueDescription),
-      "RESPIRATORYMOTIONCOMPENSATIONTECHNIQUEDESCRIPTION" => Ok(RespiratoryMotionCompensationTechniqueDescription),
+      "RESPIRATORYMOTIONCOMPENSATIONTECHNIQUEDESCRIPTION" => {
+        Ok(RespiratoryMotionCompensationTechniqueDescription)
+      }
       "00189186" => Ok(RespiratorySignalSourceID),
       "RESPIRATORYSIGNALSOURCEID" => Ok(RespiratorySignalSourceID),
       "00189195" => Ok(ChemicalShiftMinimumIntegrationLimitInHz),
@@ -35802,19 +35842,33 @@ impl TryFrom<&str> for Tag {
       "00189435" => Ok(ExposureControlSensingRegionShape),
       "EXPOSURECONTROLSENSINGREGIONSHAPE" => Ok(ExposureControlSensingRegionShape),
       "00189436" => Ok(ExposureControlSensingRegionLeftVerticalEdge),
-      "EXPOSURECONTROLSENSINGREGIONLEFTVERTICALEDGE" => Ok(ExposureControlSensingRegionLeftVerticalEdge),
+      "EXPOSURECONTROLSENSINGREGIONLEFTVERTICALEDGE" => {
+        Ok(ExposureControlSensingRegionLeftVerticalEdge)
+      }
       "00189437" => Ok(ExposureControlSensingRegionRightVerticalEdge),
-      "EXPOSURECONTROLSENSINGREGIONRIGHTVERTICALEDGE" => Ok(ExposureControlSensingRegionRightVerticalEdge),
+      "EXPOSURECONTROLSENSINGREGIONRIGHTVERTICALEDGE" => {
+        Ok(ExposureControlSensingRegionRightVerticalEdge)
+      }
       "00189438" => Ok(ExposureControlSensingRegionUpperHorizontalEdge),
-      "EXPOSURECONTROLSENSINGREGIONUPPERHORIZONTALEDGE" => Ok(ExposureControlSensingRegionUpperHorizontalEdge),
+      "EXPOSURECONTROLSENSINGREGIONUPPERHORIZONTALEDGE" => {
+        Ok(ExposureControlSensingRegionUpperHorizontalEdge)
+      }
       "00189439" => Ok(ExposureControlSensingRegionLowerHorizontalEdge),
-      "EXPOSURECONTROLSENSINGREGIONLOWERHORIZONTALEDGE" => Ok(ExposureControlSensingRegionLowerHorizontalEdge),
+      "EXPOSURECONTROLSENSINGREGIONLOWERHORIZONTALEDGE" => {
+        Ok(ExposureControlSensingRegionLowerHorizontalEdge)
+      }
       "00189440" => Ok(CenterOfCircularExposureControlSensingRegion),
-      "CENTEROFCIRCULAREXPOSURECONTROLSENSINGREGION" => Ok(CenterOfCircularExposureControlSensingRegion),
+      "CENTEROFCIRCULAREXPOSURECONTROLSENSINGREGION" => {
+        Ok(CenterOfCircularExposureControlSensingRegion)
+      }
       "00189441" => Ok(RadiusOfCircularExposureControlSensingRegion),
-      "RADIUSOFCIRCULAREXPOSURECONTROLSENSINGREGION" => Ok(RadiusOfCircularExposureControlSensingRegion),
+      "RADIUSOFCIRCULAREXPOSURECONTROLSENSINGREGION" => {
+        Ok(RadiusOfCircularExposureControlSensingRegion)
+      }
       "00189442" => Ok(VerticesOfThePolygonalExposureControlSensingRegion),
-      "VERTICESOFTHEPOLYGONALEXPOSURECONTROLSENSINGREGION" => Ok(VerticesOfThePolygonalExposureControlSensingRegion),
+      "VERTICESOFTHEPOLYGONALEXPOSURECONTROLSENSINGREGION" => {
+        Ok(VerticesOfThePolygonalExposureControlSensingRegion)
+      }
       "00189447" => Ok(ColumnAngulationPatient),
       "COLUMNANGULATIONPATIENT" => Ok(ColumnAngulationPatient),
       "00189449" => Ok(BeamAngle),
@@ -35976,7 +36030,9 @@ impl TryFrom<&str> for Tag {
       "00189723" => Ok(TerminationCardiacTriggerCountThreshold),
       "TERMINATIONCARDIACTRIGGERCOUNTTHRESHOLD" => Ok(TerminationCardiacTriggerCountThreshold),
       "00189724" => Ok(TerminationRespiratoryTriggerCountThreshold),
-      "TERMINATIONRESPIRATORYTRIGGERCOUNTTHRESHOLD" => Ok(TerminationRespiratoryTriggerCountThreshold),
+      "TERMINATIONRESPIRATORYTRIGGERCOUNTTHRESHOLD" => {
+        Ok(TerminationRespiratoryTriggerCountThreshold)
+      }
       "00189725" => Ok(DetectorGeometry),
       "DETECTORGEOMETRY" => Ok(DetectorGeometry),
       "00189726" => Ok(TransverseDetectorSeparation),
@@ -36230,9 +36286,13 @@ impl TryFrom<&str> for Tag {
       "00209167" => Ok(FunctionalGroupPointer),
       "FUNCTIONALGROUPPOINTER" => Ok(FunctionalGroupPointer),
       "00209170" => Ok(UnassignedSharedConvertedAttributesSequence),
-      "UNASSIGNEDSHAREDCONVERTEDATTRIBUTESSEQUENCE" => Ok(UnassignedSharedConvertedAttributesSequence),
+      "UNASSIGNEDSHAREDCONVERTEDATTRIBUTESSEQUENCE" => {
+        Ok(UnassignedSharedConvertedAttributesSequence)
+      }
       "00209171" => Ok(UnassignedPerFrameConvertedAttributesSequence),
-      "UNASSIGNEDPERFRAMECONVERTEDATTRIBUTESSEQUENCE" => Ok(UnassignedPerFrameConvertedAttributesSequence),
+      "UNASSIGNEDPERFRAMECONVERTEDATTRIBUTESSEQUENCE" => {
+        Ok(UnassignedPerFrameConvertedAttributesSequence)
+      }
       "00209172" => Ok(ConversionSourceAttributesSequence),
       "CONVERSIONSOURCEATTRIBUTESSEQUENCE" => Ok(ConversionSourceAttributesSequence),
       "00209213" => Ok(DimensionIndexPrivateCreator),
@@ -36414,9 +36474,13 @@ impl TryFrom<&str> for Tag {
       "00220058" => Ok(MydriaticAgentSequence),
       "MYDRIATICAGENTSEQUENCE" => Ok(MydriaticAgentSequence),
       "00221007" => Ok(OphthalmicAxialMeasurementsRightEyeSequence),
-      "OPHTHALMICAXIALMEASUREMENTSRIGHTEYESEQUENCE" => Ok(OphthalmicAxialMeasurementsRightEyeSequence),
+      "OPHTHALMICAXIALMEASUREMENTSRIGHTEYESEQUENCE" => {
+        Ok(OphthalmicAxialMeasurementsRightEyeSequence)
+      }
       "00221008" => Ok(OphthalmicAxialMeasurementsLeftEyeSequence),
-      "OPHTHALMICAXIALMEASUREMENTSLEFTEYESEQUENCE" => Ok(OphthalmicAxialMeasurementsLeftEyeSequence),
+      "OPHTHALMICAXIALMEASUREMENTSLEFTEYESEQUENCE" => {
+        Ok(OphthalmicAxialMeasurementsLeftEyeSequence)
+      }
       "00221009" => Ok(OphthalmicAxialMeasurementsDeviceType),
       "OPHTHALMICAXIALMEASUREMENTSDEVICETYPE" => Ok(OphthalmicAxialMeasurementsDeviceType),
       "00221010" => Ok(OphthalmicAxialLengthMeasurementsType),
@@ -36472,17 +36536,25 @@ impl TryFrom<&str> for Tag {
       "00221097" => Ok(ImplantPartNumber),
       "IMPLANTPARTNUMBER" => Ok(ImplantPartNumber),
       "00221100" => Ok(ReferencedOphthalmicAxialMeasurementsSequence),
-      "REFERENCEDOPHTHALMICAXIALMEASUREMENTSSEQUENCE" => Ok(ReferencedOphthalmicAxialMeasurementsSequence),
+      "REFERENCEDOPHTHALMICAXIALMEASUREMENTSSEQUENCE" => {
+        Ok(ReferencedOphthalmicAxialMeasurementsSequence)
+      }
       "00221101" => Ok(OphthalmicAxialLengthMeasurementsSegmentNameCodeSequence),
-      "OPHTHALMICAXIALLENGTHMEASUREMENTSSEGMENTNAMECODESEQUENCE" => Ok(OphthalmicAxialLengthMeasurementsSegmentNameCodeSequence),
+      "OPHTHALMICAXIALLENGTHMEASUREMENTSSEGMENTNAMECODESEQUENCE" => {
+        Ok(OphthalmicAxialLengthMeasurementsSegmentNameCodeSequence)
+      }
       "00221103" => Ok(RefractiveErrorBeforeRefractiveSurgeryCodeSequence),
-      "REFRACTIVEERRORBEFOREREFRACTIVESURGERYCODESEQUENCE" => Ok(RefractiveErrorBeforeRefractiveSurgeryCodeSequence),
+      "REFRACTIVEERRORBEFOREREFRACTIVESURGERYCODESEQUENCE" => {
+        Ok(RefractiveErrorBeforeRefractiveSurgeryCodeSequence)
+      }
       "00221121" => Ok(IOLPowerForExactEmmetropia),
       "IOLPOWERFOREXACTEMMETROPIA" => Ok(IOLPowerForExactEmmetropia),
       "00221122" => Ok(IOLPowerForExactTargetRefraction),
       "IOLPOWERFOREXACTTARGETREFRACTION" => Ok(IOLPowerForExactTargetRefraction),
       "00221125" => Ok(AnteriorChamberDepthDefinitionCodeSequence),
-      "ANTERIORCHAMBERDEPTHDEFINITIONCODESEQUENCE" => Ok(AnteriorChamberDepthDefinitionCodeSequence),
+      "ANTERIORCHAMBERDEPTHDEFINITIONCODESEQUENCE" => {
+        Ok(AnteriorChamberDepthDefinitionCodeSequence)
+      }
       "00221127" => Ok(LensThicknessSequence),
       "LENSTHICKNESSSEQUENCE" => Ok(LensThicknessSequence),
       "00221128" => Ok(AnteriorChamberDepthSequence),
@@ -36494,53 +36566,95 @@ impl TryFrom<&str> for Tag {
       "00221132" => Ok(SourceOfLensThicknessDataCodeSequence),
       "SOURCEOFLENSTHICKNESSDATACODESEQUENCE" => Ok(SourceOfLensThicknessDataCodeSequence),
       "00221133" => Ok(SourceOfAnteriorChamberDepthDataCodeSequence),
-      "SOURCEOFANTERIORCHAMBERDEPTHDATACODESEQUENCE" => Ok(SourceOfAnteriorChamberDepthDataCodeSequence),
+      "SOURCEOFANTERIORCHAMBERDEPTHDATACODESEQUENCE" => {
+        Ok(SourceOfAnteriorChamberDepthDataCodeSequence)
+      }
       "00221134" => Ok(SourceOfRefractiveMeasurementsSequence),
       "SOURCEOFREFRACTIVEMEASUREMENTSSEQUENCE" => Ok(SourceOfRefractiveMeasurementsSequence),
       "00221135" => Ok(SourceOfRefractiveMeasurementsCodeSequence),
-      "SOURCEOFREFRACTIVEMEASUREMENTSCODESEQUENCE" => Ok(SourceOfRefractiveMeasurementsCodeSequence),
+      "SOURCEOFREFRACTIVEMEASUREMENTSCODESEQUENCE" => {
+        Ok(SourceOfRefractiveMeasurementsCodeSequence)
+      }
       "00221140" => Ok(OphthalmicAxialLengthMeasurementModified),
       "OPHTHALMICAXIALLENGTHMEASUREMENTMODIFIED" => Ok(OphthalmicAxialLengthMeasurementModified),
       "00221150" => Ok(OphthalmicAxialLengthDataSourceCodeSequence),
-      "OPHTHALMICAXIALLENGTHDATASOURCECODESEQUENCE" => Ok(OphthalmicAxialLengthDataSourceCodeSequence),
+      "OPHTHALMICAXIALLENGTHDATASOURCECODESEQUENCE" => {
+        Ok(OphthalmicAxialLengthDataSourceCodeSequence)
+      }
       "00221153" => Ok(OphthalmicAxialLengthAcquisitionMethodCodeSequence),
-      "OPHTHALMICAXIALLENGTHACQUISITIONMETHODCODESEQUENCE" => Ok(OphthalmicAxialLengthAcquisitionMethodCodeSequence),
+      "OPHTHALMICAXIALLENGTHACQUISITIONMETHODCODESEQUENCE" => {
+        Ok(OphthalmicAxialLengthAcquisitionMethodCodeSequence)
+      }
       "00221155" => Ok(SignalToNoiseRatio),
       "SIGNALTONOISERATIO" => Ok(SignalToNoiseRatio),
       "00221159" => Ok(OphthalmicAxialLengthDataSourceDescription),
-      "OPHTHALMICAXIALLENGTHDATASOURCEDESCRIPTION" => Ok(OphthalmicAxialLengthDataSourceDescription),
+      "OPHTHALMICAXIALLENGTHDATASOURCEDESCRIPTION" => {
+        Ok(OphthalmicAxialLengthDataSourceDescription)
+      }
       "00221210" => Ok(OphthalmicAxialLengthMeasurementsTotalLengthSequence),
-      "OPHTHALMICAXIALLENGTHMEASUREMENTSTOTALLENGTHSEQUENCE" => Ok(OphthalmicAxialLengthMeasurementsTotalLengthSequence),
+      "OPHTHALMICAXIALLENGTHMEASUREMENTSTOTALLENGTHSEQUENCE" => {
+        Ok(OphthalmicAxialLengthMeasurementsTotalLengthSequence)
+      }
       "00221211" => Ok(OphthalmicAxialLengthMeasurementsSegmentalLengthSequence),
-      "OPHTHALMICAXIALLENGTHMEASUREMENTSSEGMENTALLENGTHSEQUENCE" => Ok(OphthalmicAxialLengthMeasurementsSegmentalLengthSequence),
+      "OPHTHALMICAXIALLENGTHMEASUREMENTSSEGMENTALLENGTHSEQUENCE" => {
+        Ok(OphthalmicAxialLengthMeasurementsSegmentalLengthSequence)
+      }
       "00221212" => Ok(OphthalmicAxialLengthMeasurementsLengthSummationSequence),
-      "OPHTHALMICAXIALLENGTHMEASUREMENTSLENGTHSUMMATIONSEQUENCE" => Ok(OphthalmicAxialLengthMeasurementsLengthSummationSequence),
+      "OPHTHALMICAXIALLENGTHMEASUREMENTSLENGTHSUMMATIONSEQUENCE" => {
+        Ok(OphthalmicAxialLengthMeasurementsLengthSummationSequence)
+      }
       "00221220" => Ok(UltrasoundOphthalmicAxialLengthMeasurementsSequence),
-      "ULTRASOUNDOPHTHALMICAXIALLENGTHMEASUREMENTSSEQUENCE" => Ok(UltrasoundOphthalmicAxialLengthMeasurementsSequence),
+      "ULTRASOUNDOPHTHALMICAXIALLENGTHMEASUREMENTSSEQUENCE" => {
+        Ok(UltrasoundOphthalmicAxialLengthMeasurementsSequence)
+      }
       "00221225" => Ok(OpticalOphthalmicAxialLengthMeasurementsSequence),
-      "OPTICALOPHTHALMICAXIALLENGTHMEASUREMENTSSEQUENCE" => Ok(OpticalOphthalmicAxialLengthMeasurementsSequence),
+      "OPTICALOPHTHALMICAXIALLENGTHMEASUREMENTSSEQUENCE" => {
+        Ok(OpticalOphthalmicAxialLengthMeasurementsSequence)
+      }
       "00221230" => Ok(UltrasoundSelectedOphthalmicAxialLengthSequence),
-      "ULTRASOUNDSELECTEDOPHTHALMICAXIALLENGTHSEQUENCE" => Ok(UltrasoundSelectedOphthalmicAxialLengthSequence),
+      "ULTRASOUNDSELECTEDOPHTHALMICAXIALLENGTHSEQUENCE" => {
+        Ok(UltrasoundSelectedOphthalmicAxialLengthSequence)
+      }
       "00221250" => Ok(OphthalmicAxialLengthSelectionMethodCodeSequence),
-      "OPHTHALMICAXIALLENGTHSELECTIONMETHODCODESEQUENCE" => Ok(OphthalmicAxialLengthSelectionMethodCodeSequence),
+      "OPHTHALMICAXIALLENGTHSELECTIONMETHODCODESEQUENCE" => {
+        Ok(OphthalmicAxialLengthSelectionMethodCodeSequence)
+      }
       "00221255" => Ok(OpticalSelectedOphthalmicAxialLengthSequence),
-      "OPTICALSELECTEDOPHTHALMICAXIALLENGTHSEQUENCE" => Ok(OpticalSelectedOphthalmicAxialLengthSequence),
+      "OPTICALSELECTEDOPHTHALMICAXIALLENGTHSEQUENCE" => {
+        Ok(OpticalSelectedOphthalmicAxialLengthSequence)
+      }
       "00221257" => Ok(SelectedSegmentalOphthalmicAxialLengthSequence),
-      "SELECTEDSEGMENTALOPHTHALMICAXIALLENGTHSEQUENCE" => Ok(SelectedSegmentalOphthalmicAxialLengthSequence),
+      "SELECTEDSEGMENTALOPHTHALMICAXIALLENGTHSEQUENCE" => {
+        Ok(SelectedSegmentalOphthalmicAxialLengthSequence)
+      }
       "00221260" => Ok(SelectedTotalOphthalmicAxialLengthSequence),
-      "SELECTEDTOTALOPHTHALMICAXIALLENGTHSEQUENCE" => Ok(SelectedTotalOphthalmicAxialLengthSequence),
+      "SELECTEDTOTALOPHTHALMICAXIALLENGTHSEQUENCE" => {
+        Ok(SelectedTotalOphthalmicAxialLengthSequence)
+      }
       "00221262" => Ok(OphthalmicAxialLengthQualityMetricSequence),
-      "OPHTHALMICAXIALLENGTHQUALITYMETRICSEQUENCE" => Ok(OphthalmicAxialLengthQualityMetricSequence),
+      "OPHTHALMICAXIALLENGTHQUALITYMETRICSEQUENCE" => {
+        Ok(OphthalmicAxialLengthQualityMetricSequence)
+      }
       "00221265" => Ok(OphthalmicAxialLengthQualityMetricTypeCodeSequence),
-      "OPHTHALMICAXIALLENGTHQUALITYMETRICTYPECODESEQUENCE" => Ok(OphthalmicAxialLengthQualityMetricTypeCodeSequence),
+      "OPHTHALMICAXIALLENGTHQUALITYMETRICTYPECODESEQUENCE" => {
+        Ok(OphthalmicAxialLengthQualityMetricTypeCodeSequence)
+      }
       "00221273" => Ok(OphthalmicAxialLengthQualityMetricTypeDescription),
-      "OPHTHALMICAXIALLENGTHQUALITYMETRICTYPEDESCRIPTION" => Ok(OphthalmicAxialLengthQualityMetricTypeDescription),
+      "OPHTHALMICAXIALLENGTHQUALITYMETRICTYPEDESCRIPTION" => {
+        Ok(OphthalmicAxialLengthQualityMetricTypeDescription)
+      }
       "00221300" => Ok(IntraocularLensCalculationsRightEyeSequence),
-      "INTRAOCULARLENSCALCULATIONSRIGHTEYESEQUENCE" => Ok(IntraocularLensCalculationsRightEyeSequence),
+      "INTRAOCULARLENSCALCULATIONSRIGHTEYESEQUENCE" => {
+        Ok(IntraocularLensCalculationsRightEyeSequence)
+      }
       "00221310" => Ok(IntraocularLensCalculationsLeftEyeSequence),
-      "INTRAOCULARLENSCALCULATIONSLEFTEYESEQUENCE" => Ok(IntraocularLensCalculationsLeftEyeSequence),
+      "INTRAOCULARLENSCALCULATIONSLEFTEYESEQUENCE" => {
+        Ok(IntraocularLensCalculationsLeftEyeSequence)
+      }
       "00221330" => Ok(ReferencedOphthalmicAxialLengthMeasurementQCImageSequence),
-      "REFERENCEDOPHTHALMICAXIALLENGTHMEASUREMENTQCIMAGESEQUENCE" => Ok(ReferencedOphthalmicAxialLengthMeasurementQCImageSequence),
+      "REFERENCEDOPHTHALMICAXIALLENGTHMEASUREMENTQCIMAGESEQUENCE" => {
+        Ok(ReferencedOphthalmicAxialLengthMeasurementQCImageSequence)
+      }
       "00221415" => Ok(OphthalmicMappingDeviceType),
       "OPHTHALMICMAPPINGDEVICETYPE" => Ok(OphthalmicMappingDeviceType),
       "00221420" => Ok(AcquisitionMethodCodeSequence),
@@ -36560,9 +36674,13 @@ impl TryFrom<&str> for Tag {
       "00221454" => Ok(PixelValueMappingExplanation),
       "PIXELVALUEMAPPINGEXPLANATION" => Ok(PixelValueMappingExplanation),
       "00221458" => Ok(OphthalmicThicknessMapQualityThresholdSequence),
-      "OPHTHALMICTHICKNESSMAPQUALITYTHRESHOLDSEQUENCE" => Ok(OphthalmicThicknessMapQualityThresholdSequence),
+      "OPHTHALMICTHICKNESSMAPQUALITYTHRESHOLDSEQUENCE" => {
+        Ok(OphthalmicThicknessMapQualityThresholdSequence)
+      }
       "00221460" => Ok(OphthalmicThicknessMapThresholdQualityRating),
-      "OPHTHALMICTHICKNESSMAPTHRESHOLDQUALITYRATING" => Ok(OphthalmicThicknessMapThresholdQualityRating),
+      "OPHTHALMICTHICKNESSMAPTHRESHOLDQUALITYRATING" => {
+        Ok(OphthalmicThicknessMapThresholdQualityRating)
+      }
       "00221463" => Ok(AnatomicStructureReferencePoint),
       "ANATOMICSTRUCTUREREFERENCEPOINT" => Ok(AnatomicStructureReferencePoint),
       "00221465" => Ok(RegistrationToLocalizerSequence),
@@ -36574,7 +36692,9 @@ impl TryFrom<&str> for Tag {
       "00221468" => Ok(RegisteredLocalizerBottomRightHandCorner),
       "REGISTEREDLOCALIZERBOTTOMRIGHTHANDCORNER" => Ok(RegisteredLocalizerBottomRightHandCorner),
       "00221470" => Ok(OphthalmicThicknessMapQualityRatingSequence),
-      "OPHTHALMICTHICKNESSMAPQUALITYRATINGSEQUENCE" => Ok(OphthalmicThicknessMapQualityRatingSequence),
+      "OPHTHALMICTHICKNESSMAPQUALITYRATINGSEQUENCE" => {
+        Ok(OphthalmicThicknessMapQualityRatingSequence)
+      }
       "00221472" => Ok(RelevantOPTAttributesSequence),
       "RELEVANTOPTATTRIBUTESSEQUENCE" => Ok(RelevantOPTAttributesSequence),
       "00240010" => Ok(VisualFieldHorizontalExtent),
@@ -36656,11 +36776,15 @@ impl TryFrom<&str> for Tag {
       "00240064" => Ok(ResultsNormalsSequence),
       "RESULTSNORMALSSEQUENCE" => Ok(ResultsNormalsSequence),
       "00240065" => Ok(AgeCorrectedSensitivityDeviationAlgorithmSequence),
-      "AGECORRECTEDSENSITIVITYDEVIATIONALGORITHMSEQUENCE" => Ok(AgeCorrectedSensitivityDeviationAlgorithmSequence),
+      "AGECORRECTEDSENSITIVITYDEVIATIONALGORITHMSEQUENCE" => {
+        Ok(AgeCorrectedSensitivityDeviationAlgorithmSequence)
+      }
       "00240066" => Ok(GlobalDeviationFromNormal),
       "GLOBALDEVIATIONFROMNORMAL" => Ok(GlobalDeviationFromNormal),
       "00240067" => Ok(GeneralizedDefectSensitivityDeviationAlgorithmSequence),
-      "GENERALIZEDDEFECTSENSITIVITYDEVIATIONALGORITHMSEQUENCE" => Ok(GeneralizedDefectSensitivityDeviationAlgorithmSequence),
+      "GENERALIZEDDEFECTSENSITIVITYDEVIATIONALGORITHMSEQUENCE" => {
+        Ok(GeneralizedDefectSensitivityDeviationAlgorithmSequence)
+      }
       "00240068" => Ok(LocalizedDeviationFromNormal),
       "LOCALIZEDDEVIATIONFROMNORMAL" => Ok(LocalizedDeviationFromNormal),
       "00240069" => Ok(PatientReliabilityIndicator),
@@ -36682,13 +36806,19 @@ impl TryFrom<&str> for Tag {
       "00240077" => Ok(ShortTermFluctuationProbability),
       "SHORTTERMFLUCTUATIONPROBABILITY" => Ok(ShortTermFluctuationProbability),
       "00240078" => Ok(CorrectedLocalizedDeviationFromNormalCalculated),
-      "CORRECTEDLOCALIZEDDEVIATIONFROMNORMALCALCULATED" => Ok(CorrectedLocalizedDeviationFromNormalCalculated),
+      "CORRECTEDLOCALIZEDDEVIATIONFROMNORMALCALCULATED" => {
+        Ok(CorrectedLocalizedDeviationFromNormalCalculated)
+      }
       "00240079" => Ok(CorrectedLocalizedDeviationFromNormal),
       "CORRECTEDLOCALIZEDDEVIATIONFROMNORMAL" => Ok(CorrectedLocalizedDeviationFromNormal),
       "00240080" => Ok(CorrectedLocalizedDeviationFromNormalProbabilityCalculated),
-      "CORRECTEDLOCALIZEDDEVIATIONFROMNORMALPROBABILITYCALCULATED" => Ok(CorrectedLocalizedDeviationFromNormalProbabilityCalculated),
+      "CORRECTEDLOCALIZEDDEVIATIONFROMNORMALPROBABILITYCALCULATED" => {
+        Ok(CorrectedLocalizedDeviationFromNormalProbabilityCalculated)
+      }
       "00240081" => Ok(CorrectedLocalizedDeviationFromNormalProbability),
-      "CORRECTEDLOCALIZEDDEVIATIONFROMNORMALPROBABILITY" => Ok(CorrectedLocalizedDeviationFromNormalProbability),
+      "CORRECTEDLOCALIZEDDEVIATIONFROMNORMALPROBABILITY" => {
+        Ok(CorrectedLocalizedDeviationFromNormalProbability)
+      }
       "00240083" => Ok(GlobalDeviationProbabilitySequence),
       "GLOBALDEVIATIONPROBABILITYSEQUENCE" => Ok(GlobalDeviationProbabilitySequence),
       "00240085" => Ok(LocalizedDeviationProbabilitySequence),
@@ -36720,13 +36850,21 @@ impl TryFrom<&str> for Tag {
       "00240098" => Ok(QuantifiedDefect),
       "QUANTIFIEDDEFECT" => Ok(QuantifiedDefect),
       "00240100" => Ok(AgeCorrectedSensitivityDeviationProbabilityValue),
-      "AGECORRECTEDSENSITIVITYDEVIATIONPROBABILITYVALUE" => Ok(AgeCorrectedSensitivityDeviationProbabilityValue),
+      "AGECORRECTEDSENSITIVITYDEVIATIONPROBABILITYVALUE" => {
+        Ok(AgeCorrectedSensitivityDeviationProbabilityValue)
+      }
       "00240102" => Ok(GeneralizedDefectCorrectedSensitivityDeviationFlag),
-      "GENERALIZEDDEFECTCORRECTEDSENSITIVITYDEVIATIONFLAG" => Ok(GeneralizedDefectCorrectedSensitivityDeviationFlag),
+      "GENERALIZEDDEFECTCORRECTEDSENSITIVITYDEVIATIONFLAG" => {
+        Ok(GeneralizedDefectCorrectedSensitivityDeviationFlag)
+      }
       "00240103" => Ok(GeneralizedDefectCorrectedSensitivityDeviationValue),
-      "GENERALIZEDDEFECTCORRECTEDSENSITIVITYDEVIATIONVALUE" => Ok(GeneralizedDefectCorrectedSensitivityDeviationValue),
+      "GENERALIZEDDEFECTCORRECTEDSENSITIVITYDEVIATIONVALUE" => {
+        Ok(GeneralizedDefectCorrectedSensitivityDeviationValue)
+      }
       "00240104" => Ok(GeneralizedDefectCorrectedSensitivityDeviationProbabilityValue),
-      "GENERALIZEDDEFECTCORRECTEDSENSITIVITYDEVIATIONPROBABILITYVALUE" => Ok(GeneralizedDefectCorrectedSensitivityDeviationProbabilityValue),
+      "GENERALIZEDDEFECTCORRECTEDSENSITIVITYDEVIATIONPROBABILITYVALUE" => {
+        Ok(GeneralizedDefectCorrectedSensitivityDeviationProbabilityValue)
+      }
       "00240105" => Ok(MinimumSensitivityValue),
       "MINIMUMSENSITIVITYVALUE" => Ok(MinimumSensitivityValue),
       "00240106" => Ok(BlindSpotLocalized),
@@ -36742,9 +36880,13 @@ impl TryFrom<&str> for Tag {
       "00240113" => Ok(MeasurementLaterality),
       "MEASUREMENTLATERALITY" => Ok(MeasurementLaterality),
       "00240114" => Ok(OphthalmicPatientClinicalInformationLeftEyeSequence),
-      "OPHTHALMICPATIENTCLINICALINFORMATIONLEFTEYESEQUENCE" => Ok(OphthalmicPatientClinicalInformationLeftEyeSequence),
+      "OPHTHALMICPATIENTCLINICALINFORMATIONLEFTEYESEQUENCE" => {
+        Ok(OphthalmicPatientClinicalInformationLeftEyeSequence)
+      }
       "00240115" => Ok(OphthalmicPatientClinicalInformationRightEyeSequence),
-      "OPHTHALMICPATIENTCLINICALINFORMATIONRIGHTEYESEQUENCE" => Ok(OphthalmicPatientClinicalInformationRightEyeSequence),
+      "OPHTHALMICPATIENTCLINICALINFORMATIONRIGHTEYESEQUENCE" => {
+        Ok(OphthalmicPatientClinicalInformationRightEyeSequence)
+      }
       "00240117" => Ok(FovealPointNormativeDataFlag),
       "FOVEALPOINTNORMATIVEDATAFLAG" => Ok(FovealPointNormativeDataFlag),
       "00240118" => Ok(FovealPointProbabilityValue),
@@ -36768,7 +36910,9 @@ impl TryFrom<&str> for Tag {
       "00240309" => Ok(DataSetDescription),
       "DATASETDESCRIPTION" => Ok(DataSetDescription),
       "00240317" => Ok(VisualFieldTestReliabilityGlobalIndexSequence),
-      "VISUALFIELDTESTRELIABILITYGLOBALINDEXSEQUENCE" => Ok(VisualFieldTestReliabilityGlobalIndexSequence),
+      "VISUALFIELDTESTRELIABILITYGLOBALINDEXSEQUENCE" => {
+        Ok(VisualFieldTestReliabilityGlobalIndexSequence)
+      }
       "00240320" => Ok(VisualFieldGlobalResultsIndexSequence),
       "VISUALFIELDGLOBALRESULTSINDEXSEQUENCE" => Ok(VisualFieldGlobalResultsIndexSequence),
       "00240325" => Ok(DataObservationSequence),
@@ -36962,9 +37106,13 @@ impl TryFrom<&str> for Tag {
       "00281111" => Ok(LargeRedPaletteColorLookupTableDescriptor),
       "LARGEREDPALETTECOLORLOOKUPTABLEDESCRIPTOR" => Ok(LargeRedPaletteColorLookupTableDescriptor),
       "00281112" => Ok(LargeGreenPaletteColorLookupTableDescriptor),
-      "LARGEGREENPALETTECOLORLOOKUPTABLEDESCRIPTOR" => Ok(LargeGreenPaletteColorLookupTableDescriptor),
+      "LARGEGREENPALETTECOLORLOOKUPTABLEDESCRIPTOR" => {
+        Ok(LargeGreenPaletteColorLookupTableDescriptor)
+      }
       "00281113" => Ok(LargeBluePaletteColorLookupTableDescriptor),
-      "LARGEBLUEPALETTECOLORLOOKUPTABLEDESCRIPTOR" => Ok(LargeBluePaletteColorLookupTableDescriptor),
+      "LARGEBLUEPALETTECOLORLOOKUPTABLEDESCRIPTOR" => {
+        Ok(LargeBluePaletteColorLookupTableDescriptor)
+      }
       "00281199" => Ok(PaletteColorLookupTableUID),
       "PALETTECOLORLOOKUPTABLEUID" => Ok(PaletteColorLookupTableUID),
       "00281200" => Ok(GrayLookupTableData),
@@ -37112,7 +37260,9 @@ impl TryFrom<&str> for Tag {
       "0028700D" => Ok(ConfigurationDescription),
       "CONFIGURATIONDESCRIPTION" => Ok(ConfigurationDescription),
       "0028700E" => Ok(ReferencedTargetLuminanceCharacteristicsID),
-      "REFERENCEDTARGETLUMINANCECHARACTERISTICSID" => Ok(ReferencedTargetLuminanceCharacteristicsID),
+      "REFERENCEDTARGETLUMINANCECHARACTERISTICSID" => {
+        Ok(ReferencedTargetLuminanceCharacteristicsID)
+      }
       "0028700F" => Ok(QAResultsSequence),
       "QARESULTSSEQUENCE" => Ok(QAResultsSequence),
       "00287010" => Ok(DisplaySubsystemQAResultsSequence),
@@ -37416,7 +37566,9 @@ impl TryFrom<&str> for Tag {
       "003A0248" => Ok(AbsoluteChannelDisplayScale),
       "ABSOLUTECHANNELDISPLAYSCALE" => Ok(AbsoluteChannelDisplayScale),
       "003A0300" => Ok(MultiplexedAudioChannelsDescriptionCodeSequence),
-      "MULTIPLEXEDAUDIOCHANNELSDESCRIPTIONCODESEQUENCE" => Ok(MultiplexedAudioChannelsDescriptionCodeSequence),
+      "MULTIPLEXEDAUDIOCHANNELSDESCRIPTIONCODESEQUENCE" => {
+        Ok(MultiplexedAudioChannelsDescriptionCodeSequence)
+      }
       "003A0301" => Ok(ChannelIdentificationCode),
       "CHANNELIDENTIFICATIONCODE" => Ok(ChannelIdentificationCode),
       "003A0302" => Ok(ChannelMode),
@@ -37442,7 +37594,9 @@ impl TryFrom<&str> for Tag {
       "0040000A" => Ok(StageCodeSequence),
       "STAGECODESEQUENCE" => Ok(StageCodeSequence),
       "0040000B" => Ok(ScheduledPerformingPhysicianIdentificationSequence),
-      "SCHEDULEDPERFORMINGPHYSICIANIDENTIFICATIONSEQUENCE" => Ok(ScheduledPerformingPhysicianIdentificationSequence),
+      "SCHEDULEDPERFORMINGPHYSICIANIDENTIFICATIONSEQUENCE" => {
+        Ok(ScheduledPerformingPhysicianIdentificationSequence)
+      }
       "00400010" => Ok(ScheduledStationName),
       "SCHEDULEDSTATIONNAME" => Ok(ScheduledStationName),
       "00400011" => Ok(ScheduledProcedureStepLocation),
@@ -37472,7 +37626,9 @@ impl TryFrom<&str> for Tag {
       "00400100" => Ok(ScheduledProcedureStepSequence),
       "SCHEDULEDPROCEDURESTEPSEQUENCE" => Ok(ScheduledProcedureStepSequence),
       "00400220" => Ok(ReferencedNonImageCompositeSOPInstanceSequence),
-      "REFERENCEDNONIMAGECOMPOSITESOPINSTANCESEQUENCE" => Ok(ReferencedNonImageCompositeSOPInstanceSequence),
+      "REFERENCEDNONIMAGECOMPOSITESOPINSTANCESEQUENCE" => {
+        Ok(ReferencedNonImageCompositeSOPInstanceSequence)
+      }
       "00400241" => Ok(PerformedStationAETitle),
       "PERFORMEDSTATIONAETITLE" => Ok(PerformedStationAETitle),
       "00400242" => Ok(PerformedStationName),
@@ -37506,7 +37662,9 @@ impl TryFrom<&str> for Tag {
       "00400280" => Ok(CommentsOnThePerformedProcedureStep),
       "COMMENTSONTHEPERFORMEDPROCEDURESTEP" => Ok(CommentsOnThePerformedProcedureStep),
       "00400281" => Ok(PerformedProcedureStepDiscontinuationReasonCodeSequence),
-      "PERFORMEDPROCEDURESTEPDISCONTINUATIONREASONCODESEQUENCE" => Ok(PerformedProcedureStepDiscontinuationReasonCodeSequence),
+      "PERFORMEDPROCEDURESTEPDISCONTINUATIONREASONCODESEQUENCE" => {
+        Ok(PerformedProcedureStepDiscontinuationReasonCodeSequence)
+      }
       "00400293" => Ok(QuantitySequence),
       "QUANTITYSEQUENCE" => Ok(QuantitySequence),
       "00400294" => Ok(Quantity),
@@ -37598,7 +37756,9 @@ impl TryFrom<&str> for Tag {
       "00400610" => Ok(SpecimenPreparationSequence),
       "SPECIMENPREPARATIONSEQUENCE" => Ok(SpecimenPreparationSequence),
       "00400612" => Ok(SpecimenPreparationStepContentItemSequence),
-      "SPECIMENPREPARATIONSTEPCONTENTITEMSEQUENCE" => Ok(SpecimenPreparationStepContentItemSequence),
+      "SPECIMENPREPARATIONSTEPCONTENTITEMSEQUENCE" => {
+        Ok(SpecimenPreparationStepContentItemSequence)
+      }
       "00400620" => Ok(SpecimenLocalizationContentItemSequence),
       "SPECIMENLOCALIZATIONCONTENTITEMSEQUENCE" => Ok(SpecimenLocalizationContentItemSequence),
       "004006FA" => Ok(SlideIdentifier),
@@ -37642,7 +37802,9 @@ impl TryFrom<&str> for Tag {
       "00401010" => Ok(NamesOfIntendedRecipientsOfResults),
       "NAMESOFINTENDEDRECIPIENTSOFRESULTS" => Ok(NamesOfIntendedRecipientsOfResults),
       "00401011" => Ok(IntendedRecipientsOfResultsIdentificationSequence),
-      "INTENDEDRECIPIENTSOFRESULTSIDENTIFICATIONSEQUENCE" => Ok(IntendedRecipientsOfResultsIdentificationSequence),
+      "INTENDEDRECIPIENTSOFRESULTSIDENTIFICATIONSEQUENCE" => {
+        Ok(IntendedRecipientsOfResultsIdentificationSequence)
+      }
       "00401012" => Ok(ReasonForPerformedProcedureCodeSequence),
       "REASONFORPERFORMEDPROCEDURECODESEQUENCE" => Ok(ReasonForPerformedProcedureCodeSequence),
       "00401060" => Ok(RequestedProcedureDescriptionTrial),
@@ -37662,9 +37824,13 @@ impl TryFrom<&str> for Tag {
       "00402005" => Ok(IssueTimeOfImagingServiceRequest),
       "ISSUETIMEOFIMAGINGSERVICEREQUEST" => Ok(IssueTimeOfImagingServiceRequest),
       "00402006" => Ok(PlacerOrderNumberImagingServiceRequestRetired),
-      "PLACERORDERNUMBERIMAGINGSERVICEREQUESTRETIRED" => Ok(PlacerOrderNumberImagingServiceRequestRetired),
+      "PLACERORDERNUMBERIMAGINGSERVICEREQUESTRETIRED" => {
+        Ok(PlacerOrderNumberImagingServiceRequestRetired)
+      }
       "00402007" => Ok(FillerOrderNumberImagingServiceRequestRetired),
-      "FILLERORDERNUMBERIMAGINGSERVICEREQUESTRETIRED" => Ok(FillerOrderNumberImagingServiceRequestRetired),
+      "FILLERORDERNUMBERIMAGINGSERVICEREQUESTRETIRED" => {
+        Ok(FillerOrderNumberImagingServiceRequestRetired)
+      }
       "00402008" => Ok(OrderEnteredBy),
       "ORDERENTEREDBY" => Ok(OrderEnteredBy),
       "00402009" => Ok(OrderEntererLocation),
@@ -37678,31 +37844,49 @@ impl TryFrom<&str> for Tag {
       "00402400" => Ok(ImagingServiceRequestComments),
       "IMAGINGSERVICEREQUESTCOMMENTS" => Ok(ImagingServiceRequestComments),
       "00403001" => Ok(ConfidentialityConstraintOnPatientDataDescription),
-      "CONFIDENTIALITYCONSTRAINTONPATIENTDATADESCRIPTION" => Ok(ConfidentialityConstraintOnPatientDataDescription),
+      "CONFIDENTIALITYCONSTRAINTONPATIENTDATADESCRIPTION" => {
+        Ok(ConfidentialityConstraintOnPatientDataDescription)
+      }
       "00404001" => Ok(GeneralPurposeScheduledProcedureStepStatus),
-      "GENERALPURPOSESCHEDULEDPROCEDURESTEPSTATUS" => Ok(GeneralPurposeScheduledProcedureStepStatus),
+      "GENERALPURPOSESCHEDULEDPROCEDURESTEPSTATUS" => {
+        Ok(GeneralPurposeScheduledProcedureStepStatus)
+      }
       "00404002" => Ok(GeneralPurposePerformedProcedureStepStatus),
-      "GENERALPURPOSEPERFORMEDPROCEDURESTEPSTATUS" => Ok(GeneralPurposePerformedProcedureStepStatus),
+      "GENERALPURPOSEPERFORMEDPROCEDURESTEPSTATUS" => {
+        Ok(GeneralPurposePerformedProcedureStepStatus)
+      }
       "00404003" => Ok(GeneralPurposeScheduledProcedureStepPriority),
-      "GENERALPURPOSESCHEDULEDPROCEDURESTEPPRIORITY" => Ok(GeneralPurposeScheduledProcedureStepPriority),
+      "GENERALPURPOSESCHEDULEDPROCEDURESTEPPRIORITY" => {
+        Ok(GeneralPurposeScheduledProcedureStepPriority)
+      }
       "00404004" => Ok(ScheduledProcessingApplicationsCodeSequence),
-      "SCHEDULEDPROCESSINGAPPLICATIONSCODESEQUENCE" => Ok(ScheduledProcessingApplicationsCodeSequence),
+      "SCHEDULEDPROCESSINGAPPLICATIONSCODESEQUENCE" => {
+        Ok(ScheduledProcessingApplicationsCodeSequence)
+      }
       "00404005" => Ok(ScheduledProcedureStepStartDateTime),
       "SCHEDULEDPROCEDURESTEPSTARTDATETIME" => Ok(ScheduledProcedureStepStartDateTime),
       "00404006" => Ok(MultipleCopiesFlag),
       "MULTIPLECOPIESFLAG" => Ok(MultipleCopiesFlag),
       "00404007" => Ok(PerformedProcessingApplicationsCodeSequence),
-      "PERFORMEDPROCESSINGAPPLICATIONSCODESEQUENCE" => Ok(PerformedProcessingApplicationsCodeSequence),
+      "PERFORMEDPROCESSINGAPPLICATIONSCODESEQUENCE" => {
+        Ok(PerformedProcessingApplicationsCodeSequence)
+      }
       "00404009" => Ok(HumanPerformerCodeSequence),
       "HUMANPERFORMERCODESEQUENCE" => Ok(HumanPerformerCodeSequence),
       "00404010" => Ok(ScheduledProcedureStepModificationDateTime),
-      "SCHEDULEDPROCEDURESTEPMODIFICATIONDATETIME" => Ok(ScheduledProcedureStepModificationDateTime),
+      "SCHEDULEDPROCEDURESTEPMODIFICATIONDATETIME" => {
+        Ok(ScheduledProcedureStepModificationDateTime)
+      }
       "00404011" => Ok(ExpectedCompletionDateTime),
       "EXPECTEDCOMPLETIONDATETIME" => Ok(ExpectedCompletionDateTime),
       "00404015" => Ok(ResultingGeneralPurposePerformedProcedureStepsSequence),
-      "RESULTINGGENERALPURPOSEPERFORMEDPROCEDURESTEPSSEQUENCE" => Ok(ResultingGeneralPurposePerformedProcedureStepsSequence),
+      "RESULTINGGENERALPURPOSEPERFORMEDPROCEDURESTEPSSEQUENCE" => {
+        Ok(ResultingGeneralPurposePerformedProcedureStepsSequence)
+      }
       "00404016" => Ok(ReferencedGeneralPurposeScheduledProcedureStepSequence),
-      "REFERENCEDGENERALPURPOSESCHEDULEDPROCEDURESTEPSEQUENCE" => Ok(ReferencedGeneralPurposeScheduledProcedureStepSequence),
+      "REFERENCEDGENERALPURPOSESCHEDULEDPROCEDURESTEPSEQUENCE" => {
+        Ok(ReferencedGeneralPurposeScheduledProcedureStepSequence)
+      }
       "00404018" => Ok(ScheduledWorkitemCodeSequence),
       "SCHEDULEDWORKITEMCODESEQUENCE" => Ok(ScheduledWorkitemCodeSequence),
       "00404019" => Ok(PerformedWorkitemCodeSequence),
@@ -37714,19 +37898,25 @@ impl TryFrom<&str> for Tag {
       "00404022" => Ok(RelevantInformationSequence),
       "RELEVANTINFORMATIONSEQUENCE" => Ok(RelevantInformationSequence),
       "00404023" => Ok(ReferencedGeneralPurposeScheduledProcedureStepTransactionUID),
-      "REFERENCEDGENERALPURPOSESCHEDULEDPROCEDURESTEPTRANSACTIONUID" => Ok(ReferencedGeneralPurposeScheduledProcedureStepTransactionUID),
+      "REFERENCEDGENERALPURPOSESCHEDULEDPROCEDURESTEPTRANSACTIONUID" => {
+        Ok(ReferencedGeneralPurposeScheduledProcedureStepTransactionUID)
+      }
       "00404025" => Ok(ScheduledStationNameCodeSequence),
       "SCHEDULEDSTATIONNAMECODESEQUENCE" => Ok(ScheduledStationNameCodeSequence),
       "00404026" => Ok(ScheduledStationClassCodeSequence),
       "SCHEDULEDSTATIONCLASSCODESEQUENCE" => Ok(ScheduledStationClassCodeSequence),
       "00404027" => Ok(ScheduledStationGeographicLocationCodeSequence),
-      "SCHEDULEDSTATIONGEOGRAPHICLOCATIONCODESEQUENCE" => Ok(ScheduledStationGeographicLocationCodeSequence),
+      "SCHEDULEDSTATIONGEOGRAPHICLOCATIONCODESEQUENCE" => {
+        Ok(ScheduledStationGeographicLocationCodeSequence)
+      }
       "00404028" => Ok(PerformedStationNameCodeSequence),
       "PERFORMEDSTATIONNAMECODESEQUENCE" => Ok(PerformedStationNameCodeSequence),
       "00404029" => Ok(PerformedStationClassCodeSequence),
       "PERFORMEDSTATIONCLASSCODESEQUENCE" => Ok(PerformedStationClassCodeSequence),
       "00404030" => Ok(PerformedStationGeographicLocationCodeSequence),
-      "PERFORMEDSTATIONGEOGRAPHICLOCATIONCODESEQUENCE" => Ok(PerformedStationGeographicLocationCodeSequence),
+      "PERFORMEDSTATIONGEOGRAPHICLOCATIONCODESEQUENCE" => {
+        Ok(PerformedStationGeographicLocationCodeSequence)
+      }
       "00404031" => Ok(RequestedSubsequentWorkitemCodeSequence),
       "REQUESTEDSUBSEQUENTWORKITEMCODESEQUENCE" => Ok(RequestedSubsequentWorkitemCodeSequence),
       "00404032" => Ok(NonDICOMOutputCodeSequence),
@@ -37754,7 +37944,9 @@ impl TryFrom<&str> for Tag {
       "00408302" => Ok(EntranceDoseInmGy),
       "ENTRANCEDOSEINMGY" => Ok(EntranceDoseInmGy),
       "00409094" => Ok(ReferencedImageRealWorldValueMappingSequence),
-      "REFERENCEDIMAGEREALWORLDVALUEMAPPINGSEQUENCE" => Ok(ReferencedImageRealWorldValueMappingSequence),
+      "REFERENCEDIMAGEREALWORLDVALUEMAPPINGSEQUENCE" => {
+        Ok(ReferencedImageRealWorldValueMappingSequence)
+      }
       "00409096" => Ok(RealWorldValueMappingSequence),
       "REALWORLDVALUEMAPPINGSEQUENCE" => Ok(RealWorldValueMappingSequence),
       "00409098" => Ok(PixelValueMappingCodeSequence),
@@ -37790,7 +37982,9 @@ impl TryFrom<&str> for Tag {
       "0040A027" => Ok(VerifyingOrganization),
       "VERIFYINGORGANIZATION" => Ok(VerifyingOrganization),
       "0040A028" => Ok(DocumentingOrganizationIdentifierCodeSequenceTrial),
-      "DOCUMENTINGORGANIZATIONIDENTIFIERCODESEQUENCETRIAL" => Ok(DocumentingOrganizationIdentifierCodeSequenceTrial),
+      "DOCUMENTINGORGANIZATIONIDENTIFIERCODESEQUENCETRIAL" => {
+        Ok(DocumentingOrganizationIdentifierCodeSequenceTrial)
+      }
       "0040A030" => Ok(VerificationDateTime),
       "VERIFICATIONDATETIME" => Ok(VerificationDateTime),
       "0040A032" => Ok(ObservationDateTime),
@@ -37822,7 +38016,9 @@ impl TryFrom<&str> for Tag {
       "0040A075" => Ok(VerifyingObserverName),
       "VERIFYINGOBSERVERNAME" => Ok(VerifyingObserverName),
       "0040A076" => Ok(DocumentingObserverIdentifierCodeSequenceTrial),
-      "DOCUMENTINGOBSERVERIDENTIFIERCODESEQUENCETRIAL" => Ok(DocumentingObserverIdentifierCodeSequenceTrial),
+      "DOCUMENTINGOBSERVERIDENTIFIERCODESEQUENCETRIAL" => {
+        Ok(DocumentingObserverIdentifierCodeSequenceTrial)
+      }
       "0040A078" => Ok(AuthorObserverSequence),
       "AUTHOROBSERVERSEQUENCE" => Ok(AuthorObserverSequence),
       "0040A07A" => Ok(ParticipantSequence),
@@ -37838,7 +38034,9 @@ impl TryFrom<&str> for Tag {
       "0040A085" => Ok(ProcedureIdentifierCodeSequenceTrial),
       "PROCEDUREIDENTIFIERCODESEQUENCETRIAL" => Ok(ProcedureIdentifierCodeSequenceTrial),
       "0040A088" => Ok(VerifyingObserverIdentificationCodeSequence),
-      "VERIFYINGOBSERVERIDENTIFICATIONCODESEQUENCE" => Ok(VerifyingObserverIdentificationCodeSequence),
+      "VERIFYINGOBSERVERIDENTIFICATIONCODESEQUENCE" => {
+        Ok(VerifyingObserverIdentificationCodeSequence)
+      }
       "0040A089" => Ok(ObjectDirectoryBinaryIdentifierTrial),
       "OBJECTDIRECTORYBINARYIDENTIFIERTRIAL" => Ok(ObjectDirectoryBinaryIdentifierTrial),
       "0040A090" => Ok(EquivalentCDADocumentSequence),
@@ -37848,7 +38046,9 @@ impl TryFrom<&str> for Tag {
       "0040A110" => Ok(DateOfDocumentOrVerbalTransactionTrial),
       "DATEOFDOCUMENTORVERBALTRANSACTIONTRIAL" => Ok(DateOfDocumentOrVerbalTransactionTrial),
       "0040A112" => Ok(TimeOfDocumentCreationOrVerbalTransactionTrial),
-      "TIMEOFDOCUMENTCREATIONORVERBALTRANSACTIONTRIAL" => Ok(TimeOfDocumentCreationOrVerbalTransactionTrial),
+      "TIMEOFDOCUMENTCREATIONORVERBALTRANSACTIONTRIAL" => {
+        Ok(TimeOfDocumentCreationOrVerbalTransactionTrial)
+      }
       "0040A120" => Ok(DateTime),
       "DATETIME" => Ok(DateTime),
       "0040A121" => Ok(Date),
@@ -38670,7 +38870,9 @@ impl TryFrom<&str> for Tag {
       "0066002C" => Ok(ReferencedSurfaceNumber),
       "REFERENCEDSURFACENUMBER" => Ok(ReferencedSurfaceNumber),
       "0066002D" => Ok(SegmentSurfaceGenerationAlgorithmIdentificationSequence),
-      "SEGMENTSURFACEGENERATIONALGORITHMIDENTIFICATIONSEQUENCE" => Ok(SegmentSurfaceGenerationAlgorithmIdentificationSequence),
+      "SEGMENTSURFACEGENERATIONALGORITHMIDENTIFICATIONSEQUENCE" => {
+        Ok(SegmentSurfaceGenerationAlgorithmIdentificationSequence)
+      }
       "0066002E" => Ok(SegmentSurfaceSourceInstanceSequence),
       "SEGMENTSURFACESOURCEINSTANCESEQUENCE" => Ok(SegmentSurfaceSourceInstanceSequence),
       "0066002F" => Ok(AlgorithmFamilyCodeSequence),
@@ -38684,7 +38886,9 @@ impl TryFrom<&str> for Tag {
       "00660034" => Ok(FacetSequence),
       "FACETSEQUENCE" => Ok(FacetSequence),
       "00660035" => Ok(SurfaceProcessingAlgorithmIdentificationSequence),
-      "SURFACEPROCESSINGALGORITHMIDENTIFICATIONSEQUENCE" => Ok(SurfaceProcessingAlgorithmIdentificationSequence),
+      "SURFACEPROCESSINGALGORITHMIDENTIFICATIONSEQUENCE" => {
+        Ok(SurfaceProcessingAlgorithmIdentificationSequence)
+      }
       "00660036" => Ok(AlgorithmName),
       "ALGORITHMNAME" => Ok(AlgorithmName),
       "00660037" => Ok(RecommendedPointRadius),
@@ -38810,7 +39014,9 @@ impl TryFrom<&str> for Tag {
       "00686540" => Ok(PlanningLandmarkDescription),
       "PLANNINGLANDMARKDESCRIPTION" => Ok(PlanningLandmarkDescription),
       "00686545" => Ok(PlanningLandmarkIdentificationCodeSequence),
-      "PLANNINGLANDMARKIDENTIFICATIONCODESEQUENCE" => Ok(PlanningLandmarkIdentificationCodeSequence),
+      "PLANNINGLANDMARKIDENTIFICATIONCODESEQUENCE" => {
+        Ok(PlanningLandmarkIdentificationCodeSequence)
+      }
       "00686550" => Ok(TwoDPointCoordinatesSequence),
       "TWODPOINTCOORDINATESSEQUENCE" => Ok(TwoDPointCoordinatesSequence),
       "00686560" => Ok(TwoDPointCoordinates),
@@ -38888,7 +39094,9 @@ impl TryFrom<&str> for Tag {
       "00700062" => Ok(GraphicLayerOrder),
       "GRAPHICLAYERORDER" => Ok(GraphicLayerOrder),
       "00700066" => Ok(GraphicLayerRecommendedDisplayGrayscaleValue),
-      "GRAPHICLAYERRECOMMENDEDDISPLAYGRAYSCALEVALUE" => Ok(GraphicLayerRecommendedDisplayGrayscaleValue),
+      "GRAPHICLAYERRECOMMENDEDDISPLAYGRAYSCALEVALUE" => {
+        Ok(GraphicLayerRecommendedDisplayGrayscaleValue)
+      }
       "00700067" => Ok(GraphicLayerRecommendedDisplayRGBValue),
       "GRAPHICLAYERRECOMMENDEDDISPLAYRGBVALUE" => Ok(GraphicLayerRecommendedDisplayRGBValue),
       "00700068" => Ok(GraphicLayerDescription),
@@ -39056,7 +39264,9 @@ impl TryFrom<&str> for Tag {
       "0072000C" => Ok(HangingProtocolDefinitionSequence),
       "HANGINGPROTOCOLDEFINITIONSEQUENCE" => Ok(HangingProtocolDefinitionSequence),
       "0072000E" => Ok(HangingProtocolUserIdentificationCodeSequence),
-      "HANGINGPROTOCOLUSERIDENTIFICATIONCODESEQUENCE" => Ok(HangingProtocolUserIdentificationCodeSequence),
+      "HANGINGPROTOCOLUSERIDENTIFICATIONCODESEQUENCE" => {
+        Ok(HangingProtocolUserIdentificationCodeSequence)
+      }
       "00720010" => Ok(HangingProtocolUserGroupName),
       "HANGINGPROTOCOLUSERGROUPNAME" => Ok(HangingProtocolUserGroupName),
       "00720012" => Ok(SourceHangingProtocolSequence),
@@ -39242,7 +39452,9 @@ impl TryFrom<&str> for Tag {
       "00720704" => Ok(PseudoColorType),
       "PSEUDOCOLORTYPE" => Ok(PseudoColorType),
       "00720705" => Ok(PseudoColorPaletteInstanceReferenceSequence),
-      "PSEUDOCOLORPALETTEINSTANCEREFERENCESEQUENCE" => Ok(PseudoColorPaletteInstanceReferenceSequence),
+      "PSEUDOCOLORPALETTEINSTANCEREFERENCESEQUENCE" => {
+        Ok(PseudoColorPaletteInstanceReferenceSequence)
+      }
       "00720706" => Ok(ShowGrayscaleInverted),
       "SHOWGRAYSCALEINVERTED" => Ok(ShowGrayscaleInverted),
       "00720710" => Ok(ShowImageTrueSizeFlag),
@@ -39276,7 +39488,9 @@ impl TryFrom<&str> for Tag {
       "0074100C" => Ok(ContactDisplayName),
       "CONTACTDISPLAYNAME" => Ok(ContactDisplayName),
       "0074100E" => Ok(ProcedureStepDiscontinuationReasonCodeSequence),
-      "PROCEDURESTEPDISCONTINUATIONREASONCODESEQUENCE" => Ok(ProcedureStepDiscontinuationReasonCodeSequence),
+      "PROCEDURESTEPDISCONTINUATIONREASONCODESEQUENCE" => {
+        Ok(ProcedureStepDiscontinuationReasonCodeSequence)
+      }
       "00741020" => Ok(BeamTaskSequence),
       "BEAMTASKSEQUENCE" => Ok(BeamTaskSequence),
       "00741022" => Ok(BeamTaskType),
@@ -39324,7 +39538,9 @@ impl TryFrom<&str> for Tag {
       "0074104A" => Ok(OverriddenAttributesSequence),
       "OVERRIDDENATTRIBUTESSEQUENCE" => Ok(OverriddenAttributesSequence),
       "0074104C" => Ok(ConventionalControlPointVerificationSequence),
-      "CONVENTIONALCONTROLPOINTVERIFICATIONSEQUENCE" => Ok(ConventionalControlPointVerificationSequence),
+      "CONVENTIONALCONTROLPOINTVERIFICATIONSEQUENCE" => {
+        Ok(ConventionalControlPointVerificationSequence)
+      }
       "0074104E" => Ok(IonControlPointVerificationSequence),
       "IONCONTROLPOINTVERIFICATIONSEQUENCE" => Ok(IonControlPointVerificationSequence),
       "00741050" => Ok(AttributeOccurrenceSequence),
@@ -39348,7 +39564,9 @@ impl TryFrom<&str> for Tag {
       "00741212" => Ok(PerformedProcessingParametersSequence),
       "PERFORMEDPROCESSINGPARAMETERSSEQUENCE" => Ok(PerformedProcessingParametersSequence),
       "00741216" => Ok(UnifiedProcedureStepPerformedProcedureSequence),
-      "UNIFIEDPROCEDURESTEPPERFORMEDPROCEDURESEQUENCE" => Ok(UnifiedProcedureStepPerformedProcedureSequence),
+      "UNIFIEDPROCEDURESTEPPERFORMEDPROCEDURESEQUENCE" => {
+        Ok(UnifiedProcedureStepPerformedProcedureSequence)
+      }
       "00741220" => Ok(RelatedProcedureStepSequence),
       "RELATEDPROCEDURESTEPSEQUENCE" => Ok(RelatedProcedureStepSequence),
       "00741222" => Ok(ProcedureStepRelationshipType),
@@ -39390,7 +39608,9 @@ impl TryFrom<&str> for Tag {
       "0076000E" => Ok(DerivationImplantAssemblyTemplateSequence),
       "DERIVATIONIMPLANTASSEMBLYTEMPLATESEQUENCE" => Ok(DerivationImplantAssemblyTemplateSequence),
       "00760010" => Ok(ImplantAssemblyTemplateTargetAnatomySequence),
-      "IMPLANTASSEMBLYTEMPLATETARGETANATOMYSEQUENCE" => Ok(ImplantAssemblyTemplateTargetAnatomySequence),
+      "IMPLANTASSEMBLYTEMPLATETARGETANATOMYSEQUENCE" => {
+        Ok(ImplantAssemblyTemplateTargetAnatomySequence)
+      }
       "00760020" => Ok(ProcedureTypeCodeSequence),
       "PROCEDURETYPECODESEQUENCE" => Ok(ProcedureTypeCodeSequence),
       "00760030" => Ok(SurgicalTechnique),
@@ -39438,25 +39658,43 @@ impl TryFrom<&str> for Tag {
       "0078002E" => Ok(ImplantTemplateGroupMemberID),
       "IMPLANTTEMPLATEGROUPMEMBERID" => Ok(ImplantTemplateGroupMemberID),
       "00780050" => Ok(ThreeDImplantTemplateGroupMemberMatchingPoint),
-      "THREEDIMPLANTTEMPLATEGROUPMEMBERMATCHINGPOINT" => Ok(ThreeDImplantTemplateGroupMemberMatchingPoint),
+      "THREEDIMPLANTTEMPLATEGROUPMEMBERMATCHINGPOINT" => {
+        Ok(ThreeDImplantTemplateGroupMemberMatchingPoint)
+      }
       "00780060" => Ok(ThreeDImplantTemplateGroupMemberMatchingAxes),
-      "THREEDIMPLANTTEMPLATEGROUPMEMBERMATCHINGAXES" => Ok(ThreeDImplantTemplateGroupMemberMatchingAxes),
+      "THREEDIMPLANTTEMPLATEGROUPMEMBERMATCHINGAXES" => {
+        Ok(ThreeDImplantTemplateGroupMemberMatchingAxes)
+      }
       "00780070" => Ok(ImplantTemplateGroupMemberMatching2DCoordinatesSequence),
-      "IMPLANTTEMPLATEGROUPMEMBERMATCHING2DCOORDINATESSEQUENCE" => Ok(ImplantTemplateGroupMemberMatching2DCoordinatesSequence),
+      "IMPLANTTEMPLATEGROUPMEMBERMATCHING2DCOORDINATESSEQUENCE" => {
+        Ok(ImplantTemplateGroupMemberMatching2DCoordinatesSequence)
+      }
       "00780090" => Ok(TwoDImplantTemplateGroupMemberMatchingPoint),
-      "TWODIMPLANTTEMPLATEGROUPMEMBERMATCHINGPOINT" => Ok(TwoDImplantTemplateGroupMemberMatchingPoint),
+      "TWODIMPLANTTEMPLATEGROUPMEMBERMATCHINGPOINT" => {
+        Ok(TwoDImplantTemplateGroupMemberMatchingPoint)
+      }
       "007800A0" => Ok(TwoDImplantTemplateGroupMemberMatchingAxes),
-      "TWODIMPLANTTEMPLATEGROUPMEMBERMATCHINGAXES" => Ok(TwoDImplantTemplateGroupMemberMatchingAxes),
+      "TWODIMPLANTTEMPLATEGROUPMEMBERMATCHINGAXES" => {
+        Ok(TwoDImplantTemplateGroupMemberMatchingAxes)
+      }
       "007800B0" => Ok(ImplantTemplateGroupVariationDimensionSequence),
-      "IMPLANTTEMPLATEGROUPVARIATIONDIMENSIONSEQUENCE" => Ok(ImplantTemplateGroupVariationDimensionSequence),
+      "IMPLANTTEMPLATEGROUPVARIATIONDIMENSIONSEQUENCE" => {
+        Ok(ImplantTemplateGroupVariationDimensionSequence)
+      }
       "007800B2" => Ok(ImplantTemplateGroupVariationDimensionName),
-      "IMPLANTTEMPLATEGROUPVARIATIONDIMENSIONNAME" => Ok(ImplantTemplateGroupVariationDimensionName),
+      "IMPLANTTEMPLATEGROUPVARIATIONDIMENSIONNAME" => {
+        Ok(ImplantTemplateGroupVariationDimensionName)
+      }
       "007800B4" => Ok(ImplantTemplateGroupVariationDimensionRankSequence),
-      "IMPLANTTEMPLATEGROUPVARIATIONDIMENSIONRANKSEQUENCE" => Ok(ImplantTemplateGroupVariationDimensionRankSequence),
+      "IMPLANTTEMPLATEGROUPVARIATIONDIMENSIONRANKSEQUENCE" => {
+        Ok(ImplantTemplateGroupVariationDimensionRankSequence)
+      }
       "007800B6" => Ok(ReferencedImplantTemplateGroupMemberID),
       "REFERENCEDIMPLANTTEMPLATEGROUPMEMBERID" => Ok(ReferencedImplantTemplateGroupMemberID),
       "007800B8" => Ok(ImplantTemplateGroupVariationDimensionRank),
-      "IMPLANTTEMPLATEGROUPVARIATIONDIMENSIONRANK" => Ok(ImplantTemplateGroupVariationDimensionRank),
+      "IMPLANTTEMPLATEGROUPVARIATIONDIMENSIONRANK" => {
+        Ok(ImplantTemplateGroupVariationDimensionRank)
+      }
       "00800001" => Ok(SurfaceScanAcquisitionTypeCodeSequence),
       "SURFACESCANACQUISITIONTYPECODESEQUENCE" => Ok(SurfaceScanAcquisitionTypeCodeSequence),
       "00800002" => Ok(SurfaceScanModeCodeSequence),
@@ -39756,7 +39994,9 @@ impl TryFrom<&str> for Tag {
       "213000C0" => Ok(OriginalImageSequence),
       "ORIGINALIMAGESEQUENCE" => Ok(OriginalImageSequence),
       "22000001" => Ok(LabelUsingInformationExtractedFromInstances),
-      "LABELUSINGINFORMATIONEXTRACTEDFROMINSTANCES" => Ok(LabelUsingInformationExtractedFromInstances),
+      "LABELUSINGINFORMATIONEXTRACTEDFROMINSTANCES" => {
+        Ok(LabelUsingInformationExtractedFromInstances)
+      }
       "22000002" => Ok(LabelText),
       "LABELTEXT" => Ok(LabelText),
       "22000003" => Ok(LabelStyleSelection),
@@ -39774,7 +40014,9 @@ impl TryFrom<&str> for Tag {
       "22000009" => Ok(IncludeDisplayApplication),
       "INCLUDEDISPLAYAPPLICATION" => Ok(IncludeDisplayApplication),
       "2200000A" => Ok(PreserveCompositeInstancesAfterMediaCreation),
-      "PRESERVECOMPOSITEINSTANCESAFTERMEDIACREATION" => Ok(PreserveCompositeInstancesAfterMediaCreation),
+      "PRESERVECOMPOSITEINSTANCESAFTERMEDIACREATION" => {
+        Ok(PreserveCompositeInstancesAfterMediaCreation)
+      }
       "2200000B" => Ok(TotalNumberOfPiecesOfMediaCreated),
       "TOTALNUMBEROFPIECESOFMEDIACREATED" => Ok(TotalNumberOfPiecesOfMediaCreated),
       "2200000C" => Ok(RequestedMediaApplicationProfile),
@@ -40042,7 +40284,9 @@ impl TryFrom<&str> for Tag {
       "30080048" => Ok(DoseRateDelivered),
       "DOSERATEDELIVERED" => Ok(DoseRateDelivered),
       "30080050" => Ok(TreatmentSummaryCalculatedDoseReferenceSequence),
-      "TREATMENTSUMMARYCALCULATEDDOSEREFERENCESEQUENCE" => Ok(TreatmentSummaryCalculatedDoseReferenceSequence),
+      "TREATMENTSUMMARYCALCULATEDDOSEREFERENCESEQUENCE" => {
+        Ok(TreatmentSummaryCalculatedDoseReferenceSequence)
+      }
       "30080052" => Ok(CumulativeDoseToDoseReference),
       "CUMULATIVEDOSETODOSEREFERENCE" => Ok(CumulativeDoseToDoseReference),
       "30080054" => Ok(FirstTreatmentDate),
@@ -40098,7 +40342,9 @@ impl TryFrom<&str> for Tag {
       "300800D0" => Ok(RecordedBlockSequence),
       "RECORDEDBLOCKSEQUENCE" => Ok(RecordedBlockSequence),
       "300800E0" => Ok(TreatmentSummaryMeasuredDoseReferenceSequence),
-      "TREATMENTSUMMARYMEASUREDDOSEREFERENCESEQUENCE" => Ok(TreatmentSummaryMeasuredDoseReferenceSequence),
+      "TREATMENTSUMMARYMEASUREDDOSEREFERENCESEQUENCE" => {
+        Ok(TreatmentSummaryMeasuredDoseReferenceSequence)
+      }
       "300800F0" => Ok(RecordedSnoutSequence),
       "RECORDEDSNOUTSEQUENCE" => Ok(RecordedSnoutSequence),
       "300800F2" => Ok(RecordedRangeShifterSequence),
@@ -40152,7 +40398,9 @@ impl TryFrom<&str> for Tag {
       "30080168" => Ok(SafePositionReturnTime),
       "SAFEPOSITIONRETURNTIME" => Ok(SafePositionReturnTime),
       "30080171" => Ok(PulseSpecificBrachyControlPointDeliveredSequence),
-      "PULSESPECIFICBRACHYCONTROLPOINTDELIVEREDSEQUENCE" => Ok(PulseSpecificBrachyControlPointDeliveredSequence),
+      "PULSESPECIFICBRACHYCONTROLPOINTDELIVEREDSEQUENCE" => {
+        Ok(PulseSpecificBrachyControlPointDeliveredSequence)
+      }
       "30080172" => Ok(PulseNumber),
       "PULSENUMBER" => Ok(PulseNumber),
       "30080173" => Ok(BrachyPulseControlPointDeliveredSequence),
@@ -40308,7 +40556,9 @@ impl TryFrom<&str> for Tag {
       "300A00A0" => Ok(NumberOfBrachyApplicationSetups),
       "NUMBEROFBRACHYAPPLICATIONSETUPS" => Ok(NumberOfBrachyApplicationSetups),
       "300A00A2" => Ok(BrachyApplicationSetupDoseSpecificationPoint),
-      "BRACHYAPPLICATIONSETUPDOSESPECIFICATIONPOINT" => Ok(BrachyApplicationSetupDoseSpecificationPoint),
+      "BRACHYAPPLICATIONSETUPDOSESPECIFICATIONPOINT" => {
+        Ok(BrachyApplicationSetupDoseSpecificationPoint)
+      }
       "300A00A4" => Ok(BrachyApplicationSetupDose),
       "BRACHYAPPLICATIONSETUPDOSE" => Ok(BrachyApplicationSetupDose),
       "300A00B0" => Ok(BeamSequence),
@@ -40350,7 +40600,9 @@ impl TryFrom<&str> for Tag {
       "300A00CA" => Ok(PlannedVerificationImageSequence),
       "PLANNEDVERIFICATIONIMAGESEQUENCE" => Ok(PlannedVerificationImageSequence),
       "300A00CC" => Ok(ImagingDeviceSpecificAcquisitionParameters),
-      "IMAGINGDEVICESPECIFICACQUISITIONPARAMETERS" => Ok(ImagingDeviceSpecificAcquisitionParameters),
+      "IMAGINGDEVICESPECIFICACQUISITIONPARAMETERS" => {
+        Ok(ImagingDeviceSpecificAcquisitionParameters)
+      }
       "300A00CE" => Ok(TreatmentDeliveryType),
       "TREATMENTDELIVERYTYPE" => Ok(TreatmentDeliveryType),
       "300A00D0" => Ok(NumberOfWedges),
@@ -40716,7 +40968,9 @@ impl TryFrom<&str> for Tag {
       "300A02E2" => Ok(SourceToCompensatorDistance),
       "SOURCETOCOMPENSATORDISTANCE" => Ok(SourceToCompensatorDistance),
       "300A02E3" => Ok(TotalCompensatorTrayWaterEquivalentThickness),
-      "TOTALCOMPENSATORTRAYWATEREQUIVALENTTHICKNESS" => Ok(TotalCompensatorTrayWaterEquivalentThickness),
+      "TOTALCOMPENSATORTRAYWATEREQUIVALENTTHICKNESS" => {
+        Ok(TotalCompensatorTrayWaterEquivalentThickness)
+      }
       "300A02E4" => Ok(IsocenterToCompensatorTrayDistance),
       "ISOCENTERTOCOMPENSATORTRAYDISTANCE" => Ok(IsocenterToCompensatorTrayDistance),
       "300A02E5" => Ok(CompensatorColumnOffset),
@@ -40772,7 +41026,9 @@ impl TryFrom<&str> for Tag {
       "300A033A" => Ok(LateralSpreadingDeviceDescription),
       "LATERALSPREADINGDEVICEDESCRIPTION" => Ok(LateralSpreadingDeviceDescription),
       "300A033C" => Ok(LateralSpreadingDeviceWaterEquivalentThickness),
-      "LATERALSPREADINGDEVICEWATEREQUIVALENTTHICKNESS" => Ok(LateralSpreadingDeviceWaterEquivalentThickness),
+      "LATERALSPREADINGDEVICEWATEREQUIVALENTTHICKNESS" => {
+        Ok(LateralSpreadingDeviceWaterEquivalentThickness)
+      }
       "300A0340" => Ok(NumberOfRangeModulators),
       "NUMBEROFRANGEMODULATORS" => Ok(NumberOfRangeModulators),
       "300A0342" => Ok(RangeModulatorSequence),
@@ -40820,9 +41076,13 @@ impl TryFrom<&str> for Tag {
       "300A0384" => Ok(RangeModulatorGatingStopValue),
       "RANGEMODULATORGATINGSTOPVALUE" => Ok(RangeModulatorGatingStopValue),
       "300A0386" => Ok(RangeModulatorGatingStartWaterEquivalentThickness),
-      "RANGEMODULATORGATINGSTARTWATEREQUIVALENTTHICKNESS" => Ok(RangeModulatorGatingStartWaterEquivalentThickness),
+      "RANGEMODULATORGATINGSTARTWATEREQUIVALENTTHICKNESS" => {
+        Ok(RangeModulatorGatingStartWaterEquivalentThickness)
+      }
       "300A0388" => Ok(RangeModulatorGatingStopWaterEquivalentThickness),
-      "RANGEMODULATORGATINGSTOPWATEREQUIVALENTTHICKNESS" => Ok(RangeModulatorGatingStopWaterEquivalentThickness),
+      "RANGEMODULATORGATINGSTOPWATEREQUIVALENTTHICKNESS" => {
+        Ok(RangeModulatorGatingStopWaterEquivalentThickness)
+      }
       "300A038A" => Ok(IsocenterToRangeModulatorDistance),
       "ISOCENTERTORANGEMODULATORDISTANCE" => Ok(IsocenterToRangeModulatorDistance),
       "300A0390" => Ok(ScanSpotTuneID),
@@ -40882,7 +41142,9 @@ impl TryFrom<&str> for Tag {
       "300A0435" => Ok(ApplicatorOpeningY),
       "APPLICATOROPENINGY" => Ok(ApplicatorOpeningY),
       "300A0436" => Ok(SourceToApplicatorMountingPositionDistance),
-      "SOURCETOAPPLICATORMOUNTINGPOSITIONDISTANCE" => Ok(SourceToApplicatorMountingPositionDistance),
+      "SOURCETOAPPLICATORMOUNTINGPOSITIONDISTANCE" => {
+        Ok(SourceToApplicatorMountingPositionDistance)
+      }
       "300C0002" => Ok(ReferencedRTPlanSequence),
       "REFERENCEDRTPLANSEQUENCE" => Ok(ReferencedRTPlanSequence),
       "300C0004" => Ok(ReferencedBeamSequence),
@@ -41266,11 +41528,17 @@ impl TryFrom<&String> for Tag {
       "00041141" => Ok(FileSetDescriptorFileID),
       "FILESETDESCRIPTORFILEID" => Ok(FileSetDescriptorFileID),
       "00041142" => Ok(SpecificCharacterSetOfFileSetDescriptorFile),
-      "SPECIFICCHARACTERSETOFFILESETDESCRIPTORFILE" => Ok(SpecificCharacterSetOfFileSetDescriptorFile),
+      "SPECIFICCHARACTERSETOFFILESETDESCRIPTORFILE" => {
+        Ok(SpecificCharacterSetOfFileSetDescriptorFile)
+      }
       "00041200" => Ok(OffsetOfTheFirstDirectoryRecordOfTheRootDirectoryEntity),
-      "OFFSETOFTHEFIRSTDIRECTORYRECORDOFTHEROOTDIRECTORYENTITY" => Ok(OffsetOfTheFirstDirectoryRecordOfTheRootDirectoryEntity),
+      "OFFSETOFTHEFIRSTDIRECTORYRECORDOFTHEROOTDIRECTORYENTITY" => {
+        Ok(OffsetOfTheFirstDirectoryRecordOfTheRootDirectoryEntity)
+      }
       "00041202" => Ok(OffsetOfTheLastDirectoryRecordOfTheRootDirectoryEntity),
-      "OFFSETOFTHELASTDIRECTORYRECORDOFTHEROOTDIRECTORYENTITY" => Ok(OffsetOfTheLastDirectoryRecordOfTheRootDirectoryEntity),
+      "OFFSETOFTHELASTDIRECTORYRECORDOFTHEROOTDIRECTORYENTITY" => {
+        Ok(OffsetOfTheLastDirectoryRecordOfTheRootDirectoryEntity)
+      }
       "00041212" => Ok(FileSetConsistencyFlag),
       "FILESETCONSISTENCYFLAG" => Ok(FileSetConsistencyFlag),
       "00041220" => Ok(DirectoryRecordSequence),
@@ -41280,7 +41548,9 @@ impl TryFrom<&String> for Tag {
       "00041410" => Ok(RecordInUseFlag),
       "RECORDINUSEFLAG" => Ok(RecordInUseFlag),
       "00041420" => Ok(OffsetOfReferencedLowerLevelDirectoryEntity),
-      "OFFSETOFREFERENCEDLOWERLEVELDIRECTORYENTITY" => Ok(OffsetOfReferencedLowerLevelDirectoryEntity),
+      "OFFSETOFREFERENCEDLOWERLEVELDIRECTORYENTITY" => {
+        Ok(OffsetOfReferencedLowerLevelDirectoryEntity)
+      }
       "00041430" => Ok(DirectoryRecordType),
       "DIRECTORYRECORDTYPE" => Ok(DirectoryRecordType),
       "00041432" => Ok(PrivateRecordUID),
@@ -41462,7 +41732,9 @@ impl TryFrom<&String> for Tag {
       "00081060" => Ok(NameOfPhysiciansReadingStudy),
       "NAMEOFPHYSICIANSREADINGSTUDY" => Ok(NameOfPhysiciansReadingStudy),
       "00081062" => Ok(PhysiciansReadingStudyIdentificationSequence),
-      "PHYSICIANSREADINGSTUDYIDENTIFICATIONSEQUENCE" => Ok(PhysiciansReadingStudyIdentificationSequence),
+      "PHYSICIANSREADINGSTUDYIDENTIFICATIONSEQUENCE" => {
+        Ok(PhysiciansReadingStudyIdentificationSequence)
+      }
       "00081070" => Ok(OperatorsName),
       "OPERATORSNAME" => Ok(OperatorsName),
       "00081072" => Ok(OperatorIdentificationSequence),
@@ -41498,7 +41770,9 @@ impl TryFrom<&String> for Tag {
       "0008114A" => Ok(ReferencedInstanceSequence),
       "REFERENCEDINSTANCESEQUENCE" => Ok(ReferencedInstanceSequence),
       "0008114B" => Ok(ReferencedRealWorldValueMappingInstanceSequence),
-      "REFERENCEDREALWORLDVALUEMAPPINGINSTANCESEQUENCE" => Ok(ReferencedRealWorldValueMappingInstanceSequence),
+      "REFERENCEDREALWORLDVALUEMAPPINGINSTANCESEQUENCE" => {
+        Ok(ReferencedRealWorldValueMappingInstanceSequence)
+      }
       "00081150" => Ok(ReferencedSOPClassUID),
       "REFERENCEDSOPCLASSUID" => Ok(ReferencedSOPClassUID),
       "00081155" => Ok(ReferencedSOPInstanceUID),
@@ -41530,7 +41804,9 @@ impl TryFrom<&String> for Tag {
       "00081199" => Ok(ReferencedSOPSequence),
       "REFERENCEDSOPSEQUENCE" => Ok(ReferencedSOPSequence),
       "00081200" => Ok(StudiesContainingOtherReferencedInstancesSequence),
-      "STUDIESCONTAININGOTHERREFERENCEDINSTANCESSEQUENCE" => Ok(StudiesContainingOtherReferencedInstancesSequence),
+      "STUDIESCONTAININGOTHERREFERENCEDINSTANCESSEQUENCE" => {
+        Ok(StudiesContainingOtherReferencedInstancesSequence)
+      }
       "00081250" => Ok(RelatedSeriesSequence),
       "RELATEDSERIESSEQUENCE" => Ok(RelatedSeriesSequence),
       "00082110" => Ok(LossyImageCompressionRetired),
@@ -41594,23 +41870,35 @@ impl TryFrom<&String> for Tag {
       "00082246" => Ok(TransducerOrientationModifierSequence),
       "TRANSDUCERORIENTATIONMODIFIERSEQUENCE" => Ok(TransducerOrientationModifierSequence),
       "00082251" => Ok(AnatomicStructureSpaceOrRegionCodeSequenceTrial),
-      "ANATOMICSTRUCTURESPACEORREGIONCODESEQUENCETRIAL" => Ok(AnatomicStructureSpaceOrRegionCodeSequenceTrial),
+      "ANATOMICSTRUCTURESPACEORREGIONCODESEQUENCETRIAL" => {
+        Ok(AnatomicStructureSpaceOrRegionCodeSequenceTrial)
+      }
       "00082253" => Ok(AnatomicPortalOfEntranceCodeSequenceTrial),
       "ANATOMICPORTALOFENTRANCECODESEQUENCETRIAL" => Ok(AnatomicPortalOfEntranceCodeSequenceTrial),
       "00082255" => Ok(AnatomicApproachDirectionCodeSequenceTrial),
-      "ANATOMICAPPROACHDIRECTIONCODESEQUENCETRIAL" => Ok(AnatomicApproachDirectionCodeSequenceTrial),
+      "ANATOMICAPPROACHDIRECTIONCODESEQUENCETRIAL" => {
+        Ok(AnatomicApproachDirectionCodeSequenceTrial)
+      }
       "00082256" => Ok(AnatomicPerspectiveDescriptionTrial),
       "ANATOMICPERSPECTIVEDESCRIPTIONTRIAL" => Ok(AnatomicPerspectiveDescriptionTrial),
       "00082257" => Ok(AnatomicPerspectiveCodeSequenceTrial),
       "ANATOMICPERSPECTIVECODESEQUENCETRIAL" => Ok(AnatomicPerspectiveCodeSequenceTrial),
       "00082258" => Ok(AnatomicLocationOfExaminingInstrumentDescriptionTrial),
-      "ANATOMICLOCATIONOFEXAMININGINSTRUMENTDESCRIPTIONTRIAL" => Ok(AnatomicLocationOfExaminingInstrumentDescriptionTrial),
+      "ANATOMICLOCATIONOFEXAMININGINSTRUMENTDESCRIPTIONTRIAL" => {
+        Ok(AnatomicLocationOfExaminingInstrumentDescriptionTrial)
+      }
       "00082259" => Ok(AnatomicLocationOfExaminingInstrumentCodeSequenceTrial),
-      "ANATOMICLOCATIONOFEXAMININGINSTRUMENTCODESEQUENCETRIAL" => Ok(AnatomicLocationOfExaminingInstrumentCodeSequenceTrial),
+      "ANATOMICLOCATIONOFEXAMININGINSTRUMENTCODESEQUENCETRIAL" => {
+        Ok(AnatomicLocationOfExaminingInstrumentCodeSequenceTrial)
+      }
       "0008225A" => Ok(AnatomicStructureSpaceOrRegionModifierCodeSequenceTrial),
-      "ANATOMICSTRUCTURESPACEORREGIONMODIFIERCODESEQUENCETRIAL" => Ok(AnatomicStructureSpaceOrRegionModifierCodeSequenceTrial),
+      "ANATOMICSTRUCTURESPACEORREGIONMODIFIERCODESEQUENCETRIAL" => {
+        Ok(AnatomicStructureSpaceOrRegionModifierCodeSequenceTrial)
+      }
       "0008225C" => Ok(OnAxisBackgroundAnatomicStructureCodeSequenceTrial),
-      "ONAXISBACKGROUNDANATOMICSTRUCTURECODESEQUENCETRIAL" => Ok(OnAxisBackgroundAnatomicStructureCodeSequenceTrial),
+      "ONAXISBACKGROUNDANATOMICSTRUCTURECODESEQUENCETRIAL" => {
+        Ok(OnAxisBackgroundAnatomicStructureCodeSequenceTrial)
+      }
       "00083001" => Ok(AlternateRepresentationSequence),
       "ALTERNATEREPRESENTATIONSEQUENCE" => Ok(AlternateRepresentationSequence),
       "00083010" => Ok(IrradiationEventUID),
@@ -41676,7 +41964,9 @@ impl TryFrom<&String> for Tag {
       "00100101" => Ok(PatientPrimaryLanguageCodeSequence),
       "PATIENTPRIMARYLANGUAGECODESEQUENCE" => Ok(PatientPrimaryLanguageCodeSequence),
       "00100102" => Ok(PatientPrimaryLanguageModifierCodeSequence),
-      "PATIENTPRIMARYLANGUAGEMODIFIERCODESEQUENCE" => Ok(PatientPrimaryLanguageModifierCodeSequence),
+      "PATIENTPRIMARYLANGUAGEMODIFIERCODESEQUENCE" => {
+        Ok(PatientPrimaryLanguageModifierCodeSequence)
+      }
       "00100200" => Ok(QualityControlSubject),
       "QUALITYCONTROLSUBJECT" => Ok(QualityControlSubject),
       "00100201" => Ok(QualityControlSubjectTypeCodeSequence),
@@ -41796,7 +42086,9 @@ impl TryFrom<&String> for Tag {
       "00120081" => Ok(ClinicalTrialProtocolEthicsCommitteeName),
       "CLINICALTRIALPROTOCOLETHICSCOMMITTEENAME" => Ok(ClinicalTrialProtocolEthicsCommitteeName),
       "00120082" => Ok(ClinicalTrialProtocolEthicsCommitteeApprovalNumber),
-      "CLINICALTRIALPROTOCOLETHICSCOMMITTEEAPPROVALNUMBER" => Ok(ClinicalTrialProtocolEthicsCommitteeApprovalNumber),
+      "CLINICALTRIALPROTOCOLETHICSCOMMITTEEAPPROVALNUMBER" => {
+        Ok(ClinicalTrialProtocolEthicsCommitteeApprovalNumber)
+      }
       "00120083" => Ok(ConsentForClinicalTrialUseSequence),
       "CONSENTFORCLINICALTRIALUSESEQUENCE" => Ok(ConsentForClinicalTrialUseSequence),
       "00120084" => Ok(DistributionType),
@@ -41892,9 +42184,13 @@ impl TryFrom<&String> for Tag {
       "00142228" => Ok(TransformedAxisUnits),
       "TRANSFORMEDAXISUNITS" => Ok(TransformedAxisUnits),
       "0014222A" => Ok(CoordinateSystemTransformRotationAndScaleMatrix),
-      "COORDINATESYSTEMTRANSFORMROTATIONANDSCALEMATRIX" => Ok(CoordinateSystemTransformRotationAndScaleMatrix),
+      "COORDINATESYSTEMTRANSFORMROTATIONANDSCALEMATRIX" => {
+        Ok(CoordinateSystemTransformRotationAndScaleMatrix)
+      }
       "0014222C" => Ok(CoordinateSystemTransformTranslationMatrix),
-      "COORDINATESYSTEMTRANSFORMTRANSLATIONMATRIX" => Ok(CoordinateSystemTransformTranslationMatrix),
+      "COORDINATESYSTEMTRANSFORMTRANSLATIONMATRIX" => {
+        Ok(CoordinateSystemTransformTranslationMatrix)
+      }
       "00143011" => Ok(InternalDetectorFrameTime),
       "INTERNALDETECTORFRAMETIME" => Ok(InternalDetectorFrameTime),
       "00143012" => Ok(NumberOfFramesIntegrated),
@@ -42238,7 +42534,9 @@ impl TryFrom<&String> for Tag {
       "00181017" => Ok(HardcopyDeviceManufacturer),
       "HARDCOPYDEVICEMANUFACTURER" => Ok(HardcopyDeviceManufacturer),
       "00181018" => Ok(SecondaryCaptureDeviceManufacturerModelName),
-      "SECONDARYCAPTUREDEVICEMANUFACTURERMODELNAME" => Ok(SecondaryCaptureDeviceManufacturerModelName),
+      "SECONDARYCAPTUREDEVICEMANUFACTURERMODELNAME" => {
+        Ok(SecondaryCaptureDeviceManufacturerModelName)
+      }
       "00181019" => Ok(SecondaryCaptureDeviceSoftwareVersions),
       "SECONDARYCAPTUREDEVICESOFTWAREVERSIONS" => Ok(SecondaryCaptureDeviceSoftwareVersions),
       "0018101A" => Ok(HardcopyDeviceSoftwareVersion),
@@ -43038,7 +43336,9 @@ impl TryFrom<&String> for Tag {
       "00189155" => Ok(ParallelReductionFactorOutOfPlane),
       "PARALLELREDUCTIONFACTOROUTOFPLANE" => Ok(ParallelReductionFactorOutOfPlane),
       "00189159" => Ok(SpectroscopyAcquisitionOutOfPlanePhaseSteps),
-      "SPECTROSCOPYACQUISITIONOUTOFPLANEPHASESTEPS" => Ok(SpectroscopyAcquisitionOutOfPlanePhaseSteps),
+      "SPECTROSCOPYACQUISITIONOUTOFPLANEPHASESTEPS" => {
+        Ok(SpectroscopyAcquisitionOutOfPlanePhaseSteps)
+      }
       "00189166" => Ok(BulkMotionStatus),
       "BULKMOTIONSTATUS" => Ok(BulkMotionStatus),
       "00189168" => Ok(ParallelReductionFactorSecondInPlane),
@@ -43076,7 +43376,9 @@ impl TryFrom<&String> for Tag {
       "00189184" => Ok(TaggingDelay),
       "TAGGINGDELAY" => Ok(TaggingDelay),
       "00189185" => Ok(RespiratoryMotionCompensationTechniqueDescription),
-      "RESPIRATORYMOTIONCOMPENSATIONTECHNIQUEDESCRIPTION" => Ok(RespiratoryMotionCompensationTechniqueDescription),
+      "RESPIRATORYMOTIONCOMPENSATIONTECHNIQUEDESCRIPTION" => {
+        Ok(RespiratoryMotionCompensationTechniqueDescription)
+      }
       "00189186" => Ok(RespiratorySignalSourceID),
       "RESPIRATORYSIGNALSOURCEID" => Ok(RespiratorySignalSourceID),
       "00189195" => Ok(ChemicalShiftMinimumIntegrationLimitInHz),
@@ -43302,19 +43604,33 @@ impl TryFrom<&String> for Tag {
       "00189435" => Ok(ExposureControlSensingRegionShape),
       "EXPOSURECONTROLSENSINGREGIONSHAPE" => Ok(ExposureControlSensingRegionShape),
       "00189436" => Ok(ExposureControlSensingRegionLeftVerticalEdge),
-      "EXPOSURECONTROLSENSINGREGIONLEFTVERTICALEDGE" => Ok(ExposureControlSensingRegionLeftVerticalEdge),
+      "EXPOSURECONTROLSENSINGREGIONLEFTVERTICALEDGE" => {
+        Ok(ExposureControlSensingRegionLeftVerticalEdge)
+      }
       "00189437" => Ok(ExposureControlSensingRegionRightVerticalEdge),
-      "EXPOSURECONTROLSENSINGREGIONRIGHTVERTICALEDGE" => Ok(ExposureControlSensingRegionRightVerticalEdge),
+      "EXPOSURECONTROLSENSINGREGIONRIGHTVERTICALEDGE" => {
+        Ok(ExposureControlSensingRegionRightVerticalEdge)
+      }
       "00189438" => Ok(ExposureControlSensingRegionUpperHorizontalEdge),
-      "EXPOSURECONTROLSENSINGREGIONUPPERHORIZONTALEDGE" => Ok(ExposureControlSensingRegionUpperHorizontalEdge),
+      "EXPOSURECONTROLSENSINGREGIONUPPERHORIZONTALEDGE" => {
+        Ok(ExposureControlSensingRegionUpperHorizontalEdge)
+      }
       "00189439" => Ok(ExposureControlSensingRegionLowerHorizontalEdge),
-      "EXPOSURECONTROLSENSINGREGIONLOWERHORIZONTALEDGE" => Ok(ExposureControlSensingRegionLowerHorizontalEdge),
+      "EXPOSURECONTROLSENSINGREGIONLOWERHORIZONTALEDGE" => {
+        Ok(ExposureControlSensingRegionLowerHorizontalEdge)
+      }
       "00189440" => Ok(CenterOfCircularExposureControlSensingRegion),
-      "CENTEROFCIRCULAREXPOSURECONTROLSENSINGREGION" => Ok(CenterOfCircularExposureControlSensingRegion),
+      "CENTEROFCIRCULAREXPOSURECONTROLSENSINGREGION" => {
+        Ok(CenterOfCircularExposureControlSensingRegion)
+      }
       "00189441" => Ok(RadiusOfCircularExposureControlSensingRegion),
-      "RADIUSOFCIRCULAREXPOSURECONTROLSENSINGREGION" => Ok(RadiusOfCircularExposureControlSensingRegion),
+      "RADIUSOFCIRCULAREXPOSURECONTROLSENSINGREGION" => {
+        Ok(RadiusOfCircularExposureControlSensingRegion)
+      }
       "00189442" => Ok(VerticesOfThePolygonalExposureControlSensingRegion),
-      "VERTICESOFTHEPOLYGONALEXPOSURECONTROLSENSINGREGION" => Ok(VerticesOfThePolygonalExposureControlSensingRegion),
+      "VERTICESOFTHEPOLYGONALEXPOSURECONTROLSENSINGREGION" => {
+        Ok(VerticesOfThePolygonalExposureControlSensingRegion)
+      }
       "00189447" => Ok(ColumnAngulationPatient),
       "COLUMNANGULATIONPATIENT" => Ok(ColumnAngulationPatient),
       "00189449" => Ok(BeamAngle),
@@ -43476,7 +43792,9 @@ impl TryFrom<&String> for Tag {
       "00189723" => Ok(TerminationCardiacTriggerCountThreshold),
       "TERMINATIONCARDIACTRIGGERCOUNTTHRESHOLD" => Ok(TerminationCardiacTriggerCountThreshold),
       "00189724" => Ok(TerminationRespiratoryTriggerCountThreshold),
-      "TERMINATIONRESPIRATORYTRIGGERCOUNTTHRESHOLD" => Ok(TerminationRespiratoryTriggerCountThreshold),
+      "TERMINATIONRESPIRATORYTRIGGERCOUNTTHRESHOLD" => {
+        Ok(TerminationRespiratoryTriggerCountThreshold)
+      }
       "00189725" => Ok(DetectorGeometry),
       "DETECTORGEOMETRY" => Ok(DetectorGeometry),
       "00189726" => Ok(TransverseDetectorSeparation),
@@ -43730,9 +44048,13 @@ impl TryFrom<&String> for Tag {
       "00209167" => Ok(FunctionalGroupPointer),
       "FUNCTIONALGROUPPOINTER" => Ok(FunctionalGroupPointer),
       "00209170" => Ok(UnassignedSharedConvertedAttributesSequence),
-      "UNASSIGNEDSHAREDCONVERTEDATTRIBUTESSEQUENCE" => Ok(UnassignedSharedConvertedAttributesSequence),
+      "UNASSIGNEDSHAREDCONVERTEDATTRIBUTESSEQUENCE" => {
+        Ok(UnassignedSharedConvertedAttributesSequence)
+      }
       "00209171" => Ok(UnassignedPerFrameConvertedAttributesSequence),
-      "UNASSIGNEDPERFRAMECONVERTEDATTRIBUTESSEQUENCE" => Ok(UnassignedPerFrameConvertedAttributesSequence),
+      "UNASSIGNEDPERFRAMECONVERTEDATTRIBUTESSEQUENCE" => {
+        Ok(UnassignedPerFrameConvertedAttributesSequence)
+      }
       "00209172" => Ok(ConversionSourceAttributesSequence),
       "CONVERSIONSOURCEATTRIBUTESSEQUENCE" => Ok(ConversionSourceAttributesSequence),
       "00209213" => Ok(DimensionIndexPrivateCreator),
@@ -43914,9 +44236,13 @@ impl TryFrom<&String> for Tag {
       "00220058" => Ok(MydriaticAgentSequence),
       "MYDRIATICAGENTSEQUENCE" => Ok(MydriaticAgentSequence),
       "00221007" => Ok(OphthalmicAxialMeasurementsRightEyeSequence),
-      "OPHTHALMICAXIALMEASUREMENTSRIGHTEYESEQUENCE" => Ok(OphthalmicAxialMeasurementsRightEyeSequence),
+      "OPHTHALMICAXIALMEASUREMENTSRIGHTEYESEQUENCE" => {
+        Ok(OphthalmicAxialMeasurementsRightEyeSequence)
+      }
       "00221008" => Ok(OphthalmicAxialMeasurementsLeftEyeSequence),
-      "OPHTHALMICAXIALMEASUREMENTSLEFTEYESEQUENCE" => Ok(OphthalmicAxialMeasurementsLeftEyeSequence),
+      "OPHTHALMICAXIALMEASUREMENTSLEFTEYESEQUENCE" => {
+        Ok(OphthalmicAxialMeasurementsLeftEyeSequence)
+      }
       "00221009" => Ok(OphthalmicAxialMeasurementsDeviceType),
       "OPHTHALMICAXIALMEASUREMENTSDEVICETYPE" => Ok(OphthalmicAxialMeasurementsDeviceType),
       "00221010" => Ok(OphthalmicAxialLengthMeasurementsType),
@@ -43972,17 +44298,25 @@ impl TryFrom<&String> for Tag {
       "00221097" => Ok(ImplantPartNumber),
       "IMPLANTPARTNUMBER" => Ok(ImplantPartNumber),
       "00221100" => Ok(ReferencedOphthalmicAxialMeasurementsSequence),
-      "REFERENCEDOPHTHALMICAXIALMEASUREMENTSSEQUENCE" => Ok(ReferencedOphthalmicAxialMeasurementsSequence),
+      "REFERENCEDOPHTHALMICAXIALMEASUREMENTSSEQUENCE" => {
+        Ok(ReferencedOphthalmicAxialMeasurementsSequence)
+      }
       "00221101" => Ok(OphthalmicAxialLengthMeasurementsSegmentNameCodeSequence),
-      "OPHTHALMICAXIALLENGTHMEASUREMENTSSEGMENTNAMECODESEQUENCE" => Ok(OphthalmicAxialLengthMeasurementsSegmentNameCodeSequence),
+      "OPHTHALMICAXIALLENGTHMEASUREMENTSSEGMENTNAMECODESEQUENCE" => {
+        Ok(OphthalmicAxialLengthMeasurementsSegmentNameCodeSequence)
+      }
       "00221103" => Ok(RefractiveErrorBeforeRefractiveSurgeryCodeSequence),
-      "REFRACTIVEERRORBEFOREREFRACTIVESURGERYCODESEQUENCE" => Ok(RefractiveErrorBeforeRefractiveSurgeryCodeSequence),
+      "REFRACTIVEERRORBEFOREREFRACTIVESURGERYCODESEQUENCE" => {
+        Ok(RefractiveErrorBeforeRefractiveSurgeryCodeSequence)
+      }
       "00221121" => Ok(IOLPowerForExactEmmetropia),
       "IOLPOWERFOREXACTEMMETROPIA" => Ok(IOLPowerForExactEmmetropia),
       "00221122" => Ok(IOLPowerForExactTargetRefraction),
       "IOLPOWERFOREXACTTARGETREFRACTION" => Ok(IOLPowerForExactTargetRefraction),
       "00221125" => Ok(AnteriorChamberDepthDefinitionCodeSequence),
-      "ANTERIORCHAMBERDEPTHDEFINITIONCODESEQUENCE" => Ok(AnteriorChamberDepthDefinitionCodeSequence),
+      "ANTERIORCHAMBERDEPTHDEFINITIONCODESEQUENCE" => {
+        Ok(AnteriorChamberDepthDefinitionCodeSequence)
+      }
       "00221127" => Ok(LensThicknessSequence),
       "LENSTHICKNESSSEQUENCE" => Ok(LensThicknessSequence),
       "00221128" => Ok(AnteriorChamberDepthSequence),
@@ -43994,53 +44328,95 @@ impl TryFrom<&String> for Tag {
       "00221132" => Ok(SourceOfLensThicknessDataCodeSequence),
       "SOURCEOFLENSTHICKNESSDATACODESEQUENCE" => Ok(SourceOfLensThicknessDataCodeSequence),
       "00221133" => Ok(SourceOfAnteriorChamberDepthDataCodeSequence),
-      "SOURCEOFANTERIORCHAMBERDEPTHDATACODESEQUENCE" => Ok(SourceOfAnteriorChamberDepthDataCodeSequence),
+      "SOURCEOFANTERIORCHAMBERDEPTHDATACODESEQUENCE" => {
+        Ok(SourceOfAnteriorChamberDepthDataCodeSequence)
+      }
       "00221134" => Ok(SourceOfRefractiveMeasurementsSequence),
       "SOURCEOFREFRACTIVEMEASUREMENTSSEQUENCE" => Ok(SourceOfRefractiveMeasurementsSequence),
       "00221135" => Ok(SourceOfRefractiveMeasurementsCodeSequence),
-      "SOURCEOFREFRACTIVEMEASUREMENTSCODESEQUENCE" => Ok(SourceOfRefractiveMeasurementsCodeSequence),
+      "SOURCEOFREFRACTIVEMEASUREMENTSCODESEQUENCE" => {
+        Ok(SourceOfRefractiveMeasurementsCodeSequence)
+      }
       "00221140" => Ok(OphthalmicAxialLengthMeasurementModified),
       "OPHTHALMICAXIALLENGTHMEASUREMENTMODIFIED" => Ok(OphthalmicAxialLengthMeasurementModified),
       "00221150" => Ok(OphthalmicAxialLengthDataSourceCodeSequence),
-      "OPHTHALMICAXIALLENGTHDATASOURCECODESEQUENCE" => Ok(OphthalmicAxialLengthDataSourceCodeSequence),
+      "OPHTHALMICAXIALLENGTHDATASOURCECODESEQUENCE" => {
+        Ok(OphthalmicAxialLengthDataSourceCodeSequence)
+      }
       "00221153" => Ok(OphthalmicAxialLengthAcquisitionMethodCodeSequence),
-      "OPHTHALMICAXIALLENGTHACQUISITIONMETHODCODESEQUENCE" => Ok(OphthalmicAxialLengthAcquisitionMethodCodeSequence),
+      "OPHTHALMICAXIALLENGTHACQUISITIONMETHODCODESEQUENCE" => {
+        Ok(OphthalmicAxialLengthAcquisitionMethodCodeSequence)
+      }
       "00221155" => Ok(SignalToNoiseRatio),
       "SIGNALTONOISERATIO" => Ok(SignalToNoiseRatio),
       "00221159" => Ok(OphthalmicAxialLengthDataSourceDescription),
-      "OPHTHALMICAXIALLENGTHDATASOURCEDESCRIPTION" => Ok(OphthalmicAxialLengthDataSourceDescription),
+      "OPHTHALMICAXIALLENGTHDATASOURCEDESCRIPTION" => {
+        Ok(OphthalmicAxialLengthDataSourceDescription)
+      }
       "00221210" => Ok(OphthalmicAxialLengthMeasurementsTotalLengthSequence),
-      "OPHTHALMICAXIALLENGTHMEASUREMENTSTOTALLENGTHSEQUENCE" => Ok(OphthalmicAxialLengthMeasurementsTotalLengthSequence),
+      "OPHTHALMICAXIALLENGTHMEASUREMENTSTOTALLENGTHSEQUENCE" => {
+        Ok(OphthalmicAxialLengthMeasurementsTotalLengthSequence)
+      }
       "00221211" => Ok(OphthalmicAxialLengthMeasurementsSegmentalLengthSequence),
-      "OPHTHALMICAXIALLENGTHMEASUREMENTSSEGMENTALLENGTHSEQUENCE" => Ok(OphthalmicAxialLengthMeasurementsSegmentalLengthSequence),
+      "OPHTHALMICAXIALLENGTHMEASUREMENTSSEGMENTALLENGTHSEQUENCE" => {
+        Ok(OphthalmicAxialLengthMeasurementsSegmentalLengthSequence)
+      }
       "00221212" => Ok(OphthalmicAxialLengthMeasurementsLengthSummationSequence),
-      "OPHTHALMICAXIALLENGTHMEASUREMENTSLENGTHSUMMATIONSEQUENCE" => Ok(OphthalmicAxialLengthMeasurementsLengthSummationSequence),
+      "OPHTHALMICAXIALLENGTHMEASUREMENTSLENGTHSUMMATIONSEQUENCE" => {
+        Ok(OphthalmicAxialLengthMeasurementsLengthSummationSequence)
+      }
       "00221220" => Ok(UltrasoundOphthalmicAxialLengthMeasurementsSequence),
-      "ULTRASOUNDOPHTHALMICAXIALLENGTHMEASUREMENTSSEQUENCE" => Ok(UltrasoundOphthalmicAxialLengthMeasurementsSequence),
+      "ULTRASOUNDOPHTHALMICAXIALLENGTHMEASUREMENTSSEQUENCE" => {
+        Ok(UltrasoundOphthalmicAxialLengthMeasurementsSequence)
+      }
       "00221225" => Ok(OpticalOphthalmicAxialLengthMeasurementsSequence),
-      "OPTICALOPHTHALMICAXIALLENGTHMEASUREMENTSSEQUENCE" => Ok(OpticalOphthalmicAxialLengthMeasurementsSequence),
+      "OPTICALOPHTHALMICAXIALLENGTHMEASUREMENTSSEQUENCE" => {
+        Ok(OpticalOphthalmicAxialLengthMeasurementsSequence)
+      }
       "00221230" => Ok(UltrasoundSelectedOphthalmicAxialLengthSequence),
-      "ULTRASOUNDSELECTEDOPHTHALMICAXIALLENGTHSEQUENCE" => Ok(UltrasoundSelectedOphthalmicAxialLengthSequence),
+      "ULTRASOUNDSELECTEDOPHTHALMICAXIALLENGTHSEQUENCE" => {
+        Ok(UltrasoundSelectedOphthalmicAxialLengthSequence)
+      }
       "00221250" => Ok(OphthalmicAxialLengthSelectionMethodCodeSequence),
-      "OPHTHALMICAXIALLENGTHSELECTIONMETHODCODESEQUENCE" => Ok(OphthalmicAxialLengthSelectionMethodCodeSequence),
+      "OPHTHALMICAXIALLENGTHSELECTIONMETHODCODESEQUENCE" => {
+        Ok(OphthalmicAxialLengthSelectionMethodCodeSequence)
+      }
       "00221255" => Ok(OpticalSelectedOphthalmicAxialLengthSequence),
-      "OPTICALSELECTEDOPHTHALMICAXIALLENGTHSEQUENCE" => Ok(OpticalSelectedOphthalmicAxialLengthSequence),
+      "OPTICALSELECTEDOPHTHALMICAXIALLENGTHSEQUENCE" => {
+        Ok(OpticalSelectedOphthalmicAxialLengthSequence)
+      }
       "00221257" => Ok(SelectedSegmentalOphthalmicAxialLengthSequence),
-      "SELECTEDSEGMENTALOPHTHALMICAXIALLENGTHSEQUENCE" => Ok(SelectedSegmentalOphthalmicAxialLengthSequence),
+      "SELECTEDSEGMENTALOPHTHALMICAXIALLENGTHSEQUENCE" => {
+        Ok(SelectedSegmentalOphthalmicAxialLengthSequence)
+      }
       "00221260" => Ok(SelectedTotalOphthalmicAxialLengthSequence),
-      "SELECTEDTOTALOPHTHALMICAXIALLENGTHSEQUENCE" => Ok(SelectedTotalOphthalmicAxialLengthSequence),
+      "SELECTEDTOTALOPHTHALMICAXIALLENGTHSEQUENCE" => {
+        Ok(SelectedTotalOphthalmicAxialLengthSequence)
+      }
       "00221262" => Ok(OphthalmicAxialLengthQualityMetricSequence),
-      "OPHTHALMICAXIALLENGTHQUALITYMETRICSEQUENCE" => Ok(OphthalmicAxialLengthQualityMetricSequence),
+      "OPHTHALMICAXIALLENGTHQUALITYMETRICSEQUENCE" => {
+        Ok(OphthalmicAxialLengthQualityMetricSequence)
+      }
       "00221265" => Ok(OphthalmicAxialLengthQualityMetricTypeCodeSequence),
-      "OPHTHALMICAXIALLENGTHQUALITYMETRICTYPECODESEQUENCE" => Ok(OphthalmicAxialLengthQualityMetricTypeCodeSequence),
+      "OPHTHALMICAXIALLENGTHQUALITYMETRICTYPECODESEQUENCE" => {
+        Ok(OphthalmicAxialLengthQualityMetricTypeCodeSequence)
+      }
       "00221273" => Ok(OphthalmicAxialLengthQualityMetricTypeDescription),
-      "OPHTHALMICAXIALLENGTHQUALITYMETRICTYPEDESCRIPTION" => Ok(OphthalmicAxialLengthQualityMetricTypeDescription),
+      "OPHTHALMICAXIALLENGTHQUALITYMETRICTYPEDESCRIPTION" => {
+        Ok(OphthalmicAxialLengthQualityMetricTypeDescription)
+      }
       "00221300" => Ok(IntraocularLensCalculationsRightEyeSequence),
-      "INTRAOCULARLENSCALCULATIONSRIGHTEYESEQUENCE" => Ok(IntraocularLensCalculationsRightEyeSequence),
+      "INTRAOCULARLENSCALCULATIONSRIGHTEYESEQUENCE" => {
+        Ok(IntraocularLensCalculationsRightEyeSequence)
+      }
       "00221310" => Ok(IntraocularLensCalculationsLeftEyeSequence),
-      "INTRAOCULARLENSCALCULATIONSLEFTEYESEQUENCE" => Ok(IntraocularLensCalculationsLeftEyeSequence),
+      "INTRAOCULARLENSCALCULATIONSLEFTEYESEQUENCE" => {
+        Ok(IntraocularLensCalculationsLeftEyeSequence)
+      }
       "00221330" => Ok(ReferencedOphthalmicAxialLengthMeasurementQCImageSequence),
-      "REFERENCEDOPHTHALMICAXIALLENGTHMEASUREMENTQCIMAGESEQUENCE" => Ok(ReferencedOphthalmicAxialLengthMeasurementQCImageSequence),
+      "REFERENCEDOPHTHALMICAXIALLENGTHMEASUREMENTQCIMAGESEQUENCE" => {
+        Ok(ReferencedOphthalmicAxialLengthMeasurementQCImageSequence)
+      }
       "00221415" => Ok(OphthalmicMappingDeviceType),
       "OPHTHALMICMAPPINGDEVICETYPE" => Ok(OphthalmicMappingDeviceType),
       "00221420" => Ok(AcquisitionMethodCodeSequence),
@@ -44060,9 +44436,13 @@ impl TryFrom<&String> for Tag {
       "00221454" => Ok(PixelValueMappingExplanation),
       "PIXELVALUEMAPPINGEXPLANATION" => Ok(PixelValueMappingExplanation),
       "00221458" => Ok(OphthalmicThicknessMapQualityThresholdSequence),
-      "OPHTHALMICTHICKNESSMAPQUALITYTHRESHOLDSEQUENCE" => Ok(OphthalmicThicknessMapQualityThresholdSequence),
+      "OPHTHALMICTHICKNESSMAPQUALITYTHRESHOLDSEQUENCE" => {
+        Ok(OphthalmicThicknessMapQualityThresholdSequence)
+      }
       "00221460" => Ok(OphthalmicThicknessMapThresholdQualityRating),
-      "OPHTHALMICTHICKNESSMAPTHRESHOLDQUALITYRATING" => Ok(OphthalmicThicknessMapThresholdQualityRating),
+      "OPHTHALMICTHICKNESSMAPTHRESHOLDQUALITYRATING" => {
+        Ok(OphthalmicThicknessMapThresholdQualityRating)
+      }
       "00221463" => Ok(AnatomicStructureReferencePoint),
       "ANATOMICSTRUCTUREREFERENCEPOINT" => Ok(AnatomicStructureReferencePoint),
       "00221465" => Ok(RegistrationToLocalizerSequence),
@@ -44074,7 +44454,9 @@ impl TryFrom<&String> for Tag {
       "00221468" => Ok(RegisteredLocalizerBottomRightHandCorner),
       "REGISTEREDLOCALIZERBOTTOMRIGHTHANDCORNER" => Ok(RegisteredLocalizerBottomRightHandCorner),
       "00221470" => Ok(OphthalmicThicknessMapQualityRatingSequence),
-      "OPHTHALMICTHICKNESSMAPQUALITYRATINGSEQUENCE" => Ok(OphthalmicThicknessMapQualityRatingSequence),
+      "OPHTHALMICTHICKNESSMAPQUALITYRATINGSEQUENCE" => {
+        Ok(OphthalmicThicknessMapQualityRatingSequence)
+      }
       "00221472" => Ok(RelevantOPTAttributesSequence),
       "RELEVANTOPTATTRIBUTESSEQUENCE" => Ok(RelevantOPTAttributesSequence),
       "00240010" => Ok(VisualFieldHorizontalExtent),
@@ -44156,11 +44538,15 @@ impl TryFrom<&String> for Tag {
       "00240064" => Ok(ResultsNormalsSequence),
       "RESULTSNORMALSSEQUENCE" => Ok(ResultsNormalsSequence),
       "00240065" => Ok(AgeCorrectedSensitivityDeviationAlgorithmSequence),
-      "AGECORRECTEDSENSITIVITYDEVIATIONALGORITHMSEQUENCE" => Ok(AgeCorrectedSensitivityDeviationAlgorithmSequence),
+      "AGECORRECTEDSENSITIVITYDEVIATIONALGORITHMSEQUENCE" => {
+        Ok(AgeCorrectedSensitivityDeviationAlgorithmSequence)
+      }
       "00240066" => Ok(GlobalDeviationFromNormal),
       "GLOBALDEVIATIONFROMNORMAL" => Ok(GlobalDeviationFromNormal),
       "00240067" => Ok(GeneralizedDefectSensitivityDeviationAlgorithmSequence),
-      "GENERALIZEDDEFECTSENSITIVITYDEVIATIONALGORITHMSEQUENCE" => Ok(GeneralizedDefectSensitivityDeviationAlgorithmSequence),
+      "GENERALIZEDDEFECTSENSITIVITYDEVIATIONALGORITHMSEQUENCE" => {
+        Ok(GeneralizedDefectSensitivityDeviationAlgorithmSequence)
+      }
       "00240068" => Ok(LocalizedDeviationFromNormal),
       "LOCALIZEDDEVIATIONFROMNORMAL" => Ok(LocalizedDeviationFromNormal),
       "00240069" => Ok(PatientReliabilityIndicator),
@@ -44182,13 +44568,19 @@ impl TryFrom<&String> for Tag {
       "00240077" => Ok(ShortTermFluctuationProbability),
       "SHORTTERMFLUCTUATIONPROBABILITY" => Ok(ShortTermFluctuationProbability),
       "00240078" => Ok(CorrectedLocalizedDeviationFromNormalCalculated),
-      "CORRECTEDLOCALIZEDDEVIATIONFROMNORMALCALCULATED" => Ok(CorrectedLocalizedDeviationFromNormalCalculated),
+      "CORRECTEDLOCALIZEDDEVIATIONFROMNORMALCALCULATED" => {
+        Ok(CorrectedLocalizedDeviationFromNormalCalculated)
+      }
       "00240079" => Ok(CorrectedLocalizedDeviationFromNormal),
       "CORRECTEDLOCALIZEDDEVIATIONFROMNORMAL" => Ok(CorrectedLocalizedDeviationFromNormal),
       "00240080" => Ok(CorrectedLocalizedDeviationFromNormalProbabilityCalculated),
-      "CORRECTEDLOCALIZEDDEVIATIONFROMNORMALPROBABILITYCALCULATED" => Ok(CorrectedLocalizedDeviationFromNormalProbabilityCalculated),
+      "CORRECTEDLOCALIZEDDEVIATIONFROMNORMALPROBABILITYCALCULATED" => {
+        Ok(CorrectedLocalizedDeviationFromNormalProbabilityCalculated)
+      }
       "00240081" => Ok(CorrectedLocalizedDeviationFromNormalProbability),
-      "CORRECTEDLOCALIZEDDEVIATIONFROMNORMALPROBABILITY" => Ok(CorrectedLocalizedDeviationFromNormalProbability),
+      "CORRECTEDLOCALIZEDDEVIATIONFROMNORMALPROBABILITY" => {
+        Ok(CorrectedLocalizedDeviationFromNormalProbability)
+      }
       "00240083" => Ok(GlobalDeviationProbabilitySequence),
       "GLOBALDEVIATIONPROBABILITYSEQUENCE" => Ok(GlobalDeviationProbabilitySequence),
       "00240085" => Ok(LocalizedDeviationProbabilitySequence),
@@ -44220,13 +44612,21 @@ impl TryFrom<&String> for Tag {
       "00240098" => Ok(QuantifiedDefect),
       "QUANTIFIEDDEFECT" => Ok(QuantifiedDefect),
       "00240100" => Ok(AgeCorrectedSensitivityDeviationProbabilityValue),
-      "AGECORRECTEDSENSITIVITYDEVIATIONPROBABILITYVALUE" => Ok(AgeCorrectedSensitivityDeviationProbabilityValue),
+      "AGECORRECTEDSENSITIVITYDEVIATIONPROBABILITYVALUE" => {
+        Ok(AgeCorrectedSensitivityDeviationProbabilityValue)
+      }
       "00240102" => Ok(GeneralizedDefectCorrectedSensitivityDeviationFlag),
-      "GENERALIZEDDEFECTCORRECTEDSENSITIVITYDEVIATIONFLAG" => Ok(GeneralizedDefectCorrectedSensitivityDeviationFlag),
+      "GENERALIZEDDEFECTCORRECTEDSENSITIVITYDEVIATIONFLAG" => {
+        Ok(GeneralizedDefectCorrectedSensitivityDeviationFlag)
+      }
       "00240103" => Ok(GeneralizedDefectCorrectedSensitivityDeviationValue),
-      "GENERALIZEDDEFECTCORRECTEDSENSITIVITYDEVIATIONVALUE" => Ok(GeneralizedDefectCorrectedSensitivityDeviationValue),
+      "GENERALIZEDDEFECTCORRECTEDSENSITIVITYDEVIATIONVALUE" => {
+        Ok(GeneralizedDefectCorrectedSensitivityDeviationValue)
+      }
       "00240104" => Ok(GeneralizedDefectCorrectedSensitivityDeviationProbabilityValue),
-      "GENERALIZEDDEFECTCORRECTEDSENSITIVITYDEVIATIONPROBABILITYVALUE" => Ok(GeneralizedDefectCorrectedSensitivityDeviationProbabilityValue),
+      "GENERALIZEDDEFECTCORRECTEDSENSITIVITYDEVIATIONPROBABILITYVALUE" => {
+        Ok(GeneralizedDefectCorrectedSensitivityDeviationProbabilityValue)
+      }
       "00240105" => Ok(MinimumSensitivityValue),
       "MINIMUMSENSITIVITYVALUE" => Ok(MinimumSensitivityValue),
       "00240106" => Ok(BlindSpotLocalized),
@@ -44242,9 +44642,13 @@ impl TryFrom<&String> for Tag {
       "00240113" => Ok(MeasurementLaterality),
       "MEASUREMENTLATERALITY" => Ok(MeasurementLaterality),
       "00240114" => Ok(OphthalmicPatientClinicalInformationLeftEyeSequence),
-      "OPHTHALMICPATIENTCLINICALINFORMATIONLEFTEYESEQUENCE" => Ok(OphthalmicPatientClinicalInformationLeftEyeSequence),
+      "OPHTHALMICPATIENTCLINICALINFORMATIONLEFTEYESEQUENCE" => {
+        Ok(OphthalmicPatientClinicalInformationLeftEyeSequence)
+      }
       "00240115" => Ok(OphthalmicPatientClinicalInformationRightEyeSequence),
-      "OPHTHALMICPATIENTCLINICALINFORMATIONRIGHTEYESEQUENCE" => Ok(OphthalmicPatientClinicalInformationRightEyeSequence),
+      "OPHTHALMICPATIENTCLINICALINFORMATIONRIGHTEYESEQUENCE" => {
+        Ok(OphthalmicPatientClinicalInformationRightEyeSequence)
+      }
       "00240117" => Ok(FovealPointNormativeDataFlag),
       "FOVEALPOINTNORMATIVEDATAFLAG" => Ok(FovealPointNormativeDataFlag),
       "00240118" => Ok(FovealPointProbabilityValue),
@@ -44268,7 +44672,9 @@ impl TryFrom<&String> for Tag {
       "00240309" => Ok(DataSetDescription),
       "DATASETDESCRIPTION" => Ok(DataSetDescription),
       "00240317" => Ok(VisualFieldTestReliabilityGlobalIndexSequence),
-      "VISUALFIELDTESTRELIABILITYGLOBALINDEXSEQUENCE" => Ok(VisualFieldTestReliabilityGlobalIndexSequence),
+      "VISUALFIELDTESTRELIABILITYGLOBALINDEXSEQUENCE" => {
+        Ok(VisualFieldTestReliabilityGlobalIndexSequence)
+      }
       "00240320" => Ok(VisualFieldGlobalResultsIndexSequence),
       "VISUALFIELDGLOBALRESULTSINDEXSEQUENCE" => Ok(VisualFieldGlobalResultsIndexSequence),
       "00240325" => Ok(DataObservationSequence),
@@ -44462,9 +44868,13 @@ impl TryFrom<&String> for Tag {
       "00281111" => Ok(LargeRedPaletteColorLookupTableDescriptor),
       "LARGEREDPALETTECOLORLOOKUPTABLEDESCRIPTOR" => Ok(LargeRedPaletteColorLookupTableDescriptor),
       "00281112" => Ok(LargeGreenPaletteColorLookupTableDescriptor),
-      "LARGEGREENPALETTECOLORLOOKUPTABLEDESCRIPTOR" => Ok(LargeGreenPaletteColorLookupTableDescriptor),
+      "LARGEGREENPALETTECOLORLOOKUPTABLEDESCRIPTOR" => {
+        Ok(LargeGreenPaletteColorLookupTableDescriptor)
+      }
       "00281113" => Ok(LargeBluePaletteColorLookupTableDescriptor),
-      "LARGEBLUEPALETTECOLORLOOKUPTABLEDESCRIPTOR" => Ok(LargeBluePaletteColorLookupTableDescriptor),
+      "LARGEBLUEPALETTECOLORLOOKUPTABLEDESCRIPTOR" => {
+        Ok(LargeBluePaletteColorLookupTableDescriptor)
+      }
       "00281199" => Ok(PaletteColorLookupTableUID),
       "PALETTECOLORLOOKUPTABLEUID" => Ok(PaletteColorLookupTableUID),
       "00281200" => Ok(GrayLookupTableData),
@@ -44612,7 +45022,9 @@ impl TryFrom<&String> for Tag {
       "0028700D" => Ok(ConfigurationDescription),
       "CONFIGURATIONDESCRIPTION" => Ok(ConfigurationDescription),
       "0028700E" => Ok(ReferencedTargetLuminanceCharacteristicsID),
-      "REFERENCEDTARGETLUMINANCECHARACTERISTICSID" => Ok(ReferencedTargetLuminanceCharacteristicsID),
+      "REFERENCEDTARGETLUMINANCECHARACTERISTICSID" => {
+        Ok(ReferencedTargetLuminanceCharacteristicsID)
+      }
       "0028700F" => Ok(QAResultsSequence),
       "QARESULTSSEQUENCE" => Ok(QAResultsSequence),
       "00287010" => Ok(DisplaySubsystemQAResultsSequence),
@@ -44916,7 +45328,9 @@ impl TryFrom<&String> for Tag {
       "003A0248" => Ok(AbsoluteChannelDisplayScale),
       "ABSOLUTECHANNELDISPLAYSCALE" => Ok(AbsoluteChannelDisplayScale),
       "003A0300" => Ok(MultiplexedAudioChannelsDescriptionCodeSequence),
-      "MULTIPLEXEDAUDIOCHANNELSDESCRIPTIONCODESEQUENCE" => Ok(MultiplexedAudioChannelsDescriptionCodeSequence),
+      "MULTIPLEXEDAUDIOCHANNELSDESCRIPTIONCODESEQUENCE" => {
+        Ok(MultiplexedAudioChannelsDescriptionCodeSequence)
+      }
       "003A0301" => Ok(ChannelIdentificationCode),
       "CHANNELIDENTIFICATIONCODE" => Ok(ChannelIdentificationCode),
       "003A0302" => Ok(ChannelMode),
@@ -44942,7 +45356,9 @@ impl TryFrom<&String> for Tag {
       "0040000A" => Ok(StageCodeSequence),
       "STAGECODESEQUENCE" => Ok(StageCodeSequence),
       "0040000B" => Ok(ScheduledPerformingPhysicianIdentificationSequence),
-      "SCHEDULEDPERFORMINGPHYSICIANIDENTIFICATIONSEQUENCE" => Ok(ScheduledPerformingPhysicianIdentificationSequence),
+      "SCHEDULEDPERFORMINGPHYSICIANIDENTIFICATIONSEQUENCE" => {
+        Ok(ScheduledPerformingPhysicianIdentificationSequence)
+      }
       "00400010" => Ok(ScheduledStationName),
       "SCHEDULEDSTATIONNAME" => Ok(ScheduledStationName),
       "00400011" => Ok(ScheduledProcedureStepLocation),
@@ -44972,7 +45388,9 @@ impl TryFrom<&String> for Tag {
       "00400100" => Ok(ScheduledProcedureStepSequence),
       "SCHEDULEDPROCEDURESTEPSEQUENCE" => Ok(ScheduledProcedureStepSequence),
       "00400220" => Ok(ReferencedNonImageCompositeSOPInstanceSequence),
-      "REFERENCEDNONIMAGECOMPOSITESOPINSTANCESEQUENCE" => Ok(ReferencedNonImageCompositeSOPInstanceSequence),
+      "REFERENCEDNONIMAGECOMPOSITESOPINSTANCESEQUENCE" => {
+        Ok(ReferencedNonImageCompositeSOPInstanceSequence)
+      }
       "00400241" => Ok(PerformedStationAETitle),
       "PERFORMEDSTATIONAETITLE" => Ok(PerformedStationAETitle),
       "00400242" => Ok(PerformedStationName),
@@ -45006,7 +45424,9 @@ impl TryFrom<&String> for Tag {
       "00400280" => Ok(CommentsOnThePerformedProcedureStep),
       "COMMENTSONTHEPERFORMEDPROCEDURESTEP" => Ok(CommentsOnThePerformedProcedureStep),
       "00400281" => Ok(PerformedProcedureStepDiscontinuationReasonCodeSequence),
-      "PERFORMEDPROCEDURESTEPDISCONTINUATIONREASONCODESEQUENCE" => Ok(PerformedProcedureStepDiscontinuationReasonCodeSequence),
+      "PERFORMEDPROCEDURESTEPDISCONTINUATIONREASONCODESEQUENCE" => {
+        Ok(PerformedProcedureStepDiscontinuationReasonCodeSequence)
+      }
       "00400293" => Ok(QuantitySequence),
       "QUANTITYSEQUENCE" => Ok(QuantitySequence),
       "00400294" => Ok(Quantity),
@@ -45098,7 +45518,9 @@ impl TryFrom<&String> for Tag {
       "00400610" => Ok(SpecimenPreparationSequence),
       "SPECIMENPREPARATIONSEQUENCE" => Ok(SpecimenPreparationSequence),
       "00400612" => Ok(SpecimenPreparationStepContentItemSequence),
-      "SPECIMENPREPARATIONSTEPCONTENTITEMSEQUENCE" => Ok(SpecimenPreparationStepContentItemSequence),
+      "SPECIMENPREPARATIONSTEPCONTENTITEMSEQUENCE" => {
+        Ok(SpecimenPreparationStepContentItemSequence)
+      }
       "00400620" => Ok(SpecimenLocalizationContentItemSequence),
       "SPECIMENLOCALIZATIONCONTENTITEMSEQUENCE" => Ok(SpecimenLocalizationContentItemSequence),
       "004006FA" => Ok(SlideIdentifier),
@@ -45142,7 +45564,9 @@ impl TryFrom<&String> for Tag {
       "00401010" => Ok(NamesOfIntendedRecipientsOfResults),
       "NAMESOFINTENDEDRECIPIENTSOFRESULTS" => Ok(NamesOfIntendedRecipientsOfResults),
       "00401011" => Ok(IntendedRecipientsOfResultsIdentificationSequence),
-      "INTENDEDRECIPIENTSOFRESULTSIDENTIFICATIONSEQUENCE" => Ok(IntendedRecipientsOfResultsIdentificationSequence),
+      "INTENDEDRECIPIENTSOFRESULTSIDENTIFICATIONSEQUENCE" => {
+        Ok(IntendedRecipientsOfResultsIdentificationSequence)
+      }
       "00401012" => Ok(ReasonForPerformedProcedureCodeSequence),
       "REASONFORPERFORMEDPROCEDURECODESEQUENCE" => Ok(ReasonForPerformedProcedureCodeSequence),
       "00401060" => Ok(RequestedProcedureDescriptionTrial),
@@ -45162,9 +45586,13 @@ impl TryFrom<&String> for Tag {
       "00402005" => Ok(IssueTimeOfImagingServiceRequest),
       "ISSUETIMEOFIMAGINGSERVICEREQUEST" => Ok(IssueTimeOfImagingServiceRequest),
       "00402006" => Ok(PlacerOrderNumberImagingServiceRequestRetired),
-      "PLACERORDERNUMBERIMAGINGSERVICEREQUESTRETIRED" => Ok(PlacerOrderNumberImagingServiceRequestRetired),
+      "PLACERORDERNUMBERIMAGINGSERVICEREQUESTRETIRED" => {
+        Ok(PlacerOrderNumberImagingServiceRequestRetired)
+      }
       "00402007" => Ok(FillerOrderNumberImagingServiceRequestRetired),
-      "FILLERORDERNUMBERIMAGINGSERVICEREQUESTRETIRED" => Ok(FillerOrderNumberImagingServiceRequestRetired),
+      "FILLERORDERNUMBERIMAGINGSERVICEREQUESTRETIRED" => {
+        Ok(FillerOrderNumberImagingServiceRequestRetired)
+      }
       "00402008" => Ok(OrderEnteredBy),
       "ORDERENTEREDBY" => Ok(OrderEnteredBy),
       "00402009" => Ok(OrderEntererLocation),
@@ -45178,31 +45606,49 @@ impl TryFrom<&String> for Tag {
       "00402400" => Ok(ImagingServiceRequestComments),
       "IMAGINGSERVICEREQUESTCOMMENTS" => Ok(ImagingServiceRequestComments),
       "00403001" => Ok(ConfidentialityConstraintOnPatientDataDescription),
-      "CONFIDENTIALITYCONSTRAINTONPATIENTDATADESCRIPTION" => Ok(ConfidentialityConstraintOnPatientDataDescription),
+      "CONFIDENTIALITYCONSTRAINTONPATIENTDATADESCRIPTION" => {
+        Ok(ConfidentialityConstraintOnPatientDataDescription)
+      }
       "00404001" => Ok(GeneralPurposeScheduledProcedureStepStatus),
-      "GENERALPURPOSESCHEDULEDPROCEDURESTEPSTATUS" => Ok(GeneralPurposeScheduledProcedureStepStatus),
+      "GENERALPURPOSESCHEDULEDPROCEDURESTEPSTATUS" => {
+        Ok(GeneralPurposeScheduledProcedureStepStatus)
+      }
       "00404002" => Ok(GeneralPurposePerformedProcedureStepStatus),
-      "GENERALPURPOSEPERFORMEDPROCEDURESTEPSTATUS" => Ok(GeneralPurposePerformedProcedureStepStatus),
+      "GENERALPURPOSEPERFORMEDPROCEDURESTEPSTATUS" => {
+        Ok(GeneralPurposePerformedProcedureStepStatus)
+      }
       "00404003" => Ok(GeneralPurposeScheduledProcedureStepPriority),
-      "GENERALPURPOSESCHEDULEDPROCEDURESTEPPRIORITY" => Ok(GeneralPurposeScheduledProcedureStepPriority),
+      "GENERALPURPOSESCHEDULEDPROCEDURESTEPPRIORITY" => {
+        Ok(GeneralPurposeScheduledProcedureStepPriority)
+      }
       "00404004" => Ok(ScheduledProcessingApplicationsCodeSequence),
-      "SCHEDULEDPROCESSINGAPPLICATIONSCODESEQUENCE" => Ok(ScheduledProcessingApplicationsCodeSequence),
+      "SCHEDULEDPROCESSINGAPPLICATIONSCODESEQUENCE" => {
+        Ok(ScheduledProcessingApplicationsCodeSequence)
+      }
       "00404005" => Ok(ScheduledProcedureStepStartDateTime),
       "SCHEDULEDPROCEDURESTEPSTARTDATETIME" => Ok(ScheduledProcedureStepStartDateTime),
       "00404006" => Ok(MultipleCopiesFlag),
       "MULTIPLECOPIESFLAG" => Ok(MultipleCopiesFlag),
       "00404007" => Ok(PerformedProcessingApplicationsCodeSequence),
-      "PERFORMEDPROCESSINGAPPLICATIONSCODESEQUENCE" => Ok(PerformedProcessingApplicationsCodeSequence),
+      "PERFORMEDPROCESSINGAPPLICATIONSCODESEQUENCE" => {
+        Ok(PerformedProcessingApplicationsCodeSequence)
+      }
       "00404009" => Ok(HumanPerformerCodeSequence),
       "HUMANPERFORMERCODESEQUENCE" => Ok(HumanPerformerCodeSequence),
       "00404010" => Ok(ScheduledProcedureStepModificationDateTime),
-      "SCHEDULEDPROCEDURESTEPMODIFICATIONDATETIME" => Ok(ScheduledProcedureStepModificationDateTime),
+      "SCHEDULEDPROCEDURESTEPMODIFICATIONDATETIME" => {
+        Ok(ScheduledProcedureStepModificationDateTime)
+      }
       "00404011" => Ok(ExpectedCompletionDateTime),
       "EXPECTEDCOMPLETIONDATETIME" => Ok(ExpectedCompletionDateTime),
       "00404015" => Ok(ResultingGeneralPurposePerformedProcedureStepsSequence),
-      "RESULTINGGENERALPURPOSEPERFORMEDPROCEDURESTEPSSEQUENCE" => Ok(ResultingGeneralPurposePerformedProcedureStepsSequence),
+      "RESULTINGGENERALPURPOSEPERFORMEDPROCEDURESTEPSSEQUENCE" => {
+        Ok(ResultingGeneralPurposePerformedProcedureStepsSequence)
+      }
       "00404016" => Ok(ReferencedGeneralPurposeScheduledProcedureStepSequence),
-      "REFERENCEDGENERALPURPOSESCHEDULEDPROCEDURESTEPSEQUENCE" => Ok(ReferencedGeneralPurposeScheduledProcedureStepSequence),
+      "REFERENCEDGENERALPURPOSESCHEDULEDPROCEDURESTEPSEQUENCE" => {
+        Ok(ReferencedGeneralPurposeScheduledProcedureStepSequence)
+      }
       "00404018" => Ok(ScheduledWorkitemCodeSequence),
       "SCHEDULEDWORKITEMCODESEQUENCE" => Ok(ScheduledWorkitemCodeSequence),
       "00404019" => Ok(PerformedWorkitemCodeSequence),
@@ -45214,19 +45660,25 @@ impl TryFrom<&String> for Tag {
       "00404022" => Ok(RelevantInformationSequence),
       "RELEVANTINFORMATIONSEQUENCE" => Ok(RelevantInformationSequence),
       "00404023" => Ok(ReferencedGeneralPurposeScheduledProcedureStepTransactionUID),
-      "REFERENCEDGENERALPURPOSESCHEDULEDPROCEDURESTEPTRANSACTIONUID" => Ok(ReferencedGeneralPurposeScheduledProcedureStepTransactionUID),
+      "REFERENCEDGENERALPURPOSESCHEDULEDPROCEDURESTEPTRANSACTIONUID" => {
+        Ok(ReferencedGeneralPurposeScheduledProcedureStepTransactionUID)
+      }
       "00404025" => Ok(ScheduledStationNameCodeSequence),
       "SCHEDULEDSTATIONNAMECODESEQUENCE" => Ok(ScheduledStationNameCodeSequence),
       "00404026" => Ok(ScheduledStationClassCodeSequence),
       "SCHEDULEDSTATIONCLASSCODESEQUENCE" => Ok(ScheduledStationClassCodeSequence),
       "00404027" => Ok(ScheduledStationGeographicLocationCodeSequence),
-      "SCHEDULEDSTATIONGEOGRAPHICLOCATIONCODESEQUENCE" => Ok(ScheduledStationGeographicLocationCodeSequence),
+      "SCHEDULEDSTATIONGEOGRAPHICLOCATIONCODESEQUENCE" => {
+        Ok(ScheduledStationGeographicLocationCodeSequence)
+      }
       "00404028" => Ok(PerformedStationNameCodeSequence),
       "PERFORMEDSTATIONNAMECODESEQUENCE" => Ok(PerformedStationNameCodeSequence),
       "00404029" => Ok(PerformedStationClassCodeSequence),
       "PERFORMEDSTATIONCLASSCODESEQUENCE" => Ok(PerformedStationClassCodeSequence),
       "00404030" => Ok(PerformedStationGeographicLocationCodeSequence),
-      "PERFORMEDSTATIONGEOGRAPHICLOCATIONCODESEQUENCE" => Ok(PerformedStationGeographicLocationCodeSequence),
+      "PERFORMEDSTATIONGEOGRAPHICLOCATIONCODESEQUENCE" => {
+        Ok(PerformedStationGeographicLocationCodeSequence)
+      }
       "00404031" => Ok(RequestedSubsequentWorkitemCodeSequence),
       "REQUESTEDSUBSEQUENTWORKITEMCODESEQUENCE" => Ok(RequestedSubsequentWorkitemCodeSequence),
       "00404032" => Ok(NonDICOMOutputCodeSequence),
@@ -45254,7 +45706,9 @@ impl TryFrom<&String> for Tag {
       "00408302" => Ok(EntranceDoseInmGy),
       "ENTRANCEDOSEINMGY" => Ok(EntranceDoseInmGy),
       "00409094" => Ok(ReferencedImageRealWorldValueMappingSequence),
-      "REFERENCEDIMAGEREALWORLDVALUEMAPPINGSEQUENCE" => Ok(ReferencedImageRealWorldValueMappingSequence),
+      "REFERENCEDIMAGEREALWORLDVALUEMAPPINGSEQUENCE" => {
+        Ok(ReferencedImageRealWorldValueMappingSequence)
+      }
       "00409096" => Ok(RealWorldValueMappingSequence),
       "REALWORLDVALUEMAPPINGSEQUENCE" => Ok(RealWorldValueMappingSequence),
       "00409098" => Ok(PixelValueMappingCodeSequence),
@@ -45290,7 +45744,9 @@ impl TryFrom<&String> for Tag {
       "0040A027" => Ok(VerifyingOrganization),
       "VERIFYINGORGANIZATION" => Ok(VerifyingOrganization),
       "0040A028" => Ok(DocumentingOrganizationIdentifierCodeSequenceTrial),
-      "DOCUMENTINGORGANIZATIONIDENTIFIERCODESEQUENCETRIAL" => Ok(DocumentingOrganizationIdentifierCodeSequenceTrial),
+      "DOCUMENTINGORGANIZATIONIDENTIFIERCODESEQUENCETRIAL" => {
+        Ok(DocumentingOrganizationIdentifierCodeSequenceTrial)
+      }
       "0040A030" => Ok(VerificationDateTime),
       "VERIFICATIONDATETIME" => Ok(VerificationDateTime),
       "0040A032" => Ok(ObservationDateTime),
@@ -45322,7 +45778,9 @@ impl TryFrom<&String> for Tag {
       "0040A075" => Ok(VerifyingObserverName),
       "VERIFYINGOBSERVERNAME" => Ok(VerifyingObserverName),
       "0040A076" => Ok(DocumentingObserverIdentifierCodeSequenceTrial),
-      "DOCUMENTINGOBSERVERIDENTIFIERCODESEQUENCETRIAL" => Ok(DocumentingObserverIdentifierCodeSequenceTrial),
+      "DOCUMENTINGOBSERVERIDENTIFIERCODESEQUENCETRIAL" => {
+        Ok(DocumentingObserverIdentifierCodeSequenceTrial)
+      }
       "0040A078" => Ok(AuthorObserverSequence),
       "AUTHOROBSERVERSEQUENCE" => Ok(AuthorObserverSequence),
       "0040A07A" => Ok(ParticipantSequence),
@@ -45338,7 +45796,9 @@ impl TryFrom<&String> for Tag {
       "0040A085" => Ok(ProcedureIdentifierCodeSequenceTrial),
       "PROCEDUREIDENTIFIERCODESEQUENCETRIAL" => Ok(ProcedureIdentifierCodeSequenceTrial),
       "0040A088" => Ok(VerifyingObserverIdentificationCodeSequence),
-      "VERIFYINGOBSERVERIDENTIFICATIONCODESEQUENCE" => Ok(VerifyingObserverIdentificationCodeSequence),
+      "VERIFYINGOBSERVERIDENTIFICATIONCODESEQUENCE" => {
+        Ok(VerifyingObserverIdentificationCodeSequence)
+      }
       "0040A089" => Ok(ObjectDirectoryBinaryIdentifierTrial),
       "OBJECTDIRECTORYBINARYIDENTIFIERTRIAL" => Ok(ObjectDirectoryBinaryIdentifierTrial),
       "0040A090" => Ok(EquivalentCDADocumentSequence),
@@ -45348,7 +45808,9 @@ impl TryFrom<&String> for Tag {
       "0040A110" => Ok(DateOfDocumentOrVerbalTransactionTrial),
       "DATEOFDOCUMENTORVERBALTRANSACTIONTRIAL" => Ok(DateOfDocumentOrVerbalTransactionTrial),
       "0040A112" => Ok(TimeOfDocumentCreationOrVerbalTransactionTrial),
-      "TIMEOFDOCUMENTCREATIONORVERBALTRANSACTIONTRIAL" => Ok(TimeOfDocumentCreationOrVerbalTransactionTrial),
+      "TIMEOFDOCUMENTCREATIONORVERBALTRANSACTIONTRIAL" => {
+        Ok(TimeOfDocumentCreationOrVerbalTransactionTrial)
+      }
       "0040A120" => Ok(DateTime),
       "DATETIME" => Ok(DateTime),
       "0040A121" => Ok(Date),
@@ -46170,7 +46632,9 @@ impl TryFrom<&String> for Tag {
       "0066002C" => Ok(ReferencedSurfaceNumber),
       "REFERENCEDSURFACENUMBER" => Ok(ReferencedSurfaceNumber),
       "0066002D" => Ok(SegmentSurfaceGenerationAlgorithmIdentificationSequence),
-      "SEGMENTSURFACEGENERATIONALGORITHMIDENTIFICATIONSEQUENCE" => Ok(SegmentSurfaceGenerationAlgorithmIdentificationSequence),
+      "SEGMENTSURFACEGENERATIONALGORITHMIDENTIFICATIONSEQUENCE" => {
+        Ok(SegmentSurfaceGenerationAlgorithmIdentificationSequence)
+      }
       "0066002E" => Ok(SegmentSurfaceSourceInstanceSequence),
       "SEGMENTSURFACESOURCEINSTANCESEQUENCE" => Ok(SegmentSurfaceSourceInstanceSequence),
       "0066002F" => Ok(AlgorithmFamilyCodeSequence),
@@ -46184,7 +46648,9 @@ impl TryFrom<&String> for Tag {
       "00660034" => Ok(FacetSequence),
       "FACETSEQUENCE" => Ok(FacetSequence),
       "00660035" => Ok(SurfaceProcessingAlgorithmIdentificationSequence),
-      "SURFACEPROCESSINGALGORITHMIDENTIFICATIONSEQUENCE" => Ok(SurfaceProcessingAlgorithmIdentificationSequence),
+      "SURFACEPROCESSINGALGORITHMIDENTIFICATIONSEQUENCE" => {
+        Ok(SurfaceProcessingAlgorithmIdentificationSequence)
+      }
       "00660036" => Ok(AlgorithmName),
       "ALGORITHMNAME" => Ok(AlgorithmName),
       "00660037" => Ok(RecommendedPointRadius),
@@ -46310,7 +46776,9 @@ impl TryFrom<&String> for Tag {
       "00686540" => Ok(PlanningLandmarkDescription),
       "PLANNINGLANDMARKDESCRIPTION" => Ok(PlanningLandmarkDescription),
       "00686545" => Ok(PlanningLandmarkIdentificationCodeSequence),
-      "PLANNINGLANDMARKIDENTIFICATIONCODESEQUENCE" => Ok(PlanningLandmarkIdentificationCodeSequence),
+      "PLANNINGLANDMARKIDENTIFICATIONCODESEQUENCE" => {
+        Ok(PlanningLandmarkIdentificationCodeSequence)
+      }
       "00686550" => Ok(TwoDPointCoordinatesSequence),
       "TWODPOINTCOORDINATESSEQUENCE" => Ok(TwoDPointCoordinatesSequence),
       "00686560" => Ok(TwoDPointCoordinates),
@@ -46388,7 +46856,9 @@ impl TryFrom<&String> for Tag {
       "00700062" => Ok(GraphicLayerOrder),
       "GRAPHICLAYERORDER" => Ok(GraphicLayerOrder),
       "00700066" => Ok(GraphicLayerRecommendedDisplayGrayscaleValue),
-      "GRAPHICLAYERRECOMMENDEDDISPLAYGRAYSCALEVALUE" => Ok(GraphicLayerRecommendedDisplayGrayscaleValue),
+      "GRAPHICLAYERRECOMMENDEDDISPLAYGRAYSCALEVALUE" => {
+        Ok(GraphicLayerRecommendedDisplayGrayscaleValue)
+      }
       "00700067" => Ok(GraphicLayerRecommendedDisplayRGBValue),
       "GRAPHICLAYERRECOMMENDEDDISPLAYRGBVALUE" => Ok(GraphicLayerRecommendedDisplayRGBValue),
       "00700068" => Ok(GraphicLayerDescription),
@@ -46556,7 +47026,9 @@ impl TryFrom<&String> for Tag {
       "0072000C" => Ok(HangingProtocolDefinitionSequence),
       "HANGINGPROTOCOLDEFINITIONSEQUENCE" => Ok(HangingProtocolDefinitionSequence),
       "0072000E" => Ok(HangingProtocolUserIdentificationCodeSequence),
-      "HANGINGPROTOCOLUSERIDENTIFICATIONCODESEQUENCE" => Ok(HangingProtocolUserIdentificationCodeSequence),
+      "HANGINGPROTOCOLUSERIDENTIFICATIONCODESEQUENCE" => {
+        Ok(HangingProtocolUserIdentificationCodeSequence)
+      }
       "00720010" => Ok(HangingProtocolUserGroupName),
       "HANGINGPROTOCOLUSERGROUPNAME" => Ok(HangingProtocolUserGroupName),
       "00720012" => Ok(SourceHangingProtocolSequence),
@@ -46742,7 +47214,9 @@ impl TryFrom<&String> for Tag {
       "00720704" => Ok(PseudoColorType),
       "PSEUDOCOLORTYPE" => Ok(PseudoColorType),
       "00720705" => Ok(PseudoColorPaletteInstanceReferenceSequence),
-      "PSEUDOCOLORPALETTEINSTANCEREFERENCESEQUENCE" => Ok(PseudoColorPaletteInstanceReferenceSequence),
+      "PSEUDOCOLORPALETTEINSTANCEREFERENCESEQUENCE" => {
+        Ok(PseudoColorPaletteInstanceReferenceSequence)
+      }
       "00720706" => Ok(ShowGrayscaleInverted),
       "SHOWGRAYSCALEINVERTED" => Ok(ShowGrayscaleInverted),
       "00720710" => Ok(ShowImageTrueSizeFlag),
@@ -46776,7 +47250,9 @@ impl TryFrom<&String> for Tag {
       "0074100C" => Ok(ContactDisplayName),
       "CONTACTDISPLAYNAME" => Ok(ContactDisplayName),
       "0074100E" => Ok(ProcedureStepDiscontinuationReasonCodeSequence),
-      "PROCEDURESTEPDISCONTINUATIONREASONCODESEQUENCE" => Ok(ProcedureStepDiscontinuationReasonCodeSequence),
+      "PROCEDURESTEPDISCONTINUATIONREASONCODESEQUENCE" => {
+        Ok(ProcedureStepDiscontinuationReasonCodeSequence)
+      }
       "00741020" => Ok(BeamTaskSequence),
       "BEAMTASKSEQUENCE" => Ok(BeamTaskSequence),
       "00741022" => Ok(BeamTaskType),
@@ -46824,7 +47300,9 @@ impl TryFrom<&String> for Tag {
       "0074104A" => Ok(OverriddenAttributesSequence),
       "OVERRIDDENATTRIBUTESSEQUENCE" => Ok(OverriddenAttributesSequence),
       "0074104C" => Ok(ConventionalControlPointVerificationSequence),
-      "CONVENTIONALCONTROLPOINTVERIFICATIONSEQUENCE" => Ok(ConventionalControlPointVerificationSequence),
+      "CONVENTIONALCONTROLPOINTVERIFICATIONSEQUENCE" => {
+        Ok(ConventionalControlPointVerificationSequence)
+      }
       "0074104E" => Ok(IonControlPointVerificationSequence),
       "IONCONTROLPOINTVERIFICATIONSEQUENCE" => Ok(IonControlPointVerificationSequence),
       "00741050" => Ok(AttributeOccurrenceSequence),
@@ -46848,7 +47326,9 @@ impl TryFrom<&String> for Tag {
       "00741212" => Ok(PerformedProcessingParametersSequence),
       "PERFORMEDPROCESSINGPARAMETERSSEQUENCE" => Ok(PerformedProcessingParametersSequence),
       "00741216" => Ok(UnifiedProcedureStepPerformedProcedureSequence),
-      "UNIFIEDPROCEDURESTEPPERFORMEDPROCEDURESEQUENCE" => Ok(UnifiedProcedureStepPerformedProcedureSequence),
+      "UNIFIEDPROCEDURESTEPPERFORMEDPROCEDURESEQUENCE" => {
+        Ok(UnifiedProcedureStepPerformedProcedureSequence)
+      }
       "00741220" => Ok(RelatedProcedureStepSequence),
       "RELATEDPROCEDURESTEPSEQUENCE" => Ok(RelatedProcedureStepSequence),
       "00741222" => Ok(ProcedureStepRelationshipType),
@@ -46890,7 +47370,9 @@ impl TryFrom<&String> for Tag {
       "0076000E" => Ok(DerivationImplantAssemblyTemplateSequence),
       "DERIVATIONIMPLANTASSEMBLYTEMPLATESEQUENCE" => Ok(DerivationImplantAssemblyTemplateSequence),
       "00760010" => Ok(ImplantAssemblyTemplateTargetAnatomySequence),
-      "IMPLANTASSEMBLYTEMPLATETARGETANATOMYSEQUENCE" => Ok(ImplantAssemblyTemplateTargetAnatomySequence),
+      "IMPLANTASSEMBLYTEMPLATETARGETANATOMYSEQUENCE" => {
+        Ok(ImplantAssemblyTemplateTargetAnatomySequence)
+      }
       "00760020" => Ok(ProcedureTypeCodeSequence),
       "PROCEDURETYPECODESEQUENCE" => Ok(ProcedureTypeCodeSequence),
       "00760030" => Ok(SurgicalTechnique),
@@ -46938,25 +47420,43 @@ impl TryFrom<&String> for Tag {
       "0078002E" => Ok(ImplantTemplateGroupMemberID),
       "IMPLANTTEMPLATEGROUPMEMBERID" => Ok(ImplantTemplateGroupMemberID),
       "00780050" => Ok(ThreeDImplantTemplateGroupMemberMatchingPoint),
-      "THREEDIMPLANTTEMPLATEGROUPMEMBERMATCHINGPOINT" => Ok(ThreeDImplantTemplateGroupMemberMatchingPoint),
+      "THREEDIMPLANTTEMPLATEGROUPMEMBERMATCHINGPOINT" => {
+        Ok(ThreeDImplantTemplateGroupMemberMatchingPoint)
+      }
       "00780060" => Ok(ThreeDImplantTemplateGroupMemberMatchingAxes),
-      "THREEDIMPLANTTEMPLATEGROUPMEMBERMATCHINGAXES" => Ok(ThreeDImplantTemplateGroupMemberMatchingAxes),
+      "THREEDIMPLANTTEMPLATEGROUPMEMBERMATCHINGAXES" => {
+        Ok(ThreeDImplantTemplateGroupMemberMatchingAxes)
+      }
       "00780070" => Ok(ImplantTemplateGroupMemberMatching2DCoordinatesSequence),
-      "IMPLANTTEMPLATEGROUPMEMBERMATCHING2DCOORDINATESSEQUENCE" => Ok(ImplantTemplateGroupMemberMatching2DCoordinatesSequence),
+      "IMPLANTTEMPLATEGROUPMEMBERMATCHING2DCOORDINATESSEQUENCE" => {
+        Ok(ImplantTemplateGroupMemberMatching2DCoordinatesSequence)
+      }
       "00780090" => Ok(TwoDImplantTemplateGroupMemberMatchingPoint),
-      "TWODIMPLANTTEMPLATEGROUPMEMBERMATCHINGPOINT" => Ok(TwoDImplantTemplateGroupMemberMatchingPoint),
+      "TWODIMPLANTTEMPLATEGROUPMEMBERMATCHINGPOINT" => {
+        Ok(TwoDImplantTemplateGroupMemberMatchingPoint)
+      }
       "007800A0" => Ok(TwoDImplantTemplateGroupMemberMatchingAxes),
-      "TWODIMPLANTTEMPLATEGROUPMEMBERMATCHINGAXES" => Ok(TwoDImplantTemplateGroupMemberMatchingAxes),
+      "TWODIMPLANTTEMPLATEGROUPMEMBERMATCHINGAXES" => {
+        Ok(TwoDImplantTemplateGroupMemberMatchingAxes)
+      }
       "007800B0" => Ok(ImplantTemplateGroupVariationDimensionSequence),
-      "IMPLANTTEMPLATEGROUPVARIATIONDIMENSIONSEQUENCE" => Ok(ImplantTemplateGroupVariationDimensionSequence),
+      "IMPLANTTEMPLATEGROUPVARIATIONDIMENSIONSEQUENCE" => {
+        Ok(ImplantTemplateGroupVariationDimensionSequence)
+      }
       "007800B2" => Ok(ImplantTemplateGroupVariationDimensionName),
-      "IMPLANTTEMPLATEGROUPVARIATIONDIMENSIONNAME" => Ok(ImplantTemplateGroupVariationDimensionName),
+      "IMPLANTTEMPLATEGROUPVARIATIONDIMENSIONNAME" => {
+        Ok(ImplantTemplateGroupVariationDimensionName)
+      }
       "007800B4" => Ok(ImplantTemplateGroupVariationDimensionRankSequence),
-      "IMPLANTTEMPLATEGROUPVARIATIONDIMENSIONRANKSEQUENCE" => Ok(ImplantTemplateGroupVariationDimensionRankSequence),
+      "IMPLANTTEMPLATEGROUPVARIATIONDIMENSIONRANKSEQUENCE" => {
+        Ok(ImplantTemplateGroupVariationDimensionRankSequence)
+      }
       "007800B6" => Ok(ReferencedImplantTemplateGroupMemberID),
       "REFERENCEDIMPLANTTEMPLATEGROUPMEMBERID" => Ok(ReferencedImplantTemplateGroupMemberID),
       "007800B8" => Ok(ImplantTemplateGroupVariationDimensionRank),
-      "IMPLANTTEMPLATEGROUPVARIATIONDIMENSIONRANK" => Ok(ImplantTemplateGroupVariationDimensionRank),
+      "IMPLANTTEMPLATEGROUPVARIATIONDIMENSIONRANK" => {
+        Ok(ImplantTemplateGroupVariationDimensionRank)
+      }
       "00800001" => Ok(SurfaceScanAcquisitionTypeCodeSequence),
       "SURFACESCANACQUISITIONTYPECODESEQUENCE" => Ok(SurfaceScanAcquisitionTypeCodeSequence),
       "00800002" => Ok(SurfaceScanModeCodeSequence),
@@ -47256,7 +47756,9 @@ impl TryFrom<&String> for Tag {
       "213000C0" => Ok(OriginalImageSequence),
       "ORIGINALIMAGESEQUENCE" => Ok(OriginalImageSequence),
       "22000001" => Ok(LabelUsingInformationExtractedFromInstances),
-      "LABELUSINGINFORMATIONEXTRACTEDFROMINSTANCES" => Ok(LabelUsingInformationExtractedFromInstances),
+      "LABELUSINGINFORMATIONEXTRACTEDFROMINSTANCES" => {
+        Ok(LabelUsingInformationExtractedFromInstances)
+      }
       "22000002" => Ok(LabelText),
       "LABELTEXT" => Ok(LabelText),
       "22000003" => Ok(LabelStyleSelection),
@@ -47274,7 +47776,9 @@ impl TryFrom<&String> for Tag {
       "22000009" => Ok(IncludeDisplayApplication),
       "INCLUDEDISPLAYAPPLICATION" => Ok(IncludeDisplayApplication),
       "2200000A" => Ok(PreserveCompositeInstancesAfterMediaCreation),
-      "PRESERVECOMPOSITEINSTANCESAFTERMEDIACREATION" => Ok(PreserveCompositeInstancesAfterMediaCreation),
+      "PRESERVECOMPOSITEINSTANCESAFTERMEDIACREATION" => {
+        Ok(PreserveCompositeInstancesAfterMediaCreation)
+      }
       "2200000B" => Ok(TotalNumberOfPiecesOfMediaCreated),
       "TOTALNUMBEROFPIECESOFMEDIACREATED" => Ok(TotalNumberOfPiecesOfMediaCreated),
       "2200000C" => Ok(RequestedMediaApplicationProfile),
@@ -47542,7 +48046,9 @@ impl TryFrom<&String> for Tag {
       "30080048" => Ok(DoseRateDelivered),
       "DOSERATEDELIVERED" => Ok(DoseRateDelivered),
       "30080050" => Ok(TreatmentSummaryCalculatedDoseReferenceSequence),
-      "TREATMENTSUMMARYCALCULATEDDOSEREFERENCESEQUENCE" => Ok(TreatmentSummaryCalculatedDoseReferenceSequence),
+      "TREATMENTSUMMARYCALCULATEDDOSEREFERENCESEQUENCE" => {
+        Ok(TreatmentSummaryCalculatedDoseReferenceSequence)
+      }
       "30080052" => Ok(CumulativeDoseToDoseReference),
       "CUMULATIVEDOSETODOSEREFERENCE" => Ok(CumulativeDoseToDoseReference),
       "30080054" => Ok(FirstTreatmentDate),
@@ -47598,7 +48104,9 @@ impl TryFrom<&String> for Tag {
       "300800D0" => Ok(RecordedBlockSequence),
       "RECORDEDBLOCKSEQUENCE" => Ok(RecordedBlockSequence),
       "300800E0" => Ok(TreatmentSummaryMeasuredDoseReferenceSequence),
-      "TREATMENTSUMMARYMEASUREDDOSEREFERENCESEQUENCE" => Ok(TreatmentSummaryMeasuredDoseReferenceSequence),
+      "TREATMENTSUMMARYMEASUREDDOSEREFERENCESEQUENCE" => {
+        Ok(TreatmentSummaryMeasuredDoseReferenceSequence)
+      }
       "300800F0" => Ok(RecordedSnoutSequence),
       "RECORDEDSNOUTSEQUENCE" => Ok(RecordedSnoutSequence),
       "300800F2" => Ok(RecordedRangeShifterSequence),
@@ -47652,7 +48160,9 @@ impl TryFrom<&String> for Tag {
       "30080168" => Ok(SafePositionReturnTime),
       "SAFEPOSITIONRETURNTIME" => Ok(SafePositionReturnTime),
       "30080171" => Ok(PulseSpecificBrachyControlPointDeliveredSequence),
-      "PULSESPECIFICBRACHYCONTROLPOINTDELIVEREDSEQUENCE" => Ok(PulseSpecificBrachyControlPointDeliveredSequence),
+      "PULSESPECIFICBRACHYCONTROLPOINTDELIVEREDSEQUENCE" => {
+        Ok(PulseSpecificBrachyControlPointDeliveredSequence)
+      }
       "30080172" => Ok(PulseNumber),
       "PULSENUMBER" => Ok(PulseNumber),
       "30080173" => Ok(BrachyPulseControlPointDeliveredSequence),
@@ -47808,7 +48318,9 @@ impl TryFrom<&String> for Tag {
       "300A00A0" => Ok(NumberOfBrachyApplicationSetups),
       "NUMBEROFBRACHYAPPLICATIONSETUPS" => Ok(NumberOfBrachyApplicationSetups),
       "300A00A2" => Ok(BrachyApplicationSetupDoseSpecificationPoint),
-      "BRACHYAPPLICATIONSETUPDOSESPECIFICATIONPOINT" => Ok(BrachyApplicationSetupDoseSpecificationPoint),
+      "BRACHYAPPLICATIONSETUPDOSESPECIFICATIONPOINT" => {
+        Ok(BrachyApplicationSetupDoseSpecificationPoint)
+      }
       "300A00A4" => Ok(BrachyApplicationSetupDose),
       "BRACHYAPPLICATIONSETUPDOSE" => Ok(BrachyApplicationSetupDose),
       "300A00B0" => Ok(BeamSequence),
@@ -47850,7 +48362,9 @@ impl TryFrom<&String> for Tag {
       "300A00CA" => Ok(PlannedVerificationImageSequence),
       "PLANNEDVERIFICATIONIMAGESEQUENCE" => Ok(PlannedVerificationImageSequence),
       "300A00CC" => Ok(ImagingDeviceSpecificAcquisitionParameters),
-      "IMAGINGDEVICESPECIFICACQUISITIONPARAMETERS" => Ok(ImagingDeviceSpecificAcquisitionParameters),
+      "IMAGINGDEVICESPECIFICACQUISITIONPARAMETERS" => {
+        Ok(ImagingDeviceSpecificAcquisitionParameters)
+      }
       "300A00CE" => Ok(TreatmentDeliveryType),
       "TREATMENTDELIVERYTYPE" => Ok(TreatmentDeliveryType),
       "300A00D0" => Ok(NumberOfWedges),
@@ -48216,7 +48730,9 @@ impl TryFrom<&String> for Tag {
       "300A02E2" => Ok(SourceToCompensatorDistance),
       "SOURCETOCOMPENSATORDISTANCE" => Ok(SourceToCompensatorDistance),
       "300A02E3" => Ok(TotalCompensatorTrayWaterEquivalentThickness),
-      "TOTALCOMPENSATORTRAYWATEREQUIVALENTTHICKNESS" => Ok(TotalCompensatorTrayWaterEquivalentThickness),
+      "TOTALCOMPENSATORTRAYWATEREQUIVALENTTHICKNESS" => {
+        Ok(TotalCompensatorTrayWaterEquivalentThickness)
+      }
       "300A02E4" => Ok(IsocenterToCompensatorTrayDistance),
       "ISOCENTERTOCOMPENSATORTRAYDISTANCE" => Ok(IsocenterToCompensatorTrayDistance),
       "300A02E5" => Ok(CompensatorColumnOffset),
@@ -48272,7 +48788,9 @@ impl TryFrom<&String> for Tag {
       "300A033A" => Ok(LateralSpreadingDeviceDescription),
       "LATERALSPREADINGDEVICEDESCRIPTION" => Ok(LateralSpreadingDeviceDescription),
       "300A033C" => Ok(LateralSpreadingDeviceWaterEquivalentThickness),
-      "LATERALSPREADINGDEVICEWATEREQUIVALENTTHICKNESS" => Ok(LateralSpreadingDeviceWaterEquivalentThickness),
+      "LATERALSPREADINGDEVICEWATEREQUIVALENTTHICKNESS" => {
+        Ok(LateralSpreadingDeviceWaterEquivalentThickness)
+      }
       "300A0340" => Ok(NumberOfRangeModulators),
       "NUMBEROFRANGEMODULATORS" => Ok(NumberOfRangeModulators),
       "300A0342" => Ok(RangeModulatorSequence),
@@ -48320,9 +48838,13 @@ impl TryFrom<&String> for Tag {
       "300A0384" => Ok(RangeModulatorGatingStopValue),
       "RANGEMODULATORGATINGSTOPVALUE" => Ok(RangeModulatorGatingStopValue),
       "300A0386" => Ok(RangeModulatorGatingStartWaterEquivalentThickness),
-      "RANGEMODULATORGATINGSTARTWATEREQUIVALENTTHICKNESS" => Ok(RangeModulatorGatingStartWaterEquivalentThickness),
+      "RANGEMODULATORGATINGSTARTWATEREQUIVALENTTHICKNESS" => {
+        Ok(RangeModulatorGatingStartWaterEquivalentThickness)
+      }
       "300A0388" => Ok(RangeModulatorGatingStopWaterEquivalentThickness),
-      "RANGEMODULATORGATINGSTOPWATEREQUIVALENTTHICKNESS" => Ok(RangeModulatorGatingStopWaterEquivalentThickness),
+      "RANGEMODULATORGATINGSTOPWATEREQUIVALENTTHICKNESS" => {
+        Ok(RangeModulatorGatingStopWaterEquivalentThickness)
+      }
       "300A038A" => Ok(IsocenterToRangeModulatorDistance),
       "ISOCENTERTORANGEMODULATORDISTANCE" => Ok(IsocenterToRangeModulatorDistance),
       "300A0390" => Ok(ScanSpotTuneID),
@@ -48382,7 +48904,9 @@ impl TryFrom<&String> for Tag {
       "300A0435" => Ok(ApplicatorOpeningY),
       "APPLICATOROPENINGY" => Ok(ApplicatorOpeningY),
       "300A0436" => Ok(SourceToApplicatorMountingPositionDistance),
-      "SOURCETOAPPLICATORMOUNTINGPOSITIONDISTANCE" => Ok(SourceToApplicatorMountingPositionDistance),
+      "SOURCETOAPPLICATORMOUNTINGPOSITIONDISTANCE" => {
+        Ok(SourceToApplicatorMountingPositionDistance)
+      }
       "300C0002" => Ok(ReferencedRTPlanSequence),
       "REFERENCEDRTPLANSEQUENCE" => Ok(ReferencedRTPlanSequence),
       "300C0004" => Ok(ReferencedBeamSequence),
@@ -52486,4 +53010,3 @@ impl TryFrom<u32> for Tag {
     }
   }
 }
-

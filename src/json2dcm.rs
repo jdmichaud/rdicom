@@ -21,14 +21,14 @@
 #![allow(dead_code)]
 #![allow(unused_variables)]
 
+use rdicom::dicom_representation::{json2dcm, DicomAttributeJson};
 use std::collections::BTreeMap;
-use std::io::BufWriter;
-use rdicom::dicom_representation::{DicomAttributeJson, json2dcm};
-use std::io::BufReader;
 use std::error::Error;
 use std::fs::File;
-use structopt::StructOpt;
+use std::io::BufReader;
+use std::io::BufWriter;
 use structopt::clap::AppSettings;
+use structopt::StructOpt;
 
 // A simplified dcm2json clone
 #[derive(Debug, StructOpt)]
@@ -47,7 +47,8 @@ struct Opt {
 fn main() -> Result<(), Box<dyn Error>> {
   let opt = Opt::from_args();
   let inputfile = File::open(&opt.jsonfilepath)?;
-  let json: BTreeMap<String, DicomAttributeJson> = serde_json::from_reader(BufReader::new(inputfile))?;
+  let json: BTreeMap<String, DicomAttributeJson> =
+    serde_json::from_reader(BufReader::new(inputfile))?;
 
   let outputfile = File::create(&opt.dcmfilepath)?;
   let mut writer = BufWriter::new(outputfile);

@@ -23,16 +23,16 @@
 #![allow(unused_imports)]
 
 use std::error::Error;
-use std::io::BufReader;
 use std::fs::File;
+use std::io::BufReader;
 use std::io::{self};
 
 use structopt::StructOpt;
 
+use rdicom::dicom_tags::SequenceDelimitationItem;
+use rdicom::instance::DicomValue;
 use rdicom::instance::Instance;
 use rdicom::misc::is_dicom_file;
-use rdicom::instance::DicomValue;
-use rdicom::dicom_tags::SequenceDelimitationItem;
 
 #[derive(Debug, StructOpt)]
 struct Opt {

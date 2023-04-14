@@ -18,9 +18,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-pub mod instance;
+pub mod dicom_representation;
+pub mod dicom_tags;
 pub mod error;
+pub mod instance;
 pub mod misc;
 pub mod tags;
-pub mod dicom_tags;
-pub mod dicom_representation;

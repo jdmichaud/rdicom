@@ -22,20 +22,20 @@
 #![allow(unused_variables)]
 #![allow(unused_imports)]
 
-use rdicom::error::DicomError;
-use rdicom::instance::DicomAttribute;
 use std::error::Error;
-use std::io::BufReader;
 use std::fs::File;
+use std::io::BufReader;
 use std::io::{self};
 
-use structopt::StructOpt;
 use structopt::clap::AppSettings;
+use structopt::StructOpt;
 
+use rdicom::dicom_tags::{Item, SequenceDelimitationItem};
+use rdicom::error::DicomError;
+use rdicom::instance::DicomAttribute;
+use rdicom::instance::DicomValue;
 use rdicom::instance::Instance;
 use rdicom::misc::is_dicom_file;
-use rdicom::instance::DicomValue;
-use rdicom::dicom_tags::{Item, SequenceDelimitationItem};
 
 /// A dcmdump clone based on rdicom
 #[derive(Debug, StructOpt)]
@@ -49,63 +49,123 @@ struct Opt {
   filepath: String,
 }
 
-fn get_tag_sequence<'b, 'a>(instance: &'a Instance, field: &DicomAttribute<'a>, level: usize)
-//       (group, element, vr,     value,  length, multiplicity, tag_name, level)
-  -> Vec<(u16,   u16,     String, String, String, usize,        &'a str,  usize)> {
+fn get_tag_sequence<'b, 'a>(
+  instance: &'a Instance,
+  field: &DicomAttribute<'a>,
+  level: usize,
+) -> Vec<(u16, u16, String, String, String, usize, &'a str, usize)> {
   let mut result: Vec<(u16, u16, String, String, String, usize, &'a str, usize)> = vec![];
   match field.vr.as_ref() {
     "SQ" => {
-      result.push((field.group, field.element, String::from("SQ"),
+      result.push((
+        field.group,
+        field.element,
+        String::from("SQ"),
         if field.length == 0xFFFFFFFF {
-          format!("(Sequence with undefined length #={})", field.subattributes.len())
+          format!(
+            "(Sequence with undefined length #={})",
+            field.subattributes.len()
+          )
         } else {
-          format!("(Sequence with explicit length #={})", field.subattributes.len())
+          format!(
+            "(Sequence with explicit length #={})",
+            field.subattributes.len()
+          )
         },
-        if field.length == 0xFFFFFFFF { "u/l".to_string() } else { format!("{}", field.length) },
-        1, field.tag.name, level,
+        if field.length == 0xFFFFFFFF {
+          "u/l".to_string()
+        } else {
+          format!("{}", field.length)
+        },
+        1,
+        field.tag.name,
+        level,
       ));
-      result.append(&mut field.subattributes.iter()
-        .map(|attr| get_tag_sequence(instance, &attr, level + 1))
-        .flatten()
-        .collect::<_>()
+      result.append(
+        &mut field
+          .subattributes
+          .iter()
+          .map(|attr| get_tag_sequence(instance, &attr, level + 1))
+          .flatten()
+          .collect::<_>(),
       );
-      result.push((0xFFFE, 0xE0DD, String::from("na"),
+      result.push((
+        0xFFFE,
+        0xE0DD,
+        String::from("na"),
         if field.length != 0xFFFFFFFF {
           "(SequenceDelimitationItem for re-encod.)".to_string()
         } else {
           "(SequenceDelimitationItem)".to_string()
         },
-        format!("{}", 0), 0, "SequenceDelimitationItem", level,
+        format!("{}", 0),
+        0,
+        "SequenceDelimitationItem",
+        level,
       ));
-    },
+    }
     _ if field.group == Item.group && field.element == Item.element => {
-      let mut sequence_tags: Vec<_> = field.subattributes.iter()
+      let mut sequence_tags: Vec<_> = field
+        .subattributes
+        .iter()
         .map(|attr| get_tag_sequence(instance, &attr, level + 1))
         .flatten()
         .collect::<_>();
-      result.push((field.group, field.element, String::from("na"),
+      result.push((
+        field.group,
+        field.element,
+        String::from("na"),
         if field.length == 0xFFFFFFFF as usize {
-          format!("(Item with undefined length #={})", field.subattributes.len())
+          format!(
+            "(Item with undefined length #={})",
+            field.subattributes.len()
+          )
         } else {
-          format!("(Item with explicit length #={})", field.subattributes.len())
+          format!(
+            "(Item with explicit length #={})",
+            field.subattributes.len()
+          )
         },
-        if field.length == 0xFFFFFFFF { "u/l".to_string() } else { format!("{}", field.length) },
-        1, field.tag.name, level,
+        if field.length == 0xFFFFFFFF {
+          "u/l".to_string()
+        } else {
+          format!("{}", field.length)
+        },
+        1,
+        field.tag.name,
+        level,
       ));
       result.append(&mut sequence_tags);
-      result.push((0xFFFE, 0xE00D, String::from("na"),
+      result.push((
+        0xFFFE,
+        0xE00D,
+        String::from("na"),
         if field.length != 0xFFFFFFFF {
           "(ItemDelimitationItem for re-encoding)".to_string()
         } else {
           "(ItemDelimitationItem)".to_string()
-        }, format!("{}", 0), 0, "ItemDelimitationItem", level,
+        },
+        format!("{}", 0),
+        0,
+        "ItemDelimitationItem",
+        level,
       ));
-    },
-    _ if field.group == SequenceDelimitationItem.group && field.element == SequenceDelimitationItem.element => {
-      result.push((field.group, field.element, String::from("na"),
-        "(SequenceDelimitationItem)".to_string(), "0".to_string(), 0, field.tag.name, level));
+    }
+    _ if field.group == SequenceDelimitationItem.group
+      && field.element == SequenceDelimitationItem.element =>
+    {
+      result.push((
+        field.group,
+        field.element,
+        String::from("na"),
+        "(SequenceDelimitationItem)".to_string(),
+        "0".to_string(),
+        0,
+        field.tag.name,
+        level,
+      ));
       return result;
-    },
+    }
     _ => {
       let value = DicomValue::from_dicom_attribute(&field, &instance).unwrap();
       match value {
@@ -119,23 +179,31 @@ fn get_tag_sequence<'b, 'a>(instance: &'a Instance, field: &DicomAttribute<'a>, 
           } else {
             (format!("[{}]", display_value), 1)
           };
-          result.push((field.group, field.element, field.vr.to_string(), display_value,
-            format!("{}", field.data_length), multiplicity, field.tag.name, level));
-        },
-        DicomValue::AE(payload) |
-        DicomValue::AS(payload) |
-        DicomValue::DA(payload) |
-        DicomValue::IS(payload) |
-        DicomValue::LO(payload) |
-        DicomValue::LT(payload) |
-        DicomValue::PN(payload) |
-        DicomValue::SH(payload) |
-        DicomValue::ST(payload) |
-        DicomValue::TM(payload) |
-        DicomValue::DT(payload) |
-        DicomValue::CS(payload) |
-        DicomValue::UT(payload) |
-        DicomValue::DS(payload) => {
+          result.push((
+            field.group,
+            field.element,
+            field.vr.to_string(),
+            display_value,
+            format!("{}", field.data_length),
+            multiplicity,
+            field.tag.name,
+            level,
+          ));
+        }
+        DicomValue::AE(payload)
+        | DicomValue::AS(payload)
+        | DicomValue::DA(payload)
+        | DicomValue::IS(payload)
+        | DicomValue::LO(payload)
+        | DicomValue::LT(payload)
+        | DicomValue::PN(payload)
+        | DicomValue::SH(payload)
+        | DicomValue::ST(payload)
+        | DicomValue::TM(payload)
+        | DicomValue::DT(payload)
+        | DicomValue::CS(payload)
+        | DicomValue::UT(payload)
+        | DicomValue::DS(payload) => {
           let mut display_value = payload.join("\\");
           if display_value.len() > 66 {
             display_value.replace_range(66.., "...");
@@ -145,18 +213,33 @@ fn get_tag_sequence<'b, 'a>(instance: &'a Instance, field: &DicomAttribute<'a>, 
           } else {
             (format!("[{}]", display_value), payload.len())
           };
-          result.push((field.group, field.element, field.vr.to_string(), display_value,
-            format!("{}", field.data_length), multiplicity, field.tag.name, level));
-        },
+          result.push((
+            field.group,
+            field.element,
+            field.vr.to_string(),
+            display_value,
+            format!("{}", field.data_length),
+            multiplicity,
+            field.tag.name,
+            level,
+          ));
+        }
         DicomValue::SeqItemEnd => {
-          result.push((field.group, field.element, String::from("na"),
-            "(ItemDelimitationItem)".to_string(), "u/l".to_string(), 1, "Item", level,
+          result.push((
+            field.group,
+            field.element,
+            String::from("na"),
+            "(ItemDelimitationItem)".to_string(),
+            "u/l".to_string(),
+            1,
+            "Item",
+            level,
           ));
           return result;
-        },
+        }
         DicomValue::SeqEnd => {
           panic!("Unexpected SeqEnd");
-        },
+        }
         DicomValue::FD(payload) => {
           let display_value = value.to_string();
           let (display_value, multiplicity) = if display_value == "" {
@@ -164,9 +247,17 @@ fn get_tag_sequence<'b, 'a>(instance: &'a Instance, field: &DicomAttribute<'a>, 
           } else {
             (display_value, payload.len())
           };
-          result.push((field.group, field.element, field.vr.to_string(), display_value,
-            format!("{}", field.data_length), multiplicity, field.tag.name, level));
-        },
+          result.push((
+            field.group,
+            field.element,
+            field.vr.to_string(),
+            display_value,
+            format!("{}", field.data_length),
+            multiplicity,
+            field.tag.name,
+            level,
+          ));
+        }
         DicomValue::FL(payload) => {
           let display_value = value.to_string();
           let (display_value, multiplicity) = if display_value == "" {
@@ -174,9 +265,17 @@ fn get_tag_sequence<'b, 'a>(instance: &'a Instance, field: &DicomAttribute<'a>, 
           } else {
             (display_value, payload.len())
           };
-          result.push((field.group, field.element, field.vr.to_string(), display_value,
-            format!("{}", field.data_length), multiplicity, field.tag.name, level));
-        },
+          result.push((
+            field.group,
+            field.element,
+            field.vr.to_string(),
+            display_value,
+            format!("{}", field.data_length),
+            multiplicity,
+            field.tag.name,
+            level,
+          ));
+        }
         _ => {
           let display_value = value.to_string();
           let (display_value, multiplicity) = if display_value == "" {
@@ -184,9 +283,17 @@ fn get_tag_sequence<'b, 'a>(instance: &'a Instance, field: &DicomAttribute<'a>, 
           } else {
             (display_value, 1)
           };
-          result.push((field.group, field.element, field.vr.to_string(), display_value,
-            format!("{}", field.data_length), multiplicity, field.tag.name, level));
-        },
+          result.push((
+            field.group,
+            field.element,
+            field.vr.to_string(),
+            display_value,
+            format!("{}", field.data_length),
+            multiplicity,
+            field.tag.name,
+            level,
+          ));
+        }
       }
     }
   };
@@ -220,10 +327,26 @@ fn dump(opt: &Opt) -> Result<(), DicomError> {
         header = false;
         println!("");
         println!("# Dicom-Data-Set");
-        println!("# Used TransferSyntax: Little Endian {}", if instance.implicit { "Implicit" } else { "Explicit" });
+        println!(
+          "# Used TransferSyntax: Little Endian {}",
+          if instance.implicit {
+            "Implicit"
+          } else {
+            "Explicit"
+          }
+        );
       }
-      println!("{}({:04x},{:04x}) {} {: <40} # {: >3},{: >2} {}",
-        " ".repeat(level * 2), group, element, vr, value, length, multiplicity, tag_name);
+      println!(
+        "{}({:04x},{:04x}) {} {: <40} # {: >3},{: >2} {}",
+        " ".repeat(level * 2),
+        group,
+        element,
+        vr,
+        value,
+        length,
+        multiplicity,
+        tag_name
+      );
     }
   }
   Ok(())

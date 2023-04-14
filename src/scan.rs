@@ -22,19 +22,19 @@
 #![allow(unused_variables)]
 #![allow(unused_imports)]
 
-use std::collections::{HashMap, HashSet};
-use std::io::BufReader;
-use std::fs::File;
-use std::path::Path;
-use std::fs::metadata;
-use std::path::PathBuf;
-use std::error::Error;
-use structopt::StructOpt;
-use structopt::clap::AppSettings;
-use walkdir::WalkDir;
-use std::io::{self, Write};
-use sqlite::{Connection};
 use serde_yaml;
+use sqlite::Connection;
+use std::collections::{HashMap, HashSet};
+use std::error::Error;
+use std::fs::metadata;
+use std::fs::File;
+use std::io::BufReader;
+use std::io::{self, Write};
+use std::path::Path;
+use std::path::PathBuf;
+use structopt::clap::AppSettings;
+use structopt::StructOpt;
+use walkdir::WalkDir;
 
 use rdicom::dicom_tags;
 use rdicom::instance::Instance;
@@ -54,17 +54,17 @@ const MEDIA_STORAGE_DIRECTORY_STORAGE: &str = "1.2.840.10008.1.3.10";
   global_settings = &[AppSettings::DisableVersion]
 )]
 struct Opt {
-    /// YAML configuration file containing the list of files to be indexed from the DICOM assets.
-    #[structopt(short, long, parse(try_from_str = file_exists))]
-    config: PathBuf,
-    /// CSV output file
-    #[structopt(long)]
-    csv_output: Option<PathBuf>,
-    /// SQL output file
-    #[structopt(long)]
-    sql_output: Option<PathBuf>,
-    /// Path to a folder containing DICOM assets. Will be scanned recursively.
-    input_path: PathBuf,
+  /// YAML configuration file containing the list of files to be indexed from the DICOM assets.
+  #[structopt(short, long, parse(try_from_str = file_exists))]
+  config: PathBuf,
+  /// CSV output file
+  #[structopt(long)]
+  csv_output: Option<PathBuf>,
+  /// SQL output file
+  #[structopt(long)]
+  sql_output: Option<PathBuf>,
+  /// Path to a folder containing DICOM assets. Will be scanned recursively.
+  input_path: PathBuf,
 }
 
 fn path_is_folder(path: &str) -> Result<PathBuf, Box<dyn Error>> {
@@ -80,12 +80,12 @@ fn path_is_folder(path: &str) -> Result<PathBuf, Box<dyn Error>> {
 }
 
 fn file_exists(path: &str) -> Result<PathBuf, Box<dyn Error>> {
-    let path_buf = PathBuf::from(path);
-    if path_buf.exists() {
-        Ok(path_buf)
-    } else {
-        Err(format!("{} does not exists", path).into())
-    }
+  let path_buf = PathBuf::from(path);
+  if path_buf.exists() {
+    Ok(path_buf)
+  } else {
+    Err(format!("{} does not exists", path).into())
+  }
 }
 
 trait IndexStore {
@@ -95,13 +95,17 @@ trait IndexStore {
 #[derive(Debug)]
 struct CsvIndexStore<W: Write> {
   writer: W,
-  fields: Vec<String>
+  fields: Vec<String>,
 }
 
 impl<W: Write> CsvIndexStore<W> {
   fn new(mut writer: W, mut fields: Vec<String>) -> Self {
     fields.push("filepath".to_string());
-    let header = fields.iter().map(|s| String::from("\"") + s + "\"").collect::<Vec<String>>().join(",");
+    let header = fields
+      .iter()
+      .map(|s| String::from("\"") + s + "\"")
+      .collect::<Vec<String>>()
+      .join(",");
     writeln!(writer, "").unwrap();
     CsvIndexStore { writer, fields }
   }
@@ -110,7 +114,11 @@ impl<W: Write> CsvIndexStore<W> {
 impl<W: Write> IndexStore for CsvIndexStore<W> {
   fn write(self: &mut Self, data: &HashMap<String, String>) -> Result<(), Box<dyn Error>> {
     for field in &self.fields {
-      match write!(self.writer, "\"{}\",", data.get(field).unwrap_or(&"undefined".to_string())) {
+      match write!(
+        self.writer,
+        "\"{}\",",
+        data.get(field).unwrap_or(&"undefined".to_string())
+      ) {
         Ok(_) => (),
         Err(e) => return Err(Box::new(e)),
       }
@@ -123,18 +131,31 @@ impl<W: Write> IndexStore for CsvIndexStore<W> {
 struct SqlIndexStore {
   connection: Connection,
   table_name: String,
-  fields: Vec<String>
+  fields: Vec<String>,
 }
 
 impl SqlIndexStore {
-  fn new(filepath: &str, table_name: &str, mut fields: Vec<String>) -> Result<Self, Box<dyn Error>> {
+  fn new(
+    filepath: &str,
+    table_name: &str,
+    mut fields: Vec<String>,
+  ) -> Result<Self, Box<dyn Error>> {
     fields.push("filepath".to_string());
-    let table = fields.iter()
+    let table = fields
+      .iter()
       .map(|s| s.to_string() + " TEXT NON NULL")
-      .collect::<Vec<String>>().join(",");
+      .collect::<Vec<String>>()
+      .join(",");
     let connection = Connection::open(filepath)?;
-    connection.execute(&format!("CREATE TABLE IF NOT EXISTS {} ({});", table_name, table))?;
-    Ok(SqlIndexStore { connection, table_name: String::from(table_name), fields })
+    connection.execute(&format!(
+      "CREATE TABLE IF NOT EXISTS {} ({});",
+      table_name, table
+    ))?;
+    Ok(SqlIndexStore {
+      connection,
+      table_name: String::from(table_name),
+      fields,
+    })
   }
 }
 
@@ -143,31 +164,61 @@ impl IndexStore for SqlIndexStore {
   // scan reentrant when using an SQL store.
   fn write(self: &mut Self, data: &HashMap<String, String>) -> Result<(), Box<dyn Error>> {
     // Check if the UIDs are not already present in the database
-    let uid_fields = self.fields.iter().filter(|f| f.to_uppercase().ends_with("UID"));
+    let uid_fields = self
+      .fields
+      .iter()
+      .filter(|f| f.to_uppercase().ends_with("UID"));
     let constraints = uid_fields
-      .map(|f| format!("{}=\"{}\"", f, data.get(f).unwrap_or(&"undefined".to_string())))
+      .map(|f| {
+        format!(
+          "{}=\"{}\"",
+          f,
+          data.get(f).unwrap_or(&"undefined".to_string())
+        )
+      })
       .collect::<Vec<String>>()
       .join(" AND ");
-    let already_present = db::query(&self.connection, &format!(
-        "SELECT * FROM {} WHERE {};", self.table_name, constraints))?.len() > 0;
+    let already_present = db::query(
+      &self.connection,
+      &format!("SELECT * FROM {} WHERE {};", self.table_name, constraints),
+    )?
+    .len()
+      > 0;
 
     if already_present {
       // The entry already exists, update it
-      let sets = self.fields.iter()
-        .map(|f| format!("{}=\"{}\"", f, data.get(f).unwrap_or(&"undefined".to_string())))
+      let sets = self
+        .fields
+        .iter()
+        .map(|f| {
+          format!(
+            "{}=\"{}\"",
+            f,
+            data.get(f).unwrap_or(&"undefined".to_string())
+          )
+        })
         .collect::<Vec<String>>()
         .join(",");
-      let query = &format!("UPDATE {} SET {} WHERE {};", self.table_name, sets, constraints);
+      let query = &format!(
+        "UPDATE {} SET {} WHERE {};",
+        self.table_name, sets, constraints
+      );
       self.connection.execute(query)?;
     } else {
       // No entry, create a new one
-      let values: Vec<_> = self.fields.iter()
+      let values: Vec<_> = self
+        .fields
+        .iter()
         .map(|x| data.get(x).unwrap_or(&"undefined".to_owned()).clone())
         .map(|x| format!("\"{}\"", x))
         .collect::<Vec<String>>();
       let column_names = self.fields.join(",");
-      let query = &format!("INSERT INTO {} ({}) VALUES ({});",
-        self.table_name, column_names, values.join(","));
+      let query = &format!(
+        "INSERT INTO {} ({}) VALUES ({});",
+        self.table_name,
+        column_names,
+        values.join(",")
+      );
       self.connection.execute(query)?;
     }
     Ok(())
@@ -181,15 +232,25 @@ fn main() -> Result<(), Box<dyn Error>> {
   let config_file = std::fs::read_to_string(&opt.config)?;
   let config: config::Config = serde_yaml::from_str(&config_file)?;
   // Create an vector of fields to write in the index
-  let indexable_fields = config.indexing.fields.series.into_iter().chain(
-    config.indexing.fields.studies.into_iter().chain(
-      config.indexing.fields.instances.into_iter(),
-    ),
-  ).collect::<Vec<String>>();
+  let indexable_fields = config
+    .indexing
+    .fields
+    .series
+    .into_iter()
+    .chain(
+      config
+        .indexing
+        .fields
+        .studies
+        .into_iter()
+        .chain(config.indexing.fields.instances.into_iter()),
+    )
+    .collect::<Vec<String>>();
   // Create an index store depending on the options
   let mut index_store = if let Some(sql_output) = opt.sql_output {
     let filepath = &sql_output.to_string_lossy().to_string();
-    Box::new(SqlIndexStore::new(filepath, &config.table_name, indexable_fields.to_vec()).unwrap()) as Box<dyn IndexStore>
+    Box::new(SqlIndexStore::new(filepath, &config.table_name, indexable_fields.to_vec()).unwrap())
+      as Box<dyn IndexStore>
   } else {
     let writer = if let Some(csv_output) = opt.csv_output {
       Box::new(File::create(csv_output)?) as Box<dyn Write>
@@ -216,14 +277,23 @@ fn main() -> Result<(), Box<dyn Error>> {
           Ok(instance) => {
             match instance.get_value(&"MediaStorageSOPClassUID".try_into().unwrap()) {
               // Ignore DICOMDIR files
-              Ok(Some(sop_class_uid)) if sop_class_uid.to_string() != MEDIA_STORAGE_DIRECTORY_STORAGE => {
+              Ok(Some(sop_class_uid))
+                if sop_class_uid.to_string() != MEDIA_STORAGE_DIRECTORY_STORAGE =>
+              {
                 let mut data = HashMap::<String, String>::new();
                 // We want the filepath in the index by default
-                data.insert("filepath".to_string(), filepath.to_string_lossy().to_string());
+                data.insert(
+                  "filepath".to_string(),
+                  filepath.to_string_lossy().to_string(),
+                );
                 for field in indexable_fields.iter() {
                   match instance.get_value(&field.try_into().unwrap()) {
                     Ok(result) => {
-                      let value = if let Some(value) = result { value.to_string() } else { "undefined".to_string() };
+                      let value = if let Some(value) = result {
+                        value.to_string()
+                      } else {
+                        "undefined".to_string()
+                      };
                       // Fill the hash map with the requested field
                       data.insert(field.to_string(), value);
                     }
@@ -255,13 +325,19 @@ fn main() -> Result<(), Box<dyn Error>> {
                 }
                 let wheel = "-\\|/";
                 let w = wheel.as_bytes()[count / 10 % 4] as char;
-                print!("{} [{}] files scanned with [{}] studies and [{}] series found and [{}] errors\r",
-                  w, count, study_set.len(), series_set.len(), error_count);
+                print!(
+                  "{} [{}] files scanned with [{}] studies and [{}] series found and [{}] errors\r",
+                  w,
+                  count,
+                  study_set.len(),
+                  series_set.len(),
+                  error_count
+                );
                 io::stdout().flush().unwrap();
-              },
+              }
               _ => (),
             }
-          },
+          }
           Err(e) => {
             print!("\r\x1b[2K");
             io::stdout().flush().unwrap();
