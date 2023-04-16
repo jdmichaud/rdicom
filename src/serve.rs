@@ -961,29 +961,68 @@ fn check_db(opt: &Opt) -> Result<(), Box<dyn Error>> {
   };
 }
 
+// A convenient representation of the content of the accept header
+#[derive(Debug)]
+struct AcceptHeader {
+  format: String,
+  parameters: HashMap<String, String>,
+}
+
+/**
+ * Returns the first entry in the request accept header that is available on the
+ * server side.
+ */
 fn get_accept_format<'a>(
-  accept: &'a str,
+  accepts: &'a Vec<AcceptHeader>,
   availables: &'a [&'a str],
-) -> Result<&'a str, DicomError> {
-  let accepts = accept.split(",").collect::<Vec<&str>>();
-  for available in availables {
-    if accepts.contains(available) {
-      return Ok(available);
+) -> Result<&'a AcceptHeader, DicomError> {
+  for accept in accepts {
+    if availables.contains(&accept.format.as_str()) {
+      return Ok(accept);
     }
   }
   return Err(DicomError::new(&format!(
-    "Unsupported accept header {}, only {:?} accept header are supported",
-    accept, availables
+    "Unsupported accept header {:?}, only {:?} accept header are supported",
+    accepts, availables
   )));
+}
+
+/**
+ * Convert the Accept header to something like:
+ * [ format: application/json, parameters: { boundary: '---abcd1234---' }, ... ]
+ */
+fn get_accept_headers(accept_header: &HeaderValue) -> Result<Vec<AcceptHeader>, Box<dyn Error>> {
+  Ok(
+    accept_header
+      .to_str()?
+      .split(',')
+      .map(|entry| {
+        let mut subentries = entry.split(';');
+        let format = subentries.next().unwrap();
+        let mut parameters = HashMap::<String, String>::new();
+        for subentry in subentries {
+          let parameter = subentry
+            .split('=')
+            .map(|s| String::from(s))
+            .collect::<Vec<String>>();
+          parameters.insert(parameter[0].clone(), parameter[1].clone());
+        }
+        AcceptHeader {
+          format: String::from(format),
+          parameters: parameters,
+        }
+      })
+      .collect::<Vec<AcceptHeader>>(),
+  )
 }
 
 fn capabilities(
   application: &'static capabilities::Application,
 ) -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
   let handlers = warp::filters::header::value("accept").map(move |accept_header: HeaderValue| {
-    let accept_header = accept_header.to_str().unwrap();
+    let accept_header = get_accept_headers(&accept_header).unwrap();
     match get_accept_format(
-      accept_header,
+      &accept_header,
       &[
         "",
         "*/*",
@@ -992,13 +1031,13 @@ fn capabilities(
         "application/json",
       ],
     ) {
-      Ok(accept) => match accept {
+      Ok(accept) => match accept.format.as_str() {
         "application/vnd.sun.wadl+xml" | "application/xml" | "" | "*/*" => Response::builder()
-          .header(warp::http::header::CONTENT_ENCODING, accept)
+          .header(warp::http::header::CONTENT_ENCODING, &accept.format)
           .status(warp::http::StatusCode::OK)
           .body(quick_xml::se::to_string(&application).unwrap()),
         "application/json" => Response::builder()
-          .header(warp::http::header::CONTENT_ENCODING, accept)
+          .header(warp::http::header::CONTENT_ENCODING, &accept.format)
           .status(warp::http::StatusCode::OK)
           .body(serde_json::to_string(&application).unwrap()),
         _ => unreachable!(),
