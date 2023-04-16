@@ -1039,7 +1039,14 @@ fn capabilities(
         "application/json" => Response::builder()
           .header(warp::http::header::CONTENT_ENCODING, &accept.format)
           .status(warp::http::StatusCode::OK)
-          .body(serde_json::to_string(&application).unwrap()),
+          // Because of https://github.com/tafia/quick-xml/issues/582, json output
+          // is polluted with field names starting with "@". We replace them here.
+          // TODO: Write a intermediary serializer to handle these.
+          .body(
+            serde_json::to_string(&application)
+              .unwrap()
+              .replace("@", ""),
+          ),
         _ => unreachable!(),
       },
       Err(e) => Response::builder()
