@@ -22,7 +22,6 @@
 #![allow(unused_variables)]
 #![allow(unused_imports)]
 
-use rdicom::dicom_tags::RequestedProcedureID;
 use std::error::Error;
 use std::fs::File;
 use std::io::BufReader;
@@ -46,11 +45,10 @@ fn main() -> Result<(), Box<dyn Error>> {
 
   if is_dicom_file(&opt.filepath) {
     let instance = Instance::from_buf_reader(BufReader::new(f))?;
-    // println!("{:?}", instance.get_value(0x00082112.try_into()?)?);
-    // println!("{:?}", instance.get_value(0x0008114A.try_into()?)?);
-    // println!("{:?}", instance.get_value(0x00081250.try_into()?)?);
-    // println!("{:?}", instance.get_value(0x7FE00000.try_into()?)?);
-    println!("{:?}", instance.get_value(RequestedProcedureID)?);
+    // println!("{:?}", instance.get_value(&0x00082112.try_into()?)?);
+    // println!("{:?}", instance.get_value(&0x0008114A.try_into()?)?);
+    println!("{:?}", instance.get_value(&0x00081250.try_into()?)?);
+    // println!("{:?}", instance.get_value(&0x7FE00000.try_into()?)?);
   }
   Ok(())
 }
