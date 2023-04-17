@@ -286,7 +286,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             if opt.log_files {
               println!("{}", filepathstr);
             }
-            match instance.get_value(&MediaStorageSOPClassUID) {
+            match instance.get_value(MediaStorageSOPClassUID) {
               // Ignore DICOMDIR files
               Ok(Some(sop_class_uid))
                 if sop_class_uid.to_string() != MEDIA_STORAGE_DIRECTORY_STORAGE =>
@@ -295,7 +295,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                 // We want the filepath in the index by default
                 data.insert("filepath".to_string(), filepathstr);
                 for field in indexable_fields.iter() {
-                  match instance.get_value(&field.try_into()?) {
+                  match instance.get_value(field.try_into()?) {
                     Ok(result) => {
                       let value = if let Some(value) = result {
                         value.to_string()
@@ -328,7 +328,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                   if let Some(series_instance_uid) = data.get("SeriesInstanceUID") {
                     series_set.insert(series_instance_uid.clone());
                   }
-                  if let Ok(Some(modality)) = instance.get_value(&Modality) {
+                  if let Ok(Some(modality)) = instance.get_value(Modality) {
                     modality_set.insert(modality.to_string().clone());
                   }
                   let wheel = "-\\|/";

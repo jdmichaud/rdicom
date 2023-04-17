@@ -24,6 +24,7 @@
 
 // https://radu-matei.com/blog/practical-guide-to-wasm-memory/#passing-arrays-to-rust-webassembly-modules
 
+use crate::dicom_tags::{LargestImagePixelValue, PixelRepresentation};
 use std::borrow::Cow;
 use std::convert::TryInto;
 use std::error::Error;
@@ -449,7 +450,7 @@ impl Instance {
    * Returns the value of a particular DICOM tag.
    * If the tag is not present in the instance, return Ok(None).
    */
-  pub fn get_value<'a>(self: &'a Self, tag: &Tag) -> Result<Option<DicomValue>, DicomError> {
+  pub fn get_value<'a>(self: &'a Self, tag: Tag) -> Result<Option<DicomValue>, DicomError> {
     // Fast forward the DICOM prefix
     // TODO: Deal with non-comformant DICOM files
     // println!("get_value: {:?}", tag);
@@ -564,7 +565,7 @@ impl Instance {
       // SmallestImagePixelValue
       // DICOM makes some fields' value representation depend on the value of other field AND
       // make these value respresentation implicit. What an awful mess...
-      let unsigned = self.get_value(&0x00280103.try_into().unwrap())? == Some(DicomValue::US(0));
+      let unsigned = self.get_value(PixelRepresentation)? == Some(DicomValue::US(0));
       if unsigned {
         tag.vr = "US"
       } else {
@@ -574,7 +575,7 @@ impl Instance {
     }
     if tag.group == 0x0028 && tag.element == 0x0107 {
       // LargestImagePixelValue
-      let unsigned = self.get_value(&0x00280103.try_into().unwrap())? == Some(DicomValue::US(0));
+      let unsigned = self.get_value(LargestImagePixelValue)? == Some(DicomValue::US(0));
       if unsigned {
         tag.vr = "US"
       } else {
@@ -757,7 +758,7 @@ impl Instance {
 
   fn is_supported_type(self: &Self) -> Result<String, DicomError> {
     // Only supporting little-endian explicit VR for now.
-    if let Some(transfer_syntax_uid_field) = self.get_value(&0x00020010.try_into().unwrap())? {
+    if let Some(transfer_syntax_uid_field) = self.get_value(0x00020010.try_into().unwrap())? {
       match transfer_syntax_uid_field {
         DicomValue::UI(transfer_syntax_uid) => {
           if !vec![
