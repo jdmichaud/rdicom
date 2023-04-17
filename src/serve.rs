@@ -22,10 +22,14 @@
 #![allow(dead_code)]
 
 use once_cell::sync::Lazy;
+use rdicom::dicom_representation::DicomAttributeJson;
 use rdicom::error::DicomError;
+use serde::ser::SerializeMap;
+use serde::Serializer;
 use serde::{de, Deserialize, Deserializer, Serialize};
 use serde_json;
 use sqlite::Connection;
+use std::collections::BTreeMap;
 use std::collections::HashMap;
 use std::convert::Infallible;
 use std::convert::TryInto;
@@ -33,6 +37,7 @@ use std::error::Error;
 use std::fmt;
 use std::net::IpAddr;
 use std::path::PathBuf;
+use std::str::from_utf8;
 use std::str::FromStr;
 use structopt::clap::AppSettings;
 use structopt::StructOpt;
@@ -128,6 +133,21 @@ fn unique_identifier() -> impl Filter<Extract = (String,), Error = Rejection> + 
       Err(reject::custom(NotAUniqueIdentifier))
     }
   })
+}
+
+struct MySerdeJsonError(serde_json::Error);
+
+/**
+ * Implements serialization of a serde_json error to be returned to the client.
+ */
+impl Serialize for MySerdeJsonError {
+  fn serialize<S: Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
+    let mut map = serializer.serialize_map(Some(3))?;
+    map.serialize_entry("line", &self.0.line())?;
+    map.serialize_entry("column", &self.0.column())?;
+    map.serialize_entry("error", &format!("{}", self.0))?;
+    map.end()
+  }
 }
 
 // Convert all the query parameters that can convert to a DICOM field (00200010=1.2.3.4.5) to
@@ -425,9 +445,7 @@ fn get_entries(
             let instance = Instance::from_filepath(filepath)?;
             // Go through those missing fields from the index and enrich the date from the index
             for field in &fields_to_fetch {
-              let tmp: &str = &field; // TODO: Why do I need this tmp? Get rid of it.
-              let dicom_field = &(tmp).try_into()?; // TODO: Convert field before opening files to fail faster
-              if let Some(field_value) = instance.get_value(dicom_field)? {
+              if let Some(field_value) = instance.get_value(&field.try_into()?)? {
                 // TODO: Manage nested fields
                 entries[i].insert(field.to_string(), field_value.to_string());
               }
@@ -493,13 +511,62 @@ fn with_db<'a>(
   warp::any().map(move || Connection::open(&sqlfile).unwrap())
 }
 
-fn get_store_api(
+fn post_store_api(
   sqlfile: String,
 ) -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
   // POST  ../studies  Store instances.
   let store_instances = warp::path("studies")
     .and(warp::path::end())
-    .map(|| warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED));
+    .and(warp::filters::header::value("Content-Type"))
+    .and(warp::filters::body::bytes())
+    // .and(warp::body::content_length_limit(1024 * 1000)) // 1G
+    .map(
+      |content_type: HeaderValue, body: warp::hyper::body::Bytes| {
+        // Is it single part or multipart?
+        let multipart = if content_type == "multipart/related" {
+          true
+        } else {
+          false
+        };
+        if multipart {
+          Response::builder()
+            .status(warp::http::StatusCode::NOT_IMPLEMENTED)
+            .body("Multipart payload not yet implemented".to_string())
+        } else {
+          let content_type = get_format_headers(&content_type).unwrap();
+          match get_accept_format(
+            &content_type,
+            &["application/dicom+json", "application/json"],
+          ) {
+            Ok(accept) => match accept.format.as_str() {
+              "application/dicom+json" | "application/json" => {
+                // TODO: remove unwrap
+                let body: String = from_utf8(body.to_vec().as_slice())
+                  .map(str::to_string)
+                  .unwrap();
+                match serde_json::from_str::<BTreeMap<String, DicomAttributeJson>>(&body) {
+                  Ok(dataset) => Response::builder()
+                    .status(warp::http::StatusCode::OK)
+                    .body("".to_string()),
+                  Err(e) => Response::builder()
+                    .status(warp::http::StatusCode::BAD_REQUEST)
+                    .header(warp::http::header::CONTENT_ENCODING, "application/json")
+                    .body(serde_json::to_string(&MySerdeJsonError(e)).unwrap_or(
+                      "{ \"error\": \"error while serializing the error\" }".to_string(),
+                    )),
+                }
+              }
+              _ => Response::builder()
+                .status(warp::http::StatusCode::INTERNAL_SERVER_ERROR)
+                .body("Unhandled Content-Type".to_string()),
+            },
+            Err(e) => Response::builder()
+              .status(warp::http::StatusCode::NOT_IMPLEMENTED)
+              .body(e.details),
+          }
+        }
+      },
+    );
   // POST  ../studies/{study}  Store instances for a specific study.
   let store_instances_in_study = warp::path("studies")
     .and(unique_identifier())
@@ -988,10 +1055,10 @@ fn get_accept_format<'a>(
 }
 
 /**
- * Convert the Accept header to something like:
+ * Convert the Accept/Content-Type header to something like:
  * [ format: application/json, parameters: { boundary: '---abcd1234---' }, ... ]
  */
-fn get_accept_headers(accept_header: &HeaderValue) -> Result<Vec<AcceptHeader>, Box<dyn Error>> {
+fn get_format_headers(accept_header: &HeaderValue) -> Result<Vec<AcceptHeader>, Box<dyn Error>> {
   Ok(
     accept_header
       .to_str()?
@@ -1020,7 +1087,7 @@ fn capabilities(
   application: &'static capabilities::Application,
 ) -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
   let handlers = warp::filters::header::value("accept").map(move |accept_header: HeaderValue| {
-    let accept_header = get_accept_headers(&accept_header).unwrap();
+    let accept_header = get_format_headers(&accept_header).unwrap();
     match get_accept_format(
       &accept_header,
       &[
@@ -1028,15 +1095,21 @@ fn capabilities(
         "*/*",
         "application/vnd.sun.wadl+xml",
         "application/xml",
+        "application/dicom+xml",
+        "application/dicom+json",
         "application/json",
       ],
     ) {
       Ok(accept) => match accept.format.as_str() {
-        "application/vnd.sun.wadl+xml" | "application/xml" | "" | "*/*" => Response::builder()
+        "application/vnd.sun.wadl+xml"
+        | "application/dicom+xml"
+        | "application/xml"
+        | ""
+        | "*/*" => Response::builder()
           .header(warp::http::header::CONTENT_ENCODING, &accept.format)
           .status(warp::http::StatusCode::OK)
           .body(quick_xml::se::to_string(&application).unwrap()),
-        "application/json" => Response::builder()
+        "application/dicom+json" | "application/json" => Response::builder()
           .header(warp::http::header::CONTENT_ENCODING, &accept.format)
           .status(warp::http::StatusCode::OK)
           // Because of https://github.com/tafia/quick-xml/issues/582, json output
@@ -1100,7 +1173,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
   let sqlfile = opt.sqlfile.to_string_lossy().to_string();
   let routes = root
-    .or(get_store_api(sqlfile.clone()))
+    .or(post_store_api(sqlfile.clone()))
     .or(get_query_api(sqlfile.clone()))
     .or(get_retrieve_api(sqlfile.clone()))
     .or(get_delete_api(sqlfile.clone()))
