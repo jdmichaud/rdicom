@@ -22,6 +22,7 @@
 #![allow(unused_variables)]
 #![allow(unused_imports)]
 
+use crate::dicom_tags::{MediaStorageSOPClassUID, Modality};
 use serde_yaml;
 use sqlite::Connection;
 use std::collections::{HashMap, HashSet};
@@ -65,6 +66,9 @@ struct Opt {
   sql_output: Option<PathBuf>,
   /// Path to a folder containing DICOM assets. Will be scanned recursively.
   input_path: PathBuf,
+  /// Log each files being scan on standard output
+  #[structopt(short, long)]
+  log_files: bool,
 }
 
 fn path_is_folder(path: &str) -> Result<PathBuf, Box<dyn Error>> {
@@ -249,8 +253,11 @@ fn main() -> Result<(), Box<dyn Error>> {
   // Create an index store depending on the options
   let mut index_store = if let Some(sql_output) = opt.sql_output {
     let filepath = &sql_output.to_string_lossy().to_string();
-    Box::new(SqlIndexStore::new(filepath, &config.table_name, indexable_fields.to_vec()).unwrap())
-      as Box<dyn IndexStore>
+    Box::new(SqlIndexStore::new(
+      filepath,
+      &config.table_name,
+      indexable_fields.to_vec(),
+    )?) as Box<dyn IndexStore>
   } else {
     let writer = if let Some(csv_output) = opt.csv_output {
       Box::new(File::create(csv_output)?) as Box<dyn Write>
@@ -273,21 +280,22 @@ fn main() -> Result<(), Box<dyn Error>> {
       count += 1;
       // For each file, check it is a dicom file, load it and parse the requested fields
       if is_dicom_file(&filepath.to_string_lossy()) {
-        match Instance::from_filepath(&filepath.to_string_lossy().to_string()) {
+        let filepathstr = filepath.to_string_lossy().to_string();
+        match Instance::from_filepath(&filepathstr) {
           Ok(instance) => {
-            match instance.get_value(&"MediaStorageSOPClassUID".try_into().unwrap()) {
+            if opt.log_files {
+              println!("{}", filepathstr);
+            }
+            match instance.get_value(&MediaStorageSOPClassUID) {
               // Ignore DICOMDIR files
               Ok(Some(sop_class_uid))
                 if sop_class_uid.to_string() != MEDIA_STORAGE_DIRECTORY_STORAGE =>
               {
                 let mut data = HashMap::<String, String>::new();
                 // We want the filepath in the index by default
-                data.insert(
-                  "filepath".to_string(),
-                  filepath.to_string_lossy().to_string(),
-                );
+                data.insert("filepath".to_string(), filepathstr);
                 for field in indexable_fields.iter() {
-                  match instance.get_value(&field.try_into().unwrap()) {
+                  match instance.get_value(&field.try_into()?) {
                     Ok(result) => {
                       let value = if let Some(value) = result {
                         value.to_string()
@@ -299,7 +307,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                     }
                     Err(e) => {
                       print!("\r\x1b[2K");
-                      io::stdout().flush().unwrap();
+                      io::stdout().flush()?;
                       eprintln!("{}: {}", filepath.to_string_lossy(), e.details);
                       error_count += 1;
                     }
@@ -308,39 +316,40 @@ fn main() -> Result<(), Box<dyn Error>> {
                 // Provide the hash map to the index store
                 if let Err(e) = index_store.write(&data) {
                   print!("\r\x1b[2K");
-                  io::stdout().flush().unwrap();
+                  io::stdout().flush()?;
                   eprintln!("{}: {:?}", filepath.to_string_lossy(), e);
                   error_count += 1;
                 }
-
-                // Fancy display
-                if let Some(study_instance_uid) = data.get("StudyInstanceUID") {
-                  study_set.insert(study_instance_uid.clone());
+                if !opt.log_files {
+                  // Fancy display
+                  if let Some(study_instance_uid) = data.get("StudyInstanceUID") {
+                    study_set.insert(study_instance_uid.clone());
+                  }
+                  if let Some(series_instance_uid) = data.get("SeriesInstanceUID") {
+                    series_set.insert(series_instance_uid.clone());
+                  }
+                  if let Ok(Some(modality)) = instance.get_value(&Modality) {
+                    modality_set.insert(modality.to_string().clone());
+                  }
+                  let wheel = "-\\|/";
+                  let w = wheel.as_bytes()[count / 10 % 4] as char;
+                  print!(
+                    "{} [{}] files scanned with [{}] studies and [{}] series found and [{}] errors\r",
+                    w,
+                    count,
+                    study_set.len(),
+                    series_set.len(),
+                    error_count
+                  );
+                  io::stdout().flush()?;
                 }
-                if let Some(series_instance_uid) = data.get("SeriesInstanceUID") {
-                  series_set.insert(series_instance_uid.clone());
-                }
-                if let Ok(Some(modality)) = instance.get_value(&"Modality".try_into().unwrap()) {
-                  modality_set.insert(modality.to_string().clone());
-                }
-                let wheel = "-\\|/";
-                let w = wheel.as_bytes()[count / 10 % 4] as char;
-                print!(
-                  "{} [{}] files scanned with [{}] studies and [{}] series found and [{}] errors\r",
-                  w,
-                  count,
-                  study_set.len(),
-                  series_set.len(),
-                  error_count
-                );
-                io::stdout().flush().unwrap();
               }
               _ => (),
             }
           }
           Err(e) => {
             print!("\r\x1b[2K");
-            io::stdout().flush().unwrap();
+            io::stdout().flush()?;
             eprintln!("{}: {}", filepath.to_string_lossy(), e.details);
             error_count += 1;
           }
