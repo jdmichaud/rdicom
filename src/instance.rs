@@ -36,6 +36,7 @@ use std::str::Utf8Error;
 
 use crate::dicom_tags::Item;
 use crate::dicom_tags::ItemDelimitationItem;
+use crate::dicom_tags::PixelRepresentation;
 use crate::dicom_tags::SequenceDelimitationItem;
 use crate::error::DicomError;
 use crate::misc::has_dicom_header;
@@ -564,7 +565,7 @@ impl Instance {
       // SmallestImagePixelValue
       // DICOM makes some fields' value representation depend on the value of other field AND
       // make these value respresentation implicit. What an awful mess...
-      let unsigned = self.get_value(&0x00280103.try_into().unwrap())? == Some(DicomValue::US(0));
+      let unsigned = self.get_value(&PixelRepresentation)? == Some(DicomValue::US(0));
       if unsigned {
         tag.vr = "US"
       } else {
@@ -574,7 +575,7 @@ impl Instance {
     }
     if tag.group == 0x0028 && tag.element == 0x0107 {
       // LargestImagePixelValue
-      let unsigned = self.get_value(&0x00280103.try_into().unwrap())? == Some(DicomValue::US(0));
+      let unsigned = self.get_value(&PixelRepresentation)? == Some(DicomValue::US(0));
       if unsigned {
         tag.vr = "US"
       } else {
