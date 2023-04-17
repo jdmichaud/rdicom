@@ -325,7 +325,7 @@ impl<'a> DicomValue<'a> {
   }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct DicomAttribute<'a> {
   pub group: u16,
   pub element: u16,
@@ -447,7 +447,9 @@ impl Instance {
   // }
 
   /**
-   * Returns the value of a particular DICOM tag.
+   * Returns the value of a particular DICOM tag. The first matching attribute
+   * is returned.
+   * Recursively parse sequence element.
    * If the tag is not present in the instance, return Ok(None).
    */
   pub fn get_value<'a>(self: &'a Self, tag: &Tag) -> Result<Option<DicomValue>, DicomError> {
@@ -462,6 +464,13 @@ impl Instance {
         break Ok(Some(DicomValue::from_dicom_attribute(&field, &self)?));
       }
 
+      // Recursively parse SQ elements
+      if field.vr == "SQ" {
+        if let Ok(Some(subfield)) = self.get_value_sq(tag, &field) {
+          break Ok(Some(DicomValue::from_dicom_attribute(&subfield, &self)?));
+        }
+      }
+
       offset = field.data_offset
         + if field.data_length == 0xFFFFFFFF {
           0
@@ -472,6 +481,42 @@ impl Instance {
         break Ok(None);
       }
     };
+  }
+
+  fn get_value_sq<'a>(
+    self: &'a Self,
+    tag: &Tag,
+    attr: &DicomAttribute<'a>,
+  ) -> Result<Option<DicomAttribute<'a>>, DicomError> {
+    match attr.vr.as_ref() {
+      "SQ" => attr
+        .subattributes
+        .iter()
+        .map(|subattr| self.get_value_sq(tag, subattr))
+        .find(|result| {
+          if let Ok(Some(value)) = result {
+            true
+          } else {
+            false
+          }
+        })
+        .unwrap_or(Ok(None)),
+      _ if attr.group == Item.group && attr.element == Item.element => attr
+        .subattributes
+        .iter()
+        .map(|subattr| self.get_value_sq(tag, subattr))
+        .find(|result| {
+          if let Ok(Some(value)) = result {
+            true
+          } else {
+            false
+          }
+        })
+        .unwrap_or(Ok(None)),
+      // TODO: I don't like that clone but not sure how to get rid of it for now
+      _ if attr.group == tag.group && attr.element == tag.element => Ok(Some(attr.clone())),
+      _ => Ok(None),
+    }
   }
 
   /**

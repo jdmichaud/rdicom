@@ -23,7 +23,7 @@
 
 use core::hash;
 
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub struct Tag {
   pub group: u16,
   pub element: u16,
