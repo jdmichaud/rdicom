@@ -29,6 +29,7 @@ use std::io::{self};
 
 use structopt::StructOpt;
 
+use rdicom::dicom_tags::RequestedProcedureID;
 use rdicom::dicom_tags::SequenceDelimitationItem;
 use rdicom::instance::DicomValue;
 use rdicom::instance::Instance;
@@ -47,8 +48,9 @@ fn main() -> Result<(), Box<dyn Error>> {
     let instance = Instance::from_buf_reader(BufReader::new(f))?;
     // println!("{:?}", instance.get_value(&0x00082112.try_into()?)?);
     // println!("{:?}", instance.get_value(&0x0008114A.try_into()?)?);
-    println!("{:?}", instance.get_value(&0x00081250.try_into()?)?);
+    // println!("{:?}", instance.get_value(&0x00081250.try_into()?)?);
     // println!("{:?}", instance.get_value(&0x7FE00000.try_into()?)?);
+    println!("{:?}", instance.get_value(&RequestedProcedureID)?);
   }
   Ok(())
 }

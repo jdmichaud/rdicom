@@ -1,24 +1,27 @@
+# Mandatory field specified here: https://dicom.nema.org/medical/dicom/current/output/html/part18.html#table_10.6.1-5
 indexing:
   fields:
     studies:
-      - StudyInstanceUID
+      - StudyDate
+      - StudyTime
+      - AccessionNumber
+      - ModalitiesInStudy
+      - ReferringPhysicianName
       - PatientName
       - PatientID
-      - PatientBirthDate
-      - AccessionNumber
-      - ReferringPhysicianName
-      - StudyDate
-      - StudyDescription
+      - StudyInstanceUID
+      - StudyID
     series:
-      - SeriesInstanceUID
-      - BitsAllocated
-      - Columns
-      - NumberOfFrames
       - Modality
-      - Rows
-      - PhotometricInterpretation
-      - PixelRepresentation
+      - SeriesInstanceUID
+      - SeriesNumber
       - PerformedProcedureStepStartDate
+      - PerformedProcedureStepStartTime
+      # - RequestAttributesSequence this is the sequence containing the following two fields
+      - ScheduledProcedureStepID
+      - RequestedProcedureID
     instances:
+      - SOPClassUID
       - SOPInstanceUID
+      - InstanceNumber
 table_name: dicom_index
