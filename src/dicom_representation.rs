@@ -421,8 +421,8 @@ impl<'a> From<&'a str> for ValueRepresentation {
   }
 }
 
-pub fn to_xml_dicom_attribute(
-  instance: &Instance,
+pub fn to_xml_dicom_attribute<R: std::io::Read + std::io::Seek>(
+  instance: &mut Instance<R>,
   dicom_attribute: &instance::DicomAttribute,
 ) -> Result<DicomAttribute, DicomError> {
   let dicom_value = DicomValue::from_dicom_attribute(dicom_attribute, instance)?;
@@ -479,19 +479,18 @@ pub fn to_xml_dicom_attribute(
 // Convert a DICOM file to a the XML model. We need to specialize it to XML because
 // of the difference between XML and JSON that the DICOM norm introduced.
 pub fn dcm2native_dicom_model(f: File) -> Result<NativeDicomModel, Box<dyn Error>> {
-  let instance = Instance::from_buf_reader(BufReader::new(f))?;
+  let mut instance = Instance::from(BufReader::new(f))?;
   let mut dicom_attributes = Vec::<DicomAttribute>::new();
-  for dicom_attribute in instance.iter() {
-    let dicom_attribute = dicom_attribute?;
-    dicom_attributes.push(to_xml_dicom_attribute(&instance, &dicom_attribute)?);
+  while let Some(dicom_attribute) = instance.next_attribute()? {
+    dicom_attributes.push(to_xml_dicom_attribute(&mut instance, &dicom_attribute)?);
   }
   Ok(NativeDicomModel {
     dicom_attributes: dicom_attributes,
   })
 }
 
-pub fn to_json_dicom_attribute(
-  instance: &Instance,
+pub fn to_json_dicom_attribute<R: std::io::Read + std::io::Seek>(
+  instance: &mut Instance<R>,
   dicom_attribute: &instance::DicomAttribute,
 ) -> Result<DicomAttributeJson, DicomError> {
   let dicom_value = DicomValue::from_dicom_attribute(dicom_attribute, instance)?;
@@ -555,7 +554,7 @@ pub fn to_json_dicom_attribute(
 // Convert a DICOM file to a the XML model. We need to specialize it to XML because
 // of the difference between XML and JSON that the DICOM norm introduced.
 pub fn dcm2json(f: File) -> Result<BTreeMap<String, DicomAttributeJson>, Box<dyn Error>> {
-  let instance = Instance::from_buf_reader(BufReader::new(f))?;
+  let mut instance = Instance::from(BufReader::new(f))?;
   let mut dicom_attributes = BTreeMap::<String, DicomAttributeJson>::new();
   for dicom_attribute in instance.iter() {
     let dicom_attribute = dicom_attribute?;
@@ -564,7 +563,10 @@ pub fn dcm2json(f: File) -> Result<BTreeMap<String, DicomAttributeJson>, Box<dyn
       "{:04x}{:04x}",
       dicom_attribute.tag.group, dicom_attribute.tag.element
     );
-    dicom_attributes.insert(tag, to_json_dicom_attribute(&instance, &dicom_attribute)?);
+    dicom_attributes.insert(
+      tag,
+      to_json_dicom_attribute(&mut instance, &dicom_attribute)?,
+    );
   }
   Ok(dicom_attributes)
 }

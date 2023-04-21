@@ -21,7 +21,7 @@
 use std::fs;
 use std::str::from_utf8;
 
-pub fn has_dicom_header(buffer: &Vec<u8>) -> bool {
+pub fn has_dicom_header(buffer: &[u8]) -> bool {
   buffer.len() > 0x84 && from_utf8(&buffer[0x80..0x80 + 4]) == Ok("DICM")
 }
 
@@ -32,6 +32,6 @@ pub fn is_dicom_file(file_path: &str) -> bool {
   }
 }
 
-pub fn is_dicom(buffer: &Vec<u8>) -> bool {
+pub fn is_dicom(buffer: &[u8]) -> bool {
   has_dicom_header(buffer)
 }

@@ -1,3 +1,17 @@
+2022-04-20 Started replacing the buffer in the instance by a Read+Seek object but
+           this will require some rework that are not trivial. Today, the library
+           use an intermediary object (DicomAttribute) to quickly seek within the
+           DICOM file without extracting data. The DicomAttribute only contains
+           trivially copyable information with pointers in the file (in the form
+           of an offset). If the value is required, the DicomAttribute is promoted
+           to a DicomValue which will contain the actual data. However, in
+           principle, a Read object is only read once. This conversion would imply
+           a seek and incur a performance penalty.
+           Moreover, this also mean that any call to next_attribute requires a
+           mutable reference to the instance. During iteration over the
+           attributes it's impossible to convert them to value as it would also
+           need a mutable reference. This would require to move the data inside
+           the DicomAttribute.
 2022-04-14 Been working on various format translation between binary DICOM, json
            and xml.
            This lead to the creation of `dicom_representation.rs` which contains

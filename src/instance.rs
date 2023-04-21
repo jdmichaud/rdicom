@@ -29,8 +29,11 @@ use std::convert::TryInto;
 use std::error::Error;
 use std::fmt;
 use std::fs::File;
+use std::io::BufRead;
 use std::io::BufReader;
 use std::io::Read;
+use std::io::Seek;
+use std::io::SeekFrom;
 use std::str::from_utf8;
 use std::str::Utf8Error;
 
@@ -43,9 +46,10 @@ use crate::misc::has_dicom_header;
 use crate::tags::Tag;
 
 #[derive(Debug)]
-pub struct Instance {
-  pub buffer: Vec<u8>,
+pub struct Instance<R: Read + Seek> {
+  pub reader: R,
   pub implicit: bool,
+  length: usize,
 }
 
 #[derive(Debug, PartialEq)]
@@ -175,15 +179,17 @@ impl<'a> ToString for DicomValue<'a> {
   }
 }
 
-fn to_string_array<'b>(
+fn to_string_array<'b, R: Read>(
   vr: &str,
   offset: usize,
   length: usize,
-  buffer: &'b Vec<u8>,
+  mut reader: R,
 ) -> Result<Vec<String>, DicomError> {
+  let mut buf = vec![0u8; length];
+  reader.read_exact(&mut buf)?;
   Ok(
-    from_utf8(&buffer[offset..offset + length])
-      .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
+    String::from_utf8(buf)
+      .map_err(|err| utf8_error_to_dicom_error(err.utf8_error(), vr, offset))?
       .trim_matches(char::from(0))
       .trim()
       .split("\\")
@@ -192,15 +198,17 @@ fn to_string_array<'b>(
   )
 }
 
-fn to_string<'b>(
+fn to_string<'b, R: Read>(
   vr: &str,
   offset: usize,
   length: usize,
-  buffer: &'b Vec<u8>,
+  mut reader: R,
 ) -> Result<String, DicomError> {
+  let mut buf = vec![0u8; length];
+  reader.read_exact(&mut buf)?;
   Ok(
-    from_utf8(&buffer[offset..offset + length])
-      .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
+    String::from_utf8(buf)
+      .map_err(|err| utf8_error_to_dicom_error(err.utf8_error(), vr, offset))?
       .trim_matches(char::from(0))
       .trim()
       .to_string(),
@@ -208,9 +216,9 @@ fn to_string<'b>(
 }
 
 impl<'a> DicomValue<'a> {
-  pub fn from_dicom_attribute<'b>(
+  pub fn from_dicom_attribute<'b, R: Read + Seek>(
     attribute: &DicomAttribute<'b>,
-    instance: &'b Instance,
+    instance: &'b mut Instance<R>,
   ) -> Result<DicomValue<'b>, DicomError> {
     Ok(match attribute.vr.as_ref() {
       "SQ" => {
@@ -236,7 +244,7 @@ impl<'a> DicomValue<'a> {
           &attribute.vr,
           attribute.data_offset,
           attribute.data_length,
-          &instance.buffer,
+          instance.reader,
         )?,
       },
     })
@@ -250,76 +258,107 @@ impl<'a> DicomValue<'a> {
     DicomValue::SeqItem(values)
   }
 
-  fn new<'b>(
+  fn new<'b, R: Read>(
     vr: &str,
     offset: usize,
     length: usize,
-    buffer: &'b Vec<u8>,
+    reader: R,
   ) -> Result<DicomValue<'b>, DicomError> {
     Ok(match vr {
-      "AE" => DicomValue::AE(to_string_array(vr, offset, length, buffer)?),
-      "AS" => DicomValue::AS(to_string_array(vr, offset, length, buffer)?),
+      "AE" => DicomValue::AE(to_string_array(vr, offset, length, reader)?),
+      "AS" => DicomValue::AS(to_string_array(vr, offset, length, reader)?),
       "AT" => {
-        let tmp: [u8; 4] = buffer[offset..offset + 4].try_into()?;
+        let mut tmp = [0u8; 4];
+        reader.read_exact(&mut tmp)?;
         DicomValue::AT(u32::from_le_bytes(tmp).try_into()?)
       }
-      "CS" => DicomValue::CS(to_string_array(vr, offset, length, buffer)?),
-      "DA" => DicomValue::DA(to_string_array(vr, offset, length, buffer)?),
-      "DS" => DicomValue::DS(to_string_array(vr, offset, length, buffer)?),
-      "DT" => DicomValue::DT(to_string_array(vr, offset, length, buffer)?),
+      "CS" => DicomValue::CS(to_string_array(vr, offset, length, reader)?),
+      "DA" => DicomValue::DA(to_string_array(vr, offset, length, reader)?),
+      "DS" => DicomValue::DS(to_string_array(vr, offset, length, reader)?),
+      "DT" => DicomValue::DT(to_string_array(vr, offset, length, reader)?),
       "FD" => {
         // let tmp: [u8; 4] = buffer[offset..offset + 4].try_into()?;
         // DicomValue::FL(f32::from_le_bytes(tmp))
+        let mut buf = vec![0u8; length];
+        reader.read_exact(&mut buf)?;
         let fdslice: &[f64] = unsafe {
           // We create a slice of f64 from a slice of u8. Safe as long as
           // 1. The size from the DICOM file is correct
           // 2. We deal only with little endian
           // This allows to avoid parsing and copying data. Speed and memory over safety here.
           std::slice::from_raw_parts(
-            buffer[offset..offset + length].as_ptr() as *const f64,
+            buf.as_ptr() as *const f64,
             length / std::mem::size_of::<f64>(),
           )
         };
         DicomValue::FD(fdslice)
       }
       "FL" => {
+        let mut buf = vec![0u8; length];
+        reader.read_exact(&mut buf)?;
         let flslice: &[f32] = unsafe {
           std::slice::from_raw_parts(
-            buffer[offset..offset + length].as_ptr() as *const f32,
+            buf.as_ptr() as *const f32,
             length / std::mem::size_of::<f32>(),
           )
         };
         DicomValue::FL(flslice)
       }
-      "IS" => DicomValue::IS(to_string_array(vr, offset, length, buffer)?),
-      "LO" => DicomValue::LO(to_string_array(vr, offset, length, buffer)?),
-      "LT" => DicomValue::LT(to_string_array(vr, offset, length, buffer)?),
-      "OB" => DicomValue::OB(&buffer[offset..offset + length]),
+      "IS" => DicomValue::IS(to_string_array(vr, offset, length, reader)?),
+      "LO" => DicomValue::LO(to_string_array(vr, offset, length, reader)?),
+      "LT" => DicomValue::LT(to_string_array(vr, offset, length, reader)?),
+      "OB" => {
+        let mut buf = vec![0u8; length];
+        reader.read_exact(&mut buf)?;
+        DicomValue::OB(&buf)
+      }
       "OW" => {
-        let (_, owslice, _) = unsafe { buffer[offset..offset + length].align_to::<u16>() };
+        let mut buf = vec![0u8; length];
+        reader.read_exact(&mut buf)?;
+        let (_, owslice, _) = unsafe { &buf.align_to::<u16>() };
         DicomValue::OW(owslice)
       }
-      "PN" => DicomValue::PN(to_string_array(vr, offset, length, buffer)?),
-      "SH" => DicomValue::SH(to_string_array(vr, offset, length, buffer)?),
-      "SL" => DicomValue::SL(
-        buffer[offset] as i32
-          | (buffer[offset + 1] as i32) << 8
-          | (buffer[offset + 2] as i32) << 16
-          | (buffer[offset + 3] as i32) << 24,
-      ),
-      "SS" => DicomValue::SS(buffer[offset] as i16 | (buffer[offset + 1] as i16) << 8),
-      "ST" => DicomValue::ST(to_string_array(vr, offset, length, buffer)?),
-      "TM" => DicomValue::TM(to_string_array(vr, offset, length, buffer)?),
-      "UI" => DicomValue::UI(to_string(vr, offset, length, buffer)?),
-      "UL" => DicomValue::UL(
-        buffer[offset] as u32
-          | (buffer[offset + 1] as u32) << 8
-          | (buffer[offset + 2] as u32) << 16
-          | (buffer[offset + 3] as u32) << 24,
-      ),
-      "US" => DicomValue::US(buffer[offset] as u16 | (buffer[offset + 1] as u16) << 8),
-      "UT" => DicomValue::UT(to_string_array(vr, offset, length, buffer)?),
-      "UN" => DicomValue::UN(&buffer[offset..offset + length]),
+      "PN" => DicomValue::PN(to_string_array(vr, offset, length, reader)?),
+      "SH" => DicomValue::SH(to_string_array(vr, offset, length, reader)?),
+      "SL" => {
+        let mut buf = [0u8; 4];
+        reader.read_exact(&mut buf)?;
+        DicomValue::SL(
+          buf[offset] as i32
+            | (buf[offset + 1] as i32) << 8
+            | (buf[offset + 2] as i32) << 16
+            | (buf[offset + 3] as i32) << 24,
+        )
+      }
+      "SS" => {
+        let mut buf = [0u8; 2];
+        reader.read_exact(&mut buf)?;
+        DicomValue::SS(buf[offset] as i16 | (buf[offset + 1] as i16) << 8)
+      }
+      "ST" => DicomValue::ST(to_string_array(vr, offset, length, reader)?),
+      "TM" => DicomValue::TM(to_string_array(vr, offset, length, reader)?),
+      "UI" => DicomValue::UI(to_string(vr, offset, length, reader)?),
+      "UL" => {
+        let mut buf = [0u8; 4];
+        reader.read_exact(&mut buf)?;
+        DicomValue::UL(
+          buf[offset] as u32
+            | (buf[offset + 1] as u32) << 8
+            | (buf[offset + 2] as u32) << 16
+            | (buf[offset + 3] as u32) << 24,
+        )
+      }
+      "US" => {
+        let mut buf = [0u8; 2];
+        reader.read_exact(&mut buf)?;
+        DicomValue::US(buf[offset] as u16 | (buf[offset + 1] as u16) << 8)
+      }
+      "UT" => DicomValue::UT(to_string_array(vr, offset, length, reader)?),
+      "UN" => {
+        let mut buf = vec![0u8; length];
+        reader.read_exact(&mut buf)?;
+        DicomValue::OB(&buf)
+      }
       _ => unimplemented!("Value representation \"{}\" not implemented", vr),
     })
   }
@@ -391,41 +430,32 @@ impl<'a> DicomAttribute<'a> {
   }
 }
 
-impl Instance {
-  /**
-   * Returns an instance from a BufReader.
-   * The entire BufReader will be read before returning the instance.
-   */
-  pub fn from_buf_reader<T: Read>(mut buf_reader: BufReader<T>) -> Result<Self, DicomError> {
-    // Read the whole file into a buffer
-    let mut buffer: Vec<u8> = vec![];
-    // TODO: Do not read the whole buffer. Use an abstraction in order to allow
-    // opening file that would not hold in memory.
-    buf_reader.read_to_end(&mut buffer)?;
-    Instance::from(buffer)
-  }
-
+impl<R: Read + Seek> Instance<R> {
   /**
    * Returns an instance from a file path.
    */
-  pub fn from_filepath(filepath: &str) -> Result<Self, DicomError> {
+  pub fn from_filepath(filepath: &str) -> Result<Instance<BufReader<File>>, DicomError> {
     let f = File::open(filepath)?;
-    return Instance::from_buf_reader(BufReader::new(f));
+    return Instance::from(BufReader::new(f));
   }
 
   /**
-   * Returns an instance from a Vec<u8>.
+   * Returns an instance from a reader (Read + Seek).
+   * Instance assume that reader does not change size once created.
    */
-  pub fn from(buffer: Vec<u8>) -> Result<Self, DicomError> {
+  pub fn from(mut reader: R) -> Result<Self, DicomError> {
     // Check it's a DICOM file
     // TODO: Manage headerless DICOM files
+    let mut buffer = [0u8, 0x84];
+    reader.read(&mut buffer);
     if !has_dicom_header(&buffer) {
       return Err(DicomError::new("Not a DICOM file"));
     }
 
     let mut instance = Instance {
-      buffer,
+      reader,
       implicit: false,
+      length: reader.seek(SeekFrom::End(0))? as usize,
     };
 
     match instance.is_supported_type() {
@@ -452,32 +482,29 @@ impl Instance {
    * Recursively parse sequence element.
    * If the tag is not present in the instance, return Ok(None).
    */
-  pub fn get_value<'a>(self: &'a Self, tag: &Tag) -> Result<Option<DicomValue>, DicomError> {
+  pub fn get_value<'a>(self: &'a mut Self, tag: &Tag) -> Result<Option<DicomValue>, DicomError> {
     // Fast forward the DICOM prefix
     // TODO: Deal with non-comformant DICOM files
     // println!("get_value: {:?}", tag);
-    let mut offset = 128 + "DICM".len();
+    // TODO: get rid of that seek
+    self
+      .reader
+      .seek(SeekFrom::Start(128u64 + "DICM".len() as u64))?;
     return loop {
-      // println!("get_value: offset: {:#06x} buffer length: {:#06x}", offset, self.buffer.len());
-      let field = self.next_attribute(offset)?;
-      if field.group == tag.group && field.element == tag.element {
-        break Ok(Some(DicomValue::from_dicom_attribute(&field, &self)?));
-      }
-
-      // Recursively parse SQ elements
-      if field.vr == "SQ" {
-        if let Ok(Some(subfield)) = self.get_value_sq(tag, &field) {
-          break Ok(Some(DicomValue::from_dicom_attribute(&subfield, &self)?));
+      // println!("get_value: offset: {:#06x} buffer length: {:#06x}", offset, self.length);
+      if let Some(field) = self.next_attribute()? {
+        if field.group == tag.group && field.element == tag.element {
+          break Ok(Some(DicomValue::from_dicom_attribute(&field, self)?));
         }
-      }
 
-      offset = field.data_offset
-        + if field.data_length == 0xFFFFFFFF {
-          0
-        } else {
-          field.data_length
-        };
-      if offset >= self.buffer.len() {
+        // Recursively parse SQ elements
+        if field.vr == "SQ" {
+          if let Ok(Some(subfield)) = self.get_value_sq(tag, &field) {
+            break Ok(Some(DicomValue::from_dicom_attribute(&subfield, self)?));
+          }
+        }
+      } else {
+        // Not found
         break Ok(None);
       }
     };
@@ -522,39 +549,30 @@ impl Instance {
   /**
    * Iterates over the DicomAttribute within the Instance.
    */
-  pub fn iter(&self) -> InstanceIter<'_> {
+  pub fn iter(&self) -> InstanceIter<'_, R> {
     InstanceIter::new(self)
   }
 
   // https://dicom.nema.org/medical/dicom/current/output/chtml/part05/sect_A.4.html
   fn retrieve_next_data_element<'a>(
-    self: &'a Self,
-    offset: usize,
+    self: &'a mut Self,
     items: &mut Vec<DicomAttribute>,
     item_length: &mut usize,
   ) -> Result<(), DicomError> {
-    let original_offset = offset;
-    let mut offset = offset;
-    if offset >= self.buffer.len() {
-      return Err(DicomError::new(&format!(
-        "Trying to read out of file bound (offset: {}, file size: {})",
-        offset,
-        self.buffer.len()
-      )));
-    }
-    let group = self.buffer[offset] as u16 | (self.buffer[offset + 1] as u16) << 8;
-    let element = self.buffer[offset + 2] as u16 | (self.buffer[offset + 3] as u16) << 8;
-    offset += 4;
-    if group == 0xFFFE && element == 0xE000 {
+    let original_offset = self.reader.stream_position()? as usize;
+    let mut buffer = [0u8; 4];
+    self.reader.read_exact(&mut buffer);
+    let group = buffer[0] as u16 | (buffer[1] as u16) << 8;
+    let element = buffer[2] as u16 | (buffer[3] as u16) << 8;
+    let offset = if group == 0xFFFE && element == 0xE000 {
       let length = {
-        let tmp: [u8; 4] = self.buffer[offset..offset + 4].try_into().unwrap();
-        offset += 4;
-        u32::from_le_bytes(tmp) as usize
+        self.reader.read_exact(&mut buffer);
+        u32::from_le_bytes(buffer) as usize
       };
       let data: &[u32] = if length != 0 {
-        let tmp: &[u8] = self.buffer[offset..offset + length].try_into().unwrap();
-        offset += length;
-        unsafe { std::mem::transmute(tmp) } // Basic Offset Table data is 32bits unsigned
+        let mut tmp = vec![0u8; length];
+        self.reader.read_exact(&mut tmp);
+        unsafe { std::mem::transmute(tmp.as_slice()) } // Basic Offset Table data is 32bits unsigned
       } else {
         &[]
       };
@@ -569,12 +587,14 @@ impl Instance {
           vm: std::ops::Range { start: 0, end: 0 },
           description: "Unknown Tag & Data",
         });
+      let offset = self.reader.stream_position()? as usize;
       items.push(DicomAttribute::new(
         group, element, "OB", offset, length, length, tag,
       ));
-      self.retrieve_next_data_element(offset, items, item_length)?;
+      self.retrieve_next_data_element(items, item_length)?;
+      offset
     } else if group == 0xFFFE && element == 0xE0DD {
-      offset += 4;
+      let offset = self.reader.stream_position()? as usize + 4;
       items.push(DicomAttribute::new(
         group,
         element,
@@ -584,11 +604,12 @@ impl Instance {
         4,
         SequenceDelimitationItem,
       ));
+      offset
     } else {
       return Err(DicomError::new(&format!(
         "Expecting sequence items in an ecapsulated pixel data field"
       )));
-    }
+    };
 
     *item_length += offset - original_offset;
     return Ok(());
@@ -641,46 +662,40 @@ impl Instance {
   /**
    * Returns the next attribute.
    */
-  pub fn next_attribute<'a>(
-    self: &'a Self,
-    offset: usize,
-  ) -> Result<DicomAttribute<'a>, DicomError> {
+  pub fn next_attribute<'a>(self: &'a mut Self) -> Result<Option<DicomAttribute<'a>>, DicomError> {
     // group(u16),element(u16),vr(str[2]),length(u16)
     // println!("next_attribute: {:#04x?}", offset);
-    let mut offset = offset;
-    if offset >= self.buffer.len() {
-      return Err(DicomError::new(&format!(
-        "Trying to read out of file bound (offset: {}, file size: {})",
-        offset,
-        self.buffer.len()
-      )));
+    {
+      let offset = self.reader.stream_position()? as usize;
+      if offset >= self.length {
+        return Ok(None);
+      }
     }
-    let group = self.buffer[offset] as u16 | (self.buffer[offset + 1] as u16) << 8;
-    let element = self.buffer[offset + 2] as u16 | (self.buffer[offset + 3] as u16) << 8;
+    let mut buffer = [0u8; 4];
+    self.reader.read_exact(&mut buffer);
+    let group = buffer[0] as u16 | (buffer[1] as u16) << 8;
+    let element = buffer[2] as u16 | (buffer[3] as u16) << 8;
     // println!("next_attribute: {:#04x?} {:#06x?}:{:#06x?}", offset, group, element);
-    offset += 4; // Skip group and element
-                 // Check if we have a sequence related data element
+    // Check if we have a sequence related data element
     if group == 0xFFFE {
       // Sequence delimiter items can have a length or 0xFFFFFFFF like sequence themselves
-      let tmp: [u8; 4] = self.buffer[offset..offset + 4].try_into().unwrap();
-      let length = u32::from_le_bytes(tmp) as usize; // Can sometimes be equal to 0xFFFFFFFF
-      offset += 4;
+      let length = {
+        self.reader.read_exact(&mut buffer);
+        u32::from_le_bytes(buffer) as usize
+      };
+      let offset = self.reader.stream_position()? as usize;
       return match element {
         0xE000 => {
           let mut subattributes: Vec<DicomAttribute> = vec![];
-          let mut subattribute;
-          let mut suboffset = offset;
           let mut item_length = 0;
-          while suboffset < (offset + length) {
-            subattribute = self.next_attribute(suboffset)?;
-            suboffset = subattribute.data_offset + subattribute.data_length;
+          while let Some(subattribute) = self.next_attribute()? {
             item_length = (subattribute.data_offset + subattribute.data_length) - offset;
             if subattribute.tag == ItemDelimitationItem {
               break;
             }
             subattributes.push(subattribute);
           }
-          Ok(DicomAttribute::new_with_subattributes(
+          Ok(Some(DicomAttribute::new_with_subattributes(
             group,
             element,
             "",
@@ -689,9 +704,9 @@ impl Instance {
             length,
             Item,
             subattributes,
-          ))
+          )))
         }
-        0xE00D => Ok(DicomAttribute::new(
+        0xE00D => Ok(Some(DicomAttribute::new(
           group,
           element,
           "",
@@ -699,8 +714,8 @@ impl Instance {
           length,
           length,
           ItemDelimitationItem,
-        )),
-        0xE0DD => Ok(DicomAttribute::new(
+        ))),
+        0xE0DD => Ok(Some(DicomAttribute::new(
           group,
           element,
           "",
@@ -708,7 +723,7 @@ impl Instance {
           length,
           length,
           SequenceDelimitationItem,
-        )),
+        ))),
         _ => Err(DicomError::new(&format!(
           "unknown sequence related data element: {}",
           element
@@ -727,9 +742,10 @@ impl Instance {
         description: "Unknown Tag & Data",
       });
     let vr = if group == 0x0002 || !self.implicit {
-      offset += 2; // Skip VR
-      from_utf8(&self.buffer[offset - 2..offset])
-        .map_err(|err| utf8_error_to_dicom_error(err, "tag", offset - 2))?
+      let mut tmp = [0u8; 2];
+      self.reader.read_exact(&mut tmp)?;
+      let offset = self.reader.stream_position().unwrap() as usize;
+      from_utf8(&tmp).map_err(|err| utf8_error_to_dicom_error(err, "tag", offset))?
     } else {
       self.get_implicit_vr(&mut tag)?;
       tag.vr
@@ -741,31 +757,29 @@ impl Instance {
       // that need to be skipped and their data length is on 4 bytes.
       // https://dicom.nema.org/dicom/2013/output/chtml/part05/chapter_7.html#sect_7.1.2
       if group == 0x0002 || !self.implicit {
-        offset += 2; // Skip reserved byte
+        // Skip reserved byte
+        let mut tmp = [0u8; 2];
+        self.reader.read_exact(&mut tmp)?;
       }
-      let tmp: [u8; 4] = self.buffer[offset..offset + 4].try_into().unwrap();
-      length = u32::from_le_bytes(tmp) as usize; // Can sometimes be equal to 0xFFFFFFFF
-      offset += 4;
+      self.reader.read_exact(&mut buffer);
+      length = u32::from_le_bytes(buffer) as usize; // Can sometimes be equal to 0xFFFFFFFF
       if vr == "SQ" || // Sequence are special types within those special types... yikes.
          length == 0xFFFFFFFF
       {
         // https://github.com/pydicom/pydicom/issues/1140
         let mut items: Vec<DicomAttribute> = vec![];
         let mut item_length = 0;
+        let offset = self.reader.stream_position()? as usize;
         if group == 0x7FE0 && element == 0x0010 {
           // https://dicom.nema.org/medical/dicom/current/output/chtml/part05/sect_A.4.html
           // We treat here the case of encapsulated pixel data
           // return Err(DicomError::new(&format!("Encapsulated pixel data not supported")));
-          self.retrieve_next_data_element(offset, &mut items, &mut item_length)?;
+          self.retrieve_next_data_element(&mut items, &mut item_length)?;
         } else {
           // See https://dicom.nema.org/dicom/2013/output/chtml/part05/sect_7.5.html
           // on what a sequence look like in a DICOM file.
-          let mut item;
-          let mut suboffset = offset;
           // Go through the items in the sequence and fetch them recursively
-          while suboffset < (offset + length) {
-            item = self.next_attribute(suboffset)?;
-            suboffset = item.data_offset + item.data_length;
+          while let Some(item) = self.next_attribute()? {
             item_length = (item.data_offset + item.data_length) - offset;
             if item.tag == SequenceDelimitationItem {
               break;
@@ -773,7 +787,7 @@ impl Instance {
             items.push(item);
           }
         }
-        return Ok(DicomAttribute::new_with_subattributes(
+        return Ok(Some(DicomAttribute::new_with_subattributes(
           group,
           element,
           vr,
@@ -782,23 +796,25 @@ impl Instance {
           length,
           tag,
           items,
-        ));
+        )));
       }
     } else {
       length = if group == 0x0002 || !self.implicit {
-        offset = offset + 2;
-        self.buffer[offset - 2] as usize | (self.buffer[offset - 1] as usize) << 8
+        let mut tmp = [0u8; 2];
+        self.reader.read_exact(&mut tmp)?;
+        tmp[0] as usize | (tmp[1] as usize) << 8
       } else {
-        offset = offset + 4;
-        self.buffer[offset - 4] as usize
-          | (self.buffer[offset - 3] as usize) << 8
-          | (self.buffer[offset - 2] as usize) << 16
-          | (self.buffer[offset - 1] as usize) << 24
+        self.reader.read_exact(&mut buffer)?;
+        buffer[0] as usize
+          | (buffer[1] as usize) << 8
+          | (buffer[2] as usize) << 16
+          | (buffer[3] as usize) << 24
       }
     }
-    Ok(DicomAttribute::new(
+    let offset = self.reader.stream_position()? as usize;
+    Ok(Some(DicomAttribute::new(
       group, element, vr, offset, length, length, tag,
-    ))
+    )))
   }
 
   fn is_supported_type(self: &Self) -> Result<String, DicomError> {
@@ -879,13 +895,13 @@ fn get_transfer_syntax_uid_label(transfer_syntax_uid: &str) -> Result<&str, Dico
   }
 }
 
-pub struct InstanceIter<'a> {
-  instance: &'a Instance,
+pub struct InstanceIter<'a, R: Read + Seek> {
+  instance: &'a Instance<R>,
   offset: usize,
 }
 
-impl<'a> InstanceIter<'a> {
-  fn new(instance: &'a Instance) -> Self {
+impl<'a, R: Read + Seek> InstanceIter<'a, R> {
+  fn new(instance: &'a Instance<R>) -> Self {
     // TODO: Deal with DICOM with broken headers
     return InstanceIter {
       instance: instance,
@@ -894,20 +910,20 @@ impl<'a> InstanceIter<'a> {
   }
 }
 
-impl<'a> Iterator for InstanceIter<'a> {
+impl<'a, R: Read + Seek> Iterator for InstanceIter<'a, R> {
   type Item = Result<DicomAttribute<'a>, DicomError>;
 
   fn next(&mut self) -> std::option::Option<<Self as Iterator>::Item> {
-    if self.offset < self.instance.buffer.len() {
-      match self.instance.next_attribute(self.offset) {
-        Ok(attribute) => {
+    match self.instance.next_attribute() {
+      Ok(opt) => {
+        if let Some(attribute) = opt {
           self.offset = attribute.data_offset + attribute.data_length;
           Some(Ok(attribute))
+        } else {
+          None
         }
-        Err(e) => Some(Err(e)),
       }
-    } else {
-      None
+      Err(e) => Some(Err(e)),
     }
   }
 }
