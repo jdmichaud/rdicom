@@ -21,8 +21,6 @@
 #![allow(unused_variables)]
 #![allow(dead_code)]
 
-use std::io::BufWriter;
-use std::fs::File;
 use once_cell::sync::Lazy;
 use rdicom::dicom_representation::{json2dcm, DicomAttributeJson};
 use rdicom::error::DicomError;
@@ -37,6 +35,8 @@ use std::convert::Infallible;
 use std::convert::TryInto;
 use std::error::Error;
 use std::fmt;
+use std::fs::File;
+use std::io::BufWriter;
 use std::net::IpAddr;
 use std::path::PathBuf;
 use std::str::from_utf8;
@@ -114,6 +114,9 @@ struct Opt {
   config: Option<PathBuf>,
   // #[structopt(short="V", long)]
   // version: bool,
+  /// DICOM files root path (root path provided to the scan tool)
+  #[structopt(short = "d", long)]
+  dcmpath: String,
 }
 
 #[derive(Debug)]
@@ -410,12 +413,45 @@ fn create_where_clause(
   format!("{where_clause} LIMIT {limit} OFFSET {offset}")
 }
 
+trait InstanceFactory {
+  fn get_instance(&self, path: &str) -> Result<Instance, DicomError>;
+}
+
+#[derive(Clone)]
+struct FSInstanceFactory {
+  dcmpath: String,
+}
+
+unsafe impl Sync for FSInstanceFactory {}
+unsafe impl Send for FSInstanceFactory {}
+
+impl FSInstanceFactory {
+  fn new(dcmpath: &str) -> FSInstanceFactory {
+    FSInstanceFactory {
+      dcmpath: String::from(dcmpath),
+    }
+  }
+}
+
+impl InstanceFactory for FSInstanceFactory {
+  fn get_instance(&self, path: &str) -> Result<Instance, DicomError> {
+    let tmp = std::path::Path::new(&self.dcmpath).join(std::path::Path::new(path));
+    let filepath = tmp.to_string_lossy();
+    if is_dicom_file(&filepath) {
+      Instance::from_filepath(&filepath)
+    } else {
+      Err(DicomError::new(&format!("{} is not a DICOM file", path)))?
+    }
+  }
+}
+
 /**
  * Retrieve the fields from the index according to the search terms and enrich
  * the data from the index with the data from the DICOM files if necessary.
  */
-fn get_entries(
+fn get_entries<T: InstanceFactory>(
   connection: &Connection,
+  instance_factory: &T,
   params: &QidoQueryParameters,
   search_terms: &HashMap<Tag, String>,
   entry_type: &str,
@@ -442,15 +478,13 @@ fn get_entries(
     // println!("fields_to_fetch {:?}", fields_to_fetch);
     if fields_to_fetch.len() > 0 {
       for i in 0..entries.len() {
-        if let Some(filepath) = entries[i].get("filepath") {
-          if is_dicom_file(filepath) {
-            let instance = Instance::from_filepath(filepath)?;
-            // Go through those missing fields from the index and enrich the date from the index
-            for field in &fields_to_fetch {
-              if let Some(field_value) = instance.get_value(&field.try_into()?)? {
-                // TODO: Manage nested fields
-                entries[i].insert(field.to_string(), field_value.to_string());
-              }
+        if let Some(rfilepath) = entries[i].get("filepath") {
+          let instance = instance_factory.get_instance(rfilepath)?;
+          // Go through those missing fields from the index and enrich the data from the index
+          for field in &fields_to_fetch {
+            if let Some(field_value) = instance.get_value(&field.try_into()?)? {
+              // TODO: Manage nested fields
+              entries[i].insert(field.to_string(), field_value.to_string());
             }
           }
         }
@@ -460,28 +494,49 @@ fn get_entries(
   return Ok(entries);
 }
 
-fn get_studies(
+fn get_studies<T: InstanceFactory>(
   connection: &Connection,
+  instance_factory: &T,
   params: &QidoQueryParameters,
   search_terms: &HashMap<Tag, String>,
 ) -> Result<Vec<HashMap<String, String>>, Box<dyn Error>> {
-  get_entries(connection, params, search_terms, "StudyInstanceUID")
+  get_entries(
+    connection,
+    instance_factory,
+    params,
+    search_terms,
+    "StudyInstanceUID",
+  )
 }
 
-fn get_series(
+fn get_series<T: InstanceFactory>(
   connection: &Connection,
+  instance_factory: &T,
   params: &QidoQueryParameters,
   search_terms: &HashMap<Tag, String>,
 ) -> Result<Vec<HashMap<String, String>>, Box<dyn Error>> {
-  get_entries(connection, params, search_terms, "SeriesInstanceUID")
+  get_entries(
+    connection,
+    instance_factory,
+    params,
+    search_terms,
+    "SeriesInstanceUID",
+  )
 }
 
-fn get_instances(
+fn get_instances<T: InstanceFactory>(
   connection: &Connection,
+  instance_factory: &T,
   params: &QidoQueryParameters,
   search_terms: &HashMap<Tag, String>,
 ) -> Result<Vec<HashMap<String, String>>, Box<dyn Error>> {
-  get_entries(connection, params, search_terms, "filepath")
+  get_entries(
+    connection,
+    instance_factory,
+    params,
+    search_terms,
+    "filepath",
+  )
 }
 
 fn get_study(ui: &str) -> HashMap<String, String> {
@@ -513,33 +568,39 @@ fn with_db<'a>(
   warp::any().map(move || Connection::open(&sqlfile).unwrap())
 }
 
-fn do_store(accept_header: &HeaderValue, body: &warp::hyper::body::Bytes) -> Result<(), DicomError> {
-  println!("do_store 1");
-  let accept_header = get_accept_headers(&accept_header).map_err(|e|
-    DicomError::new(&format!("{{ \"error\": \"to_str failed in get_accept_headers\" }}")))?;
-  println!("do_store 2");
+fn with_instance_factory<T: InstanceFactory + Clone + Send>(
+  instance_factory: T,
+) -> impl Filter<Extract = (T,), Error = Infallible> + Clone {
+  warp::any().map(move || instance_factory.clone())
+}
+
+fn do_store(
+  accept_header: &HeaderValue,
+  body: &warp::hyper::body::Bytes,
+) -> Result<(), DicomError> {
+  let accept_header = get_accept_headers(&accept_header).map_err(|e| {
+    DicomError::new(&format!(
+      "{{ \"error\": \"to_str failed in get_accept_headers\" }}"
+    ))
+  })?;
   let accept = get_accept_format(
     &accept_header,
     &["application/dicom+json", "application/json"],
   )?;
-  println!("do_store 3");
   match accept.format.as_str() {
     "application/dicom+json" | "application/json" => {
       let body: String = from_utf8(body.to_vec().as_slice()).map(str::to_string)?;
-      println!("do_store body {:?}", body);
-      let dataset = serde_json::from_str::<BTreeMap<String, DicomAttributeJson>>(&body).map_err(|e|
-        DicomError::new(&serde_json::to_string(&MySerdeJsonError(e)).unwrap())
-      )?;
-      println!("do_store dataset {:?}", dataset);
+      let dataset = serde_json::from_str::<BTreeMap<String, DicomAttributeJson>>(&body)
+        .map_err(|e| DicomError::new(&serde_json::to_string(&MySerdeJsonError(e)).unwrap()))?;
       let outputfile = File::create("test")?;
-      println!("do_store created file");
       let mut writer = BufWriter::new(outputfile);
-      json2dcm::json2dcm(&mut writer, &dataset).map_err(|e|
-        DicomError::new(&format!("{{ \"error\": \"{}\" }}", e.details))
-      )?;
+      json2dcm::json2dcm(&mut writer, &dataset)
+        .map_err(|e| DicomError::new(&format!("{{ \"error\": \"{}\" }}", e.details)))?;
       Ok(())
-    },
-    _ => Err(DicomError::new(&format!("{{ \"error\": \"Unhandled Content-Type\" }}"))),
+    }
+    _ => Err(DicomError::new(&format!(
+      "{{ \"error\": \"Unhandled Content-Type\" }}"
+    ))),
   }
 }
 
@@ -563,14 +624,14 @@ fn post_store_api(
         } else {
           // TODO: get rid if this unwrap
           if let Err(e) = do_store(&accept_header, &body) {
-            println!("{:?}", e);
             return Response::builder()
               .status(warp::http::StatusCode::INTERNAL_SERVER_ERROR)
               .header(warp::http::header::CONTENT_ENCODING, "application/json")
               .body(e.details);
           }
           return Response::builder()
-            .status(warp::http::StatusCode::OK).body("".to_string());
+            .status(warp::http::StatusCode::OK)
+            .body("".to_string());
         }
       },
     );
@@ -588,8 +649,9 @@ fn post_store_api(
 /**
  * https://www.dicomstandard.org/using/dicomweb/query-qido-rs/
  */
-fn get_query_api(
+fn get_query_api<T: InstanceFactory + Clone + Send>(
   sqlfile: String,
+  instance_factory: T,
 ) -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
   // No literal constructor for HeaderMap, so have to allocate them here...
   let mut json_headers = HeaderMap::new();
@@ -604,11 +666,14 @@ fn get_query_api(
     .and(warp::query::<QidoQueryParameters>())
     .and(query_param_to_search_terms())
     .and(with_db(sqlfile.clone()))
+    // So many clones...
+    .and(with_instance_factory(instance_factory.clone()))
     .and_then(
       |qido_params: QidoQueryParameters,
        search_terms: HashMap<Tag, String>,
-       connection: Connection| async move {
-        match get_studies(&connection, &qido_params, &search_terms) {
+       connection: Connection,
+       instance_factory: T| async move {
+        match get_studies(&connection, &instance_factory, &qido_params, &search_terms) {
           // Have to specify the type annotation here, see: https://stackoverflow.com/a/67413956/2603925
           Ok(studies) => Ok::<_, warp::Rejection>(generate_json_response(&studies)),
           // TODO: Can't use ? in the and_then handler because we can convert automatically from
@@ -627,11 +692,13 @@ fn get_query_api(
     .and(warp::query::<QidoQueryParameters>())
     .and(query_param_to_search_terms())
     .and(with_db(sqlfile.clone()))
+    .and(with_instance_factory(instance_factory.clone()))
     .and_then(
       |qido_params: QidoQueryParameters,
        search_terms: HashMap<Tag, String>,
-       connection: Connection| async move {
-        match get_series(&connection, &qido_params, &search_terms) {
+       connection: Connection,
+       instance_factory: T| async move {
+        match get_series(&connection, &instance_factory, &qido_params, &search_terms) {
           Ok(series) => Ok::<_, warp::Rejection>(generate_json_response(&series)),
           Err(e) => Err(warp::reject::custom(ApplicationError {
             message: e.to_string(),
@@ -647,11 +714,13 @@ fn get_query_api(
     .and(warp::query::<QidoQueryParameters>())
     .and(query_param_to_search_terms())
     .and(with_db(sqlfile.clone()))
+    .and(with_instance_factory(instance_factory.clone()))
     .and_then(
       |qido_params: QidoQueryParameters,
        search_terms: HashMap<Tag, String>,
-       connection: Connection| async move {
-        match get_instances(&connection, &qido_params, &search_terms) {
+       connection: Connection,
+       instance_factory: T| async move {
+        match get_instances(&connection, &instance_factory, &qido_params, &search_terms) {
           Ok(instances) => Ok::<_, warp::Rejection>(generate_json_response(&instances)),
           Err(e) => Err(warp::reject::custom(ApplicationError {
             message: e.to_string(),
@@ -669,13 +738,15 @@ fn get_query_api(
     .and(warp::query::<QidoQueryParameters>())
     .and(query_param_to_search_terms())
     .and(with_db(sqlfile.clone()))
+    .and(with_instance_factory(instance_factory.clone()))
     .and_then(
       |study_uid: String,
        qido_params: QidoQueryParameters,
        mut search_terms: HashMap<Tag, String>,
-       connection: Connection| async move {
+       connection: Connection,
+       instance_factory: T| async move {
         search_terms.insert(Tag::try_from("StudyInstanceUID").unwrap(), study_uid);
-        match get_studies(&connection, &qido_params, &search_terms) {
+        match get_studies(&connection, &instance_factory, &qido_params, &search_terms) {
           Ok(studies) => Ok::<_, warp::Rejection>(generate_json_response(&studies)),
           Err(e) => Err(warp::reject::custom(ApplicationError {
             message: e.to_string(),
@@ -695,15 +766,17 @@ fn get_query_api(
     .and(warp::query::<QidoQueryParameters>())
     .and(query_param_to_search_terms())
     .and(with_db(sqlfile.clone()))
+    .and(with_instance_factory(instance_factory.clone()))
     .and_then(
       |study_uid: String,
        series_uid: String,
        qido_params: QidoQueryParameters,
        mut search_terms: HashMap<Tag, String>,
-       connection: Connection| async move {
+       connection: Connection,
+       instance_factory: T| async move {
         search_terms.insert(Tag::try_from("StudyInstanceUID").unwrap(), study_uid);
         search_terms.insert(Tag::try_from("SeriesInstanceUID").unwrap(), series_uid);
-        match get_studies(&connection, &qido_params, &search_terms) {
+        match get_studies(&connection, &instance_factory, &qido_params, &search_terms) {
           Ok(studies) => Ok::<_, warp::Rejection>(generate_json_response(&studies)),
           Err(e) => Err(warp::reject::custom(ApplicationError {
             message: e.to_string(),
@@ -1179,9 +1252,14 @@ async fn main() -> Result<(), Box<dyn Error>> {
     .map(move || server_header);
 
   let sqlfile = opt.sqlfile.to_string_lossy().to_string();
+  let instance_factory = if opt.dcmpath == ":memory:" {
+    FSInstanceFactory::new(&opt.dcmpath)
+  } else {
+    FSInstanceFactory::new(&opt.dcmpath)
+  };
   let routes = root
     .or(post_store_api(sqlfile.clone()))
-    .or(get_query_api(sqlfile.clone()))
+    .or(get_query_api(sqlfile.clone(), instance_factory))
     .or(get_retrieve_api(sqlfile.clone()))
     .or(get_delete_api(sqlfile.clone()))
     .or(capabilities(&APPLICATION))

@@ -1,4 +1,14 @@
-2022-04-14 Been working on various format translation between binary DICOM, json
+2023-05-19 Abstract the access to bulk data so that we can work with a filesystem
+           in memory the same way we are able to create the sqlite DB in 
+           memory using :memory:. This way, when executing tests, we can launch
+           the server entirely in memory with no side effect to the file system.
+           To implement this we have a InstanceFactory trait that provide an
+           instance based on a key. For the file system the implementation will
+           just open the path and for the memory the path will be used as a key
+           to a hash map. Need to assess performance impact.
+           In addition, the path to the DICOM file is not relative in the base
+           and the server must be provided with the root to the DICOM files.
+2023-04-14 Been working on various format translation between binary DICOM, json
            and xml.
            This lead to the creation of `dicom_representation.rs` which contains
            the data structure to represent xml and json.
@@ -23,12 +33,12 @@
            they would not be valid according to the DICOM standard.
            As a consequence of these discrepencies, translation functions are
            necessary to go from one representation to another.
-2022-01-08 Add Store and delete and return Not Implemented.
+2023-01-08 Add Store and delete and return Not Implemented.
            Been using the following page to recoup info on DICOMWeb:
            https://learn.microsoft.com/en-us/azure/healthcare-apis/dicom/dicom-services-conformance-statement
-2022-01-07 Tried to deal with temporary accept header limitation for WADO. Only JSON support for now.
+2023-01-07 Tried to deal with temporary accept header limitation for WADO. Only JSON support for now.
            Can't make a filter work to early exit if header is incorrect.
-2022-01-07 minimal QIDO queries support
+2023-01-07 minimal QIDO queries support
 2022-12-21 extract data for the includefields from the DICOM files
 2022-12-18 Improve help messages of various executables
            host and port default values now set by structopt

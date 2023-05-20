@@ -272,6 +272,7 @@ fn main() -> Result<(), Box<dyn Error>> {
   let mut study_set: HashSet<String> = HashSet::new();
   let mut series_set: HashSet<String> = HashSet::new();
   let mut modality_set: HashSet<String> = HashSet::new();
+  let path_prefix = opt.input_path.clone();
   // Walk all the files in the provided input folder
   for result in WalkDir::new(opt.input_path) {
     let entry = result?;
@@ -281,6 +282,10 @@ fn main() -> Result<(), Box<dyn Error>> {
       // For each file, check it is a dicom file, load it and parse the requested fields
       if is_dicom_file(&filepath.to_string_lossy()) {
         let filepathstr = filepath.to_string_lossy().to_string();
+        let relative_filepath_str = filepath
+          .strip_prefix(path_prefix.clone())?
+          .to_string_lossy()
+          .to_string();
         match Instance::from_filepath(&filepathstr) {
           Ok(instance) => {
             if opt.log_files {
@@ -293,7 +298,7 @@ fn main() -> Result<(), Box<dyn Error>> {
               {
                 let mut data = HashMap::<String, String>::new();
                 // We want the filepath in the index by default
-                data.insert("filepath".to_string(), filepathstr);
+                data.insert("filepath".to_string(), relative_filepath_str);
                 for field in indexable_fields.iter() {
                   match instance.get_value(&field.try_into()?) {
                     Ok(result) => {
@@ -308,7 +313,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                     Err(e) => {
                       print!("\r\x1b[2K");
                       io::stdout().flush()?;
-                      eprintln!("{}: {}", filepath.to_string_lossy(), e.details);
+                      eprintln!("{}: {}", filepathstr, e.details);
                       error_count += 1;
                     }
                   }
@@ -317,7 +322,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                 if let Err(e) = index_store.write(&data) {
                   print!("\r\x1b[2K");
                   io::stdout().flush()?;
-                  eprintln!("{}: {:?}", filepath.to_string_lossy(), e);
+                  eprintln!("{}: {:?}", filepathstr, e);
                   error_count += 1;
                 }
                 if !opt.log_files {
@@ -350,7 +355,7 @@ fn main() -> Result<(), Box<dyn Error>> {
           Err(e) => {
             print!("\r\x1b[2K");
             io::stdout().flush()?;
-            eprintln!("{}: {}", filepath.to_string_lossy(), e.details);
+            eprintln!("{}: {}", filepathstr, e.details);
             error_count += 1;
           }
         }
