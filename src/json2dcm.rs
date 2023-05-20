@@ -22,8 +22,8 @@
 #![allow(unused_variables)]
 
 use rdicom::dicom_representation::{json2dcm, DicomAttributeJson};
+use rdicom::error::DicomError;
 use std::collections::BTreeMap;
-use std::error::Error;
 use std::fs::File;
 use std::io::BufReader;
 use std::io::BufWriter;
@@ -44,11 +44,11 @@ struct Opt {
   dcmfilepath: String,
 }
 
-fn main() -> Result<(), Box<dyn Error>> {
+fn main() -> Result<(), DicomError> {
   let opt = Opt::from_args();
   let inputfile = File::open(&opt.jsonfilepath)?;
   let json: BTreeMap<String, DicomAttributeJson> =
-    serde_json::from_reader(BufReader::new(inputfile))?;
+    serde_json::from_reader(BufReader::new(inputfile)).unwrap();
 
   let outputfile = File::create(&opt.dcmfilepath)?;
   let mut writer = BufWriter::new(outputfile);

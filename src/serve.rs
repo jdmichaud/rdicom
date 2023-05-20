@@ -21,8 +21,10 @@
 #![allow(unused_variables)]
 #![allow(dead_code)]
 
+use std::io::BufWriter;
+use std::fs::File;
 use once_cell::sync::Lazy;
-use rdicom::dicom_representation::DicomAttributeJson;
+use rdicom::dicom_representation::{json2dcm, DicomAttributeJson};
 use rdicom::error::DicomError;
 use serde::ser::SerializeMap;
 use serde::Serializer;
@@ -511,6 +513,36 @@ fn with_db<'a>(
   warp::any().map(move || Connection::open(&sqlfile).unwrap())
 }
 
+fn do_store(accept_header: &HeaderValue, body: &warp::hyper::body::Bytes) -> Result<(), DicomError> {
+  println!("do_store 1");
+  let accept_header = get_accept_headers(&accept_header).map_err(|e|
+    DicomError::new(&format!("{{ \"error\": \"to_str failed in get_accept_headers\" }}")))?;
+  println!("do_store 2");
+  let accept = get_accept_format(
+    &accept_header,
+    &["application/dicom+json", "application/json"],
+  )?;
+  println!("do_store 3");
+  match accept.format.as_str() {
+    "application/dicom+json" | "application/json" => {
+      let body: String = from_utf8(body.to_vec().as_slice()).map(str::to_string)?;
+      println!("do_store body {:?}", body);
+      let dataset = serde_json::from_str::<BTreeMap<String, DicomAttributeJson>>(&body).map_err(|e|
+        DicomError::new(&serde_json::to_string(&MySerdeJsonError(e)).unwrap())
+      )?;
+      println!("do_store dataset {:?}", dataset);
+      let outputfile = File::create("test")?;
+      println!("do_store created file");
+      let mut writer = BufWriter::new(outputfile);
+      json2dcm::json2dcm(&mut writer, &dataset).map_err(|e|
+        DicomError::new(&format!("{{ \"error\": \"{}\" }}", e.details))
+      )?;
+      Ok(())
+    },
+    _ => Err(DicomError::new(&format!("{{ \"error\": \"Unhandled Content-Type\" }}"))),
+  }
+}
+
 fn post_store_api(
   sqlfile: String,
 ) -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
@@ -521,49 +553,24 @@ fn post_store_api(
     .and(warp::filters::body::bytes())
     // .and(warp::body::content_length_limit(1024 * 1000)) // 1G
     .map(
-      |content_type: HeaderValue, body: warp::hyper::body::Bytes| {
+      |accept_header: HeaderValue, body: warp::hyper::body::Bytes| {
         // Is it single part or multipart?
-        let multipart = if content_type == "multipart/related" {
-          true
-        } else {
-          false
-        };
+        let multipart = accept_header == "multipart/related";
         if multipart {
-          Response::builder()
+          return Response::builder()
             .status(warp::http::StatusCode::NOT_IMPLEMENTED)
-            .body("Multipart payload not yet implemented".to_string())
+            .body("".to_string());
         } else {
-          let content_type = get_format_headers(&content_type).unwrap();
-          match get_accept_format(
-            &content_type,
-            &["application/dicom+json", "application/json"],
-          ) {
-            Ok(accept) => match accept.format.as_str() {
-              "application/dicom+json" | "application/json" => {
-                // TODO: remove unwrap
-                let body: String = from_utf8(body.to_vec().as_slice())
-                  .map(str::to_string)
-                  .unwrap();
-                match serde_json::from_str::<BTreeMap<String, DicomAttributeJson>>(&body) {
-                  Ok(dataset) => Response::builder()
-                    .status(warp::http::StatusCode::OK)
-                    .body("".to_string()),
-                  Err(e) => Response::builder()
-                    .status(warp::http::StatusCode::BAD_REQUEST)
-                    .header(warp::http::header::CONTENT_ENCODING, "application/json")
-                    .body(serde_json::to_string(&MySerdeJsonError(e)).unwrap_or(
-                      "{ \"error\": \"error while serializing the error\" }".to_string(),
-                    )),
-                }
-              }
-              _ => Response::builder()
-                .status(warp::http::StatusCode::INTERNAL_SERVER_ERROR)
-                .body("Unhandled Content-Type".to_string()),
-            },
-            Err(e) => Response::builder()
-              .status(warp::http::StatusCode::NOT_IMPLEMENTED)
-              .body(e.details),
+          // TODO: get rid if this unwrap
+          if let Err(e) = do_store(&accept_header, &body) {
+            println!("{:?}", e);
+            return Response::builder()
+              .status(warp::http::StatusCode::INTERNAL_SERVER_ERROR)
+              .header(warp::http::header::CONTENT_ENCODING, "application/json")
+              .body(e.details);
           }
+          return Response::builder()
+            .status(warp::http::StatusCode::OK).body("".to_string());
         }
       },
     );
@@ -1058,7 +1065,7 @@ fn get_accept_format<'a>(
  * Convert the Accept/Content-Type header to something like:
  * [ format: application/json, parameters: { boundary: '---abcd1234---' }, ... ]
  */
-fn get_format_headers(accept_header: &HeaderValue) -> Result<Vec<AcceptHeader>, Box<dyn Error>> {
+fn get_accept_headers(accept_header: &HeaderValue) -> Result<Vec<AcceptHeader>, Box<dyn Error>> {
   Ok(
     accept_header
       .to_str()?
@@ -1087,7 +1094,7 @@ fn capabilities(
   application: &'static capabilities::Application,
 ) -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
   let handlers = warp::filters::header::value("accept").map(move |accept_header: HeaderValue| {
-    let accept_header = get_format_headers(&accept_header).unwrap();
+    let accept_header = get_accept_headers(&accept_header).unwrap();
     match get_accept_format(
       &accept_header,
       &[

@@ -577,6 +577,7 @@ pub mod json2dcm {
   use crate::dicom_representation::Payload;
   use crate::dicom_representation::ValuePayload;
   use crate::dicom_representation::ValueRepresentation;
+  use crate::error::DicomError;
   use std::error::Error;
   use std::io::BufWriter;
   use std::io::Write;
@@ -775,10 +776,17 @@ pub mod json2dcm {
     Ok(length)
   }
 
+  impl From<Box<dyn serde::ser::StdError>> for DicomError {
+    fn from(_err: Box<dyn serde::ser::StdError>) -> Self {
+      // TODO: Improve this...
+      DicomError::new(&format!("error"))
+    }
+  }
+
   pub fn json2dcm<W: std::io::Write>(
     writer: &mut BufWriter<W>,
     json: &BTreeMap<String, DicomAttributeJson>,
-  ) -> Result<(), Box<dyn Error>> {
+  ) -> Result<(), DicomError> {
     // Write the DICOM header
     writer.write(&[0; 0x80])?;
     writer.write(&[b'D', b'I', b'C', b'M'])?;

@@ -82,3 +82,9 @@ impl From<std::num::ParseIntError> for DicomError {
     DicomError::new(&format!("{:?}", err))
   }
 }
+
+impl From<&str> for DicomError {
+  fn from(err: &str) -> Self {
+    DicomError::new(err)
+  }
+}
