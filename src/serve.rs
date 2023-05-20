@@ -37,6 +37,7 @@ use std::error::Error;
 use std::fmt;
 use std::fs::File;
 use std::io::BufWriter;
+use std::io::{BufReader, Read, Seek, Write};
 use std::net::IpAddr;
 use std::path::PathBuf;
 use std::str::from_utf8;
@@ -45,10 +46,10 @@ use structopt::clap::AppSettings;
 use structopt::StructOpt;
 use warp::http::header::{HeaderMap, HeaderValue, CONTENT_TYPE};
 use warp::http::Response;
-use warp::{reject, Filter, Rejection};
+use warp::{filters::BoxedFilter, reject, Filter, Rejection};
 
 use rdicom::instance::Instance;
-use rdicom::misc::is_dicom_file;
+
 use rdicom::tags::Tag;
 
 mod db;
@@ -413,8 +414,16 @@ fn create_where_clause(
   format!("{where_clause} LIMIT {limit} OFFSET {offset}")
 }
 
-trait InstanceFactory {
-  fn get_instance(&self, path: &str) -> Result<Instance, DicomError>;
+/**
+ * The InstanceFactory trait abstract away the access to bulk data.
+ * FSInstanceFactory implements the trait to access to file on a file system.
+ * MemoryInstanceFactory implements the trait to access data from memory. This
+ * allows the implementation of a ':memory:' option like sqlite provides.
+ */
+
+trait InstanceFactory<R: Read + Seek, W: Write> {
+  fn get_reader(&self, path: &str) -> Result<R, DicomError>;
+  fn get_writer(&self, path: &str) -> Result<W, DicomError>;
 }
 
 #[derive(Clone)]
@@ -433,23 +442,53 @@ impl FSInstanceFactory {
   }
 }
 
-impl InstanceFactory for FSInstanceFactory {
-  fn get_instance(&self, path: &str) -> Result<Instance, DicomError> {
+impl InstanceFactory<BufReader<File>, BufWriter<File>> for FSInstanceFactory {
+  fn get_reader(&self, path: &str) -> Result<BufReader<File>, DicomError> {
     let tmp = std::path::Path::new(&self.dcmpath).join(std::path::Path::new(path));
-    let filepath = tmp.to_string_lossy();
-    if is_dicom_file(&filepath) {
-      Instance::from_filepath(&filepath)
-    } else {
-      Err(DicomError::new(&format!("{} is not a DICOM file", path)))?
-    }
+    let f = File::open(&*tmp.to_string_lossy())?;
+    Ok(BufReader::new(f))
+  }
+
+  fn get_writer(&self, path: &str) -> Result<BufWriter<File>, DicomError> {
+    let tmp = std::path::Path::new(&self.dcmpath).join(std::path::Path::new(path));
+    let f = File::create(&*tmp.to_string_lossy())?;
+    Ok(BufWriter::new(f))
   }
 }
+
+// #[derive(Clone)]
+// struct MemoryInstanceFactory {
+//   files: HashMap<String, String>,
+// }
+
+// unsafe impl Sync for MemoryInstanceFactory {}
+// unsafe impl Send for MemoryInstanceFactory {}
+
+// impl MemoryInstanceFactory {
+//   fn new(dcmpath: &str) -> MemoryInstanceFactory {
+//     MemoryInstanceFactory {
+//       dcmpath: String::from(dcmpath),
+//     }
+//   }
+// }
+
+// impl InstanceFactory for MemoryInstanceFactory {
+//   fn get_instance(&self, path: &str) -> Result<Instance, DicomError> {
+//     let tmp = std::path::Path::new(&self.dcmpath).join(std::path::Path::new(path));
+//     let filepath = tmp.to_string_lossy();
+//     if is_dicom_file(&filepath) {
+//       Instance::from_filepath(&filepath)
+//     } else {
+//       Err(DicomError::new(&format!("{} is not a DICOM file", path)))?
+//     }
+//   }
+// }
 
 /**
  * Retrieve the fields from the index according to the search terms and enrich
  * the data from the index with the data from the DICOM files if necessary.
  */
-fn get_entries<T: InstanceFactory>(
+fn get_entries<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
   connection: &Connection,
   instance_factory: &T,
   params: &QidoQueryParameters,
@@ -479,7 +518,8 @@ fn get_entries<T: InstanceFactory>(
     if fields_to_fetch.len() > 0 {
       for i in 0..entries.len() {
         if let Some(rfilepath) = entries[i].get("filepath") {
-          let instance = instance_factory.get_instance(rfilepath)?;
+          let reader = instance_factory.get_reader(rfilepath)?;
+          let instance = Instance::from_reader(reader)?;
           // Go through those missing fields from the index and enrich the data from the index
           for field in &fields_to_fetch {
             if let Some(field_value) = instance.get_value(&field.try_into()?)? {
@@ -494,7 +534,7 @@ fn get_entries<T: InstanceFactory>(
   return Ok(entries);
 }
 
-fn get_studies<T: InstanceFactory>(
+fn get_studies<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
   connection: &Connection,
   instance_factory: &T,
   params: &QidoQueryParameters,
@@ -509,7 +549,7 @@ fn get_studies<T: InstanceFactory>(
   )
 }
 
-fn get_series<T: InstanceFactory>(
+fn get_series<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
   connection: &Connection,
   instance_factory: &T,
   params: &QidoQueryParameters,
@@ -524,7 +564,7 @@ fn get_series<T: InstanceFactory>(
   )
 }
 
-fn get_instances<T: InstanceFactory>(
+fn get_instances<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
   connection: &Connection,
   instance_factory: &T,
   params: &QidoQueryParameters,
@@ -568,13 +608,14 @@ fn with_db<'a>(
   warp::any().map(move || Connection::open(&sqlfile).unwrap())
 }
 
-fn with_instance_factory<T: InstanceFactory + Clone + Send>(
+fn with_instance_factory<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Send>(
   instance_factory: T,
 ) -> impl Filter<Extract = (T,), Error = Infallible> + Clone {
   warp::any().map(move || instance_factory.clone())
 }
 
-fn do_store(
+fn do_store<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Send>(
+  instance_factory: T,
   accept_header: &HeaderValue,
   body: &warp::hyper::body::Bytes,
 ) -> Result<(), DicomError> {
@@ -592,8 +633,7 @@ fn do_store(
       let body: String = from_utf8(body.to_vec().as_slice()).map(str::to_string)?;
       let dataset = serde_json::from_str::<BTreeMap<String, DicomAttributeJson>>(&body)
         .map_err(|e| DicomError::new(&serde_json::to_string(&MySerdeJsonError(e)).unwrap()))?;
-      let outputfile = File::create("test")?;
-      let mut writer = BufWriter::new(outputfile);
+      let mut writer = instance_factory.get_writer("test")?;
       json2dcm::json2dcm(&mut writer, &dataset)
         .map_err(|e| DicomError::new(&format!("{{ \"error\": \"{}\" }}", e.details)))?;
       Ok(())
@@ -604,17 +644,28 @@ fn do_store(
   }
 }
 
-fn post_store_api(
+#[derive(Debug)]
+struct RDicomRejection {
+  pub details: String,
+  pub status: warp::http::StatusCode,
+  pub accept_header: HeaderValue,
+}
+
+impl reject::Reject for RDicomRejection {}
+
+fn post_store_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Send>(
   sqlfile: String,
+  instance_factory: T,
 ) -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
   // POST  ../studies  Store instances.
   let store_instances = warp::path("studies")
     .and(warp::path::end())
     .and(warp::filters::header::value("Content-Type"))
     .and(warp::filters::body::bytes())
+    .and(with_instance_factory(instance_factory.clone()))
     // .and(warp::body::content_length_limit(1024 * 1000)) // 1G
     .map(
-      |accept_header: HeaderValue, body: warp::hyper::body::Bytes| {
+      |accept_header: HeaderValue, body: warp::hyper::body::Bytes, instance_factory: T| {
         // Is it single part or multipart?
         let multipart = accept_header == "multipart/related";
         if multipart {
@@ -623,7 +674,7 @@ fn post_store_api(
             .body("".to_string());
         } else {
           // TODO: get rid if this unwrap
-          if let Err(e) = do_store(&accept_header, &body) {
+          if let Err(e) = do_store(instance_factory, &accept_header, &body) {
             return Response::builder()
               .status(warp::http::StatusCode::INTERNAL_SERVER_ERROR)
               .header(warp::http::header::CONTENT_ENCODING, "application/json")
@@ -646,10 +697,79 @@ fn post_store_api(
     .or(store_instances_in_study)
 }
 
+// fn post_store_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Send>(
+//   sqlfile: String,
+//   instance_factory: T,
+// ) -> BoxedFilter<(impl warp::Reply,)> {
+//   // POST  ../studies  Store instances.
+//   let store_instances = warp::path("studies")
+//     .and(warp::path::end())
+//     .and(warp::filters::header::value("Content-Type"))
+//     .and(warp::filters::body::bytes())
+//     .and(with_instance_factory(instance_factory.clone()))
+//     .and_then(
+//       |accept_header: HeaderValue, body: warp::hyper::body::Bytes, instance_factory: T| async move {
+//       // Is it single part or multipart?
+//       let multipart = accept_header == "multipart/related";
+//       if multipart {
+//         Err(reject::custom(RDicomRejection {
+//           details: "Multipart payload not implemented".to_string(),
+//           status: warp::http::StatusCode::NOT_IMPLEMENTED,
+//           accept_header: HeaderValue::from_str("application/json").unwrap(),
+//         }))
+//       } else {
+//         if let Err(e) = do_store(instance_factory, &accept_header, &body) {
+//           return Err(reject::custom(RDicomRejection {
+//             details: e.details,
+//             status: warp::http::StatusCode::INTERNAL_SERVER_ERROR,
+//             accept_header: HeaderValue::from_str("application/json").unwrap(),
+//           }));
+//         }
+//         Ok("".to_string())
+//       }
+//     });
+
+//   // POST  ../studies/{study}  Store instances for a specific study.
+//   let store_instances_in_study = warp::path("studies")
+//     .and(unique_identifier())
+//     .and(warp::path::end())
+//     .and_then(|study_uid: String| async {
+//       if false {
+//         Ok("".to_string())
+//       } else {
+//         Err(reject::custom(RDicomRejection {
+//           details: "Storing under a specified StudyInstanceUID is not implemented".to_string(),
+//           status: warp::http::StatusCode::NOT_IMPLEMENTED,
+//           accept_header: HeaderValue::from_str("application/json").unwrap(),
+//         }))
+//       }
+//     });
+
+//   warp::post()
+//     .and(store_instances)
+//     .or(store_instances_in_study)
+//     .boxed()
+// }
+
+// fn post_store_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Send>(
+//   sqlfile: String,
+//   instance_factory: T,
+// ) -> impl Filter<Extract = (String,), Error = Rejection> + Clone {
+//   warp::post()
+//     // .and(warp::filters::header::value("Content-Type"))
+//     .and_then(|| async {
+//       if sqlfile == "" {
+//         Ok("".to_string())
+//       } else {
+//         Err(reject::custom(NotAUniqueIdentifier))
+//       }
+//     })
+// }
+
 /**
  * https://www.dicomstandard.org/using/dicomweb/query-qido-rs/
  */
-fn get_query_api<T: InstanceFactory + Clone + Send>(
+fn get_query_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Send>(
   sqlfile: String,
   instance_factory: T,
 ) -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
@@ -1002,6 +1122,7 @@ fn get_delete_api(
 // This function receives a `Rejection` and tries to return a custom
 // value, otherwise simply passes the rejection along.
 async fn handle_rejection(err: Rejection) -> Result<impl warp::Reply, Infallible> {
+  println!("handle_rejection !!");
   let code;
   let message: String;
 
@@ -1258,8 +1379,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
     FSInstanceFactory::new(&opt.dcmpath)
   };
   let routes = root
-    .or(post_store_api(sqlfile.clone()))
-    .or(get_query_api(sqlfile.clone(), instance_factory))
+    .or(post_store_api(sqlfile.clone(), instance_factory.clone()))
+    .or(get_query_api(sqlfile.clone(), instance_factory.clone()))
     .or(get_retrieve_api(sqlfile.clone()))
     .or(get_delete_api(sqlfile.clone()))
     .or(capabilities(&APPLICATION))

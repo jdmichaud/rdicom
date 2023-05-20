@@ -30,7 +30,7 @@ use std::error::Error;
 use std::fmt;
 use std::fs::File;
 use std::io::BufReader;
-use std::io::Read;
+use std::io::{Read, Seek};
 use std::str::from_utf8;
 use std::str::Utf8Error;
 
@@ -402,6 +402,19 @@ impl Instance {
     // TODO: Do not read the whole buffer. Use an abstraction in order to allow
     // opening file that would not hold in memory.
     buf_reader.read_to_end(&mut buffer)?;
+    Instance::from(buffer)
+  }
+
+  /**
+   * Returns an instance from a object that implements Read + Seek.
+   * The entire reader will be read before returning the instance.
+   */
+  pub fn from_reader<T: Read + Seek>(mut reader: T) -> Result<Self, DicomError> {
+    // Read the whole file into a buffer
+    let mut buffer: Vec<u8> = vec![];
+    // TODO: Do not read the whole buffer. Use an abstraction in order to allow
+    // opening file that would not hold in memory.
+    reader.read_to_end(&mut buffer)?;
     Instance::from(buffer)
   }
 

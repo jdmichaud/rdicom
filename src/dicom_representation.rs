@@ -583,7 +583,7 @@ pub mod json2dcm {
   use std::io::Write;
 
   fn write_even_16<W: std::io::Write>(
-    writer: &mut BufWriter<W>,
+    writer: &mut W,
     data: &[u8],
     padchar: u8,
   ) -> Result<usize, Box<dyn Error>> {
@@ -599,7 +599,7 @@ pub mod json2dcm {
   }
 
   fn write_even_32<W: std::io::Write>(
-    writer: &mut BufWriter<W>,
+    writer: &mut W,
     data: &[u8],
   ) -> Result<usize, Box<dyn Error>> {
     let data_length = data.len();
@@ -615,7 +615,7 @@ pub mod json2dcm {
   }
 
   fn serialize<W: std::io::Write>(
-    writer: &mut BufWriter<W>,
+    writer: &mut W,
     dicom_attribute: DicomAttribute,
   ) -> Result<usize, Box<dyn Error>> {
     let group_h: u8 = u8::from_str_radix(&dicom_attribute.tag[0..2], 16)?;
@@ -784,7 +784,7 @@ pub mod json2dcm {
   }
 
   pub fn json2dcm<W: std::io::Write>(
-    writer: &mut BufWriter<W>,
+    writer: &mut W,
     json: &BTreeMap<String, DicomAttributeJson>,
   ) -> Result<(), DicomError> {
     // Write the DICOM header
