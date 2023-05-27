@@ -21,6 +21,7 @@
 #![allow(unused_variables)]
 #![allow(dead_code)]
 
+use std::path::Path;
 use crate::index_store::IndexStore;
 use once_cell::sync::Lazy;
 use rdicom::dicom_representation::{json2dcm, DicomAttributeJson};
@@ -48,9 +49,9 @@ use warp::http::header::{HeaderMap, HeaderValue, CONTENT_TYPE};
 use warp::http::Response;
 use warp::{reject, Filter, Rejection};
 
-use rdicom::dicom_tags;
 use rdicom::instance::Instance;
 use rdicom::tags::Tag;
+use rdicom::dicom_tags;
 
 mod config;
 mod db;
@@ -155,6 +156,57 @@ impl Serialize for MySerdeJsonError {
     map.serialize_entry("column", &self.0.column())?;
     map.serialize_entry("error", &format!("{}", self.0))?;
     map.end()
+  }
+}
+
+#[derive(Debug, Serialize)]
+#[serde(untagged)]
+enum HttpErrorPayload {
+  SerdeJsonErrorPayload {
+    line: usize,
+    column: usize,
+    error: String,
+  },
+  SimpleErrorPayload { error: String },
+}
+
+#[derive(Debug)]
+struct HttpError {
+  pub status: u16,
+  pub payload: HttpErrorPayload,
+}
+
+impl HttpError {
+  pub fn new(status: u16, msg: &str) -> HttpError {
+    HttpError {
+      status,
+      payload: HttpErrorPayload::SimpleErrorPayload { error: msg.to_string() },
+    }
+  }
+
+  pub fn from_payload(status: u16, payload: HttpErrorPayload) -> HttpError {
+    HttpError {
+      status,
+      payload: payload,
+    }
+  }
+
+  pub fn from_json_error(status: u16, error: serde_json::Error) -> HttpError {
+    HttpError {
+      status,
+      payload: HttpErrorPayload::SerdeJsonErrorPayload {
+        line: error.line(),
+        column: error.column(),
+        error: format!("{}", error),
+      }
+    }
+  }
+
+  pub fn from_error(status: u16, error: &impl Error) -> HttpError {
+    HttpError {
+      status,
+      payload: HttpErrorPayload::SimpleErrorPayload { error: error.to_string() },
+    }
   }
 }
 
@@ -452,9 +504,13 @@ impl InstanceFactory<BufReader<File>, BufWriter<File>> for FSInstanceFactory {
   }
 
   fn get_writer(&self, path: &str) -> Result<BufWriter<File>, DicomError> {
-    let tmp = std::path::Path::new(&self.dcmpath).join(std::path::Path::new(path));
-    let f = File::create(&*tmp.to_string_lossy())?;
-    Ok(BufWriter::new(f))
+    let path = std::path::Path::new(&self.dcmpath).join(std::path::Path::new(path));
+    if path.exists() {
+      Err(DicomError::new("File already exists"))
+    } else {
+      let f = File::create(&*path.to_string_lossy())?;
+      Ok(BufWriter::new(f))
+    }
   }
 }
 
@@ -623,7 +679,8 @@ fn with_index_store(
 }
 
 fn dicom_attribute_json_to_string(attribute: &DicomAttributeJson) -> String {
-  String::try_from(attribute.payload.clone().unwrap()).unwrap_or("undefined".to_string())
+  String::try_from(attribute.payload.clone().unwrap())
+    .unwrap_or("undefined".to_string())
 }
 
 fn do_store<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Send>(
@@ -632,51 +689,37 @@ fn do_store<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Send>(
   index_store: &mut SqlIndexStoreWithMutex,
   accept_header: &HeaderValue,
   body: &warp::hyper::body::Bytes,
-) -> Result<(), DicomError> {
-  let accept_header = get_accept_headers(&accept_header).map_err(|e| {
-    DicomError::new(&format!(
-      "{{ \"error\": \"to_str failed in get_accept_headers\" }}"
-    ))
-  })?;
+) -> Result<(), HttpError> {
+  let accept_header = get_accept_headers(&accept_header)
+    .map_err(|e| HttpError::new(500, "to_str failed in get_accept_headers"))?;
   let accept = get_accept_format(
     &accept_header,
     &["application/dicom+json", "application/json"],
-  )?;
+  ).map_err(|e| HttpError::new(406, &e.details))?;
   match accept.format.as_str() {
     "application/dicom+json" | "application/json" => {
-      let body: String = from_utf8(body.to_vec().as_slice()).map(str::to_string)?;
+      let body: String = from_utf8(body.to_vec().as_slice()).map(str::to_string)
+        .map_err(|e| HttpError::new(400, &format!("utf-8 error. Message valid up to {} byte", e.valid_up_to())))?;
       let dataset = serde_json::from_str::<BTreeMap<String, DicomAttributeJson>>(&body)
-        .map_err(|e| DicomError::new(&serde_json::to_string(&MySerdeJsonError(e)).unwrap()))?;
+        .map_err(|e| HttpError::from_json_error(400, e))?;
       let sop_instance_uid = String::try_from(
-        dataset
-          .get(&dicom_tags::SOPInstanceUID.to_string())
-          .unwrap()
-          .payload
-          .clone()
-          .unwrap(),
-      )?;
+        dataset.get(&dicom_tags::SOPInstanceUID.to_string()).unwrap().payload.clone().unwrap()
+      ).map_err(|e| HttpError::new(400, &e.details))?;
       let filename = &format!("{}.dcm", sop_instance_uid);
-      let mut writer = instance_factory.get_writer(filename)?;
+      let mut writer = instance_factory.get_writer(filename)
+        .map_err(|e| HttpError::new(500, &e.details))?;
       // Write the file
       json2dcm::json2dcm(&mut writer, &dataset)
-        .map_err(|e| DicomError::new(&format!("{{ \"error\": \"{}\" }}", e.details)))?;
+        .map_err(|e| HttpError::new(500, &format!("{}", e.details)))?;
       // Update the index
-      let mut data: HashMap<String, String> = dataset
-        .iter()
-        .map(|(k, v)| {
-          (
-            Tag::try_from(k).unwrap().name.to_string(),
-            dicom_attribute_json_to_string(v),
-          )
-        })
+      let mut data: HashMap<String, String> = dataset.iter()
+        .map(|(k, v)| (Tag::try_from(k).unwrap().name.to_string(), dicom_attribute_json_to_string(v)))
         .collect();
       data.insert("filepath".to_string(), filename.to_string());
-      index_store.write(&data)?;
+      index_store.write(&data).map_err(|e| HttpError::new(500, &format!("{}", e)))?;
       Ok(())
     }
-    _ => Err(DicomError::new(&format!(
-      "{{ \"error\": \"Unhandled Content-Type\" }}"
-    ))),
+    _ => Err(HttpError::new(500, "Unhandled Content-Type")),
   }
 }
 
@@ -725,9 +768,9 @@ fn post_store_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + S
             &body,
           ) {
             return Response::builder()
-              .status(warp::http::StatusCode::INTERNAL_SERVER_ERROR)
+              .status(e.status)
               .header(warp::http::header::CONTENT_ENCODING, "application/json")
-              .body(e.details);
+              .body(serde_json::to_string(&e.payload).unwrap());
           }
           return Response::builder()
             .status(warp::http::StatusCode::OK)
@@ -1200,11 +1243,7 @@ fn check_db(opt: &Opt) -> Result<(String, Vec<String>, Connection), Box<dyn Erro
           .into(),
         )
       } else {
-        Ok((
-          "dicom_index".to_string(),
-          get_indexed_fields(&connection)?,
-          connection,
-        ))
+        Ok(("dicom_index".to_string(), get_indexed_fields(&connection)?, connection))
       };
     }
   };
@@ -1356,15 +1395,12 @@ async fn main() -> Result<(), Box<dyn Error>> {
     .and(warp::path("about"))
     .map(move || server_header);
 
-  let index_store = SqlIndexStoreWithMutex::new(connection, &table_name, indexable_fields)?;
+  let index_store =
+    SqlIndexStoreWithMutex::new(connection, &table_name, indexable_fields)?;
   let routes = if opt.dcmpath == ":memory:" {
     let instance_factory = MemoryInstanceFactory::new();
     root
-      .or(post_store_api(
-        &opt.sqlfile,
-        instance_factory.clone(),
-        index_store,
-      ))
+      .or(post_store_api(&opt.sqlfile, instance_factory.clone(), index_store))
       .or(get_query_api(&opt.sqlfile, instance_factory.clone()))
       .or(get_retrieve_api(&opt.sqlfile))
       .or(get_delete_api(&opt.sqlfile))
@@ -1381,10 +1417,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         FSInstanceFactory::new(&opt.dcmpath),
         index_store,
       ))
-      .or(get_query_api(
-        &opt.sqlfile,
-        FSInstanceFactory::new(&opt.dcmpath),
-      ))
+      .or(get_query_api(&opt.sqlfile, FSInstanceFactory::new(&opt.dcmpath)))
       .or(get_retrieve_api(&opt.sqlfile))
       .or(get_delete_api(&opt.sqlfile))
       .or(capabilities(&APPLICATION))
