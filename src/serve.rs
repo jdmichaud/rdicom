@@ -21,6 +21,7 @@
 #![allow(unused_variables)]
 #![allow(dead_code)]
 
+use crate::index_store::IndexStore;
 use once_cell::sync::Lazy;
 use rdicom::dicom_representation::{json2dcm, DicomAttributeJson};
 use rdicom::error::DicomError;
@@ -36,8 +37,7 @@ use std::convert::TryInto;
 use std::error::Error;
 use std::fmt;
 use std::fs::File;
-use std::io::BufWriter;
-use std::io::{BufReader, Read, Seek, Write};
+use std::io::{BufReader, BufWriter, Cursor, Read, Seek, Write};
 use std::net::IpAddr;
 use std::path::PathBuf;
 use std::str::from_utf8;
@@ -46,15 +46,17 @@ use structopt::clap::AppSettings;
 use structopt::StructOpt;
 use warp::http::header::{HeaderMap, HeaderValue, CONTENT_TYPE};
 use warp::http::Response;
-use warp::{filters::BoxedFilter, reject, Filter, Rejection};
+use warp::{reject, Filter, Rejection};
 
+use rdicom::dicom_tags;
 use rdicom::instance::Instance;
-
 use rdicom::tags::Tag;
 
-mod db;
-
 mod config;
+mod db;
+mod index_store;
+
+use index_store::SqlIndexStoreWithMutex;
 
 // r"^/instances$",
 // r"^/instances/(?P<SOPInstanceUID>[^/?#]*)$",
@@ -109,7 +111,7 @@ struct Opt {
   host: String,
   /// Sqlite database
   #[structopt(short, long)]
-  sqlfile: PathBuf,
+  sqlfile: String,
   /// Database config (necessary to create a database or add to the database)
   #[structopt(short, long, parse(try_from_str = file_exists))]
   config: Option<PathBuf>,
@@ -456,33 +458,32 @@ impl InstanceFactory<BufReader<File>, BufWriter<File>> for FSInstanceFactory {
   }
 }
 
-// #[derive(Clone)]
-// struct MemoryInstanceFactory {
-//   files: HashMap<String, String>,
-// }
+#[derive(Clone)]
+struct MemoryInstanceFactory {
+  files: Box<HashMap<String, String>>,
+}
 
-// unsafe impl Sync for MemoryInstanceFactory {}
-// unsafe impl Send for MemoryInstanceFactory {}
+unsafe impl Sync for MemoryInstanceFactory {}
+unsafe impl Send for MemoryInstanceFactory {}
 
-// impl MemoryInstanceFactory {
-//   fn new(dcmpath: &str) -> MemoryInstanceFactory {
-//     MemoryInstanceFactory {
-//       dcmpath: String::from(dcmpath),
-//     }
-//   }
-// }
+impl MemoryInstanceFactory {
+  fn new() -> MemoryInstanceFactory {
+    MemoryInstanceFactory {
+      files: Box::new(HashMap::<String, String>::new()),
+    }
+  }
+}
 
-// impl InstanceFactory for MemoryInstanceFactory {
-//   fn get_instance(&self, path: &str) -> Result<Instance, DicomError> {
-//     let tmp = std::path::Path::new(&self.dcmpath).join(std::path::Path::new(path));
-//     let filepath = tmp.to_string_lossy();
-//     if is_dicom_file(&filepath) {
-//       Instance::from_filepath(&filepath)
-//     } else {
-//       Err(DicomError::new(&format!("{} is not a DICOM file", path)))?
-//     }
-//   }
-// }
+impl InstanceFactory<std::io::Cursor<Vec<u8>>, std::io::Cursor<Vec<u8>>> for MemoryInstanceFactory {
+  fn get_reader(&self, path: &str) -> Result<std::io::Cursor<Vec<u8>>, DicomError> {
+    println!("<- {}", path);
+    Ok(Cursor::new(Vec::<u8>::new()))
+  }
+  fn get_writer(&self, path: &str) -> Result<std::io::Cursor<Vec<u8>>, DicomError> {
+    println!("-> {}", path);
+    Ok(Cursor::new(Vec::<u8>::new()))
+  }
+}
 
 /**
  * Retrieve the fields from the index according to the search terms and enrich
@@ -603,9 +604,10 @@ fn generate_json_response(data: &Vec<HashMap<String, String>>) -> String {
 }
 
 fn with_db<'a>(
-  sqlfile: String,
+  sqlfile: &String,
 ) -> impl Filter<Extract = (Connection,), Error = Infallible> + Clone + 'a {
-  warp::any().map(move || Connection::open(&sqlfile).unwrap())
+  let sqlpath = PathBuf::from_str(&sqlfile).unwrap();
+  warp::any().map(move || Connection::open(&sqlpath).unwrap())
 }
 
 fn with_instance_factory<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Send>(
@@ -614,8 +616,20 @@ fn with_instance_factory<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Cl
   warp::any().map(move || instance_factory.clone())
 }
 
+fn with_index_store(
+  index_store: SqlIndexStoreWithMutex,
+) -> impl Filter<Extract = (SqlIndexStoreWithMutex,), Error = Infallible> + Clone {
+  warp::any().map(move || index_store.clone())
+}
+
+fn dicom_attribute_json_to_string(attribute: &DicomAttributeJson) -> String {
+  String::try_from(attribute.payload.clone().unwrap()).unwrap_or("undefined".to_string())
+}
+
 fn do_store<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Send>(
+  connection: Connection,
   instance_factory: T,
+  index_store: &mut SqlIndexStoreWithMutex,
   accept_header: &HeaderValue,
   body: &warp::hyper::body::Bytes,
 ) -> Result<(), DicomError> {
@@ -633,9 +647,31 @@ fn do_store<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Send>(
       let body: String = from_utf8(body.to_vec().as_slice()).map(str::to_string)?;
       let dataset = serde_json::from_str::<BTreeMap<String, DicomAttributeJson>>(&body)
         .map_err(|e| DicomError::new(&serde_json::to_string(&MySerdeJsonError(e)).unwrap()))?;
-      let mut writer = instance_factory.get_writer("test")?;
+      let sop_instance_uid = String::try_from(
+        dataset
+          .get(&dicom_tags::SOPInstanceUID.to_string())
+          .unwrap()
+          .payload
+          .clone()
+          .unwrap(),
+      )?;
+      let filename = &format!("{}.dcm", sop_instance_uid);
+      let mut writer = instance_factory.get_writer(filename)?;
+      // Write the file
       json2dcm::json2dcm(&mut writer, &dataset)
         .map_err(|e| DicomError::new(&format!("{{ \"error\": \"{}\" }}", e.details)))?;
+      // Update the index
+      let mut data: HashMap<String, String> = dataset
+        .iter()
+        .map(|(k, v)| {
+          (
+            Tag::try_from(k).unwrap().name.to_string(),
+            dicom_attribute_json_to_string(v),
+          )
+        })
+        .collect();
+      data.insert("filepath".to_string(), filename.to_string());
+      index_store.write(&data)?;
       Ok(())
     }
     _ => Err(DicomError::new(&format!(
@@ -654,18 +690,25 @@ struct RDicomRejection {
 impl reject::Reject for RDicomRejection {}
 
 fn post_store_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Send>(
-  sqlfile: String,
+  sqlfile: &String,
   instance_factory: T,
+  index_store: SqlIndexStoreWithMutex,
 ) -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
   // POST  ../studies  Store instances.
   let store_instances = warp::path("studies")
     .and(warp::path::end())
     .and(warp::filters::header::value("Content-Type"))
     .and(warp::filters::body::bytes())
-    .and(with_instance_factory(instance_factory.clone()))
+    .and(with_db(sqlfile))
+    .and(with_instance_factory(instance_factory))
+    .and(with_index_store(index_store))
     // .and(warp::body::content_length_limit(1024 * 1000)) // 1G
     .map(
-      |accept_header: HeaderValue, body: warp::hyper::body::Bytes, instance_factory: T| {
+      |accept_header: HeaderValue,
+       body: warp::hyper::body::Bytes,
+       connection: Connection,
+       instance_factory: T,
+       mut index_store: SqlIndexStoreWithMutex| {
         // Is it single part or multipart?
         let multipart = accept_header == "multipart/related";
         if multipart {
@@ -674,7 +717,13 @@ fn post_store_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + S
             .body("".to_string());
         } else {
           // TODO: get rid if this unwrap
-          if let Err(e) = do_store(instance_factory, &accept_header, &body) {
+          if let Err(e) = do_store(
+            connection,
+            instance_factory,
+            &mut index_store,
+            &accept_header,
+            &body,
+          ) {
             return Response::builder()
               .status(warp::http::StatusCode::INTERNAL_SERVER_ERROR)
               .header(warp::http::header::CONTENT_ENCODING, "application/json")
@@ -697,80 +746,11 @@ fn post_store_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + S
     .or(store_instances_in_study)
 }
 
-// fn post_store_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Send>(
-//   sqlfile: String,
-//   instance_factory: T,
-// ) -> BoxedFilter<(impl warp::Reply,)> {
-//   // POST  ../studies  Store instances.
-//   let store_instances = warp::path("studies")
-//     .and(warp::path::end())
-//     .and(warp::filters::header::value("Content-Type"))
-//     .and(warp::filters::body::bytes())
-//     .and(with_instance_factory(instance_factory.clone()))
-//     .and_then(
-//       |accept_header: HeaderValue, body: warp::hyper::body::Bytes, instance_factory: T| async move {
-//       // Is it single part or multipart?
-//       let multipart = accept_header == "multipart/related";
-//       if multipart {
-//         Err(reject::custom(RDicomRejection {
-//           details: "Multipart payload not implemented".to_string(),
-//           status: warp::http::StatusCode::NOT_IMPLEMENTED,
-//           accept_header: HeaderValue::from_str("application/json").unwrap(),
-//         }))
-//       } else {
-//         if let Err(e) = do_store(instance_factory, &accept_header, &body) {
-//           return Err(reject::custom(RDicomRejection {
-//             details: e.details,
-//             status: warp::http::StatusCode::INTERNAL_SERVER_ERROR,
-//             accept_header: HeaderValue::from_str("application/json").unwrap(),
-//           }));
-//         }
-//         Ok("".to_string())
-//       }
-//     });
-
-//   // POST  ../studies/{study}  Store instances for a specific study.
-//   let store_instances_in_study = warp::path("studies")
-//     .and(unique_identifier())
-//     .and(warp::path::end())
-//     .and_then(|study_uid: String| async {
-//       if false {
-//         Ok("".to_string())
-//       } else {
-//         Err(reject::custom(RDicomRejection {
-//           details: "Storing under a specified StudyInstanceUID is not implemented".to_string(),
-//           status: warp::http::StatusCode::NOT_IMPLEMENTED,
-//           accept_header: HeaderValue::from_str("application/json").unwrap(),
-//         }))
-//       }
-//     });
-
-//   warp::post()
-//     .and(store_instances)
-//     .or(store_instances_in_study)
-//     .boxed()
-// }
-
-// fn post_store_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Send>(
-//   sqlfile: String,
-//   instance_factory: T,
-// ) -> impl Filter<Extract = (String,), Error = Rejection> + Clone {
-//   warp::post()
-//     // .and(warp::filters::header::value("Content-Type"))
-//     .and_then(|| async {
-//       if sqlfile == "" {
-//         Ok("".to_string())
-//       } else {
-//         Err(reject::custom(NotAUniqueIdentifier))
-//       }
-//     })
-// }
-
 /**
  * https://www.dicomstandard.org/using/dicomweb/query-qido-rs/
  */
 fn get_query_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Send>(
-  sqlfile: String,
+  sqlfile: &String,
   instance_factory: T,
 ) -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
   // No literal constructor for HeaderMap, so have to allocate them here...
@@ -785,7 +765,7 @@ fn get_query_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Se
     .and(warp::path::end())
     .and(warp::query::<QidoQueryParameters>())
     .and(query_param_to_search_terms())
-    .and(with_db(sqlfile.clone()))
+    .and(with_db(sqlfile))
     // So many clones...
     .and(with_instance_factory(instance_factory.clone()))
     .and_then(
@@ -811,7 +791,7 @@ fn get_query_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Se
     .and(warp::path::end())
     .and(warp::query::<QidoQueryParameters>())
     .and(query_param_to_search_terms())
-    .and(with_db(sqlfile.clone()))
+    .and(with_db(sqlfile))
     .and(with_instance_factory(instance_factory.clone()))
     .and_then(
       |qido_params: QidoQueryParameters,
@@ -833,7 +813,7 @@ fn get_query_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Se
     .and(warp::path::end())
     .and(warp::query::<QidoQueryParameters>())
     .and(query_param_to_search_terms())
-    .and(with_db(sqlfile.clone()))
+    .and(with_db(sqlfile))
     .and(with_instance_factory(instance_factory.clone()))
     .and_then(
       |qido_params: QidoQueryParameters,
@@ -857,7 +837,7 @@ fn get_query_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Se
     .and(warp::path::end())
     .and(warp::query::<QidoQueryParameters>())
     .and(query_param_to_search_terms())
-    .and(with_db(sqlfile.clone()))
+    .and(with_db(sqlfile))
     .and(with_instance_factory(instance_factory.clone()))
     .and_then(
       |study_uid: String,
@@ -885,7 +865,7 @@ fn get_query_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Se
     .and(warp::path::end())
     .and(warp::query::<QidoQueryParameters>())
     .and(query_param_to_search_terms())
-    .and(with_db(sqlfile.clone()))
+    .and(with_db(sqlfile))
     .and(with_instance_factory(instance_factory.clone()))
     .and_then(
       |study_uid: String,
@@ -918,7 +898,7 @@ fn get_query_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Se
  * https://www.dicomstandard.org/using/dicomweb/retrieve-wado-rs-and-wado-uri/
  */
 fn get_retrieve_api(
-  sqlfile: String,
+  sqlfile: &String,
 ) -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
   // GET {s}/studies/{study} Retrieve entire study
   let studies = warp::path("studies")
@@ -1083,7 +1063,7 @@ fn get_retrieve_api(
 }
 
 fn get_delete_api(
-  sqlfile: String,
+  sqlfile: &String,
 ) -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
   // DELETE   ../studies/{study}  Delete all instances for a specific study.
   let delete_all_instances_from_study = warp::path("studies")
@@ -1122,7 +1102,6 @@ fn get_delete_api(
 // This function receives a `Rejection` and tries to return a custom
 // value, otherwise simply passes the rejection along.
 async fn handle_rejection(err: Rejection) -> Result<impl warp::Reply, Infallible> {
-  println!("handle_rejection !!");
   let code;
   let message: String;
 
@@ -1150,19 +1129,32 @@ async fn handle_rejection(err: Rejection) -> Result<impl warp::Reply, Infallible
   Ok(warp::reply::with_status(message, code))
 }
 
-// If configuration was provided, we check respects the config. If the database
-// does not exists we create it with respect to the provided config.
-// If no configuration was provided, we check the database exists with a
+// If configuration was provided, we check the database respects the config. If
+// the database does not exists we create it with respect to the provided
+// config. If no configuration was provided, we check the database exists with a
 // 'dicom_index' table.
-fn check_db(opt: &Opt) -> Result<(), Box<dyn Error>> {
-  let sqlfile = opt.sqlfile.to_string_lossy().to_string();
-
+fn check_db(opt: &Opt) -> Result<(String, Vec<String>, Connection), Box<dyn Error>> {
+  let connection = Connection::open(&opt.sqlfile)?;
   return match &opt.config {
     Some(filepath) => {
       // Load the config
       let config_file = std::fs::read_to_string(filepath)?;
       let config: config::Config = serde_yaml::from_str(&config_file)?;
-      let connection = Connection::open(&sqlfile)?;
+      let mut indexable_fields = config
+        .indexing
+        .fields
+        .series
+        .into_iter()
+        .chain(
+          config
+            .indexing
+            .fields
+            .studies
+            .into_iter()
+            .chain(config.indexing.fields.instances.into_iter()),
+        )
+        .collect::<Vec<String>>();
+      indexable_fields.push("filepath".to_string());
       if db::query(
         &connection,
         &format!(
@@ -1173,38 +1165,23 @@ fn check_db(opt: &Opt) -> Result<(), Box<dyn Error>> {
       .is_empty()
       {
         // We will create the requested table with the appropriate fields
-        let mut indexable_fields = config
-          .indexing
-          .fields
-          .series
-          .into_iter()
-          .chain(
-            config
-              .indexing
-              .fields
-              .studies
-              .into_iter()
-              .chain(config.indexing.fields.instances.into_iter()),
-          )
-          .collect::<Vec<String>>();
-        indexable_fields.push("filepath".to_string());
         let table = indexable_fields
           .iter()
           .map(|s| s.to_string() + " TEXT NON NULL")
           .collect::<Vec<String>>()
           .join(",");
 
-        connection.execute(&format!(
+        let create_index_table_request = &format!(
           "CREATE TABLE IF NOT EXISTS {} ({});",
           config.table_name, table
-        ))?;
+        );
+        connection.execute(create_index_table_request)?;
       }
-      Ok(())
+      Ok((config.table_name, indexable_fields, connection))
     }
     None => {
       // Check the database exists and that the dicom_index table also exists.
       // If not, we need the config to tell us how to create that table.
-      let connection = Connection::open(&sqlfile)?;
       return if db::query(
         &connection,
         &format!(
@@ -1223,7 +1200,11 @@ fn check_db(opt: &Opt) -> Result<(), Box<dyn Error>> {
           .into(),
         )
       } else {
-        Ok(())
+        Ok((
+          "dicom_index".to_string(),
+          get_indexed_fields(&connection)?,
+          connection,
+        ))
       };
     }
   };
@@ -1333,13 +1314,16 @@ fn capabilities(
   let cache_header =
     warp::reply::with::default_header(warp::http::header::CACHE_CONTROL, "max-age=604800");
 
-  return warp::path::end()
+  let option = warp::path::end()
     // OPTIONS /
     .and(warp::options().and(handlers))
-    .with(cache_header.clone())
-    // GET /
-    .or(warp::get().and(handlers))
+    .with(cache_header.clone());
+  // GET /
+  let get = warp::path::end()
+    .and(warp::get().and(handlers))
     .with(cache_header);
+
+  return option.or(get);
 }
 
 #[tokio::main]
@@ -1348,7 +1332,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
   let opt = Opt::from_args();
 
   // Check the the status of the database and the option are coherent.
-  check_db(&opt)?;
+  let (table_name, indexable_fields, connection) = check_db(&opt)?;
 
   let log = warp::log::custom(|info| {
     eprintln!(
@@ -1372,27 +1356,49 @@ async fn main() -> Result<(), Box<dyn Error>> {
     .and(warp::path("about"))
     .map(move || server_header);
 
-  let sqlfile = opt.sqlfile.to_string_lossy().to_string();
-  let instance_factory = if opt.dcmpath == ":memory:" {
-    FSInstanceFactory::new(&opt.dcmpath)
+  let index_store = SqlIndexStoreWithMutex::new(connection, &table_name, indexable_fields)?;
+  let routes = if opt.dcmpath == ":memory:" {
+    let instance_factory = MemoryInstanceFactory::new();
+    root
+      .or(post_store_api(
+        &opt.sqlfile,
+        instance_factory.clone(),
+        index_store,
+      ))
+      .or(get_query_api(&opt.sqlfile, instance_factory.clone()))
+      .or(get_retrieve_api(&opt.sqlfile))
+      .or(get_delete_api(&opt.sqlfile))
+      .or(capabilities(&APPLICATION))
+      .with(warp::cors().allow_any_origin())
+      .with(warp::reply::with::headers(headers))
+      .with(log)
+      .recover(handle_rejection)
+      .boxed()
   } else {
-    FSInstanceFactory::new(&opt.dcmpath)
+    root
+      .or(post_store_api(
+        &opt.sqlfile,
+        FSInstanceFactory::new(&opt.dcmpath),
+        index_store,
+      ))
+      .or(get_query_api(
+        &opt.sqlfile,
+        FSInstanceFactory::new(&opt.dcmpath),
+      ))
+      .or(get_retrieve_api(&opt.sqlfile))
+      .or(get_delete_api(&opt.sqlfile))
+      .or(capabilities(&APPLICATION))
+      .with(warp::cors().allow_any_origin())
+      .with(warp::reply::with::headers(headers))
+      .with(log)
+      .recover(handle_rejection)
+      .boxed()
   };
-  let routes = root
-    .or(post_store_api(sqlfile.clone(), instance_factory.clone()))
-    .or(get_query_api(sqlfile.clone(), instance_factory.clone()))
-    .or(get_retrieve_api(sqlfile.clone()))
-    .or(get_delete_api(sqlfile.clone()))
-    .or(capabilities(&APPLICATION))
-    .with(warp::cors().allow_any_origin())
-    .with(warp::reply::with::headers(headers))
-    .with(log)
-    .recover(handle_rejection);
 
   let host = opt.host;
   println!(
-    "Serving HTTP on {} port {} (http://{}:{}/) with database {:?} ...",
-    host, opt.port, host, opt.port, &opt.sqlfile
+    "Serving HTTP on {} port {} (http://{}:{}/) with database {} ...",
+    host, opt.port, host, opt.port, opt.sqlfile
   );
   warp::serve(routes)
     .run((IpAddr::from_str(&host)?, opt.port))

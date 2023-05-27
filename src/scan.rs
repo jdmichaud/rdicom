@@ -22,9 +22,8 @@
 #![allow(unused_variables)]
 #![allow(unused_imports)]
 
-use crate::dicom_tags::{MediaStorageSOPClassUID, Modality};
 use serde_yaml;
-use sqlite::Connection;
+use sqlite::{Connection, ConnectionWithFullMutex};
 use std::collections::{HashMap, HashSet};
 use std::error::Error;
 use std::fs::metadata;
@@ -38,11 +37,15 @@ use structopt::StructOpt;
 use walkdir::WalkDir;
 
 use rdicom::dicom_tags;
+use rdicom::dicom_tags::{MediaStorageSOPClassUID, Modality};
 use rdicom::instance::Instance;
 use rdicom::misc::is_dicom_file;
 
 mod config;
 mod db;
+mod index_store;
+
+use index_store::{CsvIndexStore, IndexStore, SqlIndexStore, SqlIndexStoreWithMutex};
 
 const ESC: char = 27u8 as char;
 const MEDIA_STORAGE_DIRECTORY_STORAGE: &str = "1.2.840.10008.1.3.10";
@@ -63,12 +66,16 @@ struct Opt {
   csv_output: Option<PathBuf>,
   /// SQL output file
   #[structopt(long)]
-  sql_output: Option<PathBuf>,
+  sql_output: Option<String>,
   /// Path to a folder containing DICOM assets. Will be scanned recursively.
   input_path: PathBuf,
   /// Log each files being scan on standard output
   #[structopt(short, long)]
   log_files: bool,
+  /// Do not use a transaction on the database during the scan (slower but scan
+  /// can be interrupted)
+  #[structopt(short, long)]
+  no_transaction: bool,
 }
 
 fn path_is_folder(path: &str) -> Result<PathBuf, Box<dyn Error>> {
@@ -89,143 +96,6 @@ fn file_exists(path: &str) -> Result<PathBuf, Box<dyn Error>> {
     Ok(path_buf)
   } else {
     Err(format!("{} does not exists", path).into())
-  }
-}
-
-trait IndexStore {
-  fn write(&mut self, data: &HashMap<String, String>) -> Result<(), Box<dyn Error>>;
-}
-
-#[derive(Debug)]
-struct CsvIndexStore<W: Write> {
-  writer: W,
-  fields: Vec<String>,
-}
-
-impl<W: Write> CsvIndexStore<W> {
-  fn new(mut writer: W, mut fields: Vec<String>) -> Self {
-    fields.push("filepath".to_string());
-    let header = fields
-      .iter()
-      .map(|s| String::from("\"") + s + "\"")
-      .collect::<Vec<String>>()
-      .join(",");
-    writeln!(writer, "").unwrap();
-    CsvIndexStore { writer, fields }
-  }
-}
-
-impl<W: Write> IndexStore for CsvIndexStore<W> {
-  fn write(self: &mut Self, data: &HashMap<String, String>) -> Result<(), Box<dyn Error>> {
-    for field in &self.fields {
-      match write!(
-        self.writer,
-        "\"{}\",",
-        data.get(field).unwrap_or(&"undefined".to_string())
-      ) {
-        Ok(_) => (),
-        Err(e) => return Err(Box::new(e)),
-      }
-    }
-    writeln!(self.writer, "")?;
-    Ok(())
-  }
-}
-
-struct SqlIndexStore {
-  connection: Connection,
-  table_name: String,
-  fields: Vec<String>,
-}
-
-impl SqlIndexStore {
-  fn new(
-    filepath: &str,
-    table_name: &str,
-    mut fields: Vec<String>,
-  ) -> Result<Self, Box<dyn Error>> {
-    fields.push("filepath".to_string());
-    let table = fields
-      .iter()
-      .map(|s| s.to_string() + " TEXT NON NULL")
-      .collect::<Vec<String>>()
-      .join(",");
-    let connection = Connection::open(filepath)?;
-    connection.execute(&format!(
-      "CREATE TABLE IF NOT EXISTS {} ({});",
-      table_name, table
-    ))?;
-    Ok(SqlIndexStore {
-      connection,
-      table_name: String::from(table_name),
-      fields,
-    })
-  }
-}
-
-impl IndexStore for SqlIndexStore {
-  // Look for the entry in the DB, update it if present, create it otherwise. This makes
-  // scan reentrant when using an SQL store.
-  fn write(self: &mut Self, data: &HashMap<String, String>) -> Result<(), Box<dyn Error>> {
-    // Check if the UIDs are not already present in the database
-    let uid_fields = self
-      .fields
-      .iter()
-      .filter(|f| f.to_uppercase().ends_with("UID"));
-    let constraints = uid_fields
-      .map(|f| {
-        format!(
-          "{}=\"{}\"",
-          f,
-          data.get(f).unwrap_or(&"undefined".to_string())
-        )
-      })
-      .collect::<Vec<String>>()
-      .join(" AND ");
-    let already_present = db::query(
-      &self.connection,
-      &format!("SELECT * FROM {} WHERE {};", self.table_name, constraints),
-    )?
-    .len()
-      > 0;
-
-    if already_present {
-      // The entry already exists, update it
-      let sets = self
-        .fields
-        .iter()
-        .map(|f| {
-          format!(
-            "{}=\"{}\"",
-            f,
-            data.get(f).unwrap_or(&"undefined".to_string())
-          )
-        })
-        .collect::<Vec<String>>()
-        .join(",");
-      let query = &format!(
-        "UPDATE {} SET {} WHERE {};",
-        self.table_name, sets, constraints
-      );
-      self.connection.execute(query)?;
-    } else {
-      // No entry, create a new one
-      let values: Vec<_> = self
-        .fields
-        .iter()
-        .map(|x| data.get(x).unwrap_or(&"undefined".to_owned()).clone())
-        .map(|x| format!("\"{}\"", x))
-        .collect::<Vec<String>>();
-      let column_names = self.fields.join(",");
-      let query = &format!(
-        "INSERT INTO {} ({}) VALUES ({});",
-        self.table_name,
-        column_names,
-        values.join(",")
-      );
-      self.connection.execute(query)?;
-    }
-    Ok(())
   }
 }
 
@@ -251,20 +121,23 @@ fn main() -> Result<(), Box<dyn Error>> {
     )
     .collect::<Vec<String>>();
   // Create an index store depending on the options
-  let mut index_store = if let Some(sql_output) = opt.sql_output {
-    let filepath = &sql_output.to_string_lossy().to_string();
+  let mut index_store: Box<dyn IndexStore> = if let Some(sql_output) = opt.sql_output {
+    let connection = Connection::open(sql_output)?;
     Box::new(SqlIndexStore::new(
-      filepath,
+      connection,
       &config.table_name,
-      indexable_fields.to_vec(),
-    )?) as Box<dyn IndexStore>
+      [indexable_fields.clone(), vec!["filepath".to_string()]].concat(),
+    )?)
   } else {
-    let writer = if let Some(csv_output) = opt.csv_output {
-      Box::new(File::create(csv_output)?) as Box<dyn Write>
+    let writer: Box<dyn Write> = if let Some(csv_output) = opt.csv_output {
+      Box::new(File::create(csv_output)?)
     } else {
-      Box::new(io::stdout()) as Box<dyn Write>
+      Box::new(io::stdout())
     };
-    Box::new(CsvIndexStore::new(writer, indexable_fields.to_vec())) as Box<dyn IndexStore>
+    Box::new(CsvIndexStore::new(
+      writer,
+      [indexable_fields.clone(), vec!["filepath".to_string()]].concat(),
+    ))
   };
   // There sets will be used for a fancy display
   let mut count = 0;
@@ -273,6 +146,9 @@ fn main() -> Result<(), Box<dyn Error>> {
   let mut series_set: HashSet<String> = HashSet::new();
   let mut modality_set: HashSet<String> = HashSet::new();
   let path_prefix = opt.input_path.clone();
+  if !opt.no_transaction {
+    index_store.begin_transaction()?;
+  }
   // Walk all the files in the provided input folder
   for result in WalkDir::new(opt.input_path) {
     let entry = result?;
@@ -361,6 +237,9 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
       }
     }
+  }
+  if !opt.no_transaction {
+    index_store.end_transaction()?;
   }
 
   println!("{} files scanned with {} studies and {} series found with following modalities {:?} and {} errors      ",

@@ -1,5 +1,5 @@
-use crate::HashMap;
 use sqlite::{Connection, State};
+use std::collections::HashMap;
 use std::error::Error;
 
 // Performs an arbitrary query on the connection

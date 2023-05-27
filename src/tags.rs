@@ -39,3 +39,9 @@ impl hash::Hash for Tag {
     self.element.hash(state);
   }
 }
+
+impl ToString for Tag {
+  fn to_string(&self) -> String {
+    format!("{:04x}{:04x}", self.group, self.element)
+  }
+}

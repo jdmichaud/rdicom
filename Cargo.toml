@@ -52,7 +52,7 @@ serde = { version = "1.0.157", features = ["derive"] }
 serde_yaml = { version = "0.9.19" }
 serde_json = "1.0.94"
 quick-xml = { version = "0.28.1", features = ["serialize"] }
-sqlite = "0.30.3"
+sqlite = "0.30.4"
 # sqlite3-src is a transitive dependency of sqlite but we need to add the
 # bundled feature so that sqlite library is statically linked in our binaries.
 # https://stackoverflow.com/a/57782994/2603925
