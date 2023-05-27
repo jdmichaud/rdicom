@@ -61,12 +61,14 @@ warp = { version = "0.3.3" }
 tokio = { version = "1", features = ["full"] }
 once_cell = "1.17.1"
 base64 = "0.21.0"
+log = "0.4.17"
+simplelog = "0.12.1"
 
 [features]
 # dump = ["dep:structopt"]
 # scan = ["dep:structopt", "dep:walkdir", "dep:serde", "dep:serde_yaml", "dep:sqlite"]
 # test = ["dep:structopt"]
-# serve = ["dep:structopt", "dep:serde", "dep:serde_yaml", "dep:sqlite", "dep:warp", "dep:tokio"]
+# serve = ["dep:structopt", "dep:serde", "dep:serde_yaml", "dep:sqlite", "dep:warp", "dep:tokio", "dep:log", "dep:simplelog"]
 
 [profile.release] # A profile to try to minimize the size
 panic = "abort" # Abort on Panic

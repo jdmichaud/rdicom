@@ -21,8 +21,10 @@
 #![allow(unused_variables)]
 #![allow(dead_code)]
 
-use std::path::Path;
-use crate::index_store::IndexStore;
+#[macro_use]
+extern crate log;
+extern crate simplelog;
+
 use once_cell::sync::Lazy;
 use rdicom::dicom_representation::{json2dcm, DicomAttributeJson};
 use rdicom::error::DicomError;
@@ -30,6 +32,10 @@ use serde::ser::SerializeMap;
 use serde::Serializer;
 use serde::{de, Deserialize, Deserializer, Serialize};
 use serde_json;
+use simplelog::{
+  ColorChoice, CombinedLogger, Config, LevelFilter, SharedLogger, TermLogger, TerminalMode,
+  WriteLogger,
+};
 use sqlite::Connection;
 use std::collections::BTreeMap;
 use std::collections::HashMap;
@@ -49,9 +55,10 @@ use warp::http::header::{HeaderMap, HeaderValue, CONTENT_TYPE};
 use warp::http::Response;
 use warp::{reject, Filter, Rejection};
 
+use crate::index_store::IndexStore;
+use rdicom::dicom_tags;
 use rdicom::instance::Instance;
 use rdicom::tags::Tag;
-use rdicom::dicom_tags;
 
 mod config;
 mod db;
@@ -121,6 +128,12 @@ struct Opt {
   /// DICOM files root path (root path provided to the scan tool)
   #[structopt(short = "d", long)]
   dcmpath: String,
+  /// Add some logs on the console
+  #[structopt(short, long)]
+  verbose: bool,
+  /// Log file path. No logs if not specified
+  #[structopt(short, long)]
+  logfile: Option<String>,
 }
 
 #[derive(Debug)]
@@ -167,7 +180,9 @@ enum HttpErrorPayload {
     column: usize,
     error: String,
   },
-  SimpleErrorPayload { error: String },
+  SimpleErrorPayload {
+    error: String,
+  },
 }
 
 #[derive(Debug)]
@@ -180,7 +195,9 @@ impl HttpError {
   pub fn new(status: u16, msg: &str) -> HttpError {
     HttpError {
       status,
-      payload: HttpErrorPayload::SimpleErrorPayload { error: msg.to_string() },
+      payload: HttpErrorPayload::SimpleErrorPayload {
+        error: msg.to_string(),
+      },
     }
   }
 
@@ -198,14 +215,16 @@ impl HttpError {
         line: error.line(),
         column: error.column(),
         error: format!("{}", error),
-      }
+      },
     }
   }
 
   pub fn from_error(status: u16, error: &impl Error) -> HttpError {
     HttpError {
       status,
-      payload: HttpErrorPayload::SimpleErrorPayload { error: error.to_string() },
+      payload: HttpErrorPayload::SimpleErrorPayload {
+        error: error.to_string(),
+      },
     }
   }
 }
@@ -506,6 +525,7 @@ impl InstanceFactory<BufReader<File>, BufWriter<File>> for FSInstanceFactory {
   fn get_writer(&self, path: &str) -> Result<BufWriter<File>, DicomError> {
     let path = std::path::Path::new(&self.dcmpath).join(std::path::Path::new(path));
     if path.exists() {
+      error!("{:?} file already exists, cannot overwrite file", path);
       Err(DicomError::new("File already exists"))
     } else {
       let f = File::create(&*path.to_string_lossy())?;
@@ -679,8 +699,7 @@ fn with_index_store(
 }
 
 fn dicom_attribute_json_to_string(attribute: &DicomAttributeJson) -> String {
-  String::try_from(attribute.payload.clone().unwrap())
-    .unwrap_or("undefined".to_string())
+  String::try_from(attribute.payload.clone().unwrap()).unwrap_or("undefined".to_string())
 }
 
 fn do_store<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Send>(
@@ -695,31 +714,63 @@ fn do_store<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Send>(
   let accept = get_accept_format(
     &accept_header,
     &["application/dicom+json", "application/json"],
-  ).map_err(|e| HttpError::new(406, &e.details))?;
+  )
+  .map_err(|e| HttpError::new(406, &e.details))?;
   match accept.format.as_str() {
     "application/dicom+json" | "application/json" => {
-      let body: String = from_utf8(body.to_vec().as_slice()).map(str::to_string)
-        .map_err(|e| HttpError::new(400, &format!("utf-8 error. Message valid up to {} byte", e.valid_up_to())))?;
+      let body: String = from_utf8(body.to_vec().as_slice())
+        .map(str::to_string)
+        .map_err(|e| {
+          HttpError::new(
+            400,
+            &format!("utf-8 error. Message valid up to {} byte", e.valid_up_to()),
+          )
+        })?;
       let dataset = serde_json::from_str::<BTreeMap<String, DicomAttributeJson>>(&body)
         .map_err(|e| HttpError::from_json_error(400, e))?;
       let sop_instance_uid = String::try_from(
-        dataset.get(&dicom_tags::SOPInstanceUID.to_string()).unwrap().payload.clone().unwrap()
-      ).map_err(|e| HttpError::new(400, &e.details))?;
+        dataset
+          .get(&dicom_tags::SOPInstanceUID.to_string())
+          .unwrap()
+          .payload
+          .clone()
+          .unwrap(),
+      )
+      .map_err(|e| HttpError::new(400, &e.details))?;
       let filename = &format!("{}.dcm", sop_instance_uid);
-      let mut writer = instance_factory.get_writer(filename)
-        .map_err(|e| HttpError::new(500, &e.details))?;
+      let mut writer = instance_factory.get_writer(filename).map_err(|e| {
+        warn!("Could not get a writer for {}: {}", filename, e);
+        HttpError::new(500, &e.details)
+      })?;
       // Write the file
-      json2dcm::json2dcm(&mut writer, &dataset)
-        .map_err(|e| HttpError::new(500, &format!("{}", e.details)))?;
+      json2dcm::json2dcm(&mut writer, &dataset).map_err(|e| {
+        warn!(
+          "Error while streaming the dicom file to {}: {}",
+          filename, e
+        );
+        HttpError::new(500, &format!("{}", e.details))
+      })?;
       // Update the index
-      let mut data: HashMap<String, String> = dataset.iter()
-        .map(|(k, v)| (Tag::try_from(k).unwrap().name.to_string(), dicom_attribute_json_to_string(v)))
+      let mut data: HashMap<String, String> = dataset
+        .iter()
+        .map(|(k, v)| {
+          (
+            Tag::try_from(k).unwrap().name.to_string(),
+            dicom_attribute_json_to_string(v),
+          )
+        })
         .collect();
       data.insert("filepath".to_string(), filename.to_string());
-      index_store.write(&data).map_err(|e| HttpError::new(500, &format!("{}", e)))?;
+      index_store.write(&data).map_err(|e| {
+        warn!(
+          "Error while updating the index file to the DB for {}: {}",
+          filename, e
+        );
+        HttpError::new(500, &format!("{}", e))
+      })?;
       Ok(())
     }
-    _ => Err(HttpError::new(500, "Unhandled Content-Type")),
+    _ => Err(HttpError::new(406, "Unhandled Content-Type")),
   }
 }
 
@@ -1168,7 +1219,7 @@ async fn handle_rejection(err: Rejection) -> Result<impl warp::Reply, Infallible
     message = format!("unhandled rejection: {:?}", err);
   }
 
-  eprintln!("error: {:?}", err);
+  error!("{:?}", err);
   Ok(warp::reply::with_status(message, code))
 }
 
@@ -1243,7 +1294,11 @@ fn check_db(opt: &Opt) -> Result<(String, Vec<String>, Connection), Box<dyn Erro
           .into(),
         )
       } else {
-        Ok(("dicom_index".to_string(), get_indexed_fields(&connection)?, connection))
+        Ok((
+          "dicom_index".to_string(),
+          get_indexed_fields(&connection)?,
+          connection,
+        ))
       };
     }
   };
@@ -1343,9 +1398,12 @@ fn capabilities(
           ),
         _ => unreachable!(),
       },
-      Err(e) => Response::builder()
-        .status(warp::http::StatusCode::NOT_IMPLEMENTED)
-        .body(e.details),
+      Err(e) => {
+        warn!("Accept header format {:?} not accepted", accept_header);
+        return Response::builder()
+          .status(warp::http::StatusCode::NOT_IMPLEMENTED)
+          .body(e.details);
+      }
     }
   });
 
@@ -1369,6 +1427,24 @@ fn capabilities(
 async fn main() -> Result<(), Box<dyn Error>> {
   // Retrieve options
   let opt = Opt::from_args();
+
+  let mut logconfig: Vec<Box<(dyn SharedLogger + 'static)>> = vec![];
+  if opt.verbose {
+    logconfig.push(TermLogger::new(
+      LevelFilter::Warn,
+      Config::default(),
+      TerminalMode::Mixed,
+      ColorChoice::Auto,
+    ));
+  }
+  if let Some(logfile) = opt.logfile.clone() {
+    logconfig.push(WriteLogger::new(
+      LevelFilter::Trace,
+      Config::default(),
+      File::create(logfile)?,
+    ));
+  }
+  CombinedLogger::init(logconfig)?;
 
   // Check the the status of the database and the option are coherent.
   let (table_name, indexable_fields, connection) = check_db(&opt)?;
@@ -1395,12 +1471,15 @@ async fn main() -> Result<(), Box<dyn Error>> {
     .and(warp::path("about"))
     .map(move || server_header);
 
-  let index_store =
-    SqlIndexStoreWithMutex::new(connection, &table_name, indexable_fields)?;
+  let index_store = SqlIndexStoreWithMutex::new(connection, &table_name, indexable_fields)?;
   let routes = if opt.dcmpath == ":memory:" {
     let instance_factory = MemoryInstanceFactory::new();
     root
-      .or(post_store_api(&opt.sqlfile, instance_factory.clone(), index_store))
+      .or(post_store_api(
+        &opt.sqlfile,
+        instance_factory.clone(),
+        index_store,
+      ))
       .or(get_query_api(&opt.sqlfile, instance_factory.clone()))
       .or(get_retrieve_api(&opt.sqlfile))
       .or(get_delete_api(&opt.sqlfile))
@@ -1417,7 +1496,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
         FSInstanceFactory::new(&opt.dcmpath),
         index_store,
       ))
-      .or(get_query_api(&opt.sqlfile, FSInstanceFactory::new(&opt.dcmpath)))
+      .or(get_query_api(
+        &opt.sqlfile,
+        FSInstanceFactory::new(&opt.dcmpath),
+      ))
       .or(get_retrieve_api(&opt.sqlfile))
       .or(get_delete_api(&opt.sqlfile))
       .or(capabilities(&APPLICATION))
@@ -1430,6 +1512,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
   let host = opt.host;
   println!(
+    "Serving HTTP on {} port {} (http://{}:{}/) with database {} ...",
+    host, opt.port, host, opt.port, opt.sqlfile
+  );
+  info!(
     "Serving HTTP on {} port {} (http://{}:{}/) with database {} ...",
     host, opt.port, host, opt.port, opt.sqlfile
   );
