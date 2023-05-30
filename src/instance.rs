@@ -173,7 +173,7 @@ fn to_string_array(
   vr: &str,
   offset: usize,
   length: usize,
-  buffer: &Vec<u8>,
+  buffer: &[u8],
 ) -> Result<Vec<String>, DicomError> {
   Ok(
     from_utf8(&buffer[offset..offset + length])
@@ -190,7 +190,7 @@ fn to_string(
   vr: &str,
   offset: usize,
   length: usize,
-  buffer: &Vec<u8>,
+  buffer: &[u8],
 ) -> Result<String, DicomError> {
   Ok(
     from_utf8(&buffer[offset..offset + length])
@@ -248,7 +248,7 @@ impl<'a> DicomValue<'a> {
     vr: &str,
     offset: usize,
     length: usize,
-    buffer: &'b Vec<u8>,
+    buffer: &'b[u8],
   ) -> Result<DicomValue<'b>, DicomError> {
     Ok(match vr {
       "AE" => DicomValue::AE(to_string_array(vr, offset, length, buffer)?),
@@ -473,7 +473,7 @@ impl Instance {
 
       // Recursively parse SQ elements
       if field.vr == "SQ" {
-        if let Ok(Some(subfield)) = self.get_value_sq(tag, &field) {
+        if let Ok(Some(subfield)) = Instance::get_value_sq(tag, &field) {
           break Ok(Some(DicomValue::from_dicom_attribute(&subfield, self)?));
         }
       }
@@ -491,7 +491,7 @@ impl Instance {
   }
 
   fn get_value_sq<'a>(
-    &'a self,
+    // &'a self,
     tag: &Tag,
     attr: &DicomAttribute<'a>,
   ) -> Result<Option<DicomAttribute<'a>>, DicomError> {
@@ -499,26 +499,14 @@ impl Instance {
       "SQ" => attr
         .subattributes
         .iter()
-        .map(|subattr| self.get_value_sq(tag, subattr))
-        .find(|result| {
-          if let Ok(Some(value)) = result {
-            true
-          } else {
-            false
-          }
-        })
+        .map(|subattr| Instance::get_value_sq(tag, subattr))
+        .find(|result| matches!(result, Ok(Some(value))))
         .unwrap_or(Ok(None)),
       _ if attr.group == Item.group && attr.element == Item.element => attr
         .subattributes
         .iter()
-        .map(|subattr| self.get_value_sq(tag, subattr))
-        .find(|result| {
-          if let Ok(Some(value)) = result {
-            true
-          } else {
-            false
-          }
-        })
+        .map(|subattr| Instance::get_value_sq(tag, subattr))
+        .find(|result| matches!(result, Ok(Some(value))))
         .unwrap_or(Ok(None)),
       // TODO: I don't like that clone but not sure how to get rid of it for now
       _ if attr.group == tag.group && attr.element == tag.element => Ok(Some(attr.clone())),

@@ -80,7 +80,7 @@ impl<W: Write> IndexStore for CsvIndexStore<W> {
 fn write_data(
   connection: &Connection,
   table_name: &String,
-  fields: &Vec<String>,
+  fields: &[String],
   data: &HashMap<String, String>,
 ) -> Result<(), Box<dyn Error>> {
   // Check if the UIDs are not already present in the database
@@ -143,7 +143,7 @@ pub struct SqlIndexStore {
 pub fn prepare_db(
   connection: &Connection,
   table_name: &str,
-  fields: &Vec<String>,
+  fields: &[String],
 ) -> Result<(), Box<dyn Error>> {
   let table = fields
     .iter()
@@ -199,9 +199,9 @@ impl SqlIndexStoreWithMutex {
   pub fn new(
     connection: Connection,
     table_name: &str,
-    mut fields: Vec<String>,
+    fields: Vec<String>,
   ) -> Result<Self, Box<dyn Error>> {
-    prepare_db(&connection, table_name, &mut fields)?;
+    prepare_db(&connection, table_name, &fields)?;
     Ok(SqlIndexStoreWithMutex {
       connection: Arc::new(Mutex::new(connection)),
       table_name: String::from(table_name),

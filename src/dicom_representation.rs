@@ -590,10 +590,10 @@ pub mod json2dcm {
     let data_length = data.len();
     // length must be even so if odd, pad with 0
     let pad_length = if data_length % 2 == 0 { 0 } else { 1 };
-    writer.write(&((data_length + pad_length) as u16).to_le_bytes())?;
-    writer.write(data)?;
+    writer.write_all(&((data_length + pad_length) as u16).to_le_bytes())?;
+    writer.write_all(data)?;
     if pad_length == 1 {
-      writer.write(&[padchar])?;
+      writer.write_all(&[padchar])?;
     }
     Ok(data_length + pad_length)
   }
@@ -605,11 +605,11 @@ pub mod json2dcm {
     let data_length = data.len();
     // length must be even so if odd, pad with 0
     let pad_length = if data_length % 2 == 0 { 0 } else { 1 };
-    writer.write(&[0, 0])?;
-    writer.write(&((data_length + pad_length) as u32).to_le_bytes())?;
-    writer.write(data)?;
+    writer.write_all(&[0, 0])?;
+    writer.write_all(&((data_length + pad_length) as u32).to_le_bytes())?;
+    writer.write_all(data)?;
     if pad_length == 1 {
-      writer.write(&[0])?;
+      writer.write_all(&[0])?;
     }
     Ok(data_length + pad_length)
   }
@@ -625,7 +625,7 @@ pub mod json2dcm {
     // TODO: Isn't there a better looking way?
     let vr: &[u8] = <ValueRepresentation as Into<&str>>::into(dicom_attribute.vr).as_bytes();
     let mut length: usize = 6;
-    writer.write(&[group_l, group_h, element_l, element_h, vr[0], vr[1]])?;
+    writer.write_all(&[group_l, group_h, element_l, element_h, vr[0], vr[1]])?;
 
     // https://dicom.nema.org/dicom/2013/output/chtml/part05/chapter_7.html#sect_7.1.2
     if let Some(payload) = dicom_attribute.payload {
@@ -662,11 +662,11 @@ pub mod json2dcm {
                 }
               }
               // item tag
-              items_buffer_writer.write(&[0xFE, 0xFF, 0x00, 0xE0])?;
+              items_buffer_writer.write_all(&[0xFE, 0xFF, 0x00, 0xE0])?;
               // item length on 4 bytes
-              items_buffer_writer.write(&subfields_written.to_le_bytes())?;
+              items_buffer_writer.write_all(&subfields_written.to_le_bytes())?;
               // subfileds data
-              items_buffer_writer.write(subfields_buffer.as_slice())?;
+              items_buffer_writer.write_all(subfields_buffer.as_slice())?;
             }
           }
           length += 6 + write_even_32(writer, items_buffer.as_slice())?;
@@ -712,37 +712,37 @@ pub mod json2dcm {
         }
         ValueRepresentation::UL => {
           let value: u32 = payload.try_into()?;
-          writer.write(&(std::mem::size_of_val(&value) as u16).to_le_bytes())?;
-          writer.write(&(value.to_le_bytes()))?;
+          writer.write_all(&(std::mem::size_of_val(&value) as u16).to_le_bytes())?;
+          writer.write_all(&(value.to_le_bytes()))?;
           length += 2 + std::mem::size_of_val(&value);
         }
         ValueRepresentation::SS => {
           let value: i16 = payload.try_into()?;
-          writer.write(&(std::mem::size_of_val(&value) as u16).to_le_bytes())?;
-          writer.write(&value.to_le_bytes())?;
+          writer.write_all(&(std::mem::size_of_val(&value) as u16).to_le_bytes())?;
+          writer.write_all(&value.to_le_bytes())?;
           length += 2 + std::mem::size_of_val(&value);
         }
         ValueRepresentation::US => {
           let value: u16 = payload.try_into()?;
-          writer.write(&(std::mem::size_of_val(&value) as u16).to_le_bytes())?;
-          writer.write(&value.to_le_bytes())?;
+          writer.write_all(&(std::mem::size_of_val(&value) as u16).to_le_bytes())?;
+          writer.write_all(&value.to_le_bytes())?;
           length += 2 + std::mem::size_of_val(&value);
         }
         ValueRepresentation::FL => {
           let value: Vec<f32> = payload.try_into()?;
           let data_length = std::mem::size_of_val(&value[0]) * value.len();
-          writer.write(&(data_length as u16).to_le_bytes())?;
+          writer.write_all(&(data_length as u16).to_le_bytes())?;
           for v in value {
-            writer.write(&v.to_le_bytes())?;
+            writer.write_all(&v.to_le_bytes())?;
           }
           length += 2 + data_length;
         }
         ValueRepresentation::FD => {
           let value: Vec<f64> = payload.try_into()?;
           let data_length = std::mem::size_of_val(&value[0]) * value.len();
-          writer.write(&(data_length as u16).to_le_bytes())?;
+          writer.write_all(&(data_length as u16).to_le_bytes())?;
           for v in value {
-            writer.write(&v.to_le_bytes())?;
+            writer.write_all(&v.to_le_bytes())?;
           }
           length += 2 + data_length;
         }
@@ -764,11 +764,11 @@ pub mod json2dcm {
         | ValueRepresentation::SQ
         | ValueRepresentation::UT
         | ValueRepresentation::UN => {
-          writer.write(&[0, 0, 0, 0, 0, 0])?;
+          writer.write_all(&[0, 0, 0, 0, 0, 0])?;
           length += 6;
         }
         _ => {
-          writer.write(&[0, 0])?;
+          writer.write_all(&[0, 0])?;
           length += 2;
         }
       }
@@ -788,8 +788,8 @@ pub mod json2dcm {
     json: &BTreeMap<String, DicomAttributeJson>,
   ) -> Result<(), DicomError> {
     // Write the DICOM header
-    writer.write(&[0; 0x80])?;
-    writer.write(&[b'D', b'I', b'C', b'M'])?;
+    writer.write_all(&[0; 0x80])?;
+    writer.write_all(&[b'D', b'I', b'C', b'M'])?;
     // Write the meta-information header
     let mut meta_info_header: Vec<u8> = Vec::<u8>::new();
     {
@@ -872,7 +872,7 @@ pub mod json2dcm {
       )?;
     }
     // Write the other meta information
-    writer.write(meta_info_header.as_slice())?;
+    writer.write_all(meta_info_header.as_slice())?;
     // Write the rest of the dicom attributes
     for (tag, attribute) in json.iter() {
       serialize(

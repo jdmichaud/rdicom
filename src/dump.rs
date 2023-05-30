@@ -60,7 +60,7 @@ struct Data<'a> {
   level: usize,
 }
 
-fn get_tag_sequence<'b, 'a>(
+fn get_tag_sequence<'a>(
   instance: &'a Instance,
   field: &DicomAttribute<'a>,
   level: usize,

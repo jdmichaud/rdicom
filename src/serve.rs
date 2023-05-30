@@ -456,7 +456,7 @@ fn map_to_entry(tag_map: &HashMap<String, String>) -> String {
 fn create_where_clause(
   params: &QidoQueryParameters,
   search_terms: &HashMap<Tag, String>,
-  indexed_fields: &Vec<String>,
+  indexed_fields: &[String],
 ) -> String {
   // limit
   // offset
@@ -536,7 +536,7 @@ impl InstanceFactory<BufReader<File>, BufWriter<File>> for FSInstanceFactory {
 
 #[derive(Clone)]
 struct MemoryInstanceFactory {
-  files: Box<HashMap<String, String>>,
+  files: HashMap<String, String>,
 }
 
 unsafe impl Sync for MemoryInstanceFactory {}
@@ -545,7 +545,7 @@ unsafe impl Send for MemoryInstanceFactory {}
 impl MemoryInstanceFactory {
   fn new() -> MemoryInstanceFactory {
     MemoryInstanceFactory {
-      files: Box::<HashMap<String, String>>::default(),
+      files: HashMap::<String, String>::new(),
     }
   }
 }
@@ -592,15 +592,15 @@ fn get_entries<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
       .collect::<_>();
     // println!("fields_to_fetch {:?}", fields_to_fetch);
     if !fields_to_fetch.is_empty() {
-      for i in 0..entries.len() {
-        if let Some(rfilepath) = entries[i].get("filepath") {
+      for item in &mut entries {
+        if let Some(rfilepath) = item.get("filepath") {
           let reader = instance_factory.get_reader(rfilepath)?;
           let instance = Instance::from_reader(reader)?;
           // Go through those missing fields from the index and enrich the data from the index
           for field in &fields_to_fetch {
             if let Some(field_value) = instance.get_value(&field.try_into()?)? {
               // TODO: Manage nested fields
-              entries[i].insert(field.to_string(), field_value.to_string());
+              item.insert(field.to_string(), field_value.to_string());
             }
           }
         }
@@ -667,7 +667,7 @@ fn get_instance(ui: &str) -> HashMap<String, String> {
   HashMap::from([(String::from("link"), ui.to_string())])
 }
 
-fn generate_json_response(data: &Vec<HashMap<String, String>>) -> String {
+fn generate_json_response(data: &[HashMap<String, String>]) -> String {
   format!(
     "[{}]",
     data
@@ -679,7 +679,7 @@ fn generate_json_response(data: &Vec<HashMap<String, String>>) -> String {
 }
 
 fn with_db<'a>(
-  sqlfile: &String,
+  sqlfile: &str,
 ) -> impl Filter<Extract = (Connection,), Error = Infallible> + Clone + 'a {
   let sqlpath = PathBuf::from_str(sqlfile).unwrap();
   warp::any().map(move || Connection::open(&sqlpath).unwrap())
@@ -783,7 +783,7 @@ struct RDicomRejection {
 impl reject::Reject for RDicomRejection {}
 
 fn post_store_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Send>(
-  sqlfile: &String,
+  sqlfile: &str,
   instance_factory: T,
   index_store: SqlIndexStoreWithMutex,
 ) -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
@@ -843,7 +843,7 @@ fn post_store_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + S
  * https://www.dicomstandard.org/using/dicomweb/query-qido-rs/
  */
 fn get_query_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Send>(
-  sqlfile: &String,
+  sqlfile: &str,
   instance_factory: T,
 ) -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
   // No literal constructor for HeaderMap, so have to allocate them here...
@@ -991,7 +991,7 @@ fn get_query_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Se
  * https://www.dicomstandard.org/using/dicomweb/retrieve-wado-rs-and-wado-uri/
  */
 fn get_retrieve_api(
-  sqlfile: &String,
+  sqlfile: &str,
 ) -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
   // GET {s}/studies/{study} Retrieve entire study
   let studies = warp::path("studies")
@@ -1156,7 +1156,7 @@ fn get_retrieve_api(
 }
 
 fn get_delete_api(
-  sqlfile: &String,
+  sqlfile: &str,
 ) -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
   // DELETE   ../studies/{study}  Delete all instances for a specific study.
   let delete_all_instances_from_study = warp::path("studies")
