@@ -662,6 +662,7 @@ dependencies = [
 name = "rdicom"
 version = "0.1.0"
 dependencies = [
+ "atty",
  "base64 0.21.0",
  "log",
  "once_cell",

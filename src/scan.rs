@@ -23,6 +23,7 @@
 #![allow(unused_imports)]
 
 use serde_yaml;
+use atty::Stream;
 use sqlite::{Connection, ConnectionWithFullMutex};
 use std::collections::{HashMap, HashSet};
 use std::error::Error;
@@ -102,6 +103,8 @@ fn file_exists(path: &str) -> Result<PathBuf, Box<dyn Error>> {
 fn main() -> Result<(), Box<dyn Error>> {
   // Retrieve options
   let opt = Opt::from_args();
+  // Are we on a terminal
+  let on_a_tty = atty::is(Stream::Stdout);
   // Load the config
   let config_file = std::fs::read_to_string(&opt.config)?;
   let config: config::Config = serde_yaml::from_str(&config_file)?;
@@ -212,17 +215,19 @@ fn main() -> Result<(), Box<dyn Error>> {
                   if let Ok(Some(modality)) = instance.get_value(&Modality) {
                     modality_set.insert(modality.to_string().clone());
                   }
-                  let wheel = "-\\|/";
-                  let w = wheel.as_bytes()[count / 10 % 4] as char;
-                  print!(
-                    "{} [{}] files scanned with [{}] studies and [{}] series found and [{}] errors\r",
-                    w,
-                    count,
-                    study_set.len(),
-                    series_set.len(),
-                    error_count
-                  );
-                  io::stdout().flush()?;
+                  if on_a_tty {
+                    let wheel = "-\\|/";
+                    let w = wheel.as_bytes()[count / 10 % 4] as char;
+                    print!(
+                      "{} [{}] files scanned with [{}] studies and [{}] series found and [{}] errors\r",
+                      w,
+                      count,
+                      study_set.len(),
+                      series_set.len(),
+                      error_count
+                    );
+                    io::stdout().flush()?;
+                  }
                 }
               }
               _ => (),
