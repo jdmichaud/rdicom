@@ -23,5 +23,5 @@ pub fn query(
     result.push(entries);
   }
 
-  return Ok(result);
+  Ok(result)
 }

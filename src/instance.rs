@@ -111,63 +111,57 @@ impl<'a> ToString for DicomValue<'a> {
       | DicomValue::SH(value)
       | DicomValue::ST(value)
       | DicomValue::TM(value)
-      | DicomValue::UT(value) => format!("{}", value.join("\\")),
-      DicomValue::DS(value) => format!("{}", value.join("\\")),
-      DicomValue::DT(value) => format!("{}", value.join("\\")),
-      DicomValue::FD(value) => format!(
-        "{}",
-        value
+      | DicomValue::UT(value) => value.join("\\"),
+      DicomValue::DS(value) => value.join("\\"),
+      DicomValue::DT(value) => value.join("\\"),
+      DicomValue::FD(value) => value
           .iter()
           .map(|f| f.to_string())
           .collect::<Vec<_>>()
-          .join("\\")
-      ),
-      DicomValue::FL(value) => format!(
-        "{}",
-        value
+          .join("\\"),
+      DicomValue::FL(value) => value
           .iter()
           .map(|f| f.to_string())
           .collect::<Vec<_>>()
-          .join("\\")
-      ),
+          .join("\\"),
       DicomValue::UN(value) | DicomValue::OB(value) => {
         let mut result = String::with_capacity(40);
-        let mut it = (*value).into_iter().peekable();
+        let mut it = (*value).iter().peekable();
         while let Some(n) = it.next() {
           result.push_str(&format!("{:02x}", n));
           if result.len() >= 64 {
             result.replace_range(64.., "...");
             break;
           }
-          if !it.peek().is_none() {
-            result.push_str("\\");
+          if it.peek().is_some() {
+            result.push('\\');
           }
         }
         result
       }
       DicomValue::OW(value) => {
         let mut result = String::with_capacity(40);
-        let mut it = (*value).into_iter().peekable();
+        let mut it = (*value).iter().peekable();
         while let Some(n) = it.next() {
           result.push_str(&format!("{:04x}", n));
           if result.len() >= 64 {
             result.replace_range(64.., "...");
             break;
           }
-          if !it.peek().is_none() {
-            result.push_str("\\");
+          if it.peek().is_some() {
+            result.push('\\');
           }
         }
         result
       }
-      DicomValue::PN(value) => format!("{}", value.join("\\")),
+      DicomValue::PN(value) => value.join("\\"),
       // DicomValue::SeqEnd,
       // DicomValue::SeqItem,
       // DicomValue::SeqItemEnd,
       DicomValue::SL(value) => format!("{}", value),
       // DicomValue::SQ(value),
       DicomValue::SS(value) => format!("{}", value),
-      DicomValue::UI(value) => format!("{}", value),
+      DicomValue::UI(value) => value.to_string(),
       DicomValue::UL(value) => format!("{}", value),
       DicomValue::US(value) => format!("{}", value),
       _ => unimplemented!("No formatter for {:?}", self),
@@ -175,28 +169,28 @@ impl<'a> ToString for DicomValue<'a> {
   }
 }
 
-fn to_string_array<'b>(
+fn to_string_array(
   vr: &str,
   offset: usize,
   length: usize,
-  buffer: &'b Vec<u8>,
+  buffer: &Vec<u8>,
 ) -> Result<Vec<String>, DicomError> {
   Ok(
     from_utf8(&buffer[offset..offset + length])
       .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
       .trim_matches(char::from(0))
       .trim()
-      .split("\\")
+      .split('\\')
       .map(str::to_string)
       .collect(),
   )
 }
 
-fn to_string<'b>(
+fn to_string(
   vr: &str,
   offset: usize,
   length: usize,
-  buffer: &'b Vec<u8>,
+  buffer: &Vec<u8>,
 ) -> Result<String, DicomError> {
   Ok(
     from_utf8(&buffer[offset..offset + length])
@@ -217,7 +211,7 @@ impl<'a> DicomValue<'a> {
         let values: Result<Vec<_>, _> = attribute
           .subattributes
           .iter()
-          .map(|attribute| DicomValue::from_dicom_attribute(&attribute, instance))
+          .map(|attribute| DicomValue::from_dicom_attribute(attribute, instance))
           .collect::<_>();
         DicomValue::new_sequence(values?)
       }
@@ -226,7 +220,7 @@ impl<'a> DicomValue<'a> {
           let values: Result<Vec<_>, _> = attribute
             .subattributes
             .iter()
-            .map(|attribute| DicomValue::from_dicom_attribute(&attribute, instance))
+            .map(|attribute| DicomValue::from_dicom_attribute(attribute, instance))
             .collect::<_>();
           DicomValue::SeqItem(values?)
         }
@@ -242,11 +236,11 @@ impl<'a> DicomValue<'a> {
     })
   }
 
-  fn new_sequence<'b>(values: Vec<DicomValue<'b>>) -> DicomValue<'b> {
+  fn new_sequence(values: Vec<DicomValue<'_>>) -> DicomValue<'_> {
     DicomValue::SQ(values)
   }
 
-  fn new_sequence_item<'b>(values: Vec<DicomValue<'b>>) -> DicomValue<'b> {
+  fn new_sequence_item(values: Vec<DicomValue<'_>>) -> DicomValue<'_> {
     DicomValue::SeqItem(values)
   }
 
@@ -423,7 +417,7 @@ impl Instance {
    */
   pub fn from_filepath(filepath: &str) -> Result<Self, DicomError> {
     let f = File::open(filepath)?;
-    return Instance::from_buf_reader(BufReader::new(f));
+    Instance::from_buf_reader(BufReader::new(f))
   }
 
   /**
@@ -465,7 +459,7 @@ impl Instance {
    * Recursively parse sequence element.
    * If the tag is not present in the instance, return Ok(None).
    */
-  pub fn get_value<'a>(self: &'a Self, tag: &Tag) -> Result<Option<DicomValue>, DicomError> {
+  pub fn get_value(&self, tag: &Tag) -> Result<Option<DicomValue>, DicomError> {
     // Fast forward the DICOM prefix
     // TODO: Deal with non-comformant DICOM files
     // println!("get_value: {:?}", tag);
@@ -474,13 +468,13 @@ impl Instance {
       // println!("get_value: offset: {:#06x} buffer length: {:#06x}", offset, self.buffer.len());
       let field = self.next_attribute(offset)?;
       if field.group == tag.group && field.element == tag.element {
-        break Ok(Some(DicomValue::from_dicom_attribute(&field, &self)?));
+        break Ok(Some(DicomValue::from_dicom_attribute(&field, self)?));
       }
 
       // Recursively parse SQ elements
       if field.vr == "SQ" {
         if let Ok(Some(subfield)) = self.get_value_sq(tag, &field) {
-          break Ok(Some(DicomValue::from_dicom_attribute(&subfield, &self)?));
+          break Ok(Some(DicomValue::from_dicom_attribute(&subfield, self)?));
         }
       }
 
@@ -497,7 +491,7 @@ impl Instance {
   }
 
   fn get_value_sq<'a>(
-    self: &'a Self,
+    &'a self,
     tag: &Tag,
     attr: &DicomAttribute<'a>,
   ) -> Result<Option<DicomAttribute<'a>>, DicomError> {
@@ -540,8 +534,8 @@ impl Instance {
   }
 
   // https://dicom.nema.org/medical/dicom/current/output/chtml/part05/sect_A.4.html
-  fn retrieve_next_data_element<'a>(
-    self: &'a Self,
+  fn retrieve_next_data_element(
+    &self,
     offset: usize,
     items: &mut Vec<DicomAttribute>,
     item_length: &mut usize,
@@ -598,20 +592,18 @@ impl Instance {
         SequenceDelimitationItem,
       ));
     } else {
-      return Err(DicomError::new(&format!(
-        "Expecting sequence items in an ecapsulated pixel data field"
-      )));
+      return Err(DicomError::new("Expecting sequence items in an ecapsulated pixel data field"));
     }
 
     *item_length += offset - original_offset;
-    return Ok(());
+    Ok(())
   }
 
   // This "correct" the tag based on observed behavior in the wild.
   // TODO: The design of this function is questionable and force the use of a
   // mutable tag which I rather avoid. But its existence seems unavoidable due
   // to the broken nature of the implicit DICOM transfer syntax.
-  fn get_implicit_vr<'a>(self: &'a Self, tag: &mut Tag) -> Result<(), DicomError> {
+  fn get_implicit_vr(&self, tag: &mut Tag) -> Result<(), DicomError> {
     // Finding the implicit VR is not straightforward. This is DICOM after all...
     // https://dicom.nema.org/medical/dicom/2017a/output/chtml/part05/chapter_A.html
     if tag.group == 0x7FE0 && tag.element == 0x0010 {
@@ -648,16 +640,16 @@ impl Instance {
       tag.name = "GenericGroupLength";
     }
 
-    return Ok(());
+    Ok(())
   }
 
   /**
    * Returns the next attribute.
    */
-  pub fn next_attribute<'a>(
-    self: &'a Self,
+  pub fn next_attribute(
+    &self,
     offset: usize,
-  ) -> Result<DicomAttribute<'a>, DicomError> {
+  ) -> Result<DicomAttribute<'_>, DicomError> {
     // group(u16),element(u16),vr(str[2]),length(u16)
     // println!("next_attribute: {:#04x?}", offset);
     let mut offset = offset;
@@ -799,10 +791,10 @@ impl Instance {
       }
     } else {
       length = if group == 0x0002 || !self.implicit {
-        offset = offset + 2;
+        offset += 2;
         self.buffer[offset - 2] as usize | (self.buffer[offset - 1] as usize) << 8
       } else {
-        offset = offset + 4;
+        offset += 4;
         self.buffer[offset - 4] as usize
           | (self.buffer[offset - 3] as usize) << 8
           | (self.buffer[offset - 2] as usize) << 16
@@ -814,7 +806,7 @@ impl Instance {
     ))
   }
 
-  fn is_supported_type(self: &Self) -> Result<String, DicomError> {
+  fn is_supported_type(&self) -> Result<String, DicomError> {
     // Only supporting little-endian explicit VR for now.
     if let Some(transfer_syntax_uid_field) = self.get_value(&0x00020010.try_into().unwrap())? {
       match transfer_syntax_uid_field {
@@ -836,7 +828,7 @@ impl Instance {
             )))
           }
         }
-        _ => Err(DicomError::new(&format!("Unexpected type"))),
+        _ => Err(DicomError::new("Unexpected type")),
       }
     } else {
       Err(DicomError::new("Transfer Syntax UID not found"))
@@ -900,10 +892,10 @@ pub struct InstanceIter<'a> {
 impl<'a> InstanceIter<'a> {
   fn new(instance: &'a Instance) -> Self {
     // TODO: Deal with DICOM with broken headers
-    return InstanceIter {
-      instance: instance,
+    InstanceIter {
+      instance,
       offset: 128 + "DICM".len(),
-    };
+    }
   }
 }
 

@@ -310,7 +310,7 @@ impl TryFrom<Payload> for Vec<f64> {
       Payload::Value(value) => value
         .iter()
         .map(|v| match v {
-          ValuePayload::Numeral(f64_value) => Ok(*f64_value as f64),
+          ValuePayload::Numeral(f64_value) => Ok(*f64_value),
           _ => Err(DicomError::new("Payload is not a f64")),
         })
         .collect(),
@@ -472,7 +472,7 @@ pub fn to_xml_dicom_attribute(
     vr: dicom_attribute.vr.as_ref().into(),
     keyword: Some(dicom_attribute.tag.name.to_string()),
     private_creator: None,
-    payload: payload,
+    payload,
   })
 }
 
@@ -486,7 +486,7 @@ pub fn dcm2native_dicom_model(f: File) -> Result<NativeDicomModel, Box<dyn Error
     dicom_attributes.push(to_xml_dicom_attribute(&instance, &dicom_attribute)?);
   }
   Ok(NativeDicomModel {
-    dicom_attributes: dicom_attributes,
+    dicom_attributes,
   })
 }
 
@@ -548,7 +548,7 @@ pub fn to_json_dicom_attribute(
     vr: dicom_attribute.vr.as_ref().into(),
     keyword: Some(dicom_attribute.tag.name.to_string()),
     private_creator: None,
-    payload: payload,
+    payload,
   })
 }
 
@@ -633,7 +633,7 @@ pub mod json2dcm {
         // The following VRs expect 2 bytes of padding ([0, 0]) and a 4 bytes length
         ValueRepresentation::UN | ValueRepresentation::OW | ValueRepresentation::OB => {
           let data: Vec<u8> = payload.try_into()?;
-          length += 6 + write_even_32(writer, &data.as_slice())?;
+          length += 6 + write_even_32(writer, data.as_slice())?;
         }
         ValueRepresentation::SQ => {
           let mut items_buffer: Vec<u8> = Vec::<u8>::new();
@@ -666,14 +666,14 @@ pub mod json2dcm {
               // item length on 4 bytes
               items_buffer_writer.write(&subfields_written.to_le_bytes())?;
               // subfileds data
-              items_buffer_writer.write(&subfields_buffer.as_slice())?;
+              items_buffer_writer.write(subfields_buffer.as_slice())?;
             }
           }
-          length += 6 + write_even_32(writer, &items_buffer.as_slice())?;
+          length += 6 + write_even_32(writer, items_buffer.as_slice())?;
         }
         ValueRepresentation::UT => {
           let data: String = payload.try_into()?;
-          length += 6 + write_even_32(writer, &data.as_bytes())?;
+          length += 6 + write_even_32(writer, data.as_bytes())?;
         }
         ValueRepresentation::OF => {
           unimplemented!()
@@ -697,18 +697,18 @@ pub mod json2dcm {
           // Strings are padded with space (0x20)
           // https://dicom.nema.org/dicom/2013/output/chtml/part05/sect_6.2.html
           let data: String = payload.try_into()?;
-          length += 2 + write_even_16(writer, &data.as_bytes(), 0x20)?;
+          length += 2 + write_even_16(writer, data.as_bytes(), 0x20)?;
         }
         ValueRepresentation::UI => {
           // UI is padded with 0
           // https://dicom.nema.org/dicom/2013/output/chtml/part05/sect_6.2.html
           let data: String = payload.try_into()?;
-          length += 2 + write_even_16(writer, &data.as_bytes(), 0x0)?;
+          length += 2 + write_even_16(writer, data.as_bytes(), 0x0)?;
         }
         ValueRepresentation::IS => {
           let as_is: String = payload.try_into()?;
-          let data: String = as_is.split(".").take(1).collect::<_>();
-          length += 2 + write_even_16(writer, &data.as_bytes(), 0x20)?;
+          let data: String = as_is.split('.').take(1).collect::<_>();
+          length += 2 + write_even_16(writer, data.as_bytes(), 0x20)?;
         }
         ValueRepresentation::UL => {
           let value: u32 = payload.try_into()?;
@@ -779,7 +779,7 @@ pub mod json2dcm {
   impl From<Box<dyn serde::ser::StdError>> for DicomError {
     fn from(_err: Box<dyn serde::ser::StdError>) -> Self {
       // TODO: Improve this...
-      DicomError::new(&format!("error"))
+      DicomError::new("error")
     }
   }
 
@@ -872,7 +872,7 @@ pub mod json2dcm {
       )?;
     }
     // Write the other meta information
-    writer.write(&meta_info_header.as_slice())?;
+    writer.write(meta_info_header.as_slice())?;
     // Write the rest of the dicom attributes
     for (tag, attribute) in json.iter() {
       serialize(

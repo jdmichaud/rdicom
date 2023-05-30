@@ -46,7 +46,7 @@ impl<W: Write> CsvIndexStore<W> {
       .map(|s| String::from("\"") + s + "\"")
       .collect::<Vec<String>>()
       .join(",");
-    writeln!(writer, "").unwrap();
+    writeln!(writer).unwrap();
     CsvIndexStore { writer, fields }
   }
 }
@@ -59,7 +59,7 @@ impl<W: Write> IndexStore for CsvIndexStore<W> {
     Ok(())
   }
 
-  fn write(self: &mut Self, data: &HashMap<String, String>) -> Result<(), Box<dyn Error>> {
+  fn write(&mut self, data: &HashMap<String, String>) -> Result<(), Box<dyn Error>> {
     for field in &self.fields {
       match write!(
         self.writer,
@@ -70,7 +70,7 @@ impl<W: Write> IndexStore for CsvIndexStore<W> {
         Err(e) => return Err(Box::new(e)),
       }
     }
-    writeln!(self.writer, "")?;
+    writeln!(self.writer)?;
     Ok(())
   }
 }
@@ -95,12 +95,10 @@ fn write_data(
     })
     .collect::<Vec<String>>()
     .join(" AND ");
-  let already_present = db::query(
-    &connection,
+  let already_present = !db::query(
+    connection,
     &format!("SELECT * FROM {} WHERE {};", table_name, constraints),
-  )?
-  .len()
-    > 0;
+  )?.is_empty();
 
   if already_present {
     // The entry already exists, update it
@@ -152,7 +150,7 @@ pub fn prepare_db(
     .map(|s| s.to_string() + " TEXT NON NULL")
     .collect::<Vec<String>>()
     .join(",");
-  connection.execute(&format!(
+  connection.execute(format!(
     "CREATE TABLE IF NOT EXISTS {} ({});",
     table_name, table
   ))?;
@@ -185,7 +183,7 @@ impl IndexStore for SqlIndexStore {
     Ok(())
   }
 
-  fn write(self: &mut Self, data: &HashMap<String, String>) -> Result<(), Box<dyn Error>> {
+  fn write(&mut self, data: &HashMap<String, String>) -> Result<(), Box<dyn Error>> {
     write_data(&self.connection, &self.table_name, &self.fields, data)
   }
 }
@@ -225,7 +223,7 @@ impl IndexStore for SqlIndexStoreWithMutex {
     Ok(())
   }
 
-  fn write(self: &mut Self, data: &HashMap<String, String>) -> Result<(), Box<dyn Error>> {
+  fn write(&mut self, data: &HashMap<String, String>) -> Result<(), Box<dyn Error>> {
     write_data(
       &self.connection.lock().unwrap(),
       &self.table_name,

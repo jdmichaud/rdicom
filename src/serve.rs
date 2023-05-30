@@ -31,7 +31,7 @@ use rdicom::error::DicomError;
 use serde::ser::SerializeMap;
 use serde::Serializer;
 use serde::{de, Deserialize, Deserializer, Serialize};
-use serde_json;
+
 use simplelog::{
   ColorChoice, CombinedLogger, Config, LevelFilter, SharedLogger, TermLogger, TerminalMode,
   WriteLogger,
@@ -204,7 +204,7 @@ impl HttpError {
   pub fn from_payload(status: u16, payload: HttpErrorPayload) -> HttpError {
     HttpError {
       status,
-      payload: payload,
+      payload,
     }
   }
 
@@ -238,7 +238,7 @@ fn query_param_to_search_terms(
       Ok(
         q.into_iter()
           .filter_map(|(k, v)| {
-            if let Some(tag) = TryInto::<Tag>::try_into(&k).ok() {
+            if let Ok(tag) = TryInto::<Tag>::try_into(&k) {
               Some((tag, v))
             } else {
               None
@@ -275,7 +275,7 @@ where
     {
       Ok(Some(
         v.split(',')
-          .map(|s| String::from(s))
+          .map(String::from)
           .collect::<Vec<String>>(),
       ))
     }
@@ -410,7 +410,7 @@ mod capabilities {
   }
 
   // Embed the capabilities description in the executable
-  pub const CAPABILITIES_STR: &'static str = include_str!("capabilities.xml");
+  pub const CAPABILITIES_STR: &str = include_str!("capabilities.xml");
 }
 
 // Retrieves the column present in the index
@@ -470,7 +470,7 @@ fn create_where_clause(
     .iter()
     .filter(|(field, _)| indexed_fields.contains(&field.name.to_owned()))
     .fold(String::new(), |mut acc, (field, value)| {
-      if acc.len() == 0 {
+      if acc.is_empty() {
         acc += "WHERE ";
       } else {
         acc += " AND ";
@@ -545,7 +545,7 @@ unsafe impl Send for MemoryInstanceFactory {}
 impl MemoryInstanceFactory {
   fn new() -> MemoryInstanceFactory {
     MemoryInstanceFactory {
-      files: Box::new(HashMap::<String, String>::new()),
+      files: Box::<HashMap<String, String>>::default(),
     }
   }
 }
@@ -575,7 +575,7 @@ fn get_entries<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
   let indexed_fields = get_indexed_fields(connection)?;
   // First retrieve the indexed fields present in the DB
   let mut entries = db::query(
-    &connection,
+    connection,
     &format!(
       "SELECT DISTINCT {}, * FROM dicom_index {};",
       entry_type,
@@ -588,11 +588,10 @@ fn get_entries<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
   if let Some(includefield) = &params.includefield {
     let fields_to_fetch: Vec<String> = includefield
       .iter()
-      .filter(|field| !indexed_fields.contains(field))
-      .map(|field| field.clone())
+      .filter(|field| !indexed_fields.contains(field)).cloned()
       .collect::<_>();
     // println!("fields_to_fetch {:?}", fields_to_fetch);
-    if fields_to_fetch.len() > 0 {
+    if !fields_to_fetch.is_empty() {
       for i in 0..entries.len() {
         if let Some(rfilepath) = entries[i].get("filepath") {
           let reader = instance_factory.get_reader(rfilepath)?;
@@ -608,7 +607,7 @@ fn get_entries<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
       }
     }
   }
-  return Ok(entries);
+  Ok(entries)
 }
 
 fn get_studies<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
@@ -673,7 +672,7 @@ fn generate_json_response(data: &Vec<HashMap<String, String>>) -> String {
     "[{}]",
     data
       .iter()
-      .map(|study| map_to_entry(study))
+      .map(map_to_entry)
       .collect::<Vec<String>>()
       .join(",")
   )
@@ -682,7 +681,7 @@ fn generate_json_response(data: &Vec<HashMap<String, String>>) -> String {
 fn with_db<'a>(
   sqlfile: &String,
 ) -> impl Filter<Extract = (Connection,), Error = Infallible> + Clone + 'a {
-  let sqlpath = PathBuf::from_str(&sqlfile).unwrap();
+  let sqlpath = PathBuf::from_str(sqlfile).unwrap();
   warp::any().map(move || Connection::open(&sqlpath).unwrap())
 }
 
@@ -709,7 +708,7 @@ fn do_store<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Send>(
   accept_header: &HeaderValue,
   body: &warp::hyper::body::Bytes,
 ) -> Result<(), HttpError> {
-  let accept_header = get_accept_headers(&accept_header)
+  let accept_header = get_accept_headers(accept_header)
     .map_err(|e| HttpError::new(500, "to_str failed in get_accept_headers"))?;
   let accept = get_accept_format(
     &accept_header,
@@ -748,7 +747,7 @@ fn do_store<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Send>(
           "Error while streaming the dicom file to {}: {}",
           filename, e
         );
-        HttpError::new(500, &format!("{}", e.details))
+        HttpError::new(500, &e.details)
       })?;
       // Update the index
       let mut data: HashMap<String, String> = dataset
@@ -806,9 +805,9 @@ fn post_store_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + S
         // Is it single part or multipart?
         let multipart = accept_header == "multipart/related";
         if multipart {
-          return Response::builder()
+          Response::builder()
             .status(warp::http::StatusCode::NOT_IMPLEMENTED)
-            .body("".to_string());
+            .body("".to_string())
         } else {
           // TODO: get rid if this unwrap
           if let Err(e) = do_store(
@@ -823,9 +822,9 @@ fn post_store_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + S
               .header(warp::http::header::CONTENT_ENCODING, "application/json")
               .body(serde_json::to_string(&e.payload).unwrap());
           }
-          return Response::builder()
+          Response::builder()
             .status(warp::http::StatusCode::OK)
-            .body("".to_string());
+            .body("".to_string())
         }
       },
     );
@@ -960,7 +959,7 @@ fn get_query_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Se
     .and(warp::query::<QidoQueryParameters>())
     .and(query_param_to_search_terms())
     .and(with_db(sqlfile))
-    .and(with_instance_factory(instance_factory.clone()))
+    .and(with_instance_factory(instance_factory))
     .and_then(
       |study_uid: String,
        series_uid: String,
@@ -1205,10 +1204,10 @@ async fn handle_rejection(err: Rejection) -> Result<impl warp::Reply, Infallible
   } else if let Some(invalid_parameter) = err.find::<ApplicationError>() {
     code = warp::http::StatusCode::BAD_REQUEST;
     message = invalid_parameter.message.clone();
-  } else if let Some(_) = err.find::<NotAUniqueIdentifier>() {
+  } else if err.find::<NotAUniqueIdentifier>().is_some() {
     code = warp::http::StatusCode::BAD_REQUEST;
     message = String::from("path parameter is not a DICOM unique identifier");
-  } else if let Some(_) = err.find::<warp::reject::MethodNotAllowed>() {
+  } else if err.find::<warp::reject::MethodNotAllowed>().is_some() {
     // We can handle a specific error, here METHOD_NOT_ALLOWED,
     // and render it however we want
     code = warp::http::StatusCode::METHOD_NOT_ALLOWED;
@@ -1324,10 +1323,10 @@ fn get_accept_format<'a>(
       return Ok(accept);
     }
   }
-  return Err(DicomError::new(&format!(
+  Err(DicomError::new(&format!(
     "Unsupported accept header {:?}, only {:?} accept header are supported",
     accepts, availables
-  )));
+  )))
 }
 
 /**
@@ -1346,13 +1345,13 @@ fn get_accept_headers(accept_header: &HeaderValue) -> Result<Vec<AcceptHeader>, 
         for subentry in subentries {
           let parameter = subentry
             .split('=')
-            .map(|s| String::from(s))
+            .map(String::from)
             .collect::<Vec<String>>();
           parameters.insert(parameter[0].clone(), parameter[1].clone());
         }
         AcceptHeader {
           format: String::from(format),
-          parameters: parameters,
+          parameters,
         }
       })
       .collect::<Vec<AcceptHeader>>(),
@@ -1394,15 +1393,15 @@ fn capabilities(
           .body(
             serde_json::to_string(&application)
               .unwrap()
-              .replace("@", ""),
+              .replace('@', ""),
           ),
         _ => unreachable!(),
       },
       Err(e) => {
         warn!("Accept header format {:?} not accepted", accept_header);
-        return Response::builder()
+        Response::builder()
           .status(warp::http::StatusCode::NOT_IMPLEMENTED)
-          .body(e.details);
+          .body(e.details)
       }
     }
   });
@@ -1420,7 +1419,7 @@ fn capabilities(
     .and(warp::get().and(handlers))
     .with(cache_header);
 
-  return option.or(get);
+  option.or(get)
 }
 
 #[tokio::main]
@@ -1480,7 +1479,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         instance_factory.clone(),
         index_store,
       ))
-      .or(get_query_api(&opt.sqlfile, instance_factory.clone()))
+      .or(get_query_api(&opt.sqlfile, instance_factory))
       .or(get_retrieve_api(&opt.sqlfile))
       .or(get_delete_api(&opt.sqlfile))
       .or(capabilities(&APPLICATION))

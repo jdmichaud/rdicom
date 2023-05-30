@@ -55,9 +55,7 @@ impl From<Utf8Error> for DicomError {
         "UTF8 error: an unexpected byte was encountered at {}",
         l
       )),
-      None => DicomError::new(&format!(
-        "UTF8 error: the end of the input was reached unexpectedly"
-      )),
+      None => DicomError::new("UTF8 error: the end of the input was reached unexpectedly"),
     }
   }
 }

@@ -22,7 +22,7 @@
 #![allow(unused_variables)]
 #![allow(unused_imports)]
 
-use serde_yaml;
+
 use atty::Stream;
 use sqlite::{Connection, ConnectionWithFullMutex};
 use std::collections::{HashMap, HashSet};
