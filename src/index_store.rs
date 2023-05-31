@@ -98,7 +98,8 @@ fn write_data(
   let already_present = !db::query(
     connection,
     &format!("SELECT * FROM {} WHERE {};", table_name, constraints),
-  )?.is_empty();
+  )?
+  .is_empty();
 
   if already_present {
     // The entry already exists, update it

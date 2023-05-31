@@ -11,3 +11,5 @@
   should also iterate inside sequences.
 
 - Use a enum as VR for instance::DicomAttribute struct.
+
+- Embed a default config file in scan/server.

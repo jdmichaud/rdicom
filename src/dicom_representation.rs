@@ -485,9 +485,7 @@ pub fn dcm2native_dicom_model(f: File) -> Result<NativeDicomModel, Box<dyn Error
     let dicom_attribute = dicom_attribute?;
     dicom_attributes.push(to_xml_dicom_attribute(&instance, &dicom_attribute)?);
   }
-  Ok(NativeDicomModel {
-    dicom_attributes,
-  })
+  Ok(NativeDicomModel { dicom_attributes })
 }
 
 pub fn to_json_dicom_attribute(

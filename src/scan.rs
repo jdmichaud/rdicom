@@ -22,7 +22,6 @@
 #![allow(unused_variables)]
 #![allow(unused_imports)]
 
-
 use atty::Stream;
 use sqlite::{Connection, ConnectionWithFullMutex};
 use std::collections::{HashMap, HashSet};
