@@ -202,10 +202,7 @@ impl HttpError {
   }
 
   pub fn from_payload(status: u16, payload: HttpErrorPayload) -> HttpError {
-    HttpError {
-      status,
-      payload,
-    }
+    HttpError { status, payload }
   }
 
   pub fn from_json_error(status: u16, error: serde_json::Error) -> HttpError {
@@ -274,9 +271,7 @@ where
       E: de::Error,
     {
       Ok(Some(
-        v.split(',')
-          .map(String::from)
-          .collect::<Vec<String>>(),
+        v.split(',').map(String::from).collect::<Vec<String>>(),
       ))
     }
   }
@@ -441,7 +436,12 @@ fn map_to_entry(tag_map: &HashMap<String, String>) -> String {
             //   "Value": ["131600.0000"]
             // },
             "\"{:04x}{:04x}\": {{ \"vr\": \"{}\", \"Value\": [ \"{}\" ] }}",
-            tag.group, tag.element, tag.vr, value,
+            // TODO: The replace here is an ugly workaround which is probably going to cause more
+            // problem than it will solve.
+            tag.group,
+            tag.element,
+            tag.vr,
+            value.replace("\\", ","),
           ),
           // Otherwise, just dump the key in the object
           _ => format!("\"{key}\": \"{value}\""),
@@ -462,11 +462,9 @@ fn create_where_clause(
   // offset
   // fuzzymatching
   // includefield
-  let limit = params.limit.unwrap_or(u32::MAX as usize);
-  let offset = params.offset.unwrap_or(0);
   let fuzzymatching = params.fuzzymatching.unwrap_or(false);
 
-  let where_clause = search_terms
+  search_terms
     .iter()
     .filter(|(field, _)| indexed_fields.contains(&field.name.to_owned()))
     .fold(String::new(), |mut acc, (field, value)| {
@@ -483,8 +481,14 @@ fn create_where_clause(
           value,
           if fuzzymatching { "%'" } else { "'" },
         )
-    });
-  format!("{where_clause} LIMIT {limit} OFFSET {offset}")
+    })
+}
+
+fn create_limit_clause(params: &QidoQueryParameters) -> String {
+  let limit = params.limit.unwrap_or(u32::MAX as usize);
+  let offset = params.offset.unwrap_or(0);
+
+  format!("LIMIT {limit} OFFSET {offset}")
 }
 
 /**
@@ -574,21 +578,22 @@ fn get_entries<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
 ) -> Result<Vec<HashMap<String, String>>, Box<dyn Error>> {
   let indexed_fields = get_indexed_fields(connection)?;
   // First retrieve the indexed fields present in the DB
-  let mut entries = db::query(
-    connection,
-    &format!(
-      "SELECT DISTINCT {}, * FROM dicom_index {};",
-      entry_type,
-      // Will restrict the data to what is being searched
-      create_where_clause(params, search_terms, &indexed_fields)
-    ),
-  )?;
+  let query = &format!(
+    "SELECT * FROM dicom_index {} group by {} {};",
+    // Will restrict the data to what is being searched
+    create_where_clause(params, search_terms, &indexed_fields),
+    entry_type,
+    create_limit_clause(params),
+  );
+  // println!("query: {}", query);
+  let mut entries = db::query(connection, query)?;
   // println!("entries {:?}", entries);
   // Get the includefields not present in the index
   if let Some(includefield) = &params.includefield {
     let fields_to_fetch: Vec<String> = includefield
       .iter()
-      .filter(|field| !indexed_fields.contains(field)).cloned()
+      .filter(|field| !indexed_fields.contains(field))
+      .cloned()
       .collect::<_>();
     // println!("fields_to_fetch {:?}", fields_to_fetch);
     if !fields_to_fetch.is_empty() {
@@ -616,6 +621,7 @@ fn get_studies<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
   params: &QidoQueryParameters,
   search_terms: &HashMap<Tag, String>,
 ) -> Result<Vec<HashMap<String, String>>, Box<dyn Error>> {
+  // select distinct StudyDate, StudyTime, AccessionNumber, ModalitiesInStudy, ReferringPhysicianName, PatientName, PatientID, StudyInstanceUID, StudyID from dicom_index group by StudyInstanceUID;
   get_entries(
     connection,
     instance_factory,
