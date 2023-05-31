@@ -251,7 +251,10 @@ fn get_tag_sequence<'a>(
           panic!("Unexpected SeqEnd");
         }
         DicomValue::FD(payload) => {
-          let display_value = value.to_string();
+          let mut display_value = value.to_string();
+          if display_value.len() > 66 {
+            display_value.replace_range(66.., "...");
+          }
           let (display_value, multiplicity) = if display_value.is_empty() {
             ("(no value available)".to_string(), 0)
           } else {
@@ -269,7 +272,10 @@ fn get_tag_sequence<'a>(
           });
         }
         DicomValue::FL(payload) => {
-          let display_value = value.to_string();
+          let mut display_value = value.to_string();
+          if display_value.len() > 66 {
+            display_value.replace_range(66.., "...");
+          }
           let (display_value, multiplicity) = if display_value.is_empty() {
             ("(no value available)".to_string(), 0)
           } else {
