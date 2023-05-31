@@ -20,15 +20,15 @@ jobs:
       run: cargo build --release --locked
     - name: Compress tools
       run: |
-        mkdir -p ${{ archive_name }}
-        cp target/x86_64-unknown-linux-gnu/release/{dump,scan,serve,dcm2xml,dcm2json} ${{ archive_name }}
-        tar zcvf ${{ archive_name }}.tar.gz ${{ archive_name }}
+        mkdir -p ${{ env.archive_name }}
+        cp target/x86_64-unknown-linux-gnu/release/{dump,scan,serve,dcm2xml,dcm2json} ${{ env.archive_name }}
+        tar zcvf ${{ env.archive_name }}.tar.gz ${{ env.archive_name }}
     - name: Upload tools
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ${{ archive_name }}.tar.gz
-        asset_name: ${{ archive_name }}.tar.gz
+        file: ${{ env.archive_name }}.tar.gz
+        asset_name: ${{ env.archive_name }}.tar.gz
         tag: ${{ github.ref }}
         overwrite: true
         body: "rdicom tools"
