@@ -32,6 +32,7 @@ use std::io::BufReader;
 use std::io::{self, Write};
 use std::path::Path;
 use std::path::PathBuf;
+use std::str::FromStr;
 use structopt::clap::AppSettings;
 use structopt::StructOpt;
 use walkdir::WalkDir;
@@ -59,8 +60,12 @@ const MEDIA_STORAGE_DIRECTORY_STORAGE: &str = "1.2.840.10008.1.3.10";
 )]
 struct Opt {
   /// YAML configuration file containing the list of files to be indexed from the DICOM assets.
+  /// If not provided, scan will use a default configuration (see --print-config)
   #[structopt(short, long, parse(try_from_str = file_exists))]
-  config: PathBuf,
+  config: Option<PathBuf>,
+  /// Print the configuration used and exit.
+  #[structopt(long)]
+  print_config: bool,
   /// CSV output file
   #[structopt(long)]
   csv_output: Option<PathBuf>,
@@ -68,7 +73,7 @@ struct Opt {
   #[structopt(long)]
   sql_output: Option<String>,
   /// Path to a folder containing DICOM assets. Will be scanned recursively.
-  input_path: PathBuf,
+  input_path: Option<PathBuf>,
   /// Log each files being scan on standard output
   #[structopt(short, long)]
   log_files: bool,
@@ -99,13 +104,24 @@ fn file_exists(path: &str) -> Result<PathBuf, Box<dyn Error>> {
   }
 }
 
+pub const DEFAULT_CONFIG: &str = include_str!("../config.yaml");
+
 fn main() -> Result<(), Box<dyn Error>> {
   // Retrieve options
   let opt = Opt::from_args();
+  // Load the config
+  let config_file = if let Some(config_file) = opt.config {
+    std::fs::read_to_string(&config_file)?
+  } else {
+    DEFAULT_CONFIG.to_string()
+  };
+  if opt.print_config {
+    // Print the content of the configuration file and exit
+    println!("{}", config_file);
+    return Ok(());
+  }
   // Are we on a terminal
   let on_a_tty = atty::is(Stream::Stdout);
-  // Load the config
-  let config_file = std::fs::read_to_string(&opt.config)?;
   let config: config::Config = serde_yaml::from_str(&config_file)?;
   // Create an vector of fields to write in the index
   let indexable_fields = config
@@ -123,7 +139,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     )
     .collect::<Vec<String>>();
   // Create an index store depending on the options
-  let mut index_store: Box<dyn IndexStore> = if let Some(sql_output) = opt.sql_output {
+  let mut index_store: Box<dyn IndexStore> = if let Some(sql_output) = opt.sql_output.clone() {
     let connection = Connection::open(sql_output)?;
     Box::new(SqlIndexStore::new(
       connection,
@@ -147,12 +163,13 @@ fn main() -> Result<(), Box<dyn Error>> {
   let mut study_set: HashSet<String> = HashSet::new();
   let mut series_set: HashSet<String> = HashSet::new();
   let mut modality_set: HashSet<String> = HashSet::new();
-  let path_prefix = opt.input_path.clone();
+  let input_path = opt.input_path.unwrap_or(PathBuf::from_str(".")?);
+  let path_prefix = input_path.clone();
   if !opt.no_transaction {
     index_store.begin_transaction()?;
   }
   // Walk all the files in the provided input folder
-  for result in WalkDir::new(opt.input_path) {
+  for result in WalkDir::new(input_path.clone()) {
     let entry = result?;
     let filepath = entry.path();
     if filepath.is_file() {
@@ -246,7 +263,12 @@ fn main() -> Result<(), Box<dyn Error>> {
     index_store.end_transaction()?;
   }
 
-  println!("{} files scanned with {} studies and {} series found with following modalities {:?} and {} errors      ",
-    count, study_set.len(), series_set.len(), modality_set, error_count);
+  print!("{} files scanned in {} with {} studies and {} series found with following modalities {:?} and {} errors",
+    count, input_path.to_string_lossy(), study_set.len(), series_set.len(), modality_set, error_count);
+  if let Some(sql_output) = opt.sql_output {
+    println!(" and index written to {}", sql_output);
+  } else {
+    println!();
+  }
   Ok(())
 }
