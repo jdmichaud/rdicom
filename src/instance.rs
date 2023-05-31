@@ -101,6 +101,7 @@ fn utf8_error_to_dicom_error(err: Utf8Error, tag: &str, offset: usize) -> DicomE
 impl<'a> ToString for DicomValue<'a> {
   fn to_string(&self) -> String {
     match self {
+      DicomValue::AT(value) => format!("({:04x},{:04x})", value.group, value.element),
       DicomValue::AE(value)
       | DicomValue::AS(value)
       | DicomValue::CS(value)
@@ -115,15 +116,15 @@ impl<'a> ToString for DicomValue<'a> {
       DicomValue::DS(value) => value.join("\\"),
       DicomValue::DT(value) => value.join("\\"),
       DicomValue::FD(value) => value
-          .iter()
-          .map(|f| f.to_string())
-          .collect::<Vec<_>>()
-          .join("\\"),
+        .iter()
+        .map(|f| f.to_string())
+        .collect::<Vec<_>>()
+        .join("\\"),
       DicomValue::FL(value) => value
-          .iter()
-          .map(|f| f.to_string())
-          .collect::<Vec<_>>()
-          .join("\\"),
+        .iter()
+        .map(|f| f.to_string())
+        .collect::<Vec<_>>()
+        .join("\\"),
       DicomValue::UN(value) | DicomValue::OB(value) => {
         let mut result = String::with_capacity(40);
         let mut it = (*value).iter().peekable();
@@ -186,12 +187,7 @@ fn to_string_array(
   )
 }
 
-fn to_string(
-  vr: &str,
-  offset: usize,
-  length: usize,
-  buffer: &[u8],
-) -> Result<String, DicomError> {
+fn to_string(vr: &str, offset: usize, length: usize, buffer: &[u8]) -> Result<String, DicomError> {
   Ok(
     from_utf8(&buffer[offset..offset + length])
       .map_err(|err| utf8_error_to_dicom_error(err, vr, offset))?
@@ -248,14 +244,28 @@ impl<'a> DicomValue<'a> {
     vr: &str,
     offset: usize,
     length: usize,
-    buffer: &'b[u8],
+    buffer: &'b [u8],
   ) -> Result<DicomValue<'b>, DicomError> {
     Ok(match vr {
       "AE" => DicomValue::AE(to_string_array(vr, offset, length, buffer)?),
       "AS" => DicomValue::AS(to_string_array(vr, offset, length, buffer)?),
       "AT" => {
-        let tmp: [u8; 4] = buffer[offset..offset + 4].try_into()?;
-        DicomValue::AT(u32::from_le_bytes(tmp).try_into()?)
+        let tmp: u32 = u32::from_le_bytes(buffer[offset..offset + 4].try_into()?);
+        let tag = match tmp.try_into() {
+          Ok(tag) => tag,
+          Err(_) => {
+            // Tag is private, we have to create manually
+            Tag {
+              group: (tmp & 0xFFFF0000 >> 16) as u16,
+              element: (tmp & 0x0000FFFF) as u16,
+              name: "Private Tag",
+              vr: "AT",
+              vm: std::ops::Range { start: 0, end: 0 },
+              description: "Private Tag",
+            }
+          }
+        };
+        DicomValue::AT(tag)
       }
       "CS" => DicomValue::CS(to_string_array(vr, offset, length, buffer)?),
       "DA" => DicomValue::DA(to_string_array(vr, offset, length, buffer)?),
@@ -580,7 +590,9 @@ impl Instance {
         SequenceDelimitationItem,
       ));
     } else {
-      return Err(DicomError::new("Expecting sequence items in an ecapsulated pixel data field"));
+      return Err(DicomError::new(
+        "Expecting sequence items in an ecapsulated pixel data field",
+      ));
     }
 
     *item_length += offset - original_offset;
@@ -634,10 +646,7 @@ impl Instance {
   /**
    * Returns the next attribute.
    */
-  pub fn next_attribute(
-    &self,
-    offset: usize,
-  ) -> Result<DicomAttribute<'_>, DicomError> {
+  pub fn next_attribute(&self, offset: usize) -> Result<DicomAttribute<'_>, DicomError> {
     // group(u16),element(u16),vr(str[2]),length(u16)
     // println!("next_attribute: {:#04x?}", offset);
     let mut offset = offset;
