@@ -537,6 +537,12 @@ pub fn to_json_dicom_attribute(
         dicom_attributes,
       )]))
     }
+    DicomValue::CS(value) => Some(Payload::Value(
+      value
+        .iter()
+        .map(|s| ValuePayload::String(s.to_string()))
+        .collect::<_>(),
+    )),
     _ => Some(Payload::Value(vec![ValuePayload::String(
       dicom_value.to_string(),
     )])),
