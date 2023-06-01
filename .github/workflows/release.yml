@@ -16,6 +16,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Install musl-tools
+      run: |
+        set -ex
+        sudo apt-get update
+        sudo apt-get install -y musl-tools
     - name: Install target
       run: rustup target add x86_64-unknown-linux-musl
     - name: Build tools
@@ -23,7 +28,7 @@ jobs:
     - name: Compress tools
       run: |
         mkdir -p ${{ env.archive_name }}
-        cp target/x86_64-unknown-linux-gnu/release/{dump,scan,serve,dcm2xml,dcm2json} ${{ env.archive_name }}
+        cp target/x86_64-unknown-linux-musl/release/{dump,scan,serve,dcm2xml,dcm2json} ${{ env.archive_name }}
         tar zcvf ${{ env.archive_name }}.tar.gz ${{ env.archive_name }}
     - name: Upload tools
       uses: svenstaro/upload-release-action@v2
