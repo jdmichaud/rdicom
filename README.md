@@ -32,7 +32,7 @@ on a provided configuration file. The fields are then either dump as
 to the standard output or into an [sqlite](https://sqlite.org/index.html) database.
 
 ```bash
-./scan --config config.yaml --sql-output index.db /media/jedi/slowdisk/DICOM/ 
+./scan --config config.yaml --sql-output index.db /path/to/DICOM
 ```
 
 The configuration will list the fields to be extracted to the index database. For example:
@@ -63,12 +63,12 @@ by `scan`.
 
 How to start `serve`?:
 ```bash
-serve --sqlfile base.db
+serve --sqlfile base.db /path/to/DICOM
 ```
 
 or from cargo:
 ```bash
-cargo run --bin serve -- --sqlfile base.db
+cargo run --bin serve -- --sqlfile base.db /path/to/DICOM
 ```
 
 ## Contributes
