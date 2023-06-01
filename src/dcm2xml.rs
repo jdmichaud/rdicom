@@ -21,15 +21,16 @@
 #![allow(dead_code)]
 #![allow(unused_variables)]
 
-use crate::dicom_representation::dcm2native_dicom_model;
-use rdicom::dicom_representation;
-use rdicom::dicom_representation::NativeDicomModel;
-use rdicom::error::DicomError;
-use rdicom::misc::is_dicom_file;
 use std::error::Error;
 use std::fs::File;
 use structopt::clap::AppSettings;
 use structopt::StructOpt;
+
+mod dicom_representation;
+
+use crate::dicom_representation::{dcm2native_dicom_model, NativeDicomModel};
+use rdicom::error::DicomError;
+use rdicom::misc::is_dicom_file;
 
 // A simplified dcm2xml clone
 #[derive(Debug, StructOpt)]

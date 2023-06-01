@@ -48,6 +48,13 @@ impl Error for DicomError {
   }
 }
 
+impl From<Box<dyn std::error::Error>> for DicomError {
+  fn from(err: Box<dyn std::error::Error>) -> Self {
+    // TODO: Improve this...
+    DicomError::new(&format!("{:?}", err))
+  }
+}
+
 impl From<Utf8Error> for DicomError {
   fn from(err: Utf8Error) -> Self {
     match err.error_len() {

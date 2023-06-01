@@ -21,14 +21,17 @@
 #![allow(dead_code)]
 #![allow(unused_variables)]
 
-use rdicom::dicom_representation::{json2dcm, DicomAttributeJson};
-use rdicom::error::DicomError;
 use std::collections::BTreeMap;
 use std::fs::File;
 use std::io::BufReader;
 use std::io::BufWriter;
 use structopt::clap::AppSettings;
 use structopt::StructOpt;
+
+mod dicom_representation;
+
+use crate::dicom_representation::{json2dcm, DicomAttributeJson};
+use rdicom::error::DicomError;
 
 // A simplified dcm2json clone
 #[derive(Debug, StructOpt)]

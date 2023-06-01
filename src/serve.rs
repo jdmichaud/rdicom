@@ -26,12 +26,9 @@ extern crate log;
 extern crate simplelog;
 
 use once_cell::sync::Lazy;
-use rdicom::dicom_representation::{json2dcm, DicomAttributeJson};
-use rdicom::error::DicomError;
 use serde::ser::SerializeMap;
 use serde::Serializer;
 use serde::{de, Deserialize, Deserializer, Serialize};
-
 use simplelog::{
   ColorChoice, CombinedLogger, Config, LevelFilter, SharedLogger, TermLogger, TerminalMode,
   WriteLogger,
@@ -55,16 +52,18 @@ use warp::http::header::{HeaderMap, HeaderValue, CONTENT_TYPE};
 use warp::http::Response;
 use warp::{reject, Filter, Rejection};
 
+use crate::dicom_representation::{json2dcm, DicomAttributeJson};
 use crate::index_store::IndexStore;
+use index_store::SqlIndexStoreWithMutex;
 use rdicom::dicom_tags;
+use rdicom::error::DicomError;
 use rdicom::instance::Instance;
 use rdicom::tags::Tag;
 
 mod config;
 mod db;
+mod dicom_representation;
 mod index_store;
-
-use index_store::SqlIndexStoreWithMutex;
 
 // r"^/instances$",
 // r"^/instances/(?P<SOPInstanceUID>[^/?#]*)$",

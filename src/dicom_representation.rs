@@ -21,17 +21,16 @@
 // https://dicom.nema.org/medical/dicom/current/output/chtml/part19/chapter_a.html#sect_A.1.6
 // dcm2xml --native-format <dcmfile>
 
-use crate::error::DicomError;
-use crate::instance;
-use crate::instance::DicomValue;
-use crate::instance::Instance;
+// TODO: Remove that external dependency if possible
+use base64::{engine::general_purpose, Engine as _};
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 use std::error::Error;
 use std::fs::File;
 use std::io::BufReader;
-// TODO: Remove that external dependency if possible
-use base64::{engine::general_purpose, Engine as _};
+
+use rdicom::error::DicomError;
+use rdicom::instance::{self, DicomValue, Instance};
 
 #[derive(Debug, Serialize, Deserialize, Copy, Clone)]
 pub enum ValueRepresentation {
@@ -575,16 +574,18 @@ pub fn dcm2json(f: File) -> Result<BTreeMap<String, DicomAttributeJson>, Box<dyn
 
 pub mod json2dcm {
 
+  use std::error::Error;
+  use std::io::BufWriter;
+  use std::io::Write;
+
+  use rdicom::error::DicomError;
+
   use crate::dicom_representation::BTreeMap;
   use crate::dicom_representation::DicomAttribute;
   use crate::dicom_representation::DicomAttributeJson;
   use crate::dicom_representation::Payload;
   use crate::dicom_representation::ValuePayload;
   use crate::dicom_representation::ValueRepresentation;
-  use crate::error::DicomError;
-  use std::error::Error;
-  use std::io::BufWriter;
-  use std::io::Write;
 
   fn write_even_16<W: std::io::Write>(
     writer: &mut W,
@@ -778,13 +779,6 @@ pub mod json2dcm {
       }
     }
     Ok(length)
-  }
-
-  impl From<Box<dyn serde::ser::StdError>> for DicomError {
-    fn from(_err: Box<dyn serde::ser::StdError>) -> Self {
-      // TODO: Improve this...
-      DicomError::new("error")
-    }
   }
 
   pub fn json2dcm<W: std::io::Write>(
