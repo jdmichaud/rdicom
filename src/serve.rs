@@ -409,14 +409,12 @@ mod capabilities {
 
 // Retrieves the column present in the index
 fn get_indexed_fields(connection: &Connection) -> Result<Vec<String>, Box<dyn Error>> {
-  Ok(
-    connection
-      .prepare("PRAGMA table_info(dicom_index);")?
-      .into_iter()
-      // TODO: get rid of this unwrap
-      .map(|row| String::from(row.unwrap().read::<&str, _>(1)))
-      .collect::<Vec<String>>(),
-  )
+  let result = connection
+    .prepare("PRAGMA table_info(dicom_index);")?
+    .into_iter()
+    .map(|row| row.map(|r| r.read::<&str, _>(1).to_string()))
+    .collect::<Result<Vec<String>, _>>()?;
+  Ok(result)
 }
 
 fn map_to_entry(tag_map: &HashMap<String, String>) -> String {
