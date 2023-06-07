@@ -1511,6 +1511,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
       .with(warp::reply::with::headers(headers))
       .recover(handle_rejection)
       .with(log)
+      .with(warp::trace::request())
       .boxed()
   } else {
     root
@@ -1530,6 +1531,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
       .with(warp::reply::with::headers(headers))
       .recover(handle_rejection)
       .with(log)
+      .with(warp::trace::request())
       .boxed()
   };
 
