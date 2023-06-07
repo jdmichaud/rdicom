@@ -145,6 +145,10 @@ struct ApplicationError {
 }
 impl reject::Reject for ApplicationError {}
 
+#[derive(Debug)]
+struct MethodNotImplemented;
+impl reject::Reject for MethodNotImplemented {}
+
 /// Extract a UI, or reject with NotAUniqueIdentifier.
 fn unique_identifier() -> impl Filter<Extract = (String,), Error = Rejection> + Copy {
   warp::path::param().and_then(|ui: String| async {
@@ -1205,11 +1209,14 @@ async fn handle_rejection(err: Rejection) -> Result<impl warp::Reply, Infallible
     code = warp::http::StatusCode::NOT_FOUND;
     message = String::from("not found");
   } else if let Some(invalid_parameter) = err.find::<ApplicationError>() {
-    code = warp::http::StatusCode::BAD_REQUEST;
+    code = warp::http::StatusCode::INTERNAL_SERVER_ERROR;
     message = invalid_parameter.message.clone();
   } else if err.find::<NotAUniqueIdentifier>().is_some() {
     code = warp::http::StatusCode::BAD_REQUEST;
     message = String::from("path parameter is not a DICOM unique identifier");
+  } else if err.find::<MethodNotImplemented>().is_some() {
+    code = warp::http::StatusCode::NOT_IMPLEMENTED;
+    message = String::from("method not implemented");
   } else if err.find::<warp::reject::MethodNotAllowed>().is_some() {
     // We can handle a specific error, here METHOD_NOT_ALLOWED,
     // and render it however we want
@@ -1488,8 +1495,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
       .or(capabilities(&APPLICATION))
       .with(warp::cors().allow_any_origin())
       .with(warp::reply::with::headers(headers))
-      .with(log)
       .recover(handle_rejection)
+      .with(log)
       .boxed()
   } else {
     root
@@ -1507,8 +1514,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
       .or(capabilities(&APPLICATION))
       .with(warp::cors().allow_any_origin())
       .with(warp::reply::with::headers(headers))
-      .with(log)
       .recover(handle_rejection)
+      .with(log)
       .boxed()
   };
 
