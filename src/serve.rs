@@ -939,7 +939,7 @@ fn get_query_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Se
        connection: Connection,
        instance_factory: T| async move {
         search_terms.insert(Tag::try_from("StudyInstanceUID").unwrap(), study_uid);
-        match get_studies(&connection, &instance_factory, &qido_params, &search_terms) {
+        match get_series(&connection, &instance_factory, &qido_params, &search_terms) {
           Ok(studies) => Ok::<_, warp::Rejection>(generate_json_response(&studies)),
           Err(e) => Err(warp::reject::custom(ApplicationError {
             message: e.to_string(),
@@ -969,7 +969,7 @@ fn get_query_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Se
        instance_factory: T| async move {
         search_terms.insert(Tag::try_from("StudyInstanceUID").unwrap(), study_uid);
         search_terms.insert(Tag::try_from("SeriesInstanceUID").unwrap(), series_uid);
-        match get_studies(&connection, &instance_factory, &qido_params, &search_terms) {
+        match get_instances(&connection, &instance_factory, &qido_params, &search_terms) {
           Ok(studies) => Ok::<_, warp::Rejection>(generate_json_response(&studies)),
           Err(e) => Err(warp::reject::custom(ApplicationError {
             message: e.to_string(),
