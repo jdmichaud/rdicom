@@ -233,24 +233,16 @@ impl HttpError {
 // an <Tag, String> entry in a HashMap.
 fn query_param_to_search_terms(
 ) -> impl Filter<Extract = (HashMap<Tag, String>,), Error = Rejection> + Copy {
-  warp::query::<HashMap<String, String>>().and_then(|q: HashMap<String, String>| async move {
-    if true {
-      Ok(
-        q.into_iter()
-          .filter_map(|(k, v)| {
-            if let Ok(tag) = TryInto::<Tag>::try_into(&k) {
-              Some((tag, v))
-            } else {
-              None
-            }
-          })
-          // .map(|(k, v)| ((&k).try_into().unwrap(), v))
-          .collect::<HashMap<Tag, String>>(),
-      )
-    } else {
-      // TODO: Without the else clause, rust complains. Need to figure out why.
-      Err(reject::custom(NotAUniqueIdentifier))
-    }
+  warp::query::<HashMap<String, String>>().map(|q: HashMap<String, String>| {
+    q.into_iter()
+      .filter_map(|(k, v)| {
+        if let Ok(tag) = TryInto::<Tag>::try_into(&k) {
+          Some((tag, v))
+        } else {
+          None
+        }
+      })
+      .collect::<HashMap<Tag, String>>()
   })
 }
 
@@ -688,6 +680,7 @@ fn generate_json_response(data: &[HashMap<String, String>]) -> String {
 fn with_db<'a>(
   sqlfile: &str,
 ) -> impl Filter<Extract = (Connection,), Error = Infallible> + Clone + 'a {
+  // TODO: I see no way to get rid of unwrap until we replace warp.
   let sqlpath = PathBuf::from_str(sqlfile).unwrap();
   warp::any().map(move || Connection::open(&sqlpath).unwrap())
 }
