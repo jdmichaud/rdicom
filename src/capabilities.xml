@@ -72,6 +72,14 @@
         <response status="409"></response>
         <response status="415"></response>
       </method>
+      <method name="DELETE" id="deleteStudies">
+        <request>
+          <param name="Content-Type" style="header" required="false" default="application/json">
+            <option value="application/json"/>
+          </param>
+        </request>
+        <response status="200"></response>
+      </method>
     </resource>
     <resource path="studies/{study}">
       <method name="POST" id="postStudy">

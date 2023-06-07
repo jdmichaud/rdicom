@@ -1155,22 +1155,42 @@ fn get_retrieve_api(
     .or(instance_rendered)
 }
 
+fn delete_all_studies(connection: &Connection) -> Result<(), Box<dyn Error>> {
+  db::query(connection, "DELETE FROM dicom_index;")?;
+  Ok(())
+}
+
 fn get_delete_api(
   sqlfile: &str,
 ) -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
+  // DELETE   ../studies/  Delete all instances.
+  let delete_all_studies = warp::path("studies")
+    .and(warp::path::end())
+    .and(with_db(sqlfile))
+    .and_then(|connection: Connection| async move {
+      delete_all_studies(&connection)
+        .map(|_| warp::reply())
+        .map_err(|e| {
+          warp::reject::custom(ApplicationError {
+            message: e.to_string(),
+          })
+        })
+    });
   // DELETE   ../studies/{study}  Delete all instances for a specific study.
   let delete_all_instances_from_study = warp::path("studies")
     .and(unique_identifier())
     .and(warp::path::end())
-    .map(|study_uid: String| warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED));
+    .and_then(|study_uid: String| async move {
+      Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
+    });
   // DELETE   ../studies/{study}/series/{series}  Delete all instances for a specific series within a study.
   let delete_all_instance_from_series = warp::path("studies")
     .and(unique_identifier())
     .and(warp::path("series"))
     .and(unique_identifier())
     .and(warp::path::end())
-    .map(|study_uid: String, series_uid: String| {
-      warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED)
+    .and_then(|study_uid: String, series_uid: String| async move {
+      Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
     });
   // DELETE  ../studies/{study}/series/{series}/instances/{instance}   Delete a specific instance within a series.
   let delete_instance = warp::path("studies")
@@ -1180,14 +1200,15 @@ fn get_delete_api(
     .and(warp::path("instances"))
     .and(unique_identifier())
     .and(warp::path::end())
-    .map(
-      |study_uid: String, series_uid: String, instance_uid: String| {
-        warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED)
+    .and_then(
+      |study_uid: String, series_uid: String, instance_uid: String| async move {
+        Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
       },
     );
 
   warp::delete()
-    .and(delete_all_instances_from_study)
+    .and(delete_all_studies)
+    .or(delete_all_instances_from_study)
     .or(delete_all_instance_from_series)
     .or(delete_instance)
 }
