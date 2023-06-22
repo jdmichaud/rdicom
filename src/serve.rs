@@ -1016,17 +1016,19 @@ fn get_retrieve_api(
     .and(warp::path("rendered"))
     .and(warp::query::<WadoQueryParameters>())
     .and(warp::path::end())
-    .map(|study_uid: String, params: WadoQueryParameters| {
-      warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED)
-    });
+    .and_then(
+      |study_uid: String, params: WadoQueryParameters| async move {
+        Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
+      },
+    );
   // GET {s}/studies/{study}/series/{series} Retrieve entire series
   let studies_series = warp::path("studies")
     .and(unique_identifier())
     .and(warp::path("series"))
     .and(unique_identifier())
     .and(warp::path::end())
-    .map(|study_uid: String, series_uid: String| {
-      warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED)
+    .and_then(|study_uid: String, series_uid: String| async move {
+      Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
     });
   // GET {s}/studies/{study}/series/{series}/rendered  Retrieve rendered series
   let studies_series_rendered = warp::path("studies")
@@ -1036,9 +1038,9 @@ fn get_retrieve_api(
     .and(warp::path("rendered"))
     .and(warp::query::<WadoQueryParameters>())
     .and(warp::path::end())
-    .map(
-      |study_uid: String, series_uid: String, params: WadoQueryParameters| {
-        warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED)
+    .and_then(
+      |study_uid: String, series_uid: String, params: WadoQueryParameters| async move {
+        Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
       },
     );
   // GET {s}/studies/{study}/series/{series}/metadata  Retrieve series metadata
@@ -1048,8 +1050,8 @@ fn get_retrieve_api(
     .and(unique_identifier())
     .and(warp::path("metadata"))
     .and(warp::path::end())
-    .map(|study_uid: String, series_uid: String| {
-      warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED)
+    .and_then(|study_uid: String, series_uid: String| async move {
+      Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
     });
 
   let series = warp::path("series")
@@ -1061,9 +1063,11 @@ fn get_retrieve_api(
     .and(warp::path("rendered"))
     .and(warp::query::<WadoQueryParameters>())
     .and(warp::path::end())
-    .map(|study_uid: String, params: WadoQueryParameters| {
-      warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED)
-    });
+    .and_then(
+      |study_uid: String, params: WadoQueryParameters| async move {
+        Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
+      },
+    );
 
   // GET {s}/studies/{study}/series/{series}/instances/{instance}  Retrieve instance
   let studies_series_instances = warp::path("studies")
@@ -1073,26 +1077,30 @@ fn get_retrieve_api(
     .and(warp::path("instances"))
     .and(unique_identifier())
     .and(warp::path::end())
-    .map(
-      |study_uid: String, series_uid: String, instance_uid: String| {
-        warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED)
+    .and_then(
+      |study_uid: String, series_uid: String, instance_uid: String| async move {
+        Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
       },
     );
   // GET {s}/studies/{study}/series/{series}/instances/{instance}/rendered Retrieve rendered instance
-  let studies_series_instances_rendered = warp::path("studies")
-    .and(unique_identifier())
-    .and(warp::path("series"))
-    .and(unique_identifier())
-    .and(warp::path("instances"))
-    .and(unique_identifier())
-    .and(warp::path("rendered"))
-    .and(warp::query::<WadoQueryParameters>())
-    .and(warp::path::end())
-    .map(
-      |study_uid: String, series_uid: String, instance_uid: String, params: WadoQueryParameters| {
-        warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED)
-      },
-    );
+  let studies_series_instances_rendered =
+    warp::path("studies")
+      .and(unique_identifier())
+      .and(warp::path("series"))
+      .and(unique_identifier())
+      .and(warp::path("instances"))
+      .and(unique_identifier())
+      .and(warp::path("rendered"))
+      .and(warp::query::<WadoQueryParameters>())
+      .and(warp::path::end())
+      .and_then(
+        |study_uid: String,
+         series_uid: String,
+         instance_uid: String,
+         params: WadoQueryParameters| async move {
+          Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
+        },
+      );
   // GET {s}/studies/{study}/series/{series}/instances/{instance}/metadata Retrieve instance metadata
   let studies_series_instances_metadata = warp::path("studies")
     .and(unique_identifier())
@@ -1102,28 +1110,30 @@ fn get_retrieve_api(
     .and(unique_identifier())
     .and(warp::path("metadata"))
     .and(warp::path::end())
-    .map(
-      |study_uid: String, series_uid: String, instance_uid: String| {
-        warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED)
+    .and_then(
+      |study_uid: String, series_uid: String, instance_uid: String| async move {
+        Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
       },
     );
 
+  // GET {s}/instances/{instance} Retrieve instance
   let instance = warp::path("instances")
     .and(unique_identifier())
     .and(warp::path::end())
-    .map(|instance_uid: String| {
-      warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED)
+    .and_then(|instance_uid: String| async move {
+      Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
     });
-
+  // GET {s}/instances/{instance}/rendered Retrieve rendered instance
   let instance_rendered = warp::path("instances")
     .and(unique_identifier())
     .and(warp::path("rendered"))
     .and(warp::query::<WadoQueryParameters>())
     .and(warp::path::end())
-    .map(|instance_uid: String, params: WadoQueryParameters| {
-      warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED)
-    });
-
+    .and_then(
+      |instance_uid: String, params: WadoQueryParameters| async move {
+        Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
+      },
+    );
   // GET {s}/studies/{study}/series/{series}/instances/{instance}/frames/{frames}  Retrieve frames in an instance
   let studies_series_instances = warp::path("studies")
     .and(unique_identifier())
@@ -1132,12 +1142,11 @@ fn get_retrieve_api(
     .and(warp::path("instances"))
     .and(unique_identifier())
     .and(warp::path::end())
-    .map(
-      |study_uid: String, series_uid: String, instance_uid: String| {
-        warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED)
+    .and_then(
+      |study_uid: String, series_uid: String, instance_uid: String| async move {
+        Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
       },
     );
-
   // GET {s}/{bulkdataURIReference}
 
   warp::get()
