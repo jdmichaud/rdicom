@@ -21,12 +21,12 @@ This will generate the library in the `target` folder.
 
 `rdicom` can be compile to various targets including wasm:
 ```bash
-cargo build --target wasm32-wasi
+cargo build --target wasm32-unknown-unknown --lib
 ```
 
-In order to build rdicom in webassembly, you need to install the wasi target locally:
+In order to build rdicom in webassembly, you need to install the WebAssembly target locally:
 ```bash
-rustup target add wasm32-wasi
+rustup target add wasm32-unknown-unknown
 ```
 
 # Associated tools
