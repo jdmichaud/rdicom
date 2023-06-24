@@ -52,7 +52,8 @@ echo '#![allow(dead_code)]'
 echo '#![allow(unused_variables)]'
 echo '#![allow(non_upper_case_globals)]'
 echo ''
-echo 'use std::convert::TryFrom;'
+echo 'use alloc::string::String;'
+echo 'use core::convert::TryFrom;'
 echo ''
 echo 'use crate::tags::Tag;'
 echo 'use crate::error::DicomError;'
@@ -69,7 +70,7 @@ do
     echo "  name: \"${array[1]}\","
     echo "  vr: \"${array[2]}\","
     # TODO: convert ${array[3]} to a Range
-    echo "  vm: std::ops::Range { start: 0, end: 0 },"
+    echo "  vm: core::ops::Range { start: 0, end: 0 },"
     echo "  description: \"${array[4]}\","
     echo "};"
     echo ""

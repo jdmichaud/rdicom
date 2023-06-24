@@ -18,15 +18,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-use std::fs;
-use std::str::from_utf8;
+use alloc::vec::Vec;
+use core::str::from_utf8;
 
 pub fn has_dicom_header(buffer: &Vec<u8>) -> bool {
   buffer.len() > 0x84 && from_utf8(&buffer[0x80..0x80 + 4]) == Ok("DICM")
 }
 
+/**
+ * Check if a file is a DICOM file.
+ * Imperfect heuristic for now.
+ */
+#[cfg(not(target_arch = "wasm32"))]
 pub fn is_dicom_file(file_path: &str) -> bool {
-  match fs::read(file_path) {
+  match std::fs::read(file_path) {
     Ok(buf) => is_dicom(&buf),
     Err(_) => false,
   }

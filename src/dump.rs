@@ -35,7 +35,6 @@ use rdicom::error::DicomError;
 use rdicom::instance::DicomAttribute;
 use rdicom::instance::DicomValue;
 use rdicom::instance::Instance;
-use rdicom::misc::is_dicom_file;
 
 /// A dcmdump clone based on rdicom
 #[derive(Debug, StructOpt)]
@@ -319,7 +318,7 @@ fn get_tag_sequence<'a>(
 fn dump(opt: &Opt) -> Result<(), DicomError> {
   let f = File::open(&opt.filepath)?;
 
-  if is_dicom_file(&opt.filepath) {
+  if rdicom::misc::is_dicom_file(&opt.filepath) {
     let instance = Instance::from_buf_reader(BufReader::new(f))?;
     println!();
     println!("# Dicom-File-Format");

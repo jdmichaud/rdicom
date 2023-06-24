@@ -18,6 +18,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#![feature(error_in_core)]
+#![cfg_attr(target_arch = "wasm32", no_std)]
+
+#[macro_use]
+extern crate alloc;
+
 pub mod dicom_tags;
 pub mod error;
 pub mod instance;

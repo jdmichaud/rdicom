@@ -23,16 +23,27 @@
 #![allow(unused_imports)]
 
 // https://radu-matei.com/blog/practical-guide-to-wasm-memory/#passing-arrays-to-rust-webassembly-modules
+// https://surma.dev/things/rust-to-webassembly/
 
-use std::borrow::Cow;
-use std::convert::TryInto;
-use std::error::Error;
-use std::fmt;
+#[cfg(not(target_arch = "wasm32"))]
 use std::fs::File;
+#[cfg(not(target_arch = "wasm32"))]
 use std::io::BufReader;
-use std::io::{Read, Seek};
-use std::str::from_utf8;
-use std::str::Utf8Error;
+#[cfg(not(target_arch = "wasm32"))]
+use std::io::Read;
+#[cfg(not(target_arch = "wasm32"))]
+use std::io::Seek;
+
+use alloc::borrow::Cow;
+use alloc::ffi::CString;
+use alloc::string::String;
+use alloc::string::ToString;
+use alloc::vec::Vec;
+use core::convert::TryInto;
+use core::error::Error;
+use core::fmt;
+use core::str::from_utf8;
+use core::str::Utf8Error;
 
 use crate::dicom_tags::Item;
 use crate::dicom_tags::ItemDelimitationItem;
@@ -41,6 +52,22 @@ use crate::dicom_tags::SequenceDelimitationItem;
 use crate::error::DicomError;
 use crate::misc::has_dicom_header;
 use crate::tags::Tag;
+
+#[link(wasm_import_module = "env")]
+extern "C" {
+  fn log(s: *const u8);
+  fn addString(s: *const u8, len: usize);
+  fn printString();
+}
+
+fn console_log(s: &str) {
+  unsafe {
+    let c_str = CString::new(s).unwrap();
+    addString(c_str.as_ptr() as *const u8, s.len());
+    printString();
+    // log(c_str.as_ptr() as *const u8);
+  }
+}
 
 #[derive(Debug)]
 pub struct Instance {
@@ -260,7 +287,7 @@ impl<'a> DicomValue<'a> {
               element: (tmp & 0x0000FFFF) as u16,
               name: "Private Tag",
               vr: "AT",
-              vm: std::ops::Range { start: 0, end: 0 },
+              vm: core::ops::Range { start: 0, end: 0 },
               description: "Private Tag",
             }
           }
@@ -279,18 +306,18 @@ impl<'a> DicomValue<'a> {
           // 1. The size from the DICOM file is correct
           // 2. We deal only with little endian
           // This allows to avoid parsing and copying data. Speed and memory over safety here.
-          std::slice::from_raw_parts(
+          core::slice::from_raw_parts(
             buffer[offset..offset + length].as_ptr() as *const f64,
-            length / std::mem::size_of::<f64>(),
+            length / core::mem::size_of::<f64>(),
           )
         };
         DicomValue::FD(fdslice)
       }
       "FL" => {
         let flslice: &[f32] = unsafe {
-          std::slice::from_raw_parts(
+          core::slice::from_raw_parts(
             buffer[offset..offset + length].as_ptr() as *const f32,
-            length / std::mem::size_of::<f32>(),
+            length / core::mem::size_of::<f32>(),
           )
         };
         DicomValue::FL(flslice)
@@ -400,6 +427,7 @@ impl Instance {
    * Returns an instance from a BufReader.
    * The entire BufReader will be read before returning the instance.
    */
+  #[cfg(not(target_arch = "wasm32"))]
   pub fn from_buf_reader<T: Read>(mut buf_reader: BufReader<T>) -> Result<Self, DicomError> {
     // Read the whole file into a buffer
     let mut buffer: Vec<u8> = vec![];
@@ -413,6 +441,7 @@ impl Instance {
    * Returns an instance from a object that implements Read + Seek.
    * The entire reader will be read before returning the instance.
    */
+  #[cfg(not(target_arch = "wasm32"))]
   pub fn from_reader<T: Read + Seek>(mut reader: T) -> Result<Self, DicomError> {
     // Read the whole file into a buffer
     let mut buffer: Vec<u8> = vec![];
@@ -425,6 +454,7 @@ impl Instance {
   /**
    * Returns an instance from a file path.
    */
+  #[cfg(not(target_arch = "wasm32"))]
   pub fn from_filepath(filepath: &str) -> Result<Self, DicomError> {
     let f = File::open(filepath)?;
     Instance::from_buf_reader(BufReader::new(f))
@@ -454,14 +484,17 @@ impl Instance {
     }
   }
 
-  // #[no_mangle]
-  // pub extern "C" fn from_ptr(ptr: *mut u8, len: usize) -> Self {
-  //   let v = unsafe { Vec::from_raw_parts(ptr, len, len) };
-  //   match Self::from(v) {
-  //     Ok(instance) => instance,
-  //     Err(_) => panic!("Find a way to raise a Javascript exception here"),
-  //   }
-  // }
+  #[no_mangle]
+  pub extern "C" fn instance_from_ptr(ptr: *mut u8, len: usize) -> *const Instance {
+    // console_log(&format!("instance_from_ptr len {}", len));
+    console_log("1");
+    let v = unsafe { Vec::from_raw_parts(ptr, len, len) };
+    console_log("2");
+    match Self::from(v) {
+      Ok(instance) => core::ptr::addr_of!(instance),
+      Err(_) => panic!("Find a way to raise a Javascript exception here"),
+    }
+  }
 
   /**
    * Returns the value of a particular DICOM tag. The first matching attribute
@@ -559,7 +592,7 @@ impl Instance {
       let data: &[u32] = if length != 0 {
         let tmp: &[u8] = self.buffer[offset..offset + length].try_into().unwrap();
         offset += length;
-        unsafe { std::mem::transmute(tmp) } // Basic Offset Table data is 32bits unsigned
+        unsafe { core::mem::transmute(tmp) } // Basic Offset Table data is 32bits unsigned
       } else {
         &[]
       };
@@ -571,7 +604,7 @@ impl Instance {
           element,
           name: "Unknown Tag & Data",
           vr: "",
-          vm: std::ops::Range { start: 0, end: 0 },
+          vm: core::ops::Range { start: 0, end: 0 },
           description: "Unknown Tag & Data",
         });
       items.push(DicomAttribute::new(
@@ -725,7 +758,7 @@ impl Instance {
         element,
         name: "Unknown Tag & Data",
         vr: "UN",
-        vm: std::ops::Range { start: 0, end: 0 },
+        vm: core::ops::Range { start: 0, end: 0 },
         description: "Unknown Tag & Data",
       });
     let vr = if group == 0x0002 || !self.implicit {
@@ -899,7 +932,7 @@ impl<'a> InstanceIter<'a> {
 impl<'a> Iterator for InstanceIter<'a> {
   type Item = Result<DicomAttribute<'a>, DicomError>;
 
-  fn next(&mut self) -> std::option::Option<<Self as Iterator>::Item> {
+  fn next(&mut self) -> core::option::Option<<Self as Iterator>::Item> {
     if self.offset < self.instance.buffer.len() {
       match self.instance.next_attribute(self.offset) {
         Ok(attribute) => {

@@ -40,7 +40,6 @@ use walkdir::WalkDir;
 use rdicom::dicom_tags;
 use rdicom::dicom_tags::{MediaStorageSOPClassUID, Modality};
 use rdicom::instance::Instance;
-use rdicom::misc::is_dicom_file;
 
 mod config;
 mod db;
@@ -175,7 +174,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     if filepath.is_file() {
       count += 1;
       // For each file, check it is a dicom file, load it and parse the requested fields
-      if is_dicom_file(&filepath.to_string_lossy()) {
+      if rdicom::misc::is_dicom_file(&filepath.to_string_lossy()) {
         let filepathstr = filepath.to_string_lossy().to_string();
         let relative_filepath_str = filepath
           .strip_prefix(path_prefix.clone())?

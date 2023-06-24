@@ -21,6 +21,8 @@
 #![allow(dead_code)]
 #![allow(unused_variables)]
 
+use alloc::string::String;
+use alloc::string::ToString;
 use core::hash;
 
 #[derive(Debug, PartialEq, Eq, Clone)]
@@ -29,7 +31,7 @@ pub struct Tag {
   pub element: u16,
   pub name: &'static str,
   pub vr: &'static str,
-  pub vm: std::ops::Range<u16>,
+  pub vm: core::ops::Range<u16>,
   pub description: &'static str,
 }
 

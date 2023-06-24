@@ -18,10 +18,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+use crate::alloc::string::ToString;
+use alloc::boxed::Box;
+use alloc::string::String;
 use core::array::TryFromSliceError;
+use core::error::Error;
+use core::fmt;
 use core::str::Utf8Error;
-use std::error::Error;
-use std::fmt;
 
 #[derive(Debug)]
 pub struct DicomError {
@@ -48,8 +51,8 @@ impl Error for DicomError {
   }
 }
 
-impl From<Box<dyn std::error::Error>> for DicomError {
-  fn from(err: Box<dyn std::error::Error>) -> Self {
+impl From<Box<dyn core::error::Error>> for DicomError {
+  fn from(err: Box<dyn core::error::Error>) -> Self {
     // TODO: Improve this...
     DicomError::new(&format!("{:?}", err))
   }
@@ -74,15 +77,8 @@ impl From<TryFromSliceError> for DicomError {
   }
 }
 
-impl From<std::io::Error> for DicomError {
-  fn from(err: std::io::Error) -> Self {
-    // TODO: Improve this...
-    DicomError::new(&format!("{:?}", err))
-  }
-}
-
-impl From<std::num::ParseIntError> for DicomError {
-  fn from(err: std::num::ParseIntError) -> Self {
+impl From<core::num::ParseIntError> for DicomError {
+  fn from(err: core::num::ParseIntError) -> Self {
     // TODO: Improve this...
     DicomError::new(&format!("{:?}", err))
   }
@@ -91,5 +87,13 @@ impl From<std::num::ParseIntError> for DicomError {
 impl From<&str> for DicomError {
   fn from(err: &str) -> Self {
     DicomError::new(err)
+  }
+}
+
+#[cfg(not(target_arch = "wasm32"))]
+impl From<std::io::Error> for DicomError {
+  fn from(err: std::io::Error) -> Self {
+    // TODO: Improve this...
+    DicomError::new(&format!("{:?}", err))
   }
 }
