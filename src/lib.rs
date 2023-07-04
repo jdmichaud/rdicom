@@ -18,11 +18,37 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#![feature(error_in_core)]
-#![cfg_attr(target_arch = "wasm32", no_std)]
+// Doc on rust and wasm: https://surma.dev/things/rust-to-webassembly/
+
+#![feature(error_in_core)] // core::error:Error only available on nightly for now
+#![cfg_attr(target_arch = "wasm32", no_std)] // If compiling for a wasm target, do not use no_std
 
 #[macro_use]
-extern crate alloc;
+extern crate alloc; // We need this in order to use alloc modules
+
+#[cfg(target_arch = "wasm32")]
+mod allocator;
+
+// #[cfg(target_arch = "wasm32")]
+// #[link(wasm_import_module = "env")]
+// extern "C" {
+//   static memory: *const u8;
+// }
+
+#[cfg(target_arch = "wasm32")]
+#[global_allocator]
+static ALLOCATOR: allocator::WasmAllocator = allocator::WasmAllocator::new();
+
+#[cfg(target_arch = "wasm32")]
+#[panic_handler]
+fn panic(_panic: &core::panic::PanicInfo<'_>) -> ! {
+  // if let Some(s) = panic_info.payload().downcast_ref::<&str>() {
+  //     console_log("panic occurred: {s:?}");
+  // } else {
+  //     console_log("panic occurred");
+  // }
+  core::arch::wasm32::unreachable()
+}
 
 pub mod dicom_tags;
 pub mod error;

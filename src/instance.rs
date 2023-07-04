@@ -485,15 +485,17 @@ impl Instance {
   }
 
   #[no_mangle]
-  pub extern "C" fn instance_from_ptr(ptr: *mut u8, len: usize) -> *const Instance {
-    // console_log(&format!("instance_from_ptr len {}", len));
-    console_log("1");
-    let v = unsafe { Vec::from_raw_parts(ptr, len, len) };
-    console_log("2");
-    match Self::from(v) {
-      Ok(instance) => core::ptr::addr_of!(instance),
-      Err(_) => panic!("Find a way to raise a Javascript exception here"),
-    }
+  pub extern "C" fn instance_from_ptr(ptr: *mut u8, len: usize) {
+    // -> *const Instance {
+    // console_log("1");
+    let mut v = unsafe { Vec::from_raw_parts(ptr, len, len) };
+    v[0] = 111;
+    core::mem::forget(v);
+    // console_log("1");
+    // match Self::from(v) {
+    //   Ok(instance) => core::ptr::addr_of!(instance),
+    //   Err(_) => panic!("Find a way to raise a Javascript exception here"),
+    // }
   }
 
   /**
