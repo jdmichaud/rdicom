@@ -1,0 +1,123 @@
+diff --git a/Cargo.toml b/Cargo.toml
+index b8ff01d..cf090ab 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -14,78 +14,78 @@ crate-type = ["staticlib", "rlib", "cdylib"]
+ [[bin]]
+ name = "scan"
+ path = "src/scan.rs"
+-required-features = ["tools"]
++# required-features = ["tools"]
+ 
+ [[bin]]
+ name = "serve"
+ path = "src/serve.rs"
+-required-features = ["tools"]
++# required-features = ["tools"]
+ 
+ [[bin]]
+ name = "dump"
+ path = "src/dump.rs"
+-required-features = ["tools"]
++# required-features = ["tools"]
+ 
+ [[bin]]
+ name = "test"
+ path = "src/test.rs"
+-required-features = ["test"]
++# required-features = ["test"]
+ 
+ [[bin]]
+ name = "dcm2xml"
+ path = "src/dcm2xml.rs"
+-required-features = ["tools"]
++# required-features = ["tools"]
+ 
+ [[bin]]
+ name = "dcm2json"
+ path = "src/dcm2json.rs"
+-required-features = ["tools"]
++# required-features = ["tools"]
+ 
+ [[bin]]
+ name = "json2dcm"
+ path = "src/json2dcm.rs"
+-required-features = ["tools"]
++# required-features = ["tools"]
+ 
+ # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+ 
+ [dependencies]
+-structopt = { version = "0.3.25", optional = true }
+-walkdir = { version = "2.3.2", optional = true }
+-serde = { version = "1.0.157", features = ["derive"], optional = true }
+-serde_yaml = { version = "0.9.19", optional = true }
+-serde_json = { version = "1.0.94", optional = true }
+-quick-xml = { version = "0.28.1", features = ["serialize"], optional = true }
+-sqlite = { version = "0.30.4", optional = true }
++structopt = { version = "0.3.25", optional = false }
++walkdir = { version = "2.3.2", optional = false }
++serde = { version = "1.0.157", features = ["derive"], optional = false }
++serde_yaml = { version = "0.9.19", optional = false }
++serde_json = { version = "1.0.94", optional = false }
++quick-xml = { version = "0.28.1", features = ["serialize"], optional = false }
++sqlite = { version = "0.30.4", optional = false }
+ # sqlite3-src is a transitive dependency of sqlite but we need to add the
+ # bundled feature so that sqlite library is statically linked in our binaries.
+ # https://stackoverflow.com/a/57782994/2603925
+-sqlite3-src = { version = "0.4", features = ["bundled"], optional = true }
+-warp = { version = "0.3.3", optional = true }
+-tokio = { version = "1", features = ["full"], optional = true }
+-once_cell = { version = "1.17.1", optional = true }
+-base64 = { version = "0.21.0", optional = true }
+-log = { version = "0.4.17", optional = true }
+-simplelog = { version = "0.12.1", optional = true }
+-atty = { version = "0.2", optional = true }
++sqlite3-src = { version = "0.4", features = ["bundled"], optional = false }
++warp = { version = "0.3.3", optional = false }
++tokio = { version = "1", features = ["full"], optional = false }
++once_cell = { version = "1.17.1", optional = false }
++base64 = { version = "0.21.0", optional = false }
++log = { version = "0.4.17", optional = false }
++simplelog = { version = "0.12.1", optional = false }
++atty = { version = "0.2", optional = false }
+ 
+-[features]
+-tools = [
+-  "dep:structopt",
+-  "dep:walkdir",
+-  "dep:serde",
+-  "dep:serde_yaml",
+-  "dep:serde_json",
+-  "dep:quick-xml",
+-  "dep:sqlite",
+-  "dep:sqlite3-src",
+-  "dep:warp",
+-  "dep:tokio",
+-  "dep:once_cell",
+-  "dep:base64",
+-  "dep:log",
+-  "dep:simplelog",
+-  "dep:atty",
+-]
++# [features]
++# tools = [
++#   "dep:structopt",
++#   "dep:walkdir",
++#   "dep:serde",
++#   "dep:serde_yaml",
++#   "dep:serde_json",
++#   "dep:quick-xml",
++#   "dep:sqlite",
++#   "dep:sqlite3-src",
++#   "dep:warp",
++#   "dep:tokio",
++#   "dep:once_cell",
++#   "dep:base64",
++#   "dep:log",
++#   "dep:simplelog",
++#   "dep:atty",
++# ]
+ 
+ [profile.release] # A profile to try to minimize the size
+ panic = "abort" # Abort on Panic
