@@ -10,10 +10,12 @@ function toStr(charArray, ptr, limit=255) {
   return textDecoder.decode(new Uint8Array(charArray.buffer, ptr, end - ptr - 1));
 }
 
+let gmemory;
 async function rdicomInit(rdicom_path) {
   // By default, memory is 1 page (64K). We'll need a little more
   const memory = new WebAssembly.Memory({ initial: 1000 });
   console.log(memory.buffer.byteLength / 1024, 'KB allocated');
+  gmemory = memory;
 
   // Position in memory of the next available free byte.
   // malloc will move that position.
@@ -70,12 +72,12 @@ async function rdicomInit(rdicom_path) {
     malloc: size => {
       const ptr = heapPos;
       heapPos += size;
-      console.log('malloc', size, `-> 0x${ptr.toString(16)}`);
+      console.log('malloc', size, `-> 0x${ptr.toString(16)} (${ptr})`);
       return ptr;
     },
     // libc free reimplementation
     free: ptr => {
-      console.log('free');
+      console.log(`free 0x${ptr.toString(16)} (${ptr})`);
       // Nothing gets freed
     },
     __assert_fail_js: (assertion, file, line, fun) => {
@@ -119,12 +121,27 @@ function setupCanvas(id, useBuffer) {
 
 function getInstanceFromBuffer(rdicom, buffer) {
   const { instance_from_ptr } = rdicom.instance.exports;
+  // Allocate memory and ptr points to index at which the allocated buffer starts
   const ptr = rdicom.env.malloc(buffer.byteLength);
-  // const memory = new Uint8Array(rdicom.env.memory.buffer);
-  // memory.set(new Uint8Array(buffer), ptr);
   console.log('ptr', ptr);
+  // Map the whole wasm memory
+  const memory = new Uint8Array(rdicom.env.memory.buffer);
+  // Set the content of the DICOM file to the wasm memory at index ptr
+  memory.set(new Uint8Array(buffer), ptr);
   const handle = instance_from_ptr(ptr, buffer.byteLength);
   return handle;
+}
+
+function getValue(rdicom, instance, tag) {
+  const { get_value_from_ptr } = rdicom.instance.exports;
+  return get_value_from_ptr(instance, tag);
+}
+
+function fromCString(rdicom, offset) {
+  const memory = new Uint8Array(rdicom.env.memory.buffer);
+  let zero = offset;
+  while (memory[zero] !== 0) zero++;
+  return textDecoder.decode(new Uint8Array(memory.buffer, offset, zero - offset));
 }
 
 async function main() {
@@ -133,6 +150,10 @@ async function main() {
   setupCanvas('vp1', buffer => {
     instance = getInstanceFromBuffer(rdicom, buffer);
     console.log('instance loaded');
+    let value = getValue(rdicom, instance, 0x0020000d);
+    console.log('value offset', value);
+    console.log('StudyInstanceUID', fromCString(rdicom, value));
+    window.instance = instance;
   });
 }
 
