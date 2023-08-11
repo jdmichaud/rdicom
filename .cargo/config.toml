@@ -5,6 +5,7 @@ rustflags = [
   "-C", "target-feature=+crt-static",
   # https://stackoverflow.com/questions/76452839/how-to-compile-rust-for-use-with-wasms-shared-memory
   "-C", "link-args=--import-memory",
+  # "-C", "link-args=-z stack-size=10000000",
 ]
 # target = "x86_64-unknown-linux-gnu"
 target = "x86_64-unknown-linux-musl"

@@ -94,6 +94,11 @@ tools = [
 test = [
   "dep:structopt",
 ]
+test = []
+
+# Temporarily solving a crash in is_supported_type: https://stackoverflow.com/a/76648301/2603925
+[profile.dev]
+debug-assertions = false
 
 [profile.release] # A profile to try to minimize the size
 panic = "abort" # Abort on Panic

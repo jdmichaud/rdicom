@@ -485,17 +485,38 @@ impl Instance {
   }
 
   #[no_mangle]
-  pub extern "C" fn instance_from_ptr(ptr: *mut u8, len: usize) {
-    // -> *const Instance {
+  pub extern "C" fn instance_from_ptr(ptr: *mut u8, len: usize) -> *const Instance {
     // console_log("1");
-    let mut v = unsafe { Vec::from_raw_parts(ptr, len, len) };
-    v[0] = 111;
-    core::mem::forget(v);
+    let buffer = unsafe { Vec::from_raw_parts(ptr, len, len) };
+    // buffer[0] = 111;
+    // core::mem::forget(buffer);
     // console_log("1");
-    // match Self::from(v) {
-    //   Ok(instance) => core::ptr::addr_of!(instance),
-    //   Err(_) => panic!("Find a way to raise a Javascript exception here"),
-    // }
+    match Self::from(buffer) {
+      Ok(instance) => core::ptr::addr_of!(instance),
+      Err(e) => {
+        console_log(&format!("error: {:?}", e));
+        panic!("Find a way to raise a Javascript exception here");
+      }
+    }
+  }
+
+  #[no_mangle]
+  pub extern "C" fn get_value_from_ptr(instance_ptr: *mut u8, tagid: u32) -> *const i8 {
+    let instance: Instance = unsafe { core::ptr::read(instance_ptr as *const Instance) };
+    let tag = &(tagid.try_into().unwrap());
+    let dicom_value = instance.get_value(&tag).unwrap();
+    let c_str;
+    match dicom_value {
+      Some(DicomValue::UI(value)) => {
+        c_str = CString::new(value).unwrap();
+        return c_str.into_raw();
+        // addString(c_str.as_ptr() as *const u8, s.len());
+      }
+      None => {
+        return core::ptr::null();
+      }
+      _ => panic!("AAAAAAaaahhhhh!!!"),
+    }
   }
 
   /**
