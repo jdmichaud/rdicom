@@ -53,22 +53,6 @@ use crate::error::DicomError;
 use crate::misc::has_dicom_header;
 use crate::tags::Tag;
 
-#[link(wasm_import_module = "env")]
-extern "C" {
-  fn log(s: *const u8);
-  fn addString(s: *const u8, len: usize);
-  fn printString();
-}
-
-fn console_log(s: &str) {
-  unsafe {
-    let c_str = CString::new(s).unwrap();
-    addString(c_str.as_ptr() as *const u8, s.len());
-    printString();
-    // log(c_str.as_ptr() as *const u8);
-  }
-}
-
 #[derive(Debug)]
 pub struct Instance {
   pub buffer: Vec<u8>,
@@ -481,41 +465,6 @@ impl Instance {
         instance.implicit = transfer_syntax_uid == "1.2.840.10008.1.2";
         Ok(instance)
       }
-    }
-  }
-
-  #[no_mangle]
-  pub extern "C" fn instance_from_ptr(ptr: *mut u8, len: usize) -> *const Instance {
-    // console_log("1");
-    let buffer = unsafe { Vec::from_raw_parts(ptr, len, len) };
-    // buffer[0] = 111;
-    // core::mem::forget(buffer);
-    // console_log("1");
-    match Self::from(buffer) {
-      Ok(instance) => core::ptr::addr_of!(instance),
-      Err(e) => {
-        console_log(&format!("error: {:?}", e));
-        panic!("Find a way to raise a Javascript exception here");
-      }
-    }
-  }
-
-  #[no_mangle]
-  pub extern "C" fn get_value_from_ptr(instance_ptr: *mut u8, tagid: u32) -> *const i8 {
-    let instance: Instance = unsafe { core::ptr::read(instance_ptr as *const Instance) };
-    let tag = &(tagid.try_into().unwrap());
-    let dicom_value = instance.get_value(&tag).unwrap();
-    let c_str;
-    match dicom_value {
-      Some(DicomValue::UI(value)) => {
-        c_str = CString::new(value).unwrap();
-        return c_str.into_raw();
-        // addString(c_str.as_ptr() as *const u8, s.len());
-      }
-      None => {
-        return core::ptr::null();
-      }
-      _ => panic!("AAAAAAaaahhhhh!!!"),
     }
   }
 
