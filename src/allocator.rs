@@ -25,7 +25,7 @@ use core::alloc::Layout;
 
 #[link(wasm_import_module = "env")]
 extern "C" {
-  fn malloc(size: usize) -> *mut u8;
+  fn malloc(size: usize, align: usize) -> *mut u8;
   fn free(ptr: *const u8);
 }
 
@@ -42,9 +42,9 @@ unsafe impl Sync for WasmAllocator {}
 
 unsafe impl GlobalAlloc for WasmAllocator {
   unsafe fn alloc(&self, layout: Layout) -> *mut u8 {
-    let size = layout.size();
-    // let align = layout.align();
-    malloc(size)
+    let size: usize = layout.size();
+    let align: usize = layout.align();
+    malloc(size, align)
   }
 
   unsafe fn dealloc(&self, ptr: *mut u8, _layout: Layout) {

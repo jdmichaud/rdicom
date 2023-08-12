@@ -96,9 +96,10 @@ test = [
 ]
 test = []
 
+# This was needed because alignment was not taken into account by the allocator.
 # Temporarily solving a crash in is_supported_type: https://stackoverflow.com/a/76648301/2603925
-[profile.dev]
-debug-assertions = false
+# [profile.dev]
+# debug-assertions = false
 
 [profile.release] # A profile to try to minimize the size
 panic = "abort" # Abort on Panic
