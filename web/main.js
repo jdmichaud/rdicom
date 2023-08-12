@@ -41,7 +41,12 @@ async function rdicomInit(rdicom_path) {
       console.log('rdicom:', str);
       str = '';
     },
-    // libc memset reimplementation
+    // Flush the log string buffer with console.log
+    printError: () => {
+      console.error('rdicom:', str);
+      str = '';
+    },
+     // libc memset reimplementation
     memset: (ptr, value, size) => {
       console.log('memset');
       const mem = new Uint8Array(memory.buffer);
