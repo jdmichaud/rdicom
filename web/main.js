@@ -74,10 +74,15 @@ async function rdicomInit(rdicom_path) {
     // libc malloc reimplementation
     // This dumb allocator just churn through the memory and does not keep
     // track of freed memory. Will work for a while...
-    malloc: size => {
-      const ptr = heapPos;
+    malloc: (size, align = 1) => {
+      let ptr = heapPos;
       heapPos += size;
-      console.log('malloc', size, `-> 0x${ptr.toString(16)} (${ptr})`);
+      // Align ptr
+      let mod = ptr % align;
+      if (mod !== 0) {
+        ptr += align - (ptr % align);
+      }
+      console.log(`malloc(${size}, ${align})`, `-> 0x${ptr.toString(16)} (${ptr})`);
       return ptr;
     },
     // libc free reimplementation
