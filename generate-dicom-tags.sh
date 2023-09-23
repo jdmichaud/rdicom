@@ -89,7 +89,7 @@ do
   then
     # to upper case
     echo "      \"${array[0]^^}\" => Ok(${array[1]}),"
-    echo "      \"${array[1]}\" => Ok(${array[1]}),"
+    echo "      \"${array[1]^^}\" => Ok(${array[1]}),"
   fi
 done
 echo "      _ => Err(DicomError::new(&format!(\"Unknown field: {}\", field_name))),"
@@ -110,7 +110,7 @@ do
   then
     # to upper case
     echo "      \"${array[0]^^}\" => Ok(${array[1]}),"
-    echo "      \"${array[1]}\" => Ok(${array[1]}),"
+    echo "      \"${array[1]^^}\" => Ok(${array[1]}),"
   fi
 done
 echo "      _ => Err(DicomError::new(&format!(\"Unknown field: {}\", field_name))),"
