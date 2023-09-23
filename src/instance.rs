@@ -220,7 +220,7 @@ impl<'a> DicomValue<'a> {
           .iter()
           .map(|attribute| DicomValue::from_dicom_attribute(attribute, instance))
           .collect::<_>();
-        DicomValue::new_sequence(values?)
+        DicomValue::SQ(values?)
       }
       _ => match (attribute.group, attribute.element) {
         (0xFFFE, 0xE000) => {
@@ -241,14 +241,6 @@ impl<'a> DicomValue<'a> {
         )?,
       },
     })
-  }
-
-  fn new_sequence(values: Vec<DicomValue<'_>>) -> DicomValue<'_> {
-    DicomValue::SQ(values)
-  }
-
-  fn new_sequence_item(values: Vec<DicomValue<'_>>) -> DicomValue<'_> {
-    DicomValue::SeqItem(values)
   }
 
   fn new<'b>(
@@ -418,7 +410,7 @@ impl Instance {
     // TODO: Do not read the whole buffer. Use an abstraction in order to allow
     // opening file that would not hold in memory.
     buf_reader.read_to_end(&mut buffer)?;
-    Instance::from(buffer)
+    Instance::from(&buffer)
   }
 
   /**
@@ -432,7 +424,7 @@ impl Instance {
     // TODO: Do not read the whole buffer. Use an abstraction in order to allow
     // opening file that would not hold in memory.
     reader.read_to_end(&mut buffer)?;
-    Instance::from(buffer)
+    Instance::from(&buffer)
   }
 
   /**
@@ -447,7 +439,8 @@ impl Instance {
   /**
    * Returns an instance from a Vec<u8>.
    */
-  pub fn from(buffer: Vec<u8>) -> Result<Self, DicomError> {
+  // pub fn from(buffer: Vec<u8>) -> Result<Self, DicomError> {
+  pub fn from(buffer: &[u8]) -> Result<Self, DicomError> {
     // Check it's a DICOM file
     // TODO: Manage headerless DICOM files
     if !has_dicom_header(&buffer) {
@@ -455,7 +448,8 @@ impl Instance {
     }
 
     let mut instance = Instance {
-      buffer,
+      // buffer: buffer.to_vec(), // TODO: Change API to use &[u8]
+      buffer: Vec::from(buffer),
       implicit: false,
     };
 

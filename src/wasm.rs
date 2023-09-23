@@ -22,10 +22,9 @@
 
 extern crate alloc; // We need this in order to use alloc modules
 
-use alloc::vec::Vec;
-
 use crate::instance::DicomValue;
 use crate::instance::Instance;
+use crate::tags::Tag;
 
 /**
  * In wasm environment we will need to implement our own allocator which will
@@ -64,8 +63,17 @@ fn console_error(s: &str) {
 
 #[panic_handler]
 fn panic(panic_info: &core::panic::PanicInfo<'_>) -> ! {
-  if let Some(s) = panic_info.payload().downcast_ref::<&str>() {
-    console_error("panic: {s:?}");
+  if let Some(message) = panic_info.message() {
+    if let Some(location) = panic_info.location() {
+      console_error(&format!(
+        "panic: {message} ({}:{}:{})",
+        location.file(),
+        location.line(),
+        location.column()
+      ));
+    } else {
+      console_error(&format!("panic: {message:?}"));
+    }
   }
   core::arch::wasm32::unreachable()
 }
@@ -75,41 +83,15 @@ fn panic(panic_info: &core::panic::PanicInfo<'_>) -> ! {
  */
 #[no_mangle]
 pub extern "C" fn instance_from_ptr(ptr: *mut u8, len: usize) -> *const Instance {
-  let buffer = unsafe { Vec::from_raw_parts(ptr, len, len) };
+  let buffer = unsafe { alloc::slice::from_raw_parts(ptr, len) };
   match Instance::from(buffer) {
-    Ok(instance) => core::ptr::addr_of!(instance),
+    Ok(instance) => {
+      let p_instance = alloc::boxed::Box::new(instance);
+      alloc::boxed::Box::into_raw(p_instance)
+    }
     Err(e) => {
       panic!("error while creating the instance");
     }
-  }
-}
-
-fn dicom_value_to_memory(dicom_value: &DicomValue) -> *const i8 {
-  match dicom_value {
-    // DicomValue::AE(strings) |
-    // DicomValue::AS(strings) |
-    // DicomValue::CS(strings) |
-    // DicomValue::DA(strings) |
-    // DicomValue::DS(strings) |
-    // DicomValue::DT(strings) |
-    // DicomValue::IS(strings) |
-    // DicomValue::LO(strings) |
-    // DicomValue::LT(strings) |
-    // DicomValue::PN(strings) |
-    // DicomValue::SH(strings) |
-    // DicomValue::ST(strings) |
-    // DicomValue::TM(strings) |
-    // DicomValue::UT(strings) => {
-    //   let buffer_size: usize = strings.iter().reduce(|acc, value| acc += value.length).collect::<_>();
-    //   let buffer = malloc(buffer_size + core::mem::size_of<usize>());
-    //   let number_of_string_as_bytes = strings.length.to_le_bytes();
-    //   core::ptr::copy_nonoverlapping(number_of_string_as_bytes, buffer, core::mem::size_of<usize>());
-    // },
-    DicomValue::UI(value) => {
-      let c_str = CString::new(value.as_str()).unwrap();
-      return c_str.into_raw();
-    }
-    _ => todo!(),
   }
 }
 
@@ -117,19 +99,134 @@ fn dicom_value_to_memory(dicom_value: &DicomValue) -> *const i8 {
  * Gets a value from an instance and a tag as a 32 unsigned bits (e.g.: 0x0020000d)
  */
 #[no_mangle]
-pub extern "C" fn get_value_from_ptr(instance_ptr: *mut u8, tagid: u32) -> *const i8 {
-  let instance: Instance = unsafe { core::ptr::read(instance_ptr as *const Instance) };
-  let tag = &(tagid.try_into().expect("tag to exists"));
-  let dicom_value = instance.get_value(&tag).expect("value to be read");
-  let c_str;
+pub extern "C" fn get_value_from_ptr(instance_ptr: *const Instance, tagid: u32) -> *const u8 {
+  let instance: &Instance = unsafe { instance_ptr.as_ref().unwrap() };
+  // let instance: Instance = unsafe { core::ptr::read(instance_ptr as *const Instance) };
+  // let instance: &Instance = unsafe { &*instance_ptr };
+  let tag: Tag = tagid.try_into().expect("tag to exists");
+  let dicom_value = instance.get_value(&tag).unwrap(); // TODO: to something smarter here
+  let res = match dicom_value {
+    Some(value) => dicom_value_to_memory(&value),
+    None => core::ptr::null(),
+  };
+  // core::mem::forget(instance_ptr); // do not drop the instance
+  res
+  // core::ptr::null()
+  // let instance_ptr: *const u8 = core::ptr::addr_of!(instance) as *const u8;
+  // instance_ptr
+}
+
+fn stream_number<T: Into<f64>>(value: T) -> *const u8 {
+  let fvalue: f64 = value.into();
+  let buffer: *mut u8 = unsafe { ALLOCATOR.alloc_t::<f64>(core::mem::size_of::<f64>()) };
+  let number_of_string_as_bytes = fvalue.to_le_bytes();
+  unsafe {
+    core::ptr::copy_nonoverlapping(
+      number_of_string_as_bytes.as_ptr(),
+      buffer,
+      core::mem::size_of::<f64>(),
+    );
+  }
+  buffer
+}
+
+// Stream to memory the dicom value. We expect Javascript to be able to unpack
+// those depending on the type of the Tag.
+fn dicom_value_to_memory(dicom_value: &DicomValue) -> *const u8 {
+  // let c_str = CString::new("Hello").unwrap();
+  // return c_str.into_raw() as *const u8;
+
   match dicom_value {
-    Some(DicomValue::UI(value)) => {
-      c_str = CString::new(value).unwrap();
-      return c_str.into_raw();
+    DicomValue::AE(strings)
+    | DicomValue::AS(strings)
+    | DicomValue::CS(strings)
+    | DicomValue::DA(strings)
+    | DicomValue::DS(strings)
+    | DicomValue::DT(strings)
+    | DicomValue::IS(strings)
+    | DicomValue::LO(strings)
+    | DicomValue::LT(strings)
+    | DicomValue::PN(strings)
+    | DicomValue::SH(strings)
+    | DicomValue::ST(strings)
+    | DicomValue::TM(strings)
+    | DicomValue::UT(strings) => {
+      let buffer_size: usize = strings.iter().fold(0, |acc, value| acc + value.len());
+      let buffer =
+        unsafe { ALLOCATOR.alloc_t::<usize>(buffer_size + core::mem::size_of::<usize>()) };
+
+      let number_of_string_as_bytes = strings.len().to_le_bytes();
+      unsafe {
+        // Prefix the buffer with the number of element in the vector
+        core::ptr::copy_nonoverlapping(
+          number_of_string_as_bytes.as_ptr(),
+          buffer,
+          core::mem::size_of::<usize>(),
+        );
+        // Then append all the strings as null terminated C strings
+        for s in strings {
+          core::ptr::copy_nonoverlapping(
+            number_of_string_as_bytes.as_ptr(),
+            buffer,
+            core::mem::size_of::<usize>(),
+          );
+        }
+      }
+      buffer
     }
-    None => {
-      return core::ptr::null();
+    DicomValue::UI(value) => {
+      let c_str = CString::new(value.as_str()).unwrap();
+      return c_str.into_raw() as *const u8;
     }
-    _ => todo!(),
+    DicomValue::SL(value) => stream_number(*value),
+    DicomValue::SS(value) => stream_number(*value),
+    DicomValue::UL(value) => stream_number(*value),
+    DicomValue::US(value) => stream_number(*value),
+    DicomValue::FD(values) => {
+      let buffer_size = values.len() * core::mem::size_of::<f64>();
+      let buffer = unsafe { ALLOCATOR.alloc_t::<f64>(buffer_size) };
+      unsafe {
+        core::ptr::copy_nonoverlapping(values.as_ptr() as *const u8, buffer, buffer_size);
+      }
+      buffer
+    }
+    DicomValue::FL(values) => {
+      let buffer_size = values.len() * core::mem::size_of::<f64>();
+      let buffer = unsafe { ALLOCATOR.alloc_t::<f64>(buffer_size) };
+      let fvalues = values
+        .iter()
+        .map(|&n| n as f64)
+        .collect::<alloc::vec::Vec<f64>>();
+      unsafe {
+        core::ptr::copy_nonoverlapping(fvalues.as_ptr() as *const u8, buffer, buffer_size);
+      }
+      buffer
+    }
+    DicomValue::UN(values) | DicomValue::OB(values) => {
+      let buffer_size = values.len() * core::mem::size_of::<f64>();
+      let buffer = unsafe { ALLOCATOR.alloc_t::<f64>(buffer_size) };
+      let fvalues = values
+        .iter()
+        .map(|&n| n as f64)
+        .collect::<alloc::vec::Vec<f64>>();
+      unsafe {
+        core::ptr::copy_nonoverlapping(fvalues.as_ptr() as *const u8, buffer, buffer_size);
+      }
+      buffer
+    }
+    DicomValue::OW(values) => {
+      let buffer_size = values.len() * core::mem::size_of::<f64>();
+      let buffer = unsafe { ALLOCATOR.alloc_t::<f64>(buffer_size) };
+      let fvalues = values
+        .iter()
+        .map(|&n| n as f64)
+        .collect::<alloc::vec::Vec<f64>>();
+      unsafe {
+        core::ptr::copy_nonoverlapping(fvalues.as_ptr() as *const u8, buffer, buffer_size);
+      }
+      buffer
+    }
+    DicomValue::SeqEnd | DicomValue::SeqItemEnd => core::ptr::null(),
+    DicomValue::AT(_) | DicomValue::SQ(_) | DicomValue::SeqItem(_) => todo!(),
   }
 }

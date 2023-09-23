@@ -14,7 +14,7 @@ let gmemory;
 async function rdicomInit(rdicom_path) {
   // By default, memory is 1 page (64K). We'll need a little more
   const memory = new WebAssembly.Memory({ initial: 1000 });
-  console.log(memory.buffer.byteLength / 1024, 'KB allocated');
+  console.log(`${memory.buffer.byteLength / 1024} KB allocated (${memory.buffer.byteLength})`);
   gmemory = memory;
 
   // Position in memory of the next available free byte.
@@ -80,7 +80,9 @@ async function rdicomInit(rdicom_path) {
       // Align ptr
       let mod = ptr % align;
       if (mod !== 0) {
-        ptr += align - (ptr % align);
+        const move_to_align = align - (ptr % align);
+        ptr += move_to_align;
+        heapPos += move_to_align;
       }
       console.log(`malloc(${size}, ${align})`, `-> 0x${ptr.toString(16)} (${ptr})`);
       return ptr;
@@ -100,6 +102,7 @@ async function rdicomInit(rdicom_path) {
   rdicom.env = env;
   window.rdicom = rdicom;
   heapPos = rdicom.instance.exports.__heap_base.value;
+  console.log(`__heap_base.value ${heapPos}`);
 
   console.log('rdicom loaded')
   return rdicom;
@@ -139,6 +142,7 @@ function getInstanceFromBuffer(rdicom, buffer) {
   // Set the content of the DICOM file to the wasm memory at index ptr
   memory.set(new Uint8Array(buffer), ptr);
   const handle = instance_from_ptr(ptr, buffer.byteLength);
+  console.log(`handle ${handle}`);
   return handle;
 }
 
@@ -154,6 +158,12 @@ function fromCString(rdicom, offset) {
   return textDecoder.decode(new Uint8Array(memory.buffer, offset, zero - offset));
 }
 
+function fromF64(rdicom, offset) {
+  const tmp = new Uint8Array(rdicom.env.memory.buffer, offset);
+  const memory = new Float64Array(tmp);
+  return memory[0];
+}
+
 async function main() {
   const rdicom = await rdicomInit('rdicom.wasm');
   let instance; // the DICOM instance
@@ -161,8 +171,11 @@ async function main() {
     instance = getInstanceFromBuffer(rdicom, buffer);
     console.log('instance loaded');
     let value = getValue(rdicom, instance, 0x0020000d);
-    console.log('value offset', value);
-    console.log('StudyInstanceUID', fromCString(rdicom, value));
+    const StudyInstanceUID = fromCString(rdicom, value);
+    console.log('StudyInstanceUID', StudyInstanceUID);
+    value = getValue(rdicom, instance, 0x00280010);
+    const Rows = fromF64(rdicom, value);
+    console.log('Rows', Rows);
     window.instance = instance;
   });
 }
