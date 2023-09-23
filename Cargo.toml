@@ -94,7 +94,6 @@ tools = [
 test = [
   "dep:structopt",
 ]
-test = []
 
 # This was needed because alignment was not taken into account by the allocator.
 # Temporarily solving a crash in is_supported_type: https://stackoverflow.com/a/76648301/2603925
