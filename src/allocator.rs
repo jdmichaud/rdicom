@@ -25,6 +25,7 @@ use core::alloc::Layout;
 
 #[link(wasm_import_module = "env")]
 extern "C" {
+  fn memcpy(dest: *const u8, source: *const u8, len: usize) -> *mut u8;
   fn malloc(size: usize, align: usize) -> *mut u8;
   fn free(ptr: *const u8);
 }
@@ -35,6 +36,10 @@ pub struct WasmAllocator {}
 impl WasmAllocator {
   pub const fn new() -> Self {
     WasmAllocator {}
+  }
+
+  pub unsafe fn alloc_t<T>(&self, size: usize) -> *mut u8 {
+    malloc(size, core::mem::size_of::<T>())
   }
 }
 

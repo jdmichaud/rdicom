@@ -21,7 +21,7 @@
 use alloc::vec::Vec;
 use core::str::from_utf8;
 
-pub fn has_dicom_header(buffer: &Vec<u8>) -> bool {
+pub fn has_dicom_header(buffer: &[u8]) -> bool {
   let _d = buffer[0x80];
   let _i = buffer[0x81];
   let _c = buffer[0x82];
