@@ -23,6 +23,7 @@
 #![allow(unused_imports)]
 
 use atty::Stream;
+use clap::Parser;
 use sqlite::{Connection, ConnectionWithFullMutex};
 use std::collections::{HashMap, HashSet};
 use std::error::Error;
@@ -33,8 +34,6 @@ use std::io::{self, Write};
 use std::path::Path;
 use std::path::PathBuf;
 use std::str::FromStr;
-use structopt::clap::AppSettings;
-use structopt::StructOpt;
 use walkdir::WalkDir;
 
 use rdicom::dicom_tags;
@@ -51,34 +50,33 @@ const ESC: char = 27u8 as char;
 const MEDIA_STORAGE_DIRECTORY_STORAGE: &str = "1.2.840.10008.1.3.10";
 
 /// Scan a folder for DICOM assets and create an index file in CSV or SQL format.
-#[derive(Debug, StructOpt)]
-#[structopt(
+#[derive(Debug, Parser)]
+#[command(
   name = format!("scan {} ({} {})", env!("GIT_HASH"), env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION")),
-  no_version,
-  global_settings = &[AppSettings::DisableVersion]
+  version = "",
 )]
 struct Opt {
   /// YAML configuration file containing the list of files to be indexed from the DICOM assets.
   /// If not provided, scan will use a default configuration (see --print-config)
-  #[structopt(short, long, parse(try_from_str = file_exists))]
+  #[arg(short, long, value_name = "FILE")]
   config: Option<PathBuf>,
   /// Print the configuration used and exit.
-  #[structopt(long)]
+  #[arg(long)]
   print_config: bool,
   /// CSV output file
-  #[structopt(long)]
+  #[arg(long)]
   csv_output: Option<PathBuf>,
   /// SQL output file
-  #[structopt(long)]
+  #[arg(long)]
   sql_output: Option<String>,
   /// Path to a folder containing DICOM assets. Will be scanned recursively.
   input_path: Option<PathBuf>,
   /// Log each files being scan on standard output
-  #[structopt(short, long)]
-  log_files: bool,
+  #[arg(short, long, value_name = "FILE")]
+  log_file: Option<PathBuf>,
   /// Do not use a transaction on the database during the scan (slower but scan
   /// can be interrupted)
-  #[structopt(short, long)]
+  #[arg(short, long)]
   no_transaction: bool,
 }
 
@@ -105,12 +103,37 @@ fn file_exists(path: &str) -> Result<PathBuf, Box<dyn Error>> {
 
 pub const DEFAULT_CONFIG: &str = include_str!("../config.yaml");
 
+fn configure_log(log_file: &PathBuf) -> Result<(), Box<dyn Error>> {
+  use log4rs::append::file::FileAppender;
+  use log4rs::config::{Appender, Config, Root};
+  use log4rs::encode::pattern::PatternEncoder;
+
+  let logfile = FileAppender::builder()
+    .encoder(Box::new(PatternEncoder::new("{l} - {m}\n")))
+    .build(log_file)?;
+  let config = Config::builder()
+    .appender(Appender::builder().build("logfile", Box::new(logfile)))
+    .build(
+      Root::builder()
+        .appender("logfile")
+        .build(log::LevelFilter::Info),
+    )?;
+  log4rs::init_config(config)?;
+  Ok(())
+}
+
 fn main() -> Result<(), Box<dyn Error>> {
   // Retrieve options
-  let opt = Opt::from_args();
+  let opt = Opt::parse();
   // Load the config
   let config_file = if let Some(config_file) = opt.config {
-    std::fs::read_to_string(&config_file)?
+    match std::fs::read_to_string(&config_file) {
+      Err(e) => {
+        eprintln!("error: {e}: {}", config_file.display());
+        std::process::exit(1);
+      }
+      Ok(config) => config,
+    }
   } else {
     DEFAULT_CONFIG.to_string()
   };
@@ -118,6 +141,10 @@ fn main() -> Result<(), Box<dyn Error>> {
     // Print the content of the configuration file and exit
     println!("{}", config_file);
     return Ok(());
+  }
+  // Open log file if need be
+  if let Some(ref log_file) = opt.log_file {
+    let _ = configure_log(log_file);
   }
   // Are we on a terminal
   let on_a_tty = atty::is(Stream::Stdout);
@@ -182,9 +209,8 @@ fn main() -> Result<(), Box<dyn Error>> {
           .to_string();
         match Instance::from_filepath(&filepathstr) {
           Ok(instance) => {
-            if opt.log_files {
-              println!("{}", filepathstr);
-            }
+            let index_start = std::time::Instant::now();
+            log::info!("indexing {}", filepathstr);
             match instance.get_value(&MediaStorageSOPClassUID) {
               // Ignore DICOMDIR files
               Ok(Some(sop_class_uid))
@@ -208,6 +234,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                       print!("\r\x1b[2K");
                       io::stdout().flush()?;
                       eprintln!("{}: {}", filepathstr, e.details);
+                      log::error!("{}: {}", filepathstr, e.details);
                       error_count += 1;
                     }
                   }
@@ -217,9 +244,11 @@ fn main() -> Result<(), Box<dyn Error>> {
                   print!("\r\x1b[2K");
                   io::stdout().flush()?;
                   eprintln!("{}: {:?}", filepathstr, e);
+                  log::error!("{}: {}", filepathstr, e);
                   error_count += 1;
                 }
-                if !opt.log_files {
+                log::info!("indexed {} in {:?}", filepathstr, index_start.elapsed());
+                if on_a_tty {
                   // Fancy display
                   if let Some(study_instance_uid) = data.get("StudyInstanceUID") {
                     study_set.insert(study_instance_uid.clone());
@@ -252,6 +281,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             print!("\r\x1b[2K");
             io::stdout().flush()?;
             eprintln!("{}: {}", filepathstr, e.details);
+            log::error!("{}: {}", filepathstr, e.details);
             error_count += 1;
           }
         }
