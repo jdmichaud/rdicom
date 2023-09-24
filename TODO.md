@@ -13,3 +13,5 @@
 - Use a enum as VR for instance::DicomAttribute struct.
 
 - Embed a default config file in scan/server.
+
+- Add a logfile to scan logging each files being scanned and the time taken.

@@ -580,38 +580,47 @@ impl Instance {
         self.buffer.len()
       )));
     }
-    let group = self.buffer[offset] as u16 | (self.buffer[offset + 1] as u16) << 8;
-    let element = self.buffer[offset + 2] as u16 | (self.buffer[offset + 3] as u16) << 8;
-    offset += 4;
-    if group == 0xFFFE && element == 0xE000 {
-      let length = {
-        let tmp: [u8; 4] = self.buffer[offset..offset + 4].try_into().unwrap();
-        offset += 4;
-        u32::from_le_bytes(tmp) as usize
-      };
-      let data: &[u32] = if length != 0 {
-        let tmp: &[u8] = self.buffer[offset..offset + length].try_into().unwrap();
-        offset += length;
-        unsafe { core::mem::transmute(tmp) } // Basic Offset Table data is 32bits unsigned
-      } else {
-        &[]
-      };
 
-      let tag = (((group as u32) << 16) | element as u32)
-        .try_into()
-        .unwrap_or(Tag {
-          group,
-          element,
-          name: "Unknown Tag & Data",
-          vr: "",
-          vm: core::ops::Range { start: 0, end: 0 },
-          description: "Unknown Tag & Data",
-        });
-      items.push(DicomAttribute::new(
-        group, element, "OB", offset, length, length, tag,
-      ));
-      self.retrieve_next_data_element(offset, items, item_length)?;
-    } else if group == 0xFFFE && element == 0xE0DD {
+    let mut group;
+    let mut element;
+    loop {
+      group = self.buffer[offset] as u16 | (self.buffer[offset + 1] as u16) << 8;
+      element = self.buffer[offset + 2] as u16 | (self.buffer[offset + 3] as u16) << 8;
+      offset += 4;
+      // println!("retrieve_next_data_element: {:#04x?} {:#06x?}:{:#06x?}", offset, group, element);
+      if group == 0xFFFE && element == 0xE000 {
+        let length = {
+          let tmp: [u8; 4] = self.buffer[offset..offset + 4].try_into().unwrap();
+          offset += 4;
+          u32::from_le_bytes(tmp) as usize
+        };
+        let data: &[u32] = if length != 0 {
+          let tmp: &[u8] = self.buffer[offset..offset + length].try_into().unwrap();
+          offset += length;
+          unsafe { core::mem::transmute(tmp) } // Basic Offset Table data is 32bits unsigned
+        } else {
+          &[]
+        };
+
+        let tag = (((group as u32) << 16) | element as u32)
+          .try_into()
+          .unwrap_or(Tag {
+            group,
+            element,
+            name: "Unknown Tag & Data",
+            vr: "",
+            vm: core::ops::Range { start: 0, end: 0 },
+            description: "Unknown Tag & Data",
+          });
+        items.push(DicomAttribute::new(
+          group, element, "OB", offset, length, length, tag,
+        ));
+      } else {
+        break;
+      }
+    }
+
+    if group == 0xFFFE && element == 0xE0DD {
       offset += 4;
       items.push(DicomAttribute::new(
         group,

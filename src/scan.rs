@@ -262,8 +262,15 @@ fn main() -> Result<(), Box<dyn Error>> {
     index_store.end_transaction()?;
   }
 
-  print!("{} files scanned in {} with {} studies and {} series found with following modalities {:?} and {} errors",
-    count, input_path.to_string_lossy(), study_set.len(), series_set.len(), modality_set, error_count);
+  print!(
+    "{} files scanned in {} with {} studies and {} series found with following modalities {:?} and {} errors",
+    count,
+    input_path.to_string_lossy(),
+    study_set.len(),
+    series_set.len(),
+    modality_set,
+    error_count
+  );
   if let Some(sql_output) = opt.sql_output {
     println!(" and index written to {}", sql_output);
   } else {

@@ -30,7 +30,7 @@ use std::io::{self};
 use structopt::clap::AppSettings;
 use structopt::StructOpt;
 
-use rdicom::dicom_tags::{Item, SequenceDelimitationItem};
+use rdicom::dicom_tags::{Item, ItemDelimitationItem, PixelData, SequenceDelimitationItem};
 use rdicom::error::DicomError;
 use rdicom::instance::DicomAttribute;
 use rdicom::instance::DicomValue;
@@ -171,6 +171,57 @@ fn get_tag_sequence<'a>(
         length: "0".to_string(),
         multiplicity: 0,
         tag_name: field.tag.name,
+        level,
+      });
+      return result;
+    }
+    // Special case for pixel sequence
+    _ if field.group == PixelData.group
+      && field.element == PixelData.element
+      && field.length == 0xFFFFFFFF =>
+    {
+      result.push(Data {
+        group: field.group,
+        element: field.element,
+        vr: field.vr.to_string(),
+        value: format!("(PixelSequence #={})", field.subattributes.len() - 1),
+        length: "u/l".to_string(),
+        multiplicity: 1,
+        tag_name: field.tag.name,
+        level,
+      });
+      // TODO: dcmdump displays Pixel Sequences in a specific way. Each item is
+      // displayed with the pixel array instead of the "Item with explicit length"
+      // label printed above. We need to handle this specific behavior here.
+      result.append(
+        &mut field
+          .subattributes
+          .iter()
+          .flat_map(|attr| get_tag_sequence(instance, attr, level + 1))
+          // Contrary to regular SQ field, we filter out delimitation items (to match dcmdump behavior)
+          .filter(|f| {
+            !(f.group == ItemDelimitationItem.group && f.element == ItemDelimitationItem.element)
+          })
+          // For some reason, the last element is a SequenceDelimitationItem. We
+          // need to remove it and add it manually after the append to have the
+          // proper identation
+          .enumerate()
+          .filter(|&(i, _)| i != field.subattributes.len() - 1)
+          .map(|(_, v)| v)
+          .collect::<_>(),
+      );
+      result.push(Data {
+        group: 0xFFFE,
+        element: 0xE0DD,
+        vr: String::from("na"),
+        value: if field.length != 0xFFFFFFFF {
+          "(SequenceDelimitationItem for re-encod.)".to_string()
+        } else {
+          "(SequenceDelimitationItem)".to_string()
+        },
+        length: format!("{}", 0),
+        multiplicity: 0,
+        tag_name: "SequenceDelimitationItem",
         level,
       });
       return result;
