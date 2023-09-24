@@ -87,6 +87,10 @@ tools = [
   "dep:atty",
 ]
 
+test = [
+  "dep:structopt",
+]
+
 [profile.release] # A profile to try to minimize the size
 panic = "abort" # Abort on Panic
 strip = true

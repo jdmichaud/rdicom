@@ -50,7 +50,10 @@ fn main() -> Result<(), Box<dyn Error>> {
     // println!("{:?}", instance.get_value(&0x0008114A.try_into()?)?);
     // println!("{:?}", instance.get_value(&0x00081250.try_into()?)?);
     // println!("{:?}", instance.get_value(&0x7FE00000.try_into()?)?);
-    println!("{:?}", instance.get_value(&RequestedProcedureID)?);
+    // println!("{:?}", instance.get_value(&RequestedProcedureID)?);
+    println!("{:?}", instance.get_value(&rdicom::dicom_tags::PatientName));
+  } else {
+    println!("error: {} unrecognized dicom file", opt.filepath);
   }
   Ok(())
 }
