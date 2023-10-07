@@ -48,21 +48,21 @@ async function rdicomInit(rdicom_path) {
     },
      // libc memset reimplementation
     memset: (ptr, value, size) => {
-      console.log('memset');
+      // console.log('memset');
       const mem = new Uint8Array(memory.buffer);
       mem.fill(value, ptr, ptr + size);
       return ptr;
     },
     // libc memcpy reimplementation
     memcpy: (dest, source, n) => {
-      console.log('memcpy');
+      // console.log('memcpy');
       const mem = new Uint8Array(memory.buffer);
       mem.copyWithin(dest, source, source + n);
       return dest;
     },
     // libc memcmp reimplmentation
     memcmp: (s1, s2, n) => {
-      console.log('memcmp');
+      // console.log('memcmp');
       const charArray = new Uint8Array(memory.buffer);
       for (let i = 0; i < n; i++) {
         if (charArray[s1] !== charArray[s2]) {
@@ -84,12 +84,12 @@ async function rdicomInit(rdicom_path) {
         ptr += move_to_align;
         heapPos += move_to_align;
       }
-      console.log(`malloc(${size}, ${align})`, `-> 0x${ptr.toString(16)} (${ptr})`);
+      // console.log(`malloc(${size}, ${align})`, `-> 0x${ptr.toString(16)} (${ptr})`);
       return ptr;
     },
     // libc free reimplementation
     free: ptr => {
-      console.log(`free 0x${ptr.toString(16)} (${ptr})`);
+      // console.log(`free 0x${ptr.toString(16)} (${ptr})`);
       // Nothing gets freed
     },
     __assert_fail_js: (assertion, file, line, fun) => {
@@ -159,8 +159,7 @@ function fromCString(rdicom, offset) {
 }
 
 function fromF64(rdicom, offset) {
-  const tmp = new Uint8Array(rdicom.env.memory.buffer, offset);
-  const memory = new Float64Array(tmp);
+  const memory = new Float64Array(rdicom.env.memory.buffer, offset)
   return memory[0];
 }
 
@@ -176,6 +175,9 @@ async function main() {
     value = getValue(rdicom, instance, 0x00280010);
     const Rows = fromF64(rdicom, value);
     console.log('Rows', Rows);
+    value = getValue(rdicom, instance, 0x00280011);
+    const Columns = fromF64(rdicom, value);
+    console.log('Columns', Columns);
     window.instance = instance;
   });
 }
