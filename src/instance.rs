@@ -448,7 +448,7 @@ impl Instance {
     }
 
     let mut instance = Instance {
-      // buffer: buffer.to_vec(), // TODO: Change API to use &[u8]
+      // TODO: Change API to use &[u8]
       buffer: Vec::from(buffer),
       implicit: false,
     };
