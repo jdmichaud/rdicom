@@ -110,8 +110,10 @@ async function rdicomInit(rdicom_path) {
 
 const fileReader = new FileReader();
 
-function setupCanvas(id, useBuffer) {
+function setupCanvas(id, useBufferFn) {
   const canvas = document.getElementById(id);
+  canvas.width = 512;
+  canvas.height = 512;
   canvas.addEventListener("dragover", event => {
     // prevent default to allow drop
     event.preventDefault();
@@ -128,7 +130,7 @@ function setupCanvas(id, useBuffer) {
       fileReader.readAsArrayBuffer(file);
     });
     console.log('buffer', buffer);
-    useBuffer(buffer);
+    useBufferFn(canvas, buffer);
   });
 }
 
@@ -163,10 +165,16 @@ function fromF64(rdicom, offset) {
   return memory[0];
 }
 
+function fromArrayBuffer(rdicom, offset) {
+  const vector = new Uint32Array(rdicom.env.memory.buffer, offset);
+  console.log(vector[0], vector[1]);
+  return new Uint8Array(rdicom.env.memory.buffer, vector[1], vector[0]);
+}
+
 async function main() {
   const rdicom = await rdicomInit('rdicom.wasm');
   let instance; // the DICOM instance
-  setupCanvas('vp1', buffer => {
+  setupCanvas('vp1', (canvas, buffer) => {
     instance = getInstanceFromBuffer(rdicom, buffer);
     console.log('instance loaded');
     let value = getValue(rdicom, instance, 0x0020000d);
@@ -179,6 +187,40 @@ async function main() {
     const Columns = fromF64(rdicom, value);
     console.log('Columns', Columns);
     window.instance = instance;
+    value = getValue(rdicom, instance, 0x7fe00010);
+    const pixels = fromArrayBuffer(rdicom, value);
+    console.log(pixels.length, pixels);
+    const imageCanvas = document.createElement('canvas');
+    imageCanvas.width = Columns;
+    imageCanvas.height = Rows;
+    console.log(`${Columns}x${Rows}`);
+    const imageCtx = imageCanvas.getContext('2d');
+    const imageData = imageCtx.getImageData(0, 0, imageCanvas.width, imageCanvas.height);
+    console.log('imageData.data.length / 4', imageData.data.length / 4);
+    for (let i = 0; i < imageData.data.length / 4; ++i) {
+      imageData.data[i * 4    ] = pixels[i * 3    ];
+      imageData.data[i * 4 + 1] = pixels[i * 3 + 1];
+      imageData.data[i * 4 + 2] = pixels[i * 3 + 2];
+      imageData.data[i * 4 + 3] = 0xFF;
+    }
+    imageCtx.putImageData(imageData, 0, 0);
+    const ctx = canvas.getContext('2d');
+    if (Columns / Rows > canvas.width / canvas.height) {
+      // console.log(0, Math.round(canvas.height / 2) - Math.round(Rows / 2));
+      // ctx.drawImage(imageCanvas, 0, Math.round(canvas.height / 2) - Math.round(Rows / 2));
+      const zoom = canvas.width / Columns;
+      ctx.setTransform(
+        zoom, 0, 0, zoom, 0,
+        Math.round(canvas.height / 2) - Math.round(zoom * Rows / 2),
+      );
+    } else {
+      const zoom = canvas.height / Rows;
+      ctx.setTransform(
+        zoom, 0, 0, zoom,
+        Math.round(canvas.width / 2) - Math.round(zoom * Columns / 2), 0,
+      );
+    }
+    ctx.drawImage(imageCanvas, 0, 0);
   });
 }
 
