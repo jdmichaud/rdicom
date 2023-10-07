@@ -33,5 +33,6 @@ pub mod error;
 pub mod instance;
 pub mod misc;
 pub mod tags;
+// Only include the wasm module when compiling to wasm
 #[cfg(target_arch = "wasm32")]
 pub mod wasm;
