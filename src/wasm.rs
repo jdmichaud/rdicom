@@ -101,19 +101,13 @@ pub extern "C" fn instance_from_ptr(ptr: *mut u8, len: usize) -> *const Instance
 #[no_mangle]
 pub extern "C" fn get_value_from_ptr(instance_ptr: *const Instance, tagid: u32) -> *const u8 {
   let instance: &Instance = unsafe { instance_ptr.as_ref().unwrap() };
-  // let instance: Instance = unsafe { core::ptr::read(instance_ptr as *const Instance) };
-  // let instance: &Instance = unsafe { &*instance_ptr };
   let tag: Tag = tagid.try_into().expect("tag to exists");
   let dicom_value = instance.get_value(&tag).unwrap(); // TODO: to something smarter here
   let res = match dicom_value {
     Some(value) => dicom_value_to_memory(&value),
     None => core::ptr::null(),
   };
-  // core::mem::forget(instance_ptr); // do not drop the instance
   res
-  // core::ptr::null()
-  // let instance_ptr: *const u8 = core::ptr::addr_of!(instance) as *const u8;
-  // instance_ptr
 }
 
 fn stream_number<T: Into<f64>>(value: T) -> *const u8 {
@@ -133,9 +127,6 @@ fn stream_number<T: Into<f64>>(value: T) -> *const u8 {
 // Stream to memory the dicom value. We expect Javascript to be able to unpack
 // those depending on the type of the Tag.
 fn dicom_value_to_memory(dicom_value: &DicomValue) -> *const u8 {
-  // let c_str = CString::new("Hello").unwrap();
-  // return c_str.into_raw() as *const u8;
-
   match dicom_value {
     DicomValue::AE(strings)
     | DicomValue::AS(strings)

@@ -29,7 +29,7 @@ In order to build rdicom in webassembly, you need to install the WebAssembly tar
 rustup target add wasm32-unknown-unknown
 ```
 
-Build a release version of `serve` as a static execuable (note the use of the musl target):
+Build a release version of `serve` as a static executable (note the use of the musl target):
 ```bash
 cargo build --bin serve --release --features=tools --target x86_64-unknown-linux-musl
 ```
