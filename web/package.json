@@ -4,7 +4,7 @@
   "description": "A Javascript DICOM parser",
   "main": "dist/index.js",
   "scripts": {
-    "build": "rollup -c rollup.config.js --bundleConfigAsCjs",
+    "build": "rollup --config rollup.config.js --bundleConfigAsCjs",
     "generate-classes": "dicom-class-generator node_modules/@jdmichaud/dicom-model/dist/data-dictionary/data-elements.csv src/local-dataset.ts.template src/local-dataset.ts",
     "start": "rollup --watch --config dev/rollup.config.js --bundleConfigAsCjs",
     "test": "echo \"Error: no test specified\" && exit 1"

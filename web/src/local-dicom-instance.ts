@@ -29,6 +29,10 @@ export class LocalDicomInstanceDecoder {
         const value = this.getValue(this.rdicom, instanceHandle, tag);
         return this.fromArrayBuffer(value) as any;
       }
+      case 'string': {
+        let value = this.getValue(this.rdicom, instanceHandle, tag);
+        return this.fromCString(value) as any;
+      }
       case 'Float32Array':
       case 'Array<Array<string> | undefined>':
       case 'Array<Date | undefined>':
@@ -40,7 +44,6 @@ export class LocalDicomInstanceDecoder {
       case 'Array<Uint8Array | undefined>':
       case 'Date':
       case 'Float64Array':
-      case 'string':
       case 'Uint16Array':
       case 'Uint32Array':
       case 'Array<any | undefined>':

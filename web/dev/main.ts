@@ -1,5 +1,6 @@
 import { LocalDataset, LocalDicomInstanceDecoder } from '../src/index';
 
+// Manage drag and drop of DICOM files onto the canvas.
 function setupCanvas(id: string,
   useBufferFn: (canvas: HTMLCanvasElement, buffer: ArrayBuffer) => void): void {
   const canvas = document.getElementById(id) as HTMLCanvasElement;
@@ -34,16 +35,18 @@ function ensureDefined<T>(value: T | undefined, name: string): T {
   return value;
 }
 
-function main() {
+async function main() {
   console.log('ready');
+  const instanceDecoder = new LocalDicomInstanceDecoder();
+  await instanceDecoder.init('rdicom.wasm');
+
   setupCanvas('vp1', async (canvas, buffer) => {
-    const instanceDecoder = new LocalDicomInstanceDecoder();
-    await instanceDecoder.init('rdicom.wasm');
     const instance = instanceDecoder.getInstanceFromBuffer(buffer);
     const localDataset = new LocalDataset(instanceDecoder, instance);
-    const columns = ensureDefined(localDataset.Columns, 'Columns');
-    const rows = ensureDefined(localDataset.Rows, 'Rows');
-    const pixels = ensureDefined(localDataset.PixelData, 'PixelData');
+    (window as any).localDataset = localDataset;
+    const columns = localDataset.getColumns();
+    const rows = localDataset.getRows();
+    const pixels = await localDataset.getPixelData();
 
     const imageCanvas = document.createElement('canvas');
     imageCanvas.width = columns;
