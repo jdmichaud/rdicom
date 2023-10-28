@@ -689,7 +689,10 @@ impl Instance {
           let mut subattribute;
           let mut suboffset = offset;
           let mut item_length = 0;
-          while suboffset < (offset + length) {
+          // If size is 0xFFFFFFFF, then the sequence will have a delimiter, and
+          // then to not perform offset + length which will overflow on 32bits
+          // architecture (wasm)
+          while length == 0xFFFFFFFF || suboffset < (offset + length) {
             subattribute = self.next_attribute(suboffset)?;
             suboffset = subattribute.data_offset + subattribute.data_length;
             item_length = (subattribute.data_offset + subattribute.data_length) - offset;
@@ -781,7 +784,7 @@ impl Instance {
           let mut item;
           let mut suboffset = offset;
           // Go through the items in the sequence and fetch them recursively
-          while suboffset < (offset + length) {
+          while length == 0xFFFFFFFF || suboffset < (offset + length) {
             item = self.next_attribute(suboffset)?;
             suboffset = item.data_offset + item.data_length;
             item_length = (item.data_offset + item.data_length) - offset;
