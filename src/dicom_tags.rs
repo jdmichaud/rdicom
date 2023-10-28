@@ -3066,7 +3066,7 @@ pub const DarkCurrentCounts: Tag = Tag {
   group: 0x0014,
   element: 0x3050,
   name: "DarkCurrentCounts",
-  vr: "OB or OW",
+  vr: "OB",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Dark Current Counts",
 };
@@ -3084,7 +3084,7 @@ pub const AirCounts: Tag = Tag {
   group: 0x0014,
   element: 0x3070,
   name: "AirCounts",
-  vr: "OB or OW",
+  vr: "OB",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Air Counts",
 };
@@ -10518,7 +10518,7 @@ pub const ZeroVelocityPixelValue: Tag = Tag {
   group: 0x0018,
   element: 0x9810,
   name: "ZeroVelocityPixelValue",
-  vr: "US or SS",
+  vr: "US",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Zero Velocity Pixel Value",
 };
@@ -12714,7 +12714,7 @@ pub const MappedPixelValue: Tag = Tag {
   group: 0x0022,
   element: 0x1452,
   name: "MappedPixelValue",
-  vr: "US or SS",
+  vr: "US",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Mapped Pixel Value",
 };
@@ -13983,7 +13983,7 @@ pub const PerimeterValue: Tag = Tag {
   group: 0x0028,
   element: 0x0071,
   name: "PerimeterValue",
-  vr: "US or SS",
+  vr: "US",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Perimeter Value",
 };
@@ -14100,7 +14100,7 @@ pub const SmallestValidPixelValue: Tag = Tag {
   group: 0x0028,
   element: 0x0104,
   name: "SmallestValidPixelValue",
-  vr: "US or SS",
+  vr: "US",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Smallest Valid Pixel Value",
 };
@@ -14109,7 +14109,7 @@ pub const LargestValidPixelValue: Tag = Tag {
   group: 0x0028,
   element: 0x0105,
   name: "LargestValidPixelValue",
-  vr: "US or SS",
+  vr: "US",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Largest Valid Pixel Value",
 };
@@ -14118,7 +14118,7 @@ pub const SmallestImagePixelValue: Tag = Tag {
   group: 0x0028,
   element: 0x0106,
   name: "SmallestImagePixelValue",
-  vr: "US or SS",
+  vr: "US",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Smallest Image Pixel Value",
 };
@@ -14127,7 +14127,7 @@ pub const LargestImagePixelValue: Tag = Tag {
   group: 0x0028,
   element: 0x0107,
   name: "LargestImagePixelValue",
-  vr: "US or SS",
+  vr: "US",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Largest Image Pixel Value",
 };
@@ -14136,7 +14136,7 @@ pub const SmallestPixelValueInSeries: Tag = Tag {
   group: 0x0028,
   element: 0x0108,
   name: "SmallestPixelValueInSeries",
-  vr: "US or SS",
+  vr: "US",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Smallest Pixel Value in Series",
 };
@@ -14145,7 +14145,7 @@ pub const LargestPixelValueInSeries: Tag = Tag {
   group: 0x0028,
   element: 0x0109,
   name: "LargestPixelValueInSeries",
-  vr: "US or SS",
+  vr: "US",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Largest Pixel Value in Series",
 };
@@ -14154,7 +14154,7 @@ pub const SmallestImagePixelValueInPlane: Tag = Tag {
   group: 0x0028,
   element: 0x0110,
   name: "SmallestImagePixelValueInPlane",
-  vr: "US or SS",
+  vr: "US",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Smallest Image Pixel Value in Plane",
 };
@@ -14163,7 +14163,7 @@ pub const LargestImagePixelValueInPlane: Tag = Tag {
   group: 0x0028,
   element: 0x0111,
   name: "LargestImagePixelValueInPlane",
-  vr: "US or SS",
+  vr: "US",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Largest Image Pixel Value in Plane",
 };
@@ -14172,7 +14172,7 @@ pub const PixelPaddingValue: Tag = Tag {
   group: 0x0028,
   element: 0x0120,
   name: "PixelPaddingValue",
-  vr: "US or SS",
+  vr: "US",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Pixel Padding Value",
 };
@@ -14181,7 +14181,7 @@ pub const PixelPaddingRangeLimit: Tag = Tag {
   group: 0x0028,
   element: 0x0121,
   name: "PixelPaddingRangeLimit",
-  vr: "US or SS",
+  vr: "US",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Pixel Padding Range Limit",
 };
@@ -14487,7 +14487,7 @@ pub const GrayLookupTableDescriptor: Tag = Tag {
   group: 0x0028,
   element: 0x1100,
   name: "GrayLookupTableDescriptor",
-  vr: "US or SS",
+  vr: "US",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Gray Lookup Table Descriptor",
 };
@@ -14496,7 +14496,7 @@ pub const RedPaletteColorLookupTableDescriptor: Tag = Tag {
   group: 0x0028,
   element: 0x1101,
   name: "RedPaletteColorLookupTableDescriptor",
-  vr: "US or SS",
+  vr: "US",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Red Palette Color Lookup Table Descriptor",
 };
@@ -14505,7 +14505,7 @@ pub const GreenPaletteColorLookupTableDescriptor: Tag = Tag {
   group: 0x0028,
   element: 0x1102,
   name: "GreenPaletteColorLookupTableDescriptor",
-  vr: "US or SS",
+  vr: "US",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Green Palette Color Lookup Table Descriptor",
 };
@@ -14514,7 +14514,7 @@ pub const BluePaletteColorLookupTableDescriptor: Tag = Tag {
   group: 0x0028,
   element: 0x1103,
   name: "BluePaletteColorLookupTableDescriptor",
-  vr: "US or SS",
+  vr: "US",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Blue Palette Color Lookup Table Descriptor",
 };
@@ -14532,7 +14532,7 @@ pub const LargeRedPaletteColorLookupTableDescriptor: Tag = Tag {
   group: 0x0028,
   element: 0x1111,
   name: "LargeRedPaletteColorLookupTableDescriptor",
-  vr: "US or SS",
+  vr: "US",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Large Red Palette Color Lookup Table Descriptor",
 };
@@ -14541,7 +14541,7 @@ pub const LargeGreenPaletteColorLookupTableDescriptor: Tag = Tag {
   group: 0x0028,
   element: 0x1112,
   name: "LargeGreenPaletteColorLookupTableDescriptor",
-  vr: "US or SS",
+  vr: "US",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Large Green Palette Color Lookup Table Descriptor",
 };
@@ -14550,7 +14550,7 @@ pub const LargeBluePaletteColorLookupTableDescriptor: Tag = Tag {
   group: 0x0028,
   element: 0x1113,
   name: "LargeBluePaletteColorLookupTableDescriptor",
-  vr: "US or SS",
+  vr: "US",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Large Blue Palette Color Lookup Table Descriptor",
 };
@@ -14568,7 +14568,7 @@ pub const GrayLookupTableData: Tag = Tag {
   group: 0x0028,
   element: 0x1200,
   name: "GrayLookupTableData",
-  vr: "US or SS or OW",
+  vr: "US",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Gray Lookup Table Data",
 };
@@ -14892,7 +14892,7 @@ pub const LUTDescriptor: Tag = Tag {
   group: 0x0028,
   element: 0x3002,
   name: "LUTDescriptor",
-  vr: "US or SS",
+  vr: "US",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "LUT Descriptor",
 };
@@ -14919,7 +14919,7 @@ pub const LUTData: Tag = Tag {
   group: 0x0028,
   element: 0x3006,
   name: "LUTData",
-  vr: "US or OW",
+  vr: "US",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "LUT Data",
 };
@@ -18141,7 +18141,7 @@ pub const RealWorldValueLastValueMapped: Tag = Tag {
   group: 0x0040,
   element: 0x9211,
   name: "RealWorldValueLastValueMapped",
-  vr: "US or SS",
+  vr: "US",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Real World Value Last Value Mapped",
 };
@@ -18159,7 +18159,7 @@ pub const RealWorldValueFirstValueMapped: Tag = Tag {
   group: 0x0040,
   element: 0x9216,
   name: "RealWorldValueFirstValueMapped",
-  vr: "US or SS",
+  vr: "US",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Real World Value First Value Mapped",
 };
@@ -21633,7 +21633,7 @@ pub const HistogramFirstBinValue: Tag = Tag {
   group: 0x0060,
   element: 0x3004,
   name: "HistogramFirstBinValue",
-  vr: "US or SS",
+  vr: "US",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Histogram First Bin Value",
 };
@@ -21642,7 +21642,7 @@ pub const HistogramLastBinValue: Tag = Tag {
   group: 0x0060,
   element: 0x3006,
   name: "HistogramLastBinValue",
-  vr: "US or SS",
+  vr: "US",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Histogram Last Bin Value",
 };
@@ -33585,7 +33585,7 @@ pub const ChannelMinimumValue: Tag = Tag {
   group: 0x5400,
   element: 0x0110,
   name: "ChannelMinimumValue",
-  vr: "OB or OW",
+  vr: "OB",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Channel Minimum Value",
 };
@@ -33594,7 +33594,7 @@ pub const ChannelMaximumValue: Tag = Tag {
   group: 0x5400,
   element: 0x0112,
   name: "ChannelMaximumValue",
-  vr: "OB or OW",
+  vr: "OB",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Channel Maximum Value",
 };
@@ -33621,7 +33621,7 @@ pub const WaveformPaddingValue: Tag = Tag {
   group: 0x5400,
   element: 0x100A,
   name: "WaveformPaddingValue",
-  vr: "OB or OW",
+  vr: "OB",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Waveform Padding Value",
 };
@@ -33630,7 +33630,7 @@ pub const WaveformData: Tag = Tag {
   group: 0x5400,
   element: 0x1010,
   name: "WaveformData",
-  vr: "OB or OW",
+  vr: "OB",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Waveform Data",
 };
@@ -33657,7 +33657,7 @@ pub const PixelData: Tag = Tag {
   group: 0x7FE0,
   element: 0x0010,
   name: "PixelData",
-  vr: "OB or OW",
+  vr: "OB",
   vm: core::ops::Range { start: 0, end: 0 },
   description: "Pixel Data",
 };

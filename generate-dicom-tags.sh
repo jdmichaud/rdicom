@@ -55,8 +55,8 @@ echo ''
 echo 'use alloc::string::String;'
 echo 'use core::convert::TryFrom;'
 echo ''
-echo 'use crate::tags::Tag;'
 echo 'use crate::error::DicomError;'
+echo 'use crate::tags::Tag;'
 echo ''
 
 cat $1 | \
@@ -68,7 +68,8 @@ do
     echo "  group: 0x${array[0]:0:4},"
     echo "  element: 0x${array[0]:4:4},"
     echo "  name: \"${array[1]}\","
-    echo "  vr: \"${array[2]}\","
+    # FIXME: In case of something like "US or SS" we only use the first VR for now
+    echo "  vr: \"${array[2]:0:2}\","
     # TODO: convert ${array[3]} to a Range
     echo "  vm: core::ops::Range { start: 0, end: 0 },"
     echo "  description: \"${array[4]}\","
