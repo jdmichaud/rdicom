@@ -221,6 +221,16 @@ fn dicom_value_to_memory(dicom_value: &DicomValue) -> *const u8 {
       buffer
     }
     DicomValue::SeqEnd | DicomValue::SeqItemEnd => core::ptr::null(),
-    DicomValue::AT(_) | DicomValue::SQ(_) | DicomValue::SeqItem(_) => todo!(),
+    DicomValue::AT(_)
+    | DicomValue::SQ(_)
+    | DicomValue::OL(_)
+    | DicomValue::OV(_)
+    | DicomValue::OF(_)
+    | DicomValue::OD(_)
+    | DicomValue::SV(_)
+    | DicomValue::UC(_)
+    | DicomValue::UR(_)
+    | DicomValue::UV(_)
+    | DicomValue::SeqItem(_) => unimplemented!(),
   }
 }
