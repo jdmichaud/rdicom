@@ -38,8 +38,8 @@ function ensureDefined<T>(value: T | undefined, name: string): T {
 async function main(): Promise<void> {
   console.log('ready');
   const instanceDecoder = new LocalDicomInstanceDecoder();
-  console.log(`${this.memory.buffer.byteLength / 1024} KB allocated (${this.memory.buffer.byteLength})`);
-  await instanceDecoder.init(/* 'rdicom.wasm' */);
+  console.log(`${instanceDecoder.memory.buffer.byteLength / 1024} KB allocated (${instanceDecoder.memory.buffer.byteLength})`);
+  await instanceDecoder.init('rdicom.debug.wasm');
 
   setupCanvas('vp1', async (canvas, buffer) => {
     const instance = instanceDecoder.getInstanceFromBuffer(buffer);
@@ -47,6 +47,7 @@ async function main(): Promise<void> {
     (window as any).localDataset = localDataset;
     const columns = localDataset.getColumns();
     const rows = localDataset.getRows();
+    console.log(`${columns}x${rows}`);
     const pixels = await localDataset.getPixelData();
 
     const imageCanvas = document.createElement('canvas');
