@@ -21,7 +21,7 @@
 /* eslint-disable */
 import { Dataset } from '@jdmichaud/dicom-model';
 
-import { LocalDicomInstanceDecoder, InstanceHandle } from './local-dicom-instance';
+import { LocalDicomInstanceDecoder, InstanceHandle } from './local-dicom-instance-decoder';
 
 /**
  * Implements a Dataset. All the fields are optional and can thus be undefined.

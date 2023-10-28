@@ -19,4 +19,4 @@
 // SOFTWARE.
 
 export { LocalDataset } from './local-dataset';
-export { InstanceHandle, LocalDicomInstanceDecoder } from './local-dicom-instance';
+export { InstanceHandle, LocalDicomInstanceDecoder } from './local-dicom-instance-decoder';

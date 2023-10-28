@@ -1,3 +1,5 @@
+import rdicomcode from '../../target/wasm32-unknown-unknown/release/rdicom.wasm';
+
 export type InstanceHandle = number;
 
 export class LocalDicomInstanceDecoder {
@@ -8,12 +10,11 @@ export class LocalDicomInstanceDecoder {
 
   /**
    * Constructs a LocalDicomInstanceDecoder
-   * @param {number = 1000} nbpages Number of 64K pages to be allocated
+   * @param {number = 1000} nbpages Number of 64K pages to be allocated (Default to 64MB).
    */
   constructor(nbpages: number = 1000) {
     // By default, memory is 1 page (64K). We'll need a little more
     this.memory = new WebAssembly.Memory({ initial: nbpages });
-    console.log(`${this.memory.buffer.byteLength / 1024} KB allocated (${this.memory.buffer.byteLength})`);
   }
 
   get<T>(instanceHandle: InstanceHandle, tag: number, tagtype: string): T {
@@ -30,7 +31,7 @@ export class LocalDicomInstanceDecoder {
         return this.fromArrayBuffer(value) as any;
       }
       case 'string': {
-        let value = this.getValue(this.rdicom, instanceHandle, tag);
+        const value = this.getValue(this.rdicom, instanceHandle, tag);
         return this.fromCString(value) as any;
       }
       case 'Float32Array':
@@ -59,7 +60,9 @@ export class LocalDicomInstanceDecoder {
     if (this.rdicom === undefined) {
       throw new Error('LocalDicomInstanceDecoder not properly initialized (rdicom is undefined)');
     }
-    const { instance_from_ptr } = this.rdicom.instance.exports as { instance_from_ptr: Function };
+    const { instance_from_ptr } = this.rdicom.instance.exports as {
+      instance_from_ptr: (ptr: number, size: number) => InstanceHandle,
+    };
     // Allocate memory and ptr points to index at which the allocated buffer starts
     const ptr = this.runtime.malloc(buffer.byteLength);
     // Map the whole wasm memory
@@ -70,8 +73,11 @@ export class LocalDicomInstanceDecoder {
     return handle;
   }
 
-  private getValue(rdicom: WebAssembly.WebAssemblyInstantiatedSource, instance: InstanceHandle, tag: number) {
-    const { get_value_from_ptr } = rdicom.instance.exports as { get_value_from_ptr: Function };
+  private getValue(rdicom: WebAssembly.WebAssemblyInstantiatedSource, instance: InstanceHandle,
+    tag: number): number {
+    const { get_value_from_ptr } = rdicom.instance.exports as {
+      get_value_from_ptr: (i: InstanceHandle, t: number) => number,
+    };
     return get_value_from_ptr(instance, tag);
   }
 
@@ -100,7 +106,13 @@ export class LocalDicomInstanceDecoder {
     return new Uint8Array(this.memory.buffer, vector[1], vector[0]);
   }
 
-  async init(rdicompath: string) {
+  /**
+   * Initializes the Decoder.
+   * @param {string} rdicompath Path to the rdicom wasm code file to be fetched.
+   * If not provided, the module will use the code embedded in the rdicom-web
+   * module.
+   */
+  async init(rdicompath?: string): Promise<void> {
     const memory = this.memory;
     // Position in memory of the next available free byte.
     // malloc will move that position.
@@ -131,7 +143,7 @@ export class LocalDicomInstanceDecoder {
         console.error('rdicom:', str);
         str = '';
       },
-       // libc memset reimplementation
+      // libc memset reimplementation
       memset: (ptr: number, value: number, size: number) => {
         // console.log('memset');
         const mem = new Uint8Array(memory.buffer);
@@ -163,7 +175,7 @@ export class LocalDicomInstanceDecoder {
         let ptr = heapPos;
         heapPos += size;
         // Align ptr
-        let mod = ptr % align;
+        const mod = ptr % align;
         if (mod !== 0) {
           const move_to_align = align - (ptr % align);
           ptr += move_to_align;
@@ -183,7 +195,10 @@ export class LocalDicomInstanceDecoder {
       },
     }
     // Load the wasm code
-    const rdicom = await WebAssembly.instantiateStreaming(fetch(rdicompath), { env });
+    // const rdicomcode = new Uint8Array();
+    const rdicom = (rdicompath !== undefined)
+      ? await WebAssembly.instantiateStreaming(fetch(rdicompath), { env })
+      : await WebAssembly.instantiate(rdicomcode, { env });
     heapPos = (rdicom.instance.exports.__heap_base as WebAssembly.Global).value;
     this.rdicom = rdicom;
     this.runtime = env;
