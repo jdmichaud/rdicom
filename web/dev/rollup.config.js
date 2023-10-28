@@ -4,7 +4,9 @@ import typescript from 'rollup-plugin-typescript2';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import serve from 'rollup-plugin-serve';
-import copy from 'rollup-plugin-copy'
+import copy from 'rollup-plugin-copy';
+
+const isWatch = process.env.ROLLUP_WATCH;
 
 export default {
   input: 'dev/main.ts',
@@ -33,6 +35,6 @@ export default {
       verbose: true,
       copyOnce: true,
     }),
-    serve('dev/dist'),
+    isWatch && serve('dev/dist'),
   ],
 }
