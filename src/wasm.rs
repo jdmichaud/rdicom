@@ -194,6 +194,7 @@ fn dicom_value_to_memory(dicom_value: &DicomValue) -> *const u8 {
       buffer
     }
     DicomValue::UN(values) | DicomValue::OB(values) => {
+      // Allocate two u32, one for size of the buffer and one for its index (pointer)
       let buffer = unsafe { ALLOCATOR.alloc_t::<u32>(2) };
       let buffer_size = u32::try_from(values.len()).unwrap();
       let ptr = u32::try_from(values.as_ptr() as u64).unwrap();
@@ -209,14 +210,19 @@ fn dicom_value_to_memory(dicom_value: &DicomValue) -> *const u8 {
       buffer
     }
     DicomValue::OW(values) => {
-      let buffer_size = values.len() * core::mem::size_of::<f64>();
-      let buffer = unsafe { ALLOCATOR.alloc_t::<f64>(buffer_size) };
-      let fvalues = values
-        .iter()
-        .map(|&n| n as f64)
-        .collect::<alloc::vec::Vec<f64>>();
+      // Allocate two u32, one for size of the buffer and one for its index (pointer)
+      let buffer = unsafe { ALLOCATOR.alloc_t::<u32>(2) };
+      // OW is 16bits so 2 bytes
+      let buffer_size = u32::try_from(values.len() * 2).unwrap();
+      let ptr = u32::try_from(values.as_ptr() as u64).unwrap();
+      // TODO: We should check pointer size maybe
+      let data: alloc::vec::Vec<u32> = vec![buffer_size, ptr];
       unsafe {
-        core::ptr::copy_nonoverlapping(fvalues.as_ptr() as *const u8, buffer, buffer_size);
+        core::ptr::copy_nonoverlapping(
+          data.as_ptr() as *const u8,
+          buffer,
+          2 * core::mem::size_of::<u32>(),
+        );
       }
       buffer
     }
