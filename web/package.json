@@ -8,7 +8,7 @@
     "build": "(test -f ../target/wasm32-unknown-unknown/release/rdicom.wasm || (echo ' ⚠️ Missing ../target/wasm32-unknown-unknown/release/rdicom.wasm' && false)) && rollup --config rollup.config.js --bundleConfigAsCjs",
     "generate-classes": "dicom-class-generator node_modules/@jdmichaud/dicom-model/dist/data-dictionary/data-elements.csv src/local-dataset.ts.template src/local-dataset.ts",
     "lint": "eslint --config .eslintrc.js 'src/**/*.ts' --ignore-pattern 'src/**/*.spec.ts'",
-    "start": "npm run build && rollup --watch --config dev/rollup.config.js --bundleConfigAsCjs",
+    "start": "rollup --watch --config dev/rollup.config.js --bundleConfigAsCjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

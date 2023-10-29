@@ -5,12 +5,20 @@
   <meta charset="utf-8">
   <link rel="icon" href="data:;base64,="> <!-- Prevent request to favicon -->
   <script src="split.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjs@6.0.3/dist/math.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/numericjs@1.2.6/numeric-1.2.6.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/jdmichaud/linalg/mathjs.shim.js"></script>
   <style type="text/css">
     canvas {
       background-color: black;
+    }
+    body {
+      font-family: monospace;
+      font-size: 12px;
     }
   </style>
 </head>
 <body>
   <canvas id="vp1" width=512 height=512></canvas>
+  <div id="status"></div>
 </body>

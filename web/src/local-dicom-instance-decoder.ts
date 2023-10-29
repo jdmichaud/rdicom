@@ -1,3 +1,5 @@
+// We are importing the release build of rdicom.wasm. Make sure that the latest
+// version has been compiled before building the frontend component.
 import rdicomcode from '../../target/wasm32-unknown-unknown/release/rdicom.wasm';
 
 export type InstanceHandle = number;
