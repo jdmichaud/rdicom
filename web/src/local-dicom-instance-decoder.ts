@@ -23,23 +23,23 @@ export class LocalDicomInstanceDecoder {
     if (this.rdicom === undefined) {
       throw new Error('LocalDicomInstanceDecoder not properly initialized. rdicom is undefined.');
     }
+    const value = this.getValue(this.rdicom, instanceHandle, tag);
     switch (tagtype) {
       case 'number': {
-        const value = this.getValue(this.rdicom, instanceHandle, tag);
         return this.fromF64(value) as any;
       }
       case 'Uint8Array': {
-        const value = this.getValue(this.rdicom, instanceHandle, tag);
         return this.fromArrayBuffer(value) as any;
       }
       case 'string': {
-        const value = this.getValue(this.rdicom, instanceHandle, tag);
         return this.fromCString(value) as any;
+      }
+      case 'Array<number | undefined>': {
+        return this.fromCStringArray(value).map(s => parseFloat(s)) as any;
       }
       case 'Float32Array':
       case 'Array<Array<string> | undefined>':
       case 'Array<Date | undefined>':
-      case 'Array<number | undefined>':
       case 'Array<Partial<Dataset> | undefined>':
       case 'Array<string>':
       case 'Array<string | undefined>':
@@ -106,6 +106,21 @@ export class LocalDicomInstanceDecoder {
   fromArrayBuffer(offset: number): Uint8Array {
     const vector = new Uint32Array(this.memory.buffer, offset);
     return new Uint8Array(this.memory.buffer, vector[1], vector[0]);
+  }
+
+  fromCStringArray(offset: number): Array<string> {
+    const result: Array<string> = [];
+    let numberOfStrings = new Uint32Array(this.memory.buffer, offset)[0] + 1;
+    // The first string start 4 bytes after the 4 bytes number of string indeed
+    let stringOffset = offset + 4;
+    while (--numberOfStrings > 0) {
+      const stringLength = new Uint32Array(this.memory.buffer, stringOffset)[0];
+      stringOffset += 4;
+      const s = this.textDecoder.decode(new Uint8Array(this.memory.buffer, stringOffset, stringLength));
+      stringOffset += stringLength;
+      result.push(s);
+    }
+    return result;
   }
 
   /**

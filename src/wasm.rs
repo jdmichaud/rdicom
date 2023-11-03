@@ -90,7 +90,7 @@ pub extern "C" fn instance_from_ptr(ptr: *mut u8, len: usize) -> *const Instance
       alloc::boxed::Box::into_raw(p_instance)
     }
     Err(e) => {
-      panic!("error while creating the instance");
+      panic!("error: {e} while creating the instance");
     }
   }
 }
@@ -142,25 +142,33 @@ fn dicom_value_to_memory(dicom_value: &DicomValue) -> *const u8 {
     | DicomValue::ST(strings)
     | DicomValue::TM(strings)
     | DicomValue::UT(strings) => {
-      let buffer_size: usize = strings.iter().fold(0, |acc, value| acc + value.len());
-      let buffer =
-        unsafe { ALLOCATOR.alloc_t::<usize>(buffer_size + core::mem::size_of::<usize>()) };
+      // Compute the size of all the string put together + a 4 bytes for each string length
+      let buffer_size: usize = strings.iter().fold(0, |acc, value| acc + value.len() + 4);
 
-      let number_of_string_as_bytes = strings.len().to_le_bytes();
+      // The buffer will contain the number of strings and then, for each string,
+      // the size of the string and a copy of the string without the terminating
+      // null character
+      let buffer = unsafe { ALLOCATOR.alloc_t::<usize>(buffer_size + core::mem::size_of::<u32>()) };
+      let mut ptr = buffer;
+
       unsafe {
         // Prefix the buffer with the number of element in the vector
+        let number_of_string: u32 = u32::try_from(strings.len()).unwrap();
         core::ptr::copy_nonoverlapping(
-          number_of_string_as_bytes.as_ptr(),
-          buffer,
-          core::mem::size_of::<usize>(),
+          number_of_string.to_le_bytes().as_ptr(),
+          ptr,
+          core::mem::size_of::<u32>(),
         );
-        // Then append all the strings as null terminated C strings
+        ptr = ptr.wrapping_add(core::mem::size_of::<u32>());
+        // Then append the pointer to all the string
         for s in strings {
-          core::ptr::copy_nonoverlapping(
-            number_of_string_as_bytes.as_ptr(),
-            buffer,
-            core::mem::size_of::<usize>(),
-          );
+          let c_str = CString::new(s.clone()).unwrap();
+          let ssize = u32::try_from(s.len()).unwrap().to_le_bytes();
+          core::ptr::copy_nonoverlapping(ssize.as_ptr(), ptr, core::mem::size_of::<u32>());
+          ptr = ptr.wrapping_add(core::mem::size_of::<u32>());
+          // Do not copy the terminal null character
+          core::ptr::copy_nonoverlapping(c_str.as_ptr(), ptr as *mut i8, s.len());
+          ptr = ptr.wrapping_add(s.len());
         }
       }
       buffer

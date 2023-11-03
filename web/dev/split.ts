@@ -41,6 +41,14 @@ function ensureDefined<T>(value: T | undefined, name: string): T {
 type InstanceSet = { [key: string]: LocalDataset[] };
 
 function splitSeries(instances: InstanceSet): LocalDataset[] {
+  const instancesToSplit = instances[Object.keys(instances)[0]];
+  // Compute the direction of the volume based on the first frame
+  const firstInstance = instancesToSplit[0];
+  const imageOrientationPatient = firstInstance.getImageOrientationPatient();
+  console.log(imageOrientationPatient);
+  instancesToSplit.reduce((acc, value) => {
+    return acc;
+  }, );
   return [];
 }
 
@@ -48,7 +56,7 @@ async function main(): Promise<void> {
   console.log('ready');
   const instanceDecoder = new LocalDicomInstanceDecoder(700 * 1024 / 64);
   console.log(`${instanceDecoder.memory.buffer.byteLength / 1024} KB allocated (${instanceDecoder.memory.buffer.byteLength})`);
-  await instanceDecoder.init(/* 'rdicom.debug.wasm' */);
+  await instanceDecoder.init('rdicom.debug.wasm');
 
   const statusLine = document.getElementById('status') as HTMLDivElement;
   let count = 0;
@@ -60,12 +68,11 @@ async function main(): Promise<void> {
     instances[localDataset.getSeriesInstanceUID()] ??= [];
     instances[localDataset.getSeriesInstanceUID()].push(localDataset);
     (window as any).localDataset = localDataset;
-    const columns = localDataset.getColumns();
-    const rows = localDataset.getRows();
-    const pixels = await localDataset.getPixelData();
     statusLine.innerText = `${count} / ${nbfiles} (${Math.round(count / nbfiles * 100)}%)`;
-    console.log(`${columns}x${rows} ${pixels.length}`);
 
+    if (count === nbfiles) {
+      splitSeries(instances);
+    }
     // const imageCanvas = document.createElement('canvas');
     // imageCanvas.width = columns;
     // imageCanvas.height = rows;
