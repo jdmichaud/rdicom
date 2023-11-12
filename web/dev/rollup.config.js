@@ -5,6 +5,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import serve from 'rollup-plugin-serve';
 import sourcemaps from 'rollup-plugin-sourcemaps'
 import copy from 'rollup-plugin-copy';
+import livereload from 'rollup-plugin-livereload';
 
 const isWatch = process.env.ROLLUP_WATCH;
 
@@ -35,6 +36,7 @@ export default [{
       copyOnce: true,
     }),
     isWatch && serve('dev/dist'),
+    isWatch && livereload(),
   ],
 }, {
   input: 'dev/split.ts',
@@ -62,5 +64,6 @@ export default [{
       copyOnce: true,
     }),
     isWatch && serve('dev/dist'),
+    isWatch && livereload(),
   ],
 }]
