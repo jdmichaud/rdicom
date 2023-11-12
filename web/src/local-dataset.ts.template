@@ -41,7 +41,7 @@ export class LocalDataset implements Dataset {
   }
 
   get x{{=element.tag.toLowerCase()}}(): {{=element.returnedType}} | undefined {
-    {{? !element.tag.toLowerCase().includes('x') }}{{? !element.returnedType === 'any' }}return this.instanceDecoder.get<string>(this.instance, 0x{{=element.tag.toLowerCase()}}, 'string');{{??}}return this.instanceDecoder.get<{{=element.returnedType}}>(this.instance, 0x{{=element.tag.toLowerCase()}}, '{{=element.returnedType}}');{{?}}{{??}}throw new Error('Unsupported field {{=element.keyword}} ({{=element.tag}})'){{?}}
+    {{? !element.tag.toLowerCase().includes('x') }}{{? !element.returnedType === 'any' }}return this.instanceDecoder.get<string>(this.instance, 0x{{=element.tag.toLowerCase()}}, 'string', '{{=element.vrArray[0]}}');{{??}}return this.instanceDecoder.get<{{=element.returnedType}}>(this.instance, 0x{{=element.tag.toLowerCase()}}, '{{=element.returnedType}}', '{{=element.vrArray[0]}}');{{?}}{{??}}throw new Error('Unsupported field {{=element.keyword}} ({{=element.tag}})'){{?}}
   }
 
   {{? element.isLinkable }}async get{{=element.keyword}}(): Promise<{{=element.returnedType}}> {

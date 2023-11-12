@@ -19,23 +19,39 @@ export class LocalDicomInstanceDecoder {
     this.memory = new WebAssembly.Memory({ initial: nbpages });
   }
 
-  get<T>(instanceHandle: InstanceHandle, tag: number, tagtype: string): T {
+  get<T>(instanceHandle: InstanceHandle, tag: number, tagtype: string, vr: string): T {
     if (this.rdicom === undefined) {
       throw new Error('LocalDicomInstanceDecoder not properly initialized. rdicom is undefined.');
     }
-    const value = this.getValue(this.rdicom, instanceHandle, tag);
+
+    const addr = this.getValueAddr(this.rdicom, instanceHandle, tag);
+
     switch (tagtype) {
       case 'number': {
-        return this.fromF64(value) as any;
+        switch (vr) {
+          case 'CS':
+          case 'DS':
+          case 'IS': {
+            const strings = this.fromCStringArray(addr);
+            return parseFloat(strings[0]) as any;
+          }
+          default:
+            return this.fromF64(addr) as any;
+        }
       }
       case 'Uint8Array': {
-        return this.fromArrayBuffer(value) as any;
+        return this.fromArrayBuffer(addr) as any;
       }
       case 'string': {
-        return this.fromCString(value) as any;
+        return this.fromCString(addr) as any;
       }
+      case 'Array<number>':
       case 'Array<number | undefined>': {
-        return this.fromCStringArray(value).map(s => parseFloat(s)) as any;
+        return this.fromCStringArray(addr).map(s => parseFloat(s)) as any;
+      }
+      case 'Array<string>':
+      case 'Array<string | undefined>': {
+        return this.fromCStringArray(addr) as any;
       }
       case 'Float32Array':
       case 'Array<Array<string> | undefined>':
@@ -66,7 +82,7 @@ export class LocalDicomInstanceDecoder {
       instance_from_ptr: (ptr: number, size: number) => InstanceHandle,
     };
     // Allocate memory and ptr points to index at which the allocated buffer starts
-    const ptr = this.runtime.malloc(buffer.byteLength);
+    const ptr = this.runtime.malloc(buffer.byteLength, 8); // Align on 64 bits
     // Map the whole wasm memory
     const memory = new Uint8Array(this.memory.buffer);
     // Set the content of the DICOM file to the wasm memory at index ptr
@@ -75,7 +91,7 @@ export class LocalDicomInstanceDecoder {
     return handle;
   }
 
-  private getValue(rdicom: WebAssembly.WebAssemblyInstantiatedSource, instance: InstanceHandle,
+  private getValueAddr(rdicom: WebAssembly.WebAssemblyInstantiatedSource, instance: InstanceHandle,
     tag: number): number {
     const { get_value_from_ptr } = rdicom.instance.exports as {
       get_value_from_ptr: (i: InstanceHandle, t: number) => number,
