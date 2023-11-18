@@ -37,7 +37,7 @@ function ensureDefined<T>(value: T | undefined, name: string): T {
 
 async function main(): Promise<void> {
   console.log('ready');
-  const instanceDecoder = new LocalDicomInstanceDecoder();
+  const instanceDecoder = await LocalDicomInstanceDecoder.create();
   console.log(`${instanceDecoder.memory.buffer.byteLength / 1024} KB allocated (${instanceDecoder.memory.buffer.byteLength})`);
   await instanceDecoder.init('rdicom.debug.wasm');
 

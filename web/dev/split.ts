@@ -90,9 +90,11 @@ interface LUTData {
 
 async function main(): Promise<void> {
   console.log('ready');
-  const instanceDecoder = new LocalDicomInstanceDecoder(700 * 1024 / 64);
+  const instanceDecoder = await LocalDicomInstanceDecoder.create({
+    nbpages: 700 * 1024 / 64,
+    // rdicompath: rdicom.debug.wasm,
+  });
   console.log(`${instanceDecoder.memory.buffer.byteLength / 1024} KB allocated (${instanceDecoder.memory.buffer.byteLength})`);
-  await instanceDecoder.init(/* 'rdicom.debug.wasm' */);
 
   const statusLine = document.getElementById('status') as HTMLDivElement;
   let count = 0;

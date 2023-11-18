@@ -4,6 +4,15 @@ import rdicomcode from '../../target/wasm32-unknown-unknown/release/rdicom.wasm'
 
 export type InstanceHandle = number;
 
+export interface LocalDicomInstanceDecoderSpecifier {
+  // Number of 64K pages to be allocated (Default to 64MB).
+  nbpages?: number;
+  // Path to the rdicom wasm code file to be fetched.
+  // If not provided, the module will use the code embedded in the rdicom-web
+  // module.
+  rdicompath?: string;
+}
+
 export class LocalDicomInstanceDecoder {
   memory: WebAssembly.Memory;
   textDecoder = new TextDecoder();
@@ -11,10 +20,18 @@ export class LocalDicomInstanceDecoder {
   runtime: any; // TODO: need to define a type here.
 
   /**
+   * Creates a LocalDicomInstanceDecoder and initializes it.
+   * @returns an initialized LocalDicomInstanceDecoder.
+   */
+  static async create(specifier?: LocalDicomInstanceDecoderSpecifier): Promise<LocalDicomInstanceDecoder> {
+    return new LocalDicomInstanceDecoder(specifier?.nbpages ?? 1000).init(specifier?.rdicompath);
+  }
+
+  /**
    * Constructs a LocalDicomInstanceDecoder
    * @param {number = 1000} nbpages Number of 64K pages to be allocated (Default to 64MB).
    */
-  constructor(nbpages: number = 1000) {
+  protected constructor(nbpages: number = 1000) {
     // By default, memory is 1 page (64K). We'll need a little more
     this.memory = new WebAssembly.Memory({ initial: nbpages });
   }
@@ -145,7 +162,7 @@ export class LocalDicomInstanceDecoder {
    * If not provided, the module will use the code embedded in the rdicom-web
    * module.
    */
-  async init(rdicompath?: string): Promise<void> {
+  async init(rdicompath?: string): Promise<LocalDicomInstanceDecoder> {
     const memory = this.memory;
     // Position in memory of the next available free byte.
     // malloc will move that position.
@@ -235,6 +252,8 @@ export class LocalDicomInstanceDecoder {
     heapPos = (rdicom.instance.exports.__heap_base as WebAssembly.Global).value;
     this.rdicom = rdicom;
     this.runtime = env;
+
+    return this;
   }
 
   private toDate(datestr: string | undefined): Date | undefined {
