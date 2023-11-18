@@ -1,6 +1,6 @@
 {
   "name": "@jdmichaud/rdicom-web",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A Javascript DICOM parser",
   "main": "dist/index.js",
   "scripts": {
@@ -9,6 +9,7 @@
     "generate-classes": "dicom-class-generator node_modules/@jdmichaud/dicom-model/dist/data-dictionary/data-elements.csv src/local-dataset.ts.template src/local-dataset.ts",
     "lint": "eslint --config .eslintrc.js 'src/**/*.ts' --ignore-pattern 'src/**/*.spec.ts'",
     "start": "rollup --watch --config dev/rollup.config.js --bundleConfigAsCjs",
+    "prepublishOnly": "npm run all",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
