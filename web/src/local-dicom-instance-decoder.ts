@@ -36,12 +36,15 @@ export class LocalDicomInstanceDecoder {
     this.memory = new WebAssembly.Memory({ initial: nbpages });
   }
 
-  get<T>(instanceHandle: InstanceHandle, tag: number, tagtype: string, vr: string): T {
+  get<T>(instanceHandle: InstanceHandle, tag: number, tagtype: string, vr: string): T | undefined {
     if (this.rdicom === undefined) {
       throw new Error('LocalDicomInstanceDecoder not properly initialized. rdicom is undefined.');
     }
 
     const addr = this.getValueAddr(this.rdicom, instanceHandle, tag);
+    if (addr === 0) { // field not found
+      return undefined;
+    }
 
     switch (tagtype) {
       case 'number': {
@@ -50,7 +53,9 @@ export class LocalDicomInstanceDecoder {
           case 'DS':
           case 'IS': {
             const strings = this.fromCStringArray(addr);
-            return parseFloat(strings[0]) as any;
+            return (strings.length > 0)
+              ? parseFloat(strings[0]) as any
+              : undefined;
           }
           default:
             return this.fromF64(addr) as any;

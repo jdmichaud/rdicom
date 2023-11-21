@@ -24,7 +24,6 @@ extern crate alloc; // We need this in order to use alloc modules
 
 use crate::instance::DicomValue;
 use crate::instance::Instance;
-use crate::tags::Tag;
 
 /**
  * In wasm environment we will need to implement our own allocator which will
@@ -101,13 +100,20 @@ pub extern "C" fn instance_from_ptr(ptr: *mut u8, len: usize) -> *const Instance
 #[no_mangle]
 pub extern "C" fn get_value_from_ptr(instance_ptr: *const Instance, tagid: u32) -> *const u8 {
   let instance: &Instance = unsafe { instance_ptr.as_ref().unwrap() };
-  let tag: Tag = tagid.try_into().expect("tag to exists");
-  let dicom_value = instance.get_value(&tag).unwrap(); // TODO: to something smarter here
-  let res = match dicom_value {
-    Some(value) => dicom_value_to_memory(&value),
-    None => core::ptr::null(),
-  };
-  res
+  let tag = tagid.try_into();
+  if let Ok(tag) = tag {
+    if let Ok(dicom_value) = instance.get_value(&tag) {
+      match dicom_value {
+        Some(value) => dicom_value_to_memory(&value),
+        None => core::ptr::null(),
+      }
+    } else {
+      core::ptr::null()
+    }
+  } else {
+    // Field not found
+    core::ptr::null()
+  }
 }
 
 fn stream_number<T: Into<f64>>(value: T) -> *const u8 {
