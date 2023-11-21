@@ -92,7 +92,7 @@ async function main(): Promise<void> {
   console.log('ready');
   const instanceDecoder = await LocalDicomInstanceDecoder.create({
     nbpages: 700 * 1024 / 64,
-    // rdicompath: rdicom.debug.wasm,
+    // rdicompath: 'rdicom.debug.wasm',
   });
   console.log(`${instanceDecoder.memory.buffer.byteLength / 1024} KB allocated (${instanceDecoder.memory.buffer.byteLength})`);
 
