@@ -152,7 +152,9 @@ export class LocalDicomInstanceDecoder {
     // The first string start 4 bytes after the 4 bytes number of string indeed
     let stringOffset = offset + 4;
     while (--numberOfStrings > 0) {
-      const stringLength = new Uint32Array(this.memory.buffer, stringOffset)[0];
+      // const stringLength = new Uint32Array(this.memory.buffer, stringOffset)[0];
+      const byteArray = new Uint8Array(this.memory.buffer, stringOffset);
+      const stringLength = byteArray[0] | byteArray[1] << 8 | byteArray[2] << 16 | byteArray[3] << 24;
       stringOffset += 4;
       const s = this.textDecoder.decode(new Uint8Array(this.memory.buffer, stringOffset, stringLength));
       stringOffset += stringLength;
