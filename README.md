@@ -75,7 +75,7 @@ on a provided configuration file. The fields are then either dump as
 to the standard output or into an [sqlite](https://sqlite.org/index.html) database.
 
 ```bash
-./scan --config config.yaml --sql-output index.db /path/to/DICOM
+./scan --sql-output index.db /path/to/DICOM
 ```
 
 The configuration will list the fields to be extracted to the index database. For example:
@@ -99,6 +99,10 @@ indexing:
 table_name: dicom_index
 ```
 
+The default configuration can be printed with `scan --print-output`. You can
+redirect the output to a file, tweak it and then use it with
+`scan --config myconfig.json`.
+
 ## `serve`
 
 `serve` will serve a DICOMWeb service backed by a sqlite database previously created
@@ -106,13 +110,17 @@ by `scan`.
 
 How to start `serve`?:
 ```bash
-serve --sqlfile base.db /path/to/DICOM
+serve --sqlfile base.db --dcmpath /path/to/DICOM
 ```
 
 or from cargo:
 ```bash
 cargo run --bin serve -- --sqlfile base.db /path/to/DICOM
 ```
+
+The default configuration can be printed with `serve --print-output`. You can
+redirect the output to a file, tweak it and then use it with
+`serve --config myconfig.json`.
 
 The library `crate-type` must be set to `cdylib` in `Cargo.toml`.
 
