@@ -57,7 +57,7 @@ use crate::index_store::IndexStore;
 use index_store::SqlIndexStoreWithMutex;
 use rdicom::dicom_tags;
 use rdicom::error::DicomError;
-use rdicom::instance::Instance;
+use rdicom::instance::{DicomValue, Instance};
 use rdicom::tags::Tag;
 
 mod config;
@@ -662,13 +662,63 @@ fn get_serie(ui: &str) -> HashMap<String, String> {
   HashMap::from([(String::from("link"), ui.to_string())])
 }
 
-fn get_instance(ui: &str) -> HashMap<String, String> {
-  HashMap::from([(String::from("link"), ui.to_string())])
+fn get_instance<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
+  connection: &Connection,
+  instance_factory: &T,
+  params: &WadoQueryParameters,
+  search_terms: &HashMap<Tag, String>,
+) -> Result<Vec<HashMap<String, String>>, Box<dyn Error>> {
+  // Retrieve the filename of all the instances matching the search parameters
+  let query = &format!(
+    "SELECT filepath FROM dicom_index WHERE StudyInstanceUID='{}' AND SeriesInstanceUID='{}' AND SOPInstanceUID='{}';",
+    // Will restrict the data to what is being searched
+    search_terms.get(&Tag::try_from("StudyInstanceUID")?).ok_or("Missing StudyInstanceUID in search terms")?,
+    search_terms.get(&Tag::try_from("SeriesInstanceUID")?).ok_or("Missing SeriesInstanceUID in search terms")?,
+    search_terms.get(&Tag::try_from("SOPInstanceUID")?).ok_or("Missing SOPInstanceUID in search terms")?,
+  );
+  // println!("query: {}", query);
+  let mut entries = db::query(connection, query)?;
+  // println!("entries {:?}", entries);
+  // Get the includefields not present in the index
+  for item in &mut entries {
+    if let Some(rfilepath) = item.get("filepath") {
+      let reader = instance_factory.get_reader(rfilepath)?;
+      let instance = Instance::from_reader(reader)?;
+      // Go through those missing fields from the index and enrich the data from the index
+      for attribute in instance.iter() {
+        if let Ok(attribute) = attribute {
+          if attribute.tag.vr != "UN" {
+            // TODO: Better management of unknown tags
+            if let Ok(value) = DicomValue::from_dicom_attribute(&attribute, &instance) {
+              match value {
+                // TODO: Manage nested fields
+                DicomValue::SQ(_)
+                // TODO: Manage BulkdataURI
+                | DicomValue::OB(_)
+                | DicomValue::OD(_)
+                | DicomValue::OF(_)
+                | DicomValue::OL(_)
+                | DicomValue::OV(_)
+                | DicomValue::OW(_)
+                // TODO: Better management of unknown tags
+                | DicomValue::UN(_) => (),
+                _ => {
+                  item.insert(attribute.tag.to_string(), value.to_string());
+                  ()
+                },
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  Ok(entries)
 }
 
 fn generate_json_response(data: &[HashMap<String, String>]) -> String {
   format!(
-    "[{}]",
+    "{}",
     data
       .iter()
       .map(map_to_entry)
@@ -868,7 +918,9 @@ fn get_query_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Se
        instance_factory: T| async move {
         match get_studies(&connection, &instance_factory, &qido_params, &search_terms) {
           // Have to specify the type annotation here, see: https://stackoverflow.com/a/67413956/2603925
-          Ok(studies) => Ok::<_, warp::Rejection>(generate_json_response(&studies)),
+          Ok(studies) => {
+            Ok::<_, warp::Rejection>(format!("[{}]", generate_json_response(&studies)))
+          }
           // TODO: Can't use ? in the and_then handler because we can convert automatically from
           // DicomError to Reject. See: https://stackoverflow.com/a/65175925/2603925
           Err(e) => Err(warp::reject::custom(ApplicationError {
@@ -892,7 +944,7 @@ fn get_query_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Se
        connection: Connection,
        instance_factory: T| async move {
         match get_series(&connection, &instance_factory, &qido_params, &search_terms) {
-          Ok(series) => Ok::<_, warp::Rejection>(generate_json_response(&series)),
+          Ok(series) => Ok::<_, warp::Rejection>(format!("[{}]", generate_json_response(&series))),
           Err(e) => Err(warp::reject::custom(ApplicationError {
             message: e.to_string(),
           })),
@@ -914,7 +966,9 @@ fn get_query_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Se
        connection: Connection,
        instance_factory: T| async move {
         match get_instances(&connection, &instance_factory, &qido_params, &search_terms) {
-          Ok(instances) => Ok::<_, warp::Rejection>(generate_json_response(&instances)),
+          Ok(instances) => {
+            Ok::<_, warp::Rejection>(format!("[{}]", generate_json_response(&instances)))
+          }
           Err(e) => Err(warp::reject::custom(ApplicationError {
             message: e.to_string(),
           })),
@@ -940,7 +994,9 @@ fn get_query_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Se
        instance_factory: T| async move {
         search_terms.insert(Tag::try_from("StudyInstanceUID").unwrap(), study_uid);
         match get_series(&connection, &instance_factory, &qido_params, &search_terms) {
-          Ok(studies) => Ok::<_, warp::Rejection>(generate_json_response(&studies)),
+          Ok(studies) => {
+            Ok::<_, warp::Rejection>(format!("[{}]", generate_json_response(&studies)))
+          }
           Err(e) => Err(warp::reject::custom(ApplicationError {
             message: e.to_string(),
           })),
@@ -970,7 +1026,9 @@ fn get_query_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Se
         search_terms.insert(Tag::try_from("StudyInstanceUID").unwrap(), study_uid);
         search_terms.insert(Tag::try_from("SeriesInstanceUID").unwrap(), series_uid);
         match get_instances(&connection, &instance_factory, &qido_params, &search_terms) {
-          Ok(studies) => Ok::<_, warp::Rejection>(generate_json_response(&studies)),
+          Ok(studies) => {
+            Ok::<_, warp::Rejection>(format!("[{}]", generate_json_response(&studies)))
+          }
           Err(e) => Err(warp::reject::custom(ApplicationError {
             message: e.to_string(),
           })),
@@ -990,9 +1048,17 @@ fn get_query_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Se
 /**
  * https://www.dicomstandard.org/using/dicomweb/retrieve-wado-rs-and-wado-uri/
  */
-fn get_retrieve_api(
+fn get_retrieve_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Send>(
   sqlfile: &str,
+  instance_factory: T,
 ) -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
+  // No literal constructor for HeaderMap, so have to allocate them here...
+  let mut json_headers = HeaderMap::new();
+  json_headers.insert(
+    CONTENT_TYPE,
+    "application/dicom+json; charset=utf-8".parse().unwrap(),
+  );
+
   // GET {s}/studies/{study} Retrieve entire study
   let studies = warp::path("studies")
     .and(unique_identifier())
@@ -1110,12 +1176,28 @@ fn get_retrieve_api(
     .and(unique_identifier())
     .and(warp::path("metadata"))
     .and(warp::path::end())
+    .and(warp::query::<WadoQueryParameters>())
+    .and(with_db(sqlfile))
+    .and(with_instance_factory(instance_factory.clone()))
     .and_then(
-      |study_uid: String, series_uid: String, instance_uid: String| async move {
-        Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
+      |study_uid: String,
+       series_uid: String,
+       instance_uid: String,
+       wado_params: WadoQueryParameters,
+       connection: Connection,
+       instance_factory: T| async move {
+        let mut search_terms = HashMap::<Tag, String>::new();
+        search_terms.insert(Tag::try_from("StudyInstanceUID").unwrap(), study_uid);
+        search_terms.insert(Tag::try_from("SeriesInstanceUID").unwrap(), series_uid);
+        search_terms.insert(Tag::try_from("SOPInstanceUID").unwrap(), instance_uid);
+        match get_instance(&connection, &instance_factory, &wado_params, &search_terms) {
+          Ok(instances) => Ok::<_, warp::Rejection>(generate_json_response(&instances)),
+          Err(e) => Err(warp::reject::custom(ApplicationError {
+            message: e.to_string(),
+          })),
+        }
       },
     );
-
   // GET {s}/instances/{instance} Retrieve instance
   let instance = warp::path("instances")
     .and(unique_identifier())
@@ -1512,8 +1594,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
         instance_factory.clone(),
         index_store,
       ))
-      .or(get_query_api(&opt.sqlfile, instance_factory))
-      .or(get_retrieve_api(&opt.sqlfile))
+      .or(get_query_api(&opt.sqlfile, instance_factory.clone()))
+      .or(get_retrieve_api(&opt.sqlfile, instance_factory))
       .or(get_delete_api(&opt.sqlfile))
       .or(capabilities(&APPLICATION))
       .with(warp::cors().allow_any_origin())
@@ -1533,7 +1615,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
         &opt.sqlfile,
         FSInstanceFactory::new(&opt.dcmpath),
       ))
-      .or(get_retrieve_api(&opt.sqlfile))
+      .or(get_retrieve_api(
+        &opt.sqlfile,
+        FSInstanceFactory::new(&opt.dcmpath),
+      ))
       .or(get_delete_api(&opt.sqlfile))
       .or(capabilities(&APPLICATION))
       .with(warp::cors().allow_any_origin())
