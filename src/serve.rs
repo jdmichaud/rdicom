@@ -422,20 +422,34 @@ fn map_to_entry(tag_map: &HashMap<String, String>) -> String {
         // Try to convert the column name to a tag
         let tag_result: Result<Tag, DicomError> = key.try_into();
         match tag_result {
-          Ok(tag) => format!(
-            // We have a Dicom that we will format according to the DicomWeb standard
-            // "00080030": {
-            //   "vr": "TM",
-            //   "Value": ["131600.0000"]
-            // },
-            "\"{:04x}{:04x}\": {{ \"vr\": \"{}\", \"Value\": [ \"{}\" ] }}",
-            // TODO: The replace here is an ugly workaround which is probably going to cause more
-            // problem than it will solve.
-            tag.group,
-            tag.element,
-            tag.vr,
-            value.replace("\\", ","),
-          ),
+          Ok(tag) => {
+            match tag.vr {
+              "OB" | "OD" | "OF" | "OL" | "OV" | "OW" => {
+                format!(
+                  // Create a BulkdataURI
+                  // "00080030": "/bulkdata/{StudyInstanceUID}/{SeriesInstanceUID}/{SOPInstanceUID}/{tag}",
+                  "\"{:04x}{:04x}\": \"/bulkdata/{}\"",
+                  tag.group, tag.element, value,
+                )
+              }
+              _ => {
+                format!(
+                  // We have a Dicom that we will format according to the DicomWeb standard
+                  // "00080030": {
+                  //   "vr": "TM",
+                  //   "Value": ["131600.0000"]
+                  // },
+                  "\"{:04x}{:04x}\": {{ \"vr\": \"{}\", \"Value\": [ \"{}\" ] }}",
+                  // TODO: The replace here is an ugly workaround which is probably going to cause more
+                  // problem than it will solve.
+                  tag.group,
+                  tag.element,
+                  tag.vr,
+                  value.replace("\\", ","),
+                )
+              }
+            }
+          }
           // Otherwise, just dump the key in the object
           _ => format!("\"{key}\": \"{value}\""),
         }
@@ -662,58 +676,124 @@ fn get_serie(ui: &str) -> HashMap<String, String> {
   HashMap::from([(String::from("link"), ui.to_string())])
 }
 
-fn get_instance<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
+fn get_filepath(
   connection: &Connection,
-  instance_factory: &T,
-  params: &WadoQueryParameters,
-  search_terms: &HashMap<Tag, String>,
-) -> Result<Vec<HashMap<String, String>>, Box<dyn Error>> {
-  // Retrieve the filename of all the instances matching the search parameters
+  study_instance_uid: &str,
+  series_instance_uid: &str,
+  sop_instance_uid: &str,
+) -> Result<String, Box<dyn Error>> {
   let query = &format!(
     "SELECT filepath FROM dicom_index WHERE StudyInstanceUID='{}' AND SeriesInstanceUID='{}' AND SOPInstanceUID='{}';",
     // Will restrict the data to what is being searched
-    search_terms.get(&Tag::try_from("StudyInstanceUID")?).ok_or("Missing StudyInstanceUID in search terms")?,
-    search_terms.get(&Tag::try_from("SeriesInstanceUID")?).ok_or("Missing SeriesInstanceUID in search terms")?,
-    search_terms.get(&Tag::try_from("SOPInstanceUID")?).ok_or("Missing SOPInstanceUID in search terms")?,
+    study_instance_uid,
+    series_instance_uid,
+    sop_instance_uid,
   );
   // println!("query: {}", query);
-  let mut entries = db::query(connection, query)?;
-  // println!("entries {:?}", entries);
-  // Get the includefields not present in the index
-  for item in &mut entries {
-    if let Some(rfilepath) = item.get("filepath") {
-      let reader = instance_factory.get_reader(rfilepath)?;
-      let instance = Instance::from_reader(reader)?;
-      // Go through those missing fields from the index and enrich the data from the index
-      for attribute in instance.iter() {
-        if let Ok(attribute) = attribute {
-          if attribute.tag.vr != "UN" {
+  return Ok(
+    db::query(connection, query)?[0]
+      .get("filepath")
+      .ok_or("Entry not found")?
+      .to_string(),
+  );
+}
+
+fn get_instance<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
+  connection: &Connection,
+  instance_factory: &T,
+  search_terms: &HashMap<Tag, String>,
+) -> Result<Vec<HashMap<String, String>>, Box<dyn Error>> {
+  // Retrieve the filename of the instances matching the search parameters
+  let study_instance_uid = search_terms
+    .get(&dicom_tags::StudyInstanceUID)
+    .ok_or("Missing StudyInstanceUID in search terms")?;
+  let series_instance_uid = search_terms
+    .get(&dicom_tags::SeriesInstanceUID)
+    .ok_or("Missing SeriesInstanceUID in search terms")?;
+  let sop_instance_uid = search_terms
+    .get(&dicom_tags::SOPInstanceUID)
+    .ok_or("Missing SOPInstanceUID in search terms")?;
+  let filepath = get_filepath(
+    connection,
+    study_instance_uid,
+    series_instance_uid,
+    sop_instance_uid,
+  )?;
+  // Load the file
+  let mut result = HashMap::<String, String>::new();
+  result.insert("filepath".to_string(), filepath.clone());
+  let reader = instance_factory.get_reader(&filepath)?;
+  let instance = Instance::from_reader(reader)?;
+  // Go through all the fields of the instance
+  for attribute in instance.iter() {
+    if let Ok(attribute) = attribute {
+      if attribute.tag.vr != "UN" {
+        // TODO: Better management of unknown tags
+        if let Ok(value) = DicomValue::from_dicom_attribute(&attribute, &instance) {
+          match value {
+            // TODO: Manage nested fields
+            DicomValue::SQ(_)
+            // TODO: Manage BulkdataURI
+            | DicomValue::OB(_)
+            | DicomValue::OD(_)
+            | DicomValue::OF(_)
+            | DicomValue::OL(_)
+            | DicomValue::OV(_)
+            | DicomValue::OW(_) => {
+              result.insert(
+                attribute.tag.to_string(),
+                format!("{}/{}/{}/{:04x}{:04x}", study_instance_uid, series_instance_uid,
+                  sop_instance_uid, attribute.tag.group, attribute.tag.element),
+              );
+            },
             // TODO: Better management of unknown tags
-            if let Ok(value) = DicomValue::from_dicom_attribute(&attribute, &instance) {
-              match value {
-                // TODO: Manage nested fields
-                DicomValue::SQ(_)
-                // TODO: Manage BulkdataURI
-                | DicomValue::OB(_)
-                | DicomValue::OD(_)
-                | DicomValue::OF(_)
-                | DicomValue::OL(_)
-                | DicomValue::OV(_)
-                | DicomValue::OW(_)
-                // TODO: Better management of unknown tags
-                | DicomValue::UN(_) => (),
-                _ => {
-                  item.insert(attribute.tag.to_string(), value.to_string());
-                  ()
-                },
-              }
-            }
+            DicomValue::UN(_) => (),
+            _ => {
+              result.insert(attribute.tag.to_string(), value.to_string());
+            },
           }
         }
       }
     }
   }
-  Ok(entries)
+  Ok(vec![result])
+}
+
+fn get_bulk_tag<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
+  connection: &Connection,
+  instance_factory: &T,
+  search_terms: &HashMap<Tag, String>,
+  tag: Tag,
+) -> Result<Vec<u8>, Box<dyn Error>> {
+  let study_instance_uid = search_terms
+    .get(&Tag::try_from("StudyInstanceUID")?)
+    .ok_or("Missing StudyInstanceUID in search terms")?;
+  let series_instance_uid = search_terms
+    .get(&Tag::try_from("SeriesInstanceUID")?)
+    .ok_or("Missing SeriesInstanceUID in search terms")?;
+  let sop_instance_uid = search_terms
+    .get(&Tag::try_from("SOPInstanceUID")?)
+    .ok_or("Missing SOPInstanceUID in search terms")?;
+  let filepath = get_filepath(
+    connection,
+    study_instance_uid,
+    series_instance_uid,
+    sop_instance_uid,
+  )?;
+  let instance = Instance::from_reader(instance_factory.get_reader(&filepath)?)?;
+  match instance.get_value(&tag) {
+    Ok(Some(dicom_value)) => match dicom_value {
+      DicomValue::OB(value) => Ok(value.to_owned()),
+      DicomValue::OD(_) => Ok(vec![]),
+      DicomValue::OF(_) => Ok(vec![]),
+      DicomValue::OL(_) => Ok(vec![]),
+      DicomValue::OV(_) => Ok(vec![]),
+      DicomValue::OW(value) => Ok(value.to_owned()),
+      _ => Err(format!("Unsupported bulkdata tag {:?}", tag).into()),
+    },
+    Ok(None) => Err(format!("No such tag {:?}", tag).into()),
+    Err(e) => Err(Box::new(e)),
+  }
 }
 
 fn generate_json_response(data: &[HashMap<String, String>]) -> String {
@@ -992,7 +1072,7 @@ fn get_query_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Se
        mut search_terms: HashMap<Tag, String>,
        connection: Connection,
        instance_factory: T| async move {
-        search_terms.insert(Tag::try_from("StudyInstanceUID").unwrap(), study_uid);
+        search_terms.insert(dicom_tags::StudyInstanceUID, study_uid);
         match get_series(&connection, &instance_factory, &qido_params, &search_terms) {
           Ok(studies) => {
             Ok::<_, warp::Rejection>(format!("[{}]", generate_json_response(&studies)))
@@ -1023,8 +1103,8 @@ fn get_query_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Se
        mut search_terms: HashMap<Tag, String>,
        connection: Connection,
        instance_factory: T| async move {
-        search_terms.insert(Tag::try_from("StudyInstanceUID").unwrap(), study_uid);
-        search_terms.insert(Tag::try_from("SeriesInstanceUID").unwrap(), series_uid);
+        search_terms.insert(dicom_tags::StudyInstanceUID, study_uid);
+        search_terms.insert(dicom_tags::SeriesInstanceUID, series_uid);
         match get_instances(&connection, &instance_factory, &qido_params, &search_terms) {
           Ok(studies) => {
             Ok::<_, warp::Rejection>(format!("[{}]", generate_json_response(&studies)))
@@ -1176,21 +1256,19 @@ fn get_retrieve_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone +
     .and(unique_identifier())
     .and(warp::path("metadata"))
     .and(warp::path::end())
-    .and(warp::query::<WadoQueryParameters>())
     .and(with_db(sqlfile))
     .and(with_instance_factory(instance_factory.clone()))
     .and_then(
       |study_uid: String,
        series_uid: String,
        instance_uid: String,
-       wado_params: WadoQueryParameters,
        connection: Connection,
        instance_factory: T| async move {
         let mut search_terms = HashMap::<Tag, String>::new();
-        search_terms.insert(Tag::try_from("StudyInstanceUID").unwrap(), study_uid);
-        search_terms.insert(Tag::try_from("SeriesInstanceUID").unwrap(), series_uid);
-        search_terms.insert(Tag::try_from("SOPInstanceUID").unwrap(), instance_uid);
-        match get_instance(&connection, &instance_factory, &wado_params, &search_terms) {
+        search_terms.insert(dicom_tags::StudyInstanceUID, study_uid);
+        search_terms.insert(dicom_tags::SeriesInstanceUID, series_uid);
+        search_terms.insert(dicom_tags::SOPInstanceUID, instance_uid);
+        match get_instance(&connection, &instance_factory, &search_terms) {
           Ok(instances) => Ok::<_, warp::Rejection>(generate_json_response(&instances)),
           Err(e) => Err(warp::reject::custom(ApplicationError {
             message: e.to_string(),
@@ -1217,19 +1295,53 @@ fn get_retrieve_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone +
       },
     );
   // GET {s}/studies/{study}/series/{series}/instances/{instance}/frames/{frames}  Retrieve frames in an instance
-  let studies_series_instances = warp::path("studies")
+  let studies_series_instances_frames = warp::path("studies")
     .and(unique_identifier())
     .and(warp::path("series"))
     .and(unique_identifier())
     .and(warp::path("instances"))
     .and(unique_identifier())
+    .and(warp::path("frames"))
+    .and(unique_identifier())
     .and(warp::path::end())
     .and_then(
-      |study_uid: String, series_uid: String, instance_uid: String| async move {
+      |study_uid: String, series_uid: String, instance_uid: String, frame_uid: String| async move {
         Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
       },
     );
   // GET {s}/{bulkdataURIReference}
+  let studies_series_instances_bulkdata = warp::path("bulkdata")
+    .and(unique_identifier())
+    .and(unique_identifier())
+    .and(unique_identifier())
+    .and(unique_identifier())
+    .and(warp::path::end())
+    .and(with_db(sqlfile))
+    .and(with_instance_factory(instance_factory.clone()))
+    .and_then(
+      |study_uid: String,
+       series_uid: String,
+       instance_uid: String,
+       tag: String,
+       connection: Connection,
+       instance_factory: T| async move {
+        let mut search_terms = HashMap::<Tag, String>::new();
+        search_terms.insert(dicom_tags::StudyInstanceUID, study_uid);
+        search_terms.insert(dicom_tags::SeriesInstanceUID, series_uid);
+        search_terms.insert(dicom_tags::SOPInstanceUID, instance_uid);
+        let tag = Tag::try_from(&tag).or_else(|e| {
+          Err(warp::reject::custom(ApplicationError {
+            message: e.to_string(),
+          }))
+        })?;
+        match get_bulk_tag(&connection, &instance_factory, &search_terms, tag) {
+          Ok(data) => Ok::<_, warp::Rejection>(data),
+          Err(e) => Err(warp::reject::custom(ApplicationError {
+            message: e.to_string(),
+          })),
+        }
+      },
+    );
 
   warp::get()
     .and(studies)
@@ -1244,6 +1356,8 @@ fn get_retrieve_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone +
     .or(studies_series_instances_metadata)
     .or(instance)
     .or(instance_rendered)
+    .or(studies_series_instances_frames)
+    .or(studies_series_instances_bulkdata)
 }
 
 fn delete_all_studies(connection: &Connection) -> Result<(), Box<dyn Error>> {

@@ -75,6 +75,25 @@ export class LocalDicomInstanceDecoder {
       case 'Array<string | undefined>': {
         return this.fromCStringArray(addr) as any;
       }
+      case 'Date': {
+        const data = this.fromCStringArray(addr);
+        const date = data[0];
+        if (date === undefined) return undefined;
+        const canondatestr = (date.includes('.'))
+          ? date.split('.').join('') // ACR-NEMA Standard 300 date format
+          : date;
+        const year = Number(canondatestr.substr(0, 4));
+        const month = Number(canondatestr.substr(4, 2));
+        const day = Number(canondatestr.substr(6, 2));
+        return new Date(year, month, day) as any;
+      }
+      case 'any': {
+        switch (vr) {
+          case "PN":
+          default:
+            return this.fromCStringArray(addr) as any;
+        }
+      }
       case 'Float32Array':
       case 'Array<Array<string> | undefined>':
       case 'Array<Date | undefined>':
@@ -83,17 +102,15 @@ export class LocalDicomInstanceDecoder {
       case 'Array<string | undefined>':
       case 'Array<Uint16Array | undefined>':
       case 'Array<Uint8Array | undefined>':
-      case 'Date':
       case 'Float64Array':
       case 'Uint16Array':
       case 'Uint32Array':
       case 'Array<any | undefined>':
-      case 'any':
       case 'undefined':
       default:
     }
 
-    throw new Error(`LocalDicomInstanceDecoder: unsupported type ${tagtype} for tag ${tag}`);
+    throw new Error(`LocalDicomInstanceDecoder: unsupported type ${tagtype} for tag 0x${tag.toString(16)}`);
   }
 
   getInstanceFromBuffer(buffer: ArrayBuffer): InstanceHandle {

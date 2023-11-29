@@ -1,5 +1,9 @@
 ## TODOs
 
+- (serve) use `serde` to generate json (get rid of `map_to_entry`)
+
+- (serve) replace `warp` with `axum`
+
 - Refactor the instance API. Instead of going from the more general `BufReader`
   to the particular &[u8] type, invert the logic. Accept a &[u8] which converts
   to a `BufReader` and use the `BufReader` in the parsing logic. This makes the
