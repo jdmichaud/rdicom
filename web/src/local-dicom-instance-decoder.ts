@@ -65,7 +65,12 @@ export class LocalDicomInstanceDecoder {
         return this.fromArrayBuffer(addr) as any;
       }
       case 'string': {
-        return this.fromCString(addr) as any;
+        switch (vr) {
+          case 'CS':
+            return this.fromCStringArray(addr) as any;
+          default:
+            return this.fromCString(addr) as any;
+        }
       }
       case 'Array<number>':
       case 'Array<number | undefined>': {
