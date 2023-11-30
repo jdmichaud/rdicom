@@ -67,6 +67,7 @@ export class LocalDicomInstanceDecoder {
       case 'string': {
         switch (vr) {
           case 'CS':
+          case 'TM':
             return this.fromCStringArray(addr) as any;
           default:
             return this.fromCString(addr) as any;
