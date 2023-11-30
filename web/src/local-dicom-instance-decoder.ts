@@ -90,7 +90,8 @@ export class LocalDicomInstanceDecoder {
         const year = Number(canondatestr.substr(0, 4));
         const month = Number(canondatestr.substr(4, 2));
         const day = Number(canondatestr.substr(6, 2));
-        return new Date(year, month, day) as any;
+        // Yes, Date constructores requests the monthIndex...
+        return new Date(year, month - 1, day) as any;
       }
       case 'any': {
         switch (vr) {

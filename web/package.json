@@ -1,6 +1,6 @@
 {
   "name": "@jdmichaud/rdicom-web",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "A Javascript DICOM parser",
   "main": "dist/index.js",
   "scripts": {
