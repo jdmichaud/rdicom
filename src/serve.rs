@@ -428,7 +428,7 @@ fn map_to_entry(tag_map: &HashMap<String, String>) -> String {
                 format!(
                   // Create a BulkdataURI
                   // "00080030": "/bulkdata/{StudyInstanceUID}/{SeriesInstanceUID}/{SOPInstanceUID}/{tag}",
-                  "\"{:04x}{:04x}\": \"/bulkdata/{}\"",
+                  "\"{:04X}{:04X}\": \"/bulkdata/{}\"",
                   tag.group, tag.element, value,
                 )
               }
@@ -439,7 +439,7 @@ fn map_to_entry(tag_map: &HashMap<String, String>) -> String {
                   //   "vr": "TM",
                   //   "Value": ["131600.0000"]
                   // },
-                  "\"{:04x}{:04x}\": {{ \"vr\": \"{}\", \"Value\": [ \"{}\" ] }}",
+                  "\"{:04X}{:04X}\": {{ \"vr\": \"{}\", \"Value\": [ \"{}\" ] }}",
                   // TODO: The replace here is an ugly workaround which is probably going to cause more
                   // problem than it will solve.
                   tag.group,
