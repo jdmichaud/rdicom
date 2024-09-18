@@ -788,7 +788,7 @@ fn get_bulk_tag<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
       DicomValue::OF(_) => Ok(vec![]),
       DicomValue::OL(_) => Ok(vec![]),
       DicomValue::OV(_) => Ok(vec![]),
-      DicomValue::OW(value) => Ok(value.to_owned()),
+      DicomValue::OW(value) => Ok(vec![]),
       _ => Err(format!("Unsupported bulkdata tag {:?}", tag).into()),
     },
     Ok(None) => Err(format!("No such tag {:?}", tag).into()),
