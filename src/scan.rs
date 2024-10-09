@@ -194,6 +194,7 @@ fn main() -> Result<(), Box<dyn Error>> {
   if !opt.no_transaction {
     index_store.begin_transaction()?;
   }
+  println!("scanning {}", input_path.to_string_lossy());
   // Walk all the files in the provided input folder
   for result in WalkDir::new(input_path.clone()) {
     let entry = result?;
