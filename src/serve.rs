@@ -133,6 +133,9 @@ struct Opt {
   /// Log file path. No logs if not specified
   #[structopt(short, long)]
   logfile: Option<String>,
+  /// Insert a prefix between the base of the url and the path
+  #[structopt(short = "x", long)]
+  prefix: Option<String>,
 }
 
 #[derive(Debug)]
@@ -1694,6 +1697,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
   static APPLICATION: Lazy<capabilities::Application> =
     Lazy::new(|| quick_xml::de::from_str(capabilities::CAPABILITIES_STR).unwrap());
 
+  let prefix = opt.prefix.unwrap_or("".to_string());
+
   // GET /
   let root = warp::get()
     .and(warp::path("about"))
@@ -1703,14 +1708,14 @@ async fn main() -> Result<(), Box<dyn Error>> {
   let routes = if opt.dcmpath == ":memory:" {
     let instance_factory = MemoryInstanceFactory::new();
     root
-      .or(post_store_api(
+      .or(warp::path(prefix.clone()).and(post_store_api(
         &opt.sqlfile,
         instance_factory.clone(),
         index_store,
-      ))
-      .or(get_query_api(&opt.sqlfile, instance_factory.clone()))
-      .or(get_retrieve_api(&opt.sqlfile, instance_factory))
-      .or(get_delete_api(&opt.sqlfile))
+      )))
+      .or(warp::path(prefix.clone()).and(get_query_api(&opt.sqlfile, instance_factory.clone())))
+      .or(warp::path(prefix.clone()).and(get_retrieve_api(&opt.sqlfile, instance_factory)))
+      .or(warp::path(prefix.clone()).and(get_delete_api(&opt.sqlfile)))
       .or(capabilities(&APPLICATION))
       .with(warp::cors().allow_any_origin())
       .with(warp::reply::with::headers(headers))
@@ -1720,20 +1725,20 @@ async fn main() -> Result<(), Box<dyn Error>> {
       .boxed()
   } else {
     root
-      .or(post_store_api(
+      .or(warp::path(prefix.clone()).and(post_store_api(
         &opt.sqlfile,
         FSInstanceFactory::new(&opt.dcmpath),
         index_store,
-      ))
-      .or(get_query_api(
+      )))
+      .or(warp::path(prefix.clone()).and(get_query_api(
         &opt.sqlfile,
         FSInstanceFactory::new(&opt.dcmpath),
-      ))
-      .or(get_retrieve_api(
+      )))
+      .or(warp::path(prefix.clone()).and(get_retrieve_api(
         &opt.sqlfile,
         FSInstanceFactory::new(&opt.dcmpath),
-      ))
-      .or(get_delete_api(&opt.sqlfile))
+      )))
+      .or(warp::path(prefix.clone()).and(get_delete_api(&opt.sqlfile)))
       .or(capabilities(&APPLICATION))
       .with(warp::cors().allow_any_origin())
       .with(warp::reply::with::headers(headers))
@@ -1745,12 +1750,12 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
   let host = opt.host;
   println!(
-    "Serving HTTP on {} port {} (http://{}:{}/) with database {} ...",
-    host, opt.port, host, opt.port, opt.sqlfile
+    "Serving HTTP on {} port {} (dicom: http://{}:{}/{}) with database {} ...",
+    host, opt.port, host, opt.port, &prefix, opt.sqlfile
   );
   info!(
-    "Serving HTTP on {} port {} (http://{}:{}/) with database {} ...",
-    host, opt.port, host, opt.port, opt.sqlfile
+    "Serving HTTP on {} port {} (dicom: http://{}:{}/{}) with database {} ...",
+    host, opt.port, host, opt.port, &prefix, opt.sqlfile
   );
   warp::serve(routes)
     .run((IpAddr::from_str(&host)?, opt.port))
