@@ -20,8 +20,6 @@
 
 #![allow(unused_variables)]
 #![allow(dead_code)]
-#![feature(panic_info_message)] // for wasm panic_handler
-#![feature(error_in_core)] // core::error:Error only available on nightly for now
 #![cfg_attr(target_arch = "wasm32", no_std)] // If compiling for a wasm target, do not use no_std
 
 #[macro_use]

@@ -18,6 +18,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+// cargo run --bin serve --features tools --target x86_64-unknown-linux-musl --\
+//   --sqlfile :memory: --config config.yaml --dcmpath /tmp/ --verbose
+
 #![allow(unused_variables)]
 #![allow(dead_code)]
 
@@ -33,7 +36,7 @@ use simplelog::{
   ColorChoice, CombinedLogger, Config, LevelFilter, SharedLogger, TermLogger, TerminalMode,
   WriteLogger,
 };
-use sqlite::Connection;
+use sqlite::{Connection, ConnectionThreadSafe};
 use std::collections::BTreeMap;
 use std::collections::HashMap;
 use std::convert::Infallible;
@@ -46,6 +49,7 @@ use std::net::IpAddr;
 use std::path::PathBuf;
 use std::str::from_utf8;
 use std::str::FromStr;
+use std::sync::{Arc, Mutex};
 use structopt::clap::AppSettings;
 use structopt::StructOpt;
 use warp::http::header::{HeaderMap, HeaderValue, CONTENT_TYPE};
@@ -407,7 +411,7 @@ mod capabilities {
 }
 
 // Retrieves the column present in the index
-fn get_indexed_fields(connection: &Connection) -> Result<Vec<String>, Box<dyn Error>> {
+fn get_indexed_fields(connection: &ConnectionThreadSafe) -> Result<Vec<String>, Box<dyn Error>> {
   let result = connection
     .prepare("PRAGMA table_info(dicom_index);")?
     .into_iter()
@@ -580,7 +584,7 @@ impl InstanceFactory<std::io::Cursor<Vec<u8>>, std::io::Cursor<Vec<u8>>> for Mem
  * the data from the index with the data from the DICOM files if necessary.
  */
 fn get_entries<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
-  connection: &Connection,
+  connection: &ConnectionThreadSafe,
   instance_factory: &T,
   params: &QidoQueryParameters,
   search_terms: &HashMap<Tag, String>,
@@ -626,7 +630,7 @@ fn get_entries<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
 }
 
 fn get_studies<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
-  connection: &Connection,
+  connection: &ConnectionThreadSafe,
   instance_factory: &T,
   params: &QidoQueryParameters,
   search_terms: &HashMap<Tag, String>,
@@ -642,7 +646,7 @@ fn get_studies<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
 }
 
 fn get_series<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
-  connection: &Connection,
+  connection: &ConnectionThreadSafe,
   instance_factory: &T,
   params: &QidoQueryParameters,
   search_terms: &HashMap<Tag, String>,
@@ -657,7 +661,7 @@ fn get_series<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
 }
 
 fn get_instances<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
-  connection: &Connection,
+  connection: &ConnectionThreadSafe,
   instance_factory: &T,
   params: &QidoQueryParameters,
   search_terms: &HashMap<Tag, String>,
@@ -680,7 +684,7 @@ fn get_serie(ui: &str) -> HashMap<String, String> {
 }
 
 fn get_filepath(
-  connection: &Connection,
+  connection: &ConnectionThreadSafe,
   study_instance_uid: &str,
   series_instance_uid: &str,
   sop_instance_uid: &str,
@@ -702,7 +706,7 @@ fn get_filepath(
 }
 
 fn get_instance<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
-  connection: &Connection,
+  connection: &ConnectionThreadSafe,
   instance_factory: &T,
   search_terms: &HashMap<Tag, String>,
 ) -> Result<Vec<HashMap<String, String>>, Box<dyn Error>> {
@@ -763,7 +767,7 @@ fn get_instance<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
 }
 
 fn get_bulk_tag<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
-  connection: &Connection,
+  connection: &ConnectionThreadSafe,
   instance_factory: &T,
   search_terms: &HashMap<Tag, String>,
   tag: Tag,
@@ -812,10 +816,10 @@ fn generate_json_response(data: &[HashMap<String, String>]) -> String {
 
 fn with_db<'a>(
   sqlfile: &str,
-) -> impl Filter<Extract = (Connection,), Error = Infallible> + Clone + 'a {
+) -> impl Filter<Extract = (ConnectionThreadSafe,), Error = Infallible> + Clone + 'a {
   // TODO: I see no way to get rid of unwrap until we replace warp.
   let sqlpath = PathBuf::from_str(sqlfile).unwrap();
-  warp::any().map(move || Connection::open(&sqlpath).unwrap())
+  warp::any().map(move || Connection::open_thread_safe(&sqlpath).unwrap())
 }
 
 fn with_instance_factory<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Send>(
@@ -835,7 +839,7 @@ fn dicom_attribute_json_to_string(attribute: &DicomAttributeJson) -> String {
 }
 
 fn do_store<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Send>(
-  connection: Connection,
+  connection: ConnectionThreadSafe,
   instance_factory: T,
   index_store: &mut SqlIndexStoreWithMutex,
   accept_header: &HeaderValue,
@@ -932,7 +936,7 @@ fn post_store_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + S
     .map(
       |accept_header: HeaderValue,
        body: warp::hyper::body::Bytes,
-       connection: Connection,
+       connection: ConnectionThreadSafe,
        instance_factory: T,
        mut index_store: SqlIndexStoreWithMutex| {
         // Is it single part or multipart?
@@ -997,7 +1001,7 @@ fn get_query_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Se
     .and_then(
       |qido_params: QidoQueryParameters,
        search_terms: HashMap<Tag, String>,
-       connection: Connection,
+       connection: ConnectionThreadSafe,
        instance_factory: T| async move {
         match get_studies(&connection, &instance_factory, &qido_params, &search_terms) {
           // Have to specify the type annotation here, see: https://stackoverflow.com/a/67413956/2603925
@@ -1024,7 +1028,7 @@ fn get_query_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Se
     .and_then(
       |qido_params: QidoQueryParameters,
        search_terms: HashMap<Tag, String>,
-       connection: Connection,
+       connection: ConnectionThreadSafe,
        instance_factory: T| async move {
         match get_series(&connection, &instance_factory, &qido_params, &search_terms) {
           Ok(series) => Ok::<_, warp::Rejection>(format!("[{}]", generate_json_response(&series))),
@@ -1046,7 +1050,7 @@ fn get_query_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Se
     .and_then(
       |qido_params: QidoQueryParameters,
        search_terms: HashMap<Tag, String>,
-       connection: Connection,
+       connection: ConnectionThreadSafe,
        instance_factory: T| async move {
         match get_instances(&connection, &instance_factory, &qido_params, &search_terms) {
           Ok(instances) => {
@@ -1073,7 +1077,7 @@ fn get_query_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Se
       |study_uid: String,
        qido_params: QidoQueryParameters,
        mut search_terms: HashMap<Tag, String>,
-       connection: Connection,
+       connection: ConnectionThreadSafe,
        instance_factory: T| async move {
         search_terms.insert(dicom_tags::StudyInstanceUID, study_uid);
         match get_series(&connection, &instance_factory, &qido_params, &search_terms) {
@@ -1104,7 +1108,7 @@ fn get_query_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Se
        series_uid: String,
        qido_params: QidoQueryParameters,
        mut search_terms: HashMap<Tag, String>,
-       connection: Connection,
+       connection: ConnectionThreadSafe,
        instance_factory: T| async move {
         search_terms.insert(dicom_tags::StudyInstanceUID, study_uid);
         search_terms.insert(dicom_tags::SeriesInstanceUID, series_uid);
@@ -1265,7 +1269,7 @@ fn get_retrieve_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone +
       |study_uid: String,
        series_uid: String,
        instance_uid: String,
-       connection: Connection,
+       connection: ConnectionThreadSafe,
        instance_factory: T| async move {
         let mut search_terms = HashMap::<Tag, String>::new();
         search_terms.insert(dicom_tags::StudyInstanceUID, study_uid);
@@ -1326,7 +1330,7 @@ fn get_retrieve_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone +
        series_uid: String,
        instance_uid: String,
        tag: String,
-       connection: Connection,
+       connection: ConnectionThreadSafe,
        instance_factory: T| async move {
         let mut search_terms = HashMap::<Tag, String>::new();
         search_terms.insert(dicom_tags::StudyInstanceUID, study_uid);
@@ -1363,7 +1367,7 @@ fn get_retrieve_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone +
     .or(studies_series_instances_bulkdata)
 }
 
-fn delete_all_studies(connection: &Connection) -> Result<(), Box<dyn Error>> {
+fn delete_all_studies(connection: &ConnectionThreadSafe) -> Result<(), Box<dyn Error>> {
   db::query(connection, "DELETE FROM dicom_index;")?;
   Ok(())
 }
@@ -1375,7 +1379,7 @@ fn get_delete_api(
   let delete_all_studies = warp::path("studies")
     .and(warp::path::end())
     .and(with_db(sqlfile))
-    .and_then(|connection: Connection| async move {
+    .and_then(|connection: ConnectionThreadSafe| async move {
       delete_all_studies(&connection)
         .map(|_| warp::reply())
         .map_err(|e| {
@@ -1458,8 +1462,8 @@ async fn handle_rejection(err: Rejection) -> Result<impl warp::Reply, Infallible
 // the database does not exists we create it with respect to the provided
 // config. If no configuration was provided, we check the database exists with a
 // 'dicom_index' table.
-fn check_db(opt: &Opt) -> Result<(String, Vec<String>, Connection), Box<dyn Error>> {
-  let connection = Connection::open(&opt.sqlfile)?;
+fn check_db(opt: &Opt) -> Result<(String, Vec<String>, ConnectionThreadSafe), Box<dyn Error>> {
+  let connection = Connection::open_thread_safe(&opt.sqlfile)?;
   return match &opt.config {
     Some(filepath) => {
       // Load the config
@@ -1686,7 +1690,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
       info.method(),
       info.path(),
       info.status(),
-      info.elapsed()
+      info.elapsed(),
     );
   });
 
@@ -1704,7 +1708,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
     .and(warp::path("about"))
     .map(move || server_header);
 
-  let index_store = SqlIndexStoreWithMutex::new(connection, &table_name, indexable_fields)?;
+  let connection = Arc::new(Mutex::new(connection));
+  let index_store = SqlIndexStoreWithMutex::new(connection.clone(), &table_name, indexable_fields)?;
   let routes = if opt.dcmpath == ":memory:" {
     let instance_factory = MemoryInstanceFactory::new();
     root

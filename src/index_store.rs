@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-use sqlite::Connection;
+use sqlite::ConnectionThreadSafe;
 use std::collections::HashMap;
 use std::error::Error;
 use std::io::Write;
@@ -78,7 +78,7 @@ impl<W: Write> IndexStore for CsvIndexStore<W> {
 // Look for the entry in the DB, update it if present, create it otherwise. This makes
 // scan reentrant when using an SQL store.
 fn write_data(
-  connection: &Connection,
+  connection: &ConnectionThreadSafe,
   table_name: &String,
   fields: &[String],
   data: &HashMap<String, String>,
@@ -136,13 +136,13 @@ fn write_data(
 }
 
 pub struct SqlIndexStore {
-  connection: Connection,
+  connection: ConnectionThreadSafe,
   table_name: String,
   fields: Vec<String>,
 }
 
 pub fn prepare_db(
-  connection: &Connection,
+  connection: &ConnectionThreadSafe,
   table_name: &str,
   fields: &[String],
 ) -> Result<(), Box<dyn Error>> {
@@ -160,7 +160,7 @@ pub fn prepare_db(
 
 impl SqlIndexStore {
   pub fn new(
-    connection: Connection,
+    connection: ConnectionThreadSafe,
     table_name: &str,
     fields: Vec<String>,
   ) -> Result<Self, Box<dyn Error>> {
@@ -191,20 +191,20 @@ impl IndexStore for SqlIndexStore {
 
 #[derive(Clone)]
 pub struct SqlIndexStoreWithMutex {
-  connection: Arc<Mutex<Connection>>,
+  connection: Arc<Mutex<ConnectionThreadSafe>>,
   table_name: String,
   fields: Vec<String>,
 }
 
 impl SqlIndexStoreWithMutex {
   pub fn new(
-    connection: Connection,
+    connection: Arc<Mutex<ConnectionThreadSafe>>,
     table_name: &str,
     fields: Vec<String>,
   ) -> Result<Self, Box<dyn Error>> {
-    prepare_db(&connection, table_name, &fields)?;
+    prepare_db(&connection.lock().unwrap(), table_name, &fields)?;
     Ok(SqlIndexStoreWithMutex {
-      connection: Arc::new(Mutex::new(connection)),
+      connection: connection,
       table_name: String::from(table_name),
       fields,
     })

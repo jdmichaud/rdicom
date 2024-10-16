@@ -18,13 +18,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+// cargo run --bin scan --features=tools --release --target x86_64-unknown-linux-musl -- \
+// --config config.yaml --sql-output /tmp/slowdisk.db /media/jedi/slowdisk/DICOM/
+
 #![allow(dead_code)]
 #![allow(unused_variables)]
 #![allow(unused_imports)]
 
 use atty::Stream;
 use clap::Parser;
-use sqlite::{Connection, ConnectionWithFullMutex};
+use sqlite::Connection;
 use std::collections::{HashMap, HashSet};
 use std::error::Error;
 use std::fs::metadata;
@@ -44,7 +47,7 @@ mod config;
 mod db;
 mod index_store;
 
-use index_store::{CsvIndexStore, IndexStore, SqlIndexStore, SqlIndexStoreWithMutex};
+use index_store::{CsvIndexStore, IndexStore, SqlIndexStore};
 
 const ESC: char = 27u8 as char;
 const MEDIA_STORAGE_DIRECTORY_STORAGE: &str = "1.2.840.10008.1.3.10";
@@ -166,7 +169,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     .collect::<Vec<String>>();
   // Create an index store depending on the options
   let mut index_store: Box<dyn IndexStore> = if let Some(sql_output) = opt.sql_output.clone() {
-    let connection = Connection::open(sql_output)?;
+    let connection = Connection::open_thread_safe(sql_output)?;
     Box::new(SqlIndexStore::new(
       connection,
       &config.table_name,

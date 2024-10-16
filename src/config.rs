@@ -36,4 +36,26 @@ pub struct Indexing {
 pub struct Config {
   pub indexing: Indexing,
   pub table_name: String,
+  // Do we overwrite DICOM file on STORE
+  pub store_overwrite: Option<bool>,
+}
+
+impl Config {
+  pub fn get_indexable_fields(self: &Self) -> Vec<String> {
+    self
+      .indexing
+      .fields
+      .series
+      .iter()
+      .chain(
+        self
+          .indexing
+          .fields
+          .studies
+          .iter()
+          .chain(self.indexing.fields.instances.iter()),
+      )
+      .map(|s| s.clone())
+      .collect::<Vec<String>>()
+  }
 }

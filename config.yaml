@@ -25,3 +25,4 @@ indexing:
       - SOPInstanceUID
       - InstanceNumber
 table_name: dicom_index
+store_overwrite: true
