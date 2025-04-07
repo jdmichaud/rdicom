@@ -22,11 +22,6 @@ path = "src/serve.rs"
 required-features = ["tools"]
 
 [[bin]]
-name = "serve2"
-path = "src/serve2.rs"
-required-features = ["tools"]
-
-[[bin]]
 name = "dump"
 path = "src/dump.rs"
 required-features = ["tools"]

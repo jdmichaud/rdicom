@@ -18,6 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+// Run serve for testing purposes (sqlite in memory and datapath in /tmp)
 // cargo run --bin serve --features tools --target x86_64-unknown-linux-musl --\
 //   --sqlfile :memory: --config config.yaml --dcmpath /tmp/ --verbose
 
@@ -28,32 +29,42 @@
 extern crate log;
 extern crate simplelog;
 
+use axum::{
+  body::{Body, Bytes},
+  extract::{rejection::JsonRejection, Path, Request},
+  http::{
+    header::{HeaderValue, ACCEPT},
+    HeaderMap, StatusCode,
+  },
+  middleware::{self, Next},
+  response::{IntoResponse, Response},
+  routing::{delete, get, options, post},
+  Json, Router,
+};
+use axum_extra::extract::WithRejection;
+use clap::Parser;
+use http_body_util::BodyExt;
 use once_cell::sync::Lazy;
 use serde::ser::SerializeMap;
 use serde::Serializer;
 use serde::{de, Deserialize, Deserializer, Serialize};
-use simplelog::{
-  ColorChoice, CombinedLogger, Config, LevelFilter, SharedLogger, TermLogger, TerminalMode,
-  WriteLogger,
-};
 use sqlite::{Connection, ConnectionThreadSafe};
 use std::collections::BTreeMap;
 use std::collections::HashMap;
 use std::convert::Infallible;
 use std::convert::TryInto;
+use std::env;
 use std::error::Error;
 use std::fmt;
 use std::fs::File;
 use std::io::{BufReader, BufWriter, Cursor, Read, Seek, Write};
-use std::net::IpAddr;
 use std::path::PathBuf;
-use std::str::from_utf8;
 use std::str::FromStr;
-use std::sync::{Arc, Mutex};
-use structopt::clap::AppSettings;
-use structopt::StructOpt;
-use warp::http::header::{HeaderMap, HeaderValue, CONTENT_TYPE};
-use warp::http::Response;
+use std::sync::Arc;
+use std::sync::Mutex;
+use tower_http::trace::{self, TraceLayer};
+// use warp::http::Response;
+use tracing::Level;
 use warp::{reject, Filter, Rejection};
 
 use crate::dicom_representation::{json2dcm, DicomAttributeJson};
@@ -97,48 +108,49 @@ mod index_store;
 // r"^/studies/(?P<StudyInstanceUID>[^/?#]*)/series/(?P<SeriesInstanceUID>[^/?#]*)/thumbnail$",
 // r"^/studies/(?P<StudyInstanceUID>[^/?#]*)/thumbnail$"
 
-fn file_exists(path: &str) -> Result<PathBuf, Box<dyn Error>> {
-  let path_buf = PathBuf::from(path);
-  if path_buf.exists() {
-    Ok(path_buf)
-  } else {
-    Err(format!("{} does not exists", path).into())
-  }
-}
+// pub const CAPABILITIES_STR: &str = include_str!("capabilities.xml");
+pub const SERVER_HEADER: &str = concat!("rdicomweb/", env!("CARGO_PKG_VERSION"));
+
+const DEFAULT_CONFIG: &str = include_str!("../config.yaml");
 
 /// A simple DICOMWeb server
-#[derive(Debug, StructOpt)]
+#[derive(Debug, Parser)]
 #[structopt(
   name = format!("serve {} ({} {})", env!("GIT_HASH"), env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION")),
-  no_version,
-  global_settings = &[AppSettings::DisableVersion]
+  version = "",
 )]
 struct Opt {
   /// Port to listen to
-  #[structopt(default_value = "8080", short, long)]
+  #[arg(default_value = "8080", short, long)]
   port: u16,
   /// Host to serve
-  #[structopt(default_value = "127.0.0.1", short = "o", long)]
+  #[arg(default_value = "127.0.0.1", short = 'o', long)]
   host: String,
   /// Sqlite database
-  #[structopt(short, long)]
+  #[arg(short, long)]
   sqlfile: String,
   /// Database config (necessary to create a database or add to the database)
-  #[structopt(short, long, parse(try_from_str = file_exists))]
+  #[arg(short, long)]
   config: Option<PathBuf>,
-  // #[structopt(short="V", long)]
+  /// Print the used configuration and exit.
+  /// You can use this option to initialize the default config file with:
+  ///   mkdir -p ~/.config/runner/
+  ///   runner --print-config ~/.config/runner/config.yaml
+  #[arg(long, verbatim_doc_comment)]
+  print_config: bool,
+  // #[arg(short="V", long)]
   // version: bool,
   /// DICOM files root path (root path provided to the scan tool)
-  #[structopt(short = "d", long)]
+  #[arg(short = 'd', long)]
   dcmpath: String,
   /// Add some logs on the console
-  #[structopt(short, long)]
+  #[arg(short, long)]
   verbose: bool,
   /// Log file path. No logs if not specified
-  #[structopt(short, long)]
+  #[arg(short, long)]
   logfile: Option<String>,
   /// Insert a prefix between the base of the url and the path
-  #[structopt(short = "x", long)]
+  #[arg(short = 'x', long)]
   prefix: Option<String>,
 }
 
@@ -411,7 +423,7 @@ mod capabilities {
 }
 
 // Retrieves the column present in the index
-fn get_indexed_fields(connection: &ConnectionThreadSafe) -> Result<Vec<String>, Box<dyn Error>> {
+fn get_indexed_fields(connection: &Connection) -> Result<Vec<String>, Box<dyn Error>> {
   let result = connection
     .prepare("PRAGMA table_info(dicom_index);")?
     .into_iter()
@@ -511,10 +523,11 @@ fn create_limit_clause(params: &QidoQueryParameters) -> String {
  * MemoryInstanceFactory implements the trait to access data from memory. This
  * allows the implementation of a ':memory:' option like sqlite provides.
  */
+trait ReadSeek: Read + Seek {}
 
-trait InstanceFactory<R: Read + Seek, W: Write> {
-  fn get_reader(&self, path: &str) -> Result<R, DicomError>;
-  fn get_writer(&self, path: &str) -> Result<W, DicomError>;
+trait InstanceFactory {
+  fn get_reader(&self, path: &str) -> Result<Box<dyn ReadSeek>, DicomError>;
+  fn get_writer(&self, path: &str, overwrite: bool) -> Result<Box<dyn Write>, DicomError>;
 }
 
 #[derive(Clone)]
@@ -533,21 +546,23 @@ impl FSInstanceFactory {
   }
 }
 
-impl InstanceFactory<BufReader<File>, BufWriter<File>> for FSInstanceFactory {
-  fn get_reader(&self, path: &str) -> Result<BufReader<File>, DicomError> {
+impl ReadSeek for BufReader<File> {}
+
+impl InstanceFactory for FSInstanceFactory {
+  fn get_reader(&self, path: &str) -> Result<Box<dyn ReadSeek>, DicomError> {
     let tmp = std::path::Path::new(&self.dcmpath).join(std::path::Path::new(path));
     let f = File::open(&*tmp.to_string_lossy())?;
-    Ok(BufReader::new(f))
+    Ok(Box::new(BufReader::new(f)))
   }
 
-  fn get_writer(&self, path: &str) -> Result<BufWriter<File>, DicomError> {
+  fn get_writer(&self, path: &str, overwrite: bool) -> Result<Box<dyn Write>, DicomError> {
     let path = std::path::Path::new(&self.dcmpath).join(std::path::Path::new(path));
-    if path.exists() {
+    if !path.exists() || overwrite {
+      let f = File::create(&*path.to_string_lossy())?;
+      Ok(Box::new(BufWriter::new(f)))
+    } else {
       error!("{:?} file already exists, cannot overwrite file", path);
       Err(DicomError::new("File already exists"))
-    } else {
-      let f = File::create(&*path.to_string_lossy())?;
-      Ok(BufWriter::new(f))
     }
   }
 }
@@ -568,14 +583,16 @@ impl MemoryInstanceFactory {
   }
 }
 
-impl InstanceFactory<std::io::Cursor<Vec<u8>>, std::io::Cursor<Vec<u8>>> for MemoryInstanceFactory {
-  fn get_reader(&self, path: &str) -> Result<std::io::Cursor<Vec<u8>>, DicomError> {
+impl ReadSeek for Cursor<Vec<u8>> {}
+
+impl InstanceFactory for MemoryInstanceFactory {
+  fn get_reader(&self, path: &str) -> Result<Box<dyn ReadSeek>, DicomError> {
     println!("<- {}", path);
-    Ok(Cursor::new(Vec::<u8>::new()))
+    Ok(Box::new(Cursor::new(Vec::<u8>::new())))
   }
-  fn get_writer(&self, path: &str) -> Result<std::io::Cursor<Vec<u8>>, DicomError> {
+  fn get_writer(&self, path: &str, _overwrite: bool) -> Result<Box<dyn Write>, DicomError> {
     println!("-> {}", path);
-    Ok(Cursor::new(Vec::<u8>::new()))
+    Ok(Box::new(Cursor::new(Vec::<u8>::new())))
   }
 }
 
@@ -583,9 +600,9 @@ impl InstanceFactory<std::io::Cursor<Vec<u8>>, std::io::Cursor<Vec<u8>>> for Mem
  * Retrieve the fields from the index according to the search terms and enrich
  * the data from the index with the data from the DICOM files if necessary.
  */
-fn get_entries<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
-  connection: &ConnectionThreadSafe,
-  instance_factory: &T,
+fn get_entries(
+  connection: &Connection,
+  instance_factory: &Box<dyn InstanceFactory + Send + Sync>,
   params: &QidoQueryParameters,
   search_terms: &HashMap<Tag, String>,
   entry_type: &str,
@@ -593,13 +610,13 @@ fn get_entries<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
   let indexed_fields = get_indexed_fields(connection)?;
   // First retrieve the indexed fields present in the DB
   let query = &format!(
-    "SELECT * FROM dicom_index {} group by {} {};",
+    "SELECT * FROM dicom_index {} GROUP BY {} {};",
     // Will restrict the data to what is being searched
     create_where_clause(params, search_terms, &indexed_fields),
     entry_type,
     create_limit_clause(params),
   );
-  // println!("query: {}", query);
+  tracing::debug!("query: {}", query);
   let mut entries = db::query(connection, query)?;
   // println!("entries {:?}", entries);
   // Get the includefields not present in the index
@@ -629,50 +646,203 @@ fn get_entries<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
   Ok(entries)
 }
 
-fn get_studies<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
-  connection: &ConnectionThreadSafe,
-  instance_factory: &T,
-  params: &QidoQueryParameters,
-  search_terms: &HashMap<Tag, String>,
-) -> Result<Vec<HashMap<String, String>>, Box<dyn Error>> {
-  // select distinct StudyDate, StudyTime, AccessionNumber, ModalitiesInStudy, ReferringPhysicianName, PatientName, PatientID, StudyInstanceUID, StudyID from dicom_index group by StudyInstanceUID;
-  get_entries(
-    connection,
-    instance_factory,
-    params,
-    search_terms,
+#[derive(Deserialize)]
+struct SearchTerms {
+  study_uid: Option<String>,
+  series_uid: Option<String>,
+  instance_uid: Option<String>,
+}
+
+#[axum_macros::debug_handler]
+async fn get_studies(
+  axum::extract::State(state): axum::extract::State<Arc<AppState>>,
+  params: axum::extract::Query<QidoQueryParameters>,
+  Path(SearchTerms {
+    instance_uid,
+    study_uid,
+    series_uid,
+  }): Path<SearchTerms>,
+  headers: HeaderMap,
+) -> impl IntoResponse {
+  let mut search_terms = HashMap::<Tag, String>::new();
+  if let Some(instance_uid) = instance_uid {
+    search_terms.insert(dicom_tags::SOPInstanceUID, instance_uid);
+  }
+  if let Some(series_uid) = series_uid {
+    search_terms.insert(dicom_tags::SeriesInstanceUID, series_uid);
+  }
+  if let Some(study_uid) = study_uid {
+    search_terms.insert(dicom_tags::StudyInstanceUID, study_uid);
+  }
+
+  let mut response_headers = HeaderMap::new();
+  match get_entries(
+    &state.connection.lock().unwrap(),
+    &state.instance_factory,
+    &params,
+    &search_terms,
     "StudyInstanceUID",
-  )
+  ) {
+    Ok(result) if result.len() > 0 => {
+      let accept_formats = get_accept_formats(headers);
+      if accept_formats
+        .iter()
+        .any(|e| e == "application/json" || e == "application/json+dicom")
+      {
+        response_headers.insert(
+          "content-type",
+          "application/dicom+json; charset=utf-8".parse().unwrap(),
+        );
+        // 🤮 TODO: need to replace generate_json_response
+        (
+          response_headers,
+          generate_json_response(&result).into_response(),
+        )
+      } else {
+        (
+          response_headers,
+          StatusCode::UNSUPPORTED_MEDIA_TYPE.into_response(),
+        )
+      }
+    }
+    Ok(_) => (response_headers, StatusCode::NOT_FOUND.into_response()),
+    Err(_) => (
+      response_headers,
+      StatusCode::INTERNAL_SERVER_ERROR.into_response(),
+    ),
+  }
 }
 
-fn get_series<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
-  connection: &ConnectionThreadSafe,
-  instance_factory: &T,
-  params: &QidoQueryParameters,
-  search_terms: &HashMap<Tag, String>,
-) -> Result<Vec<HashMap<String, String>>, Box<dyn Error>> {
-  get_entries(
-    connection,
-    instance_factory,
-    params,
-    search_terms,
+#[axum_macros::debug_handler]
+async fn get_series(
+  axum::extract::State(state): axum::extract::State<Arc<AppState>>,
+  params: axum::extract::Query<QidoQueryParameters>,
+  Path(SearchTerms {
+    instance_uid,
+    study_uid,
+    series_uid,
+  }): Path<SearchTerms>,
+  headers: HeaderMap,
+) -> impl IntoResponse {
+  let mut search_terms = HashMap::<Tag, String>::new();
+  if let Some(instance_uid) = instance_uid {
+    search_terms.insert(dicom_tags::SOPInstanceUID, instance_uid);
+  }
+  if let Some(series_uid) = series_uid {
+    search_terms.insert(dicom_tags::SeriesInstanceUID, series_uid);
+  }
+  if let Some(study_uid) = study_uid {
+    search_terms.insert(dicom_tags::StudyInstanceUID, study_uid);
+  }
+
+  let mut response_headers = HeaderMap::new();
+  match get_entries(
+    &state.connection.lock().unwrap(),
+    &state.instance_factory,
+    &params,
+    &search_terms,
     "SeriesInstanceUID",
-  )
+  ) {
+    Ok(result) if result.len() > 0 => {
+      let accept_formats = get_accept_formats(headers);
+      if accept_formats
+        .iter()
+        .any(|e| e == "application/json" || e == "application/json+dicom")
+      {
+        response_headers.insert(
+          "content-type",
+          "application/dicom+json; charset=utf-8".parse().unwrap(),
+        );
+        (
+          response_headers,
+          generate_json_response(&result).into_response(),
+        )
+      } else {
+        (
+          response_headers,
+          StatusCode::UNSUPPORTED_MEDIA_TYPE.into_response(),
+        )
+      }
+    }
+    Ok(_) => (response_headers, StatusCode::NOT_FOUND.into_response()),
+    Err(_) => (
+      response_headers,
+      StatusCode::INTERNAL_SERVER_ERROR.into_response(),
+    ),
+  }
 }
 
-fn get_instances<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
-  connection: &ConnectionThreadSafe,
-  instance_factory: &T,
-  params: &QidoQueryParameters,
-  search_terms: &HashMap<Tag, String>,
-) -> Result<Vec<HashMap<String, String>>, Box<dyn Error>> {
-  get_entries(
-    connection,
-    instance_factory,
-    params,
-    search_terms,
+#[axum_macros::debug_handler]
+async fn get_instances(
+  axum::extract::State(state): axum::extract::State<Arc<AppState>>,
+  params: axum::extract::Query<QidoQueryParameters>,
+  Path(SearchTerms {
+    instance_uid,
+    study_uid,
+    series_uid,
+  }): Path<SearchTerms>,
+  headers: HeaderMap,
+) -> impl IntoResponse {
+  let mut search_terms = HashMap::<Tag, String>::new();
+  if let Some(instance_uid) = instance_uid {
+    search_terms.insert(dicom_tags::SOPInstanceUID, instance_uid);
+  }
+  if let Some(series_uid) = series_uid {
+    search_terms.insert(dicom_tags::SeriesInstanceUID, series_uid);
+  }
+  if let Some(study_uid) = study_uid {
+    search_terms.insert(dicom_tags::StudyInstanceUID, study_uid);
+  }
+
+  let mut response_headers = HeaderMap::new();
+  match get_entries(
+    &state.connection.lock().unwrap(),
+    &state.instance_factory,
+    &params,
+    &search_terms,
     "filepath",
-  )
+  ) {
+    Ok(result) if result.len() > 0 => {
+      let accept_formats = get_accept_formats(headers);
+      if accept_formats
+        .iter()
+        .any(|e| e == "application/json" || e == "application/json+dicom")
+      {
+        response_headers.insert(
+          "content-type",
+          "application/dicom+json; charset=utf-8".parse().unwrap(),
+        );
+        (
+          response_headers,
+          generate_json_response(&result).into_response(),
+        )
+      } else {
+        (
+          response_headers,
+          StatusCode::UNSUPPORTED_MEDIA_TYPE.into_response(),
+        )
+      }
+    }
+    Ok(_) => (response_headers, StatusCode::NOT_FOUND.into_response()),
+    Err(_) => (
+      response_headers,
+      StatusCode::INTERNAL_SERVER_ERROR.into_response(),
+    ),
+  }
+}
+
+#[axum_macros::debug_handler]
+async fn not_implemented(
+  axum::extract::State(state): axum::extract::State<Arc<AppState>>,
+) -> impl IntoResponse {
+  StatusCode::NOT_IMPLEMENTED.into_response()
+}
+
+#[axum_macros::debug_handler]
+async fn not_found(
+  axum::extract::State(state): axum::extract::State<Arc<AppState>>,
+) -> impl IntoResponse {
+  StatusCode::NOT_FOUND.into_response()
 }
 
 fn get_study(ui: &str) -> HashMap<String, String> {
@@ -684,7 +854,7 @@ fn get_serie(ui: &str) -> HashMap<String, String> {
 }
 
 fn get_filepath(
-  connection: &ConnectionThreadSafe,
+  connection: &Connection,
   study_instance_uid: &str,
   series_instance_uid: &str,
   sop_instance_uid: &str,
@@ -705,69 +875,69 @@ fn get_filepath(
   );
 }
 
-fn get_instance<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
-  connection: &ConnectionThreadSafe,
-  instance_factory: &T,
-  search_terms: &HashMap<Tag, String>,
-) -> Result<Vec<HashMap<String, String>>, Box<dyn Error>> {
-  // Retrieve the filename of the instances matching the search parameters
-  let study_instance_uid = search_terms
-    .get(&dicom_tags::StudyInstanceUID)
-    .ok_or("Missing StudyInstanceUID in search terms")?;
-  let series_instance_uid = search_terms
-    .get(&dicom_tags::SeriesInstanceUID)
-    .ok_or("Missing SeriesInstanceUID in search terms")?;
-  let sop_instance_uid = search_terms
-    .get(&dicom_tags::SOPInstanceUID)
-    .ok_or("Missing SOPInstanceUID in search terms")?;
-  let filepath = get_filepath(
-    connection,
-    study_instance_uid,
-    series_instance_uid,
-    sop_instance_uid,
-  )?;
-  // Load the file
-  let mut result = HashMap::<String, String>::new();
-  result.insert("filepath".to_string(), filepath.clone());
-  let reader = instance_factory.get_reader(&filepath)?;
-  let instance = Instance::from_reader(reader)?;
-  // Go through all the fields of the instance
-  for attribute in instance.iter() {
-    if let Ok(attribute) = attribute {
-      if attribute.tag.vr != "UN" {
-        // TODO: Better management of unknown tags
-        if let Ok(value) = DicomValue::from_dicom_attribute(&attribute, &instance) {
-          match value {
-            // TODO: Manage nested fields
-            DicomValue::SQ(_)
-            // TODO: Manage BulkdataURI
-            | DicomValue::OB(_)
-            | DicomValue::OD(_)
-            | DicomValue::OF(_)
-            | DicomValue::OL(_)
-            | DicomValue::OV(_)
-            | DicomValue::OW(_) => {
-              result.insert(
-                attribute.tag.to_string(),
-                format!("{}/{}/{}/{:04x}{:04x}", study_instance_uid, series_instance_uid,
-                  sop_instance_uid, attribute.tag.group, attribute.tag.element),
-              );
-            },
-            // TODO: Better management of unknown tags
-            DicomValue::UN(_) => (),
-            _ => {
-              result.insert(attribute.tag.to_string(), value.to_string());
-            },
-          }
-        }
-      }
-    }
-  }
-  Ok(vec![result])
-}
+// fn get_instance<T: InstanceFactory>(
+//   connection: &Connection,
+//   instance_factory: &T,
+//   search_terms: &HashMap<Tag, String>,
+// ) -> Result<Vec<HashMap<String, String>>, Box<dyn Error>> {
+//   // Retrieve the filename of the instances matching the search parameters
+//   let study_instance_uid = search_terms
+//     .get(&dicom_tags::StudyInstanceUID)
+//     .ok_or("Missing StudyInstanceUID in search terms")?;
+//   let series_instance_uid = search_terms
+//     .get(&dicom_tags::SeriesInstanceUID)
+//     .ok_or("Missing SeriesInstanceUID in search terms")?;
+//   let sop_instance_uid = search_terms
+//     .get(&dicom_tags::SOPInstanceUID)
+//     .ok_or("Missing SOPInstanceUID in search terms")?;
+//   let filepath = get_filepath(
+//     connection,
+//     study_instance_uid,
+//     series_instance_uid,
+//     sop_instance_uid,
+//   )?;
+//   // Load the file
+//   let mut result = HashMap::<String, String>::new();
+//   result.insert("filepath".to_string(), filepath.clone());
+//   let reader = instance_factory.get_reader(&filepath)?;
+//   let instance = Instance::from_reader(reader)?;
+//   // Go through all the fields of the instance
+//   for attribute in instance.iter() {
+//     if let Ok(attribute) = attribute {
+//       if attribute.tag.vr != "UN" {
+//         // TODO: Better management of unknown tags
+//         if let Ok(value) = DicomValue::from_dicom_attribute(&attribute, &instance) {
+//           match value {
+//             // TODO: Manage nested fields
+//             DicomValue::SQ(_)
+//             // TODO: Manage BulkdataURI
+//             | DicomValue::OB(_)
+//             | DicomValue::OD(_)
+//             | DicomValue::OF(_)
+//             | DicomValue::OL(_)
+//             | DicomValue::OV(_)
+//             | DicomValue::OW(_) => {
+//               result.insert(
+//                 attribute.tag.to_string(),
+//                 format!("{}/{}/{}/{:04x}{:04x}", study_instance_uid, series_instance_uid,
+//                   sop_instance_uid, attribute.tag.group, attribute.tag.element),
+//               );
+//             },
+//             // TODO: Better management of unknown tags
+//             DicomValue::UN(_) => (),
+//             _ => {
+//               result.insert(attribute.tag.to_string(), value.to_string());
+//             },
+//           }
+//         }
+//       }
+//     }
+//   }
+//   Ok(vec![result])
+// }
 
-fn get_bulk_tag<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
-  connection: &ConnectionThreadSafe,
+fn get_bulk_tag<T: InstanceFactory>(
+  connection: &Connection,
   instance_factory: &T,
   search_terms: &HashMap<Tag, String>,
   tag: Tag,
@@ -805,7 +975,7 @@ fn get_bulk_tag<R: Read + Seek, W: Write, T: InstanceFactory<R, W>>(
 
 fn generate_json_response(data: &[HashMap<String, String>]) -> String {
   format!(
-    "{}",
+    "[{}]",
     data
       .iter()
       .map(map_to_entry)
@@ -816,99 +986,99 @@ fn generate_json_response(data: &[HashMap<String, String>]) -> String {
 
 fn with_db<'a>(
   sqlfile: &str,
-) -> impl Filter<Extract = (ConnectionThreadSafe,), Error = Infallible> + Clone + 'a {
+) -> impl Filter<Extract = (Connection,), Error = Infallible> + Clone + 'a {
   // TODO: I see no way to get rid of unwrap until we replace warp.
   let sqlpath = PathBuf::from_str(sqlfile).unwrap();
-  warp::any().map(move || Connection::open_thread_safe(&sqlpath).unwrap())
+  warp::any().map(move || Connection::open(&sqlpath).unwrap())
 }
 
-fn with_instance_factory<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Send>(
+fn with_instance_factory<T: InstanceFactory + Clone + Send>(
   instance_factory: T,
 ) -> impl Filter<Extract = (T,), Error = Infallible> + Clone {
   warp::any().map(move || instance_factory.clone())
 }
 
-fn with_index_store(
-  index_store: SqlIndexStoreWithMutex,
-) -> impl Filter<Extract = (SqlIndexStoreWithMutex,), Error = Infallible> + Clone {
-  warp::any().map(move || index_store.clone())
-}
+// fn with_index_store(
+//   index_store: SqlIndexStoreWithMutex,
+// ) -> impl Filter<Extract = (SqlIndexStoreWithMutex,), Error = Infallible> + Clone {
+//   warp::any().map(move || index_store.clone())
+// }
 
 fn dicom_attribute_json_to_string(attribute: &DicomAttributeJson) -> String {
   String::try_from(attribute.payload.clone().unwrap()).unwrap_or("undefined".to_string())
 }
 
-fn do_store<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Send>(
-  connection: ConnectionThreadSafe,
-  instance_factory: T,
-  index_store: &mut SqlIndexStoreWithMutex,
-  accept_header: &HeaderValue,
-  body: &warp::hyper::body::Bytes,
-) -> Result<(), HttpError> {
-  let accept_header = get_accept_headers(accept_header)
-    .map_err(|e| HttpError::new(500, "to_str failed in get_accept_headers"))?;
-  let accept = get_accept_format(
-    &accept_header,
-    &["application/dicom+json", "application/json"],
-  )
-  .map_err(|e| HttpError::new(406, &e.details))?;
-  match accept.format.as_str() {
-    "application/dicom+json" | "application/json" => {
-      let body: String = from_utf8(body.to_vec().as_slice())
-        .map(str::to_string)
-        .map_err(|e| {
-          HttpError::new(
-            400,
-            &format!("utf-8 error. Message valid up to {} byte", e.valid_up_to()),
-          )
-        })?;
-      let dataset = serde_json::from_str::<BTreeMap<String, DicomAttributeJson>>(&body)
-        .map_err(|e| HttpError::from_json_error(400, e))?;
-      let sop_instance_uid = String::try_from(
-        dataset
-          .get(&dicom_tags::SOPInstanceUID.to_string())
-          .unwrap()
-          .payload
-          .clone()
-          .unwrap(),
-      )
-      .map_err(|e| HttpError::new(400, &e.details))?;
-      let filename = &format!("{}.dcm", sop_instance_uid);
-      let mut writer = instance_factory.get_writer(filename).map_err(|e| {
-        warn!("Could not get a writer for {}: {}", filename, e);
-        HttpError::new(500, &e.details)
-      })?;
-      // Write the file
-      json2dcm::json2dcm(&mut writer, &dataset).map_err(|e| {
-        warn!(
-          "Error while streaming the dicom file to {}: {}",
-          filename, e
-        );
-        HttpError::new(500, &e.details)
-      })?;
-      // Update the index
-      let mut data: HashMap<String, String> = dataset
-        .iter()
-        .map(|(k, v)| {
-          (
-            Tag::try_from(k).unwrap().name.to_string(),
-            dicom_attribute_json_to_string(v),
-          )
-        })
-        .collect();
-      data.insert("filepath".to_string(), filename.to_string());
-      index_store.write(&data).map_err(|e| {
-        warn!(
-          "Error while updating the index file to the DB for {}: {}",
-          filename, e
-        );
-        HttpError::new(500, &format!("{}", e))
-      })?;
-      Ok(())
-    }
-    _ => Err(HttpError::new(406, "Unhandled Content-Type")),
-  }
-}
+// fn do_store<T: InstanceFactory + Clone + Send>(
+//   connection: Connection,
+//   instance_factory: T,
+//   index_store: &mut SqlIndexStoreWithMutex,
+//   accept_header: &HeaderValue,
+//   body: &warp::hyper::body::Bytes,
+// ) -> Result<(), HttpError> {
+//   let accept_header = get_accept_headers(accept_header)
+//     .map_err(|e| HttpError::new(500, "to_str failed in get_accept_headers"))?;
+//   let accept = get_accept_format(
+//     &accept_header,
+//     &["application/dicom+json", "application/json"],
+//   )
+//   .map_err(|e| HttpError::new(406, &e.details))?;
+//   match accept.format.as_str() {
+//     "application/dicom+json" | "application/json" => {
+//       let body: String = from_utf8(body.to_vec().as_slice())
+//         .map(str::to_string)
+//         .map_err(|e| {
+//           HttpError::new(
+//             400,
+//             &format!("utf-8 error. Message valid up to {} byte", e.valid_up_to()),
+//           )
+//         })?;
+//       let dataset = serde_json::from_str::<BTreeMap<String, DicomAttributeJson>>(&body)
+//         .map_err(|e| HttpError::from_json_error(400, e))?;
+//       let sop_instance_uid = String::try_from(
+//         dataset
+//           .get(&dicom_tags::SOPInstanceUID.to_string())
+//           .unwrap()
+//           .payload
+//           .clone()
+//           .unwrap(),
+//       )
+//       .map_err(|e| HttpError::new(400, &e.details))?;
+//       let filename = &format!("{}.dcm", sop_instance_uid);
+//       let mut writer = instance_factory.get_writer(filename).map_err(|e| {
+//         warn!("Could not get a writer for {}: {}", filename, e);
+//         HttpError::new(500, &e.details)
+//       })?;
+//       // Write the file
+//       json2dcm::json2dcm(&mut writer, &dataset).map_err(|e| {
+//         warn!(
+//           "Error while streaming the dicom file to {}: {}",
+//           filename, e
+//         );
+//         HttpError::new(500, &e.details)
+//       })?;
+//       // Update the index
+//       let mut data: HashMap<String, String> = dataset
+//         .iter()
+//         .map(|(k, v)| {
+//           (
+//             Tag::try_from(k).unwrap().name.to_string(),
+//             dicom_attribute_json_to_string(v),
+//           )
+//         })
+//         .collect();
+//       data.insert("filepath".to_string(), filename.to_string());
+//       index_store.write(&data).map_err(|e| {
+//         warn!(
+//           "Error while updating the index file to the DB for {}: {}",
+//           filename, e
+//         );
+//         HttpError::new(500, &format!("{}", e))
+//       })?;
+//       Ok(())
+//     }
+//     _ => Err(HttpError::new(406, "Unhandled Content-Type")),
+//   }
+// }
 
 #[derive(Debug)]
 struct RDicomRejection {
@@ -919,457 +1089,603 @@ struct RDicomRejection {
 
 impl reject::Reject for RDicomRejection {}
 
-fn post_store_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Send>(
-  sqlfile: &str,
-  instance_factory: T,
-  index_store: SqlIndexStoreWithMutex,
-) -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
-  // POST  ../studies  Store instances.
-  let store_instances = warp::path("studies")
-    .and(warp::path::end())
-    .and(warp::filters::header::value("Content-Type"))
-    .and(warp::filters::body::bytes())
-    .and(with_db(sqlfile))
-    .and(with_instance_factory(instance_factory))
-    .and(with_index_store(index_store))
-    // .and(warp::body::content_length_limit(1024 * 1000)) // 1G
-    .map(
-      |accept_header: HeaderValue,
-       body: warp::hyper::body::Bytes,
-       connection: ConnectionThreadSafe,
-       instance_factory: T,
-       mut index_store: SqlIndexStoreWithMutex| {
-        // Is it single part or multipart?
-        let multipart = accept_header == "multipart/related";
-        if multipart {
-          Response::builder()
-            .status(warp::http::StatusCode::NOT_IMPLEMENTED)
-            .body("".to_string())
-        } else {
-          // TODO: get rid if this unwrap
-          if let Err(e) = do_store(
-            connection,
-            instance_factory,
-            &mut index_store,
-            &accept_header,
-            &body,
-          ) {
-            return Response::builder()
-              .status(e.status)
-              .header(warp::http::header::CONTENT_ENCODING, "application/json")
-              .body(serde_json::to_string(&e.payload).unwrap());
-          }
-          Response::builder()
-            .status(warp::http::StatusCode::OK)
-            .body("".to_string())
-        }
-      },
-    );
-  // POST  ../studies/{study}  Store instances for a specific study.
-  let store_instances_in_study = warp::path("studies")
-    .and(unique_identifier())
-    .and(warp::path::end())
-    .map(|study_uid: String| warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED));
+// fn post_store_api<T: InstanceFactory + Clone + Send>(
+//   sqlfile: &str,
+//   instance_factory: T,
+//   index_store: SqlIndexStoreWithMutex,
+// ) -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
+//   // POST  ../studies  Store instances.
+//   let store_instances = warp::path("studies")
+//     .and(warp::path::end())
+//     .and(warp::filters::header::value("Content-Type"))
+//     .and(warp::filters::body::bytes())
+//     .and(with_db(sqlfile))
+//     .and(with_instance_factory(instance_factory))
+//     .and(with_index_store(index_store))
+//     // .and(warp::body::content_length_limit(1024 * 1000)) // 1G
+//     .map(
+//       |accept_header: HeaderValue,
+//        body: warp::hyper::body::Bytes,
+//        connection: Connection,
+//        instance_factory: T,
+//        mut index_store: SqlIndexStoreWithMutex| {
+//         // Is it single part or multipart?
+//         let multipart = accept_header == "multipart/related";
+//         if multipart {
+//           Response::builder()
+//             .status(warp::http::StatusCode::NOT_IMPLEMENTED)
+//             .body("".to_string())
+//         } else {
+//           // TODO: get rid if this unwrap
+//           if let Err(e) = do_store(
+//             connection,
+//             instance_factory,
+//             &mut index_store,
+//             &accept_header,
+//             &body,
+//           ) {
+//             return Response::builder()
+//               .status(e.status)
+//               .header(warp::http::header::CONTENT_ENCODING, "application/json")
+//               .body(serde_json::to_string(&e.payload).unwrap());
+//           }
+//           Response::builder()
+//             .status(warp::http::StatusCode::OK)
+//             .body("".to_string())
+//         }
+//       },
+//     );
+//   // POST  ../studies/{study}  Store instances for a specific study.
+//   let store_instances_in_study = warp::path("studies")
+//     .and(unique_identifier())
+//     .and(warp::path::end())
+//     .map(|study_uid: String| warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED));
 
-  warp::post()
-    .and(store_instances)
-    .or(store_instances_in_study)
-}
+//   warp::post()
+//     .and(store_instances)
+//     .or(store_instances_in_study)
+// }
 
 /**
  * https://www.dicomstandard.org/using/dicomweb/query-qido-rs/
  */
-fn get_query_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Send>(
-  sqlfile: &str,
-  instance_factory: T,
-) -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
-  // No literal constructor for HeaderMap, so have to allocate them here...
-  let mut json_headers = HeaderMap::new();
-  json_headers.insert(
-    CONTENT_TYPE,
-    "application/dicom+json; charset=utf-8".parse().unwrap(),
-  );
+// fn get_query_api<T: InstanceFactory + Clone + Send>(
+//   sqlfile: &str,
+//   instance_factory: T,
+// ) -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
+//   // No literal constructor for HeaderMap, so have to allocate them here...
+//   let mut json_headers = HeaderMap::new();
+//   json_headers.insert(
+//     CONTENT_TYPE,
+//     "application/dicom+json; charset=utf-8".parse().unwrap(),
+//   );
 
-  // GET {s}/studies?... Query for all the studies
-  let studies = warp::path("studies")
-    .and(warp::path::end())
-    .and(warp::query::<QidoQueryParameters>())
-    .and(query_param_to_search_terms())
-    .and(with_db(sqlfile))
-    // So many clones...
-    .and(with_instance_factory(instance_factory.clone()))
-    .and_then(
-      |qido_params: QidoQueryParameters,
-       search_terms: HashMap<Tag, String>,
-       connection: ConnectionThreadSafe,
-       instance_factory: T| async move {
-        match get_studies(&connection, &instance_factory, &qido_params, &search_terms) {
-          // Have to specify the type annotation here, see: https://stackoverflow.com/a/67413956/2603925
-          Ok(studies) => {
-            Ok::<_, warp::Rejection>(format!("[{}]", generate_json_response(&studies)))
-          }
-          // TODO: Can't use ? in the and_then handler because we can convert automatically from
-          // DicomError to Reject. See: https://stackoverflow.com/a/65175925/2603925
-          Err(e) => Err(warp::reject::custom(ApplicationError {
-            message: e.to_string(),
-          })),
-        }
-      },
-    )
-    .with(warp::reply::with::headers(json_headers.clone()));
+//   // GET {s}/studies?... Query for all the studies
+//   let studies = warp::path("studies")
+//     .and(warp::path::end())
+//     .and(warp::query::<QidoQueryParameters>())
+//     .and(query_param_to_search_terms())
+//     .and(with_db(sqlfile))
+//     // So many clones...
+//     .and(with_instance_factory(instance_factory.clone()))
+//     .and_then(
+//       |qido_params: QidoQueryParameters,
+//        search_terms: HashMap<Tag, String>,
+//        connection: Connection,
+//        instance_factory: T| async move {
+//         match get_studies(&connection, &instance_factory, &qido_params, &search_terms) {
+//           // Have to specify the type annotation here, see: https://stackoverflow.com/a/67413956/2603925
+//           Ok(studies) => {
+//             Ok::<_, warp::Rejection>(format!("[{}]", generate_json_response(&studies)))
+//           }
+//           // TODO: Can't use ? in the and_then handler because we can convert automatically from
+//           // DicomError to Reject. See: https://stackoverflow.com/a/65175925/2603925
+//           Err(e) => Err(warp::reject::custom(ApplicationError {
+//             message: e.to_string(),
+//           })),
+//         }
+//       },
+//     )
+//     .with(warp::reply::with::headers(json_headers.clone()));
 
-  // GET {s}/series?... Query for all the series
-  let series = warp::path("series")
-    .and(warp::path::end())
-    .and(warp::query::<QidoQueryParameters>())
-    .and(query_param_to_search_terms())
-    .and(with_db(sqlfile))
-    .and(with_instance_factory(instance_factory.clone()))
-    .and_then(
-      |qido_params: QidoQueryParameters,
-       search_terms: HashMap<Tag, String>,
-       connection: ConnectionThreadSafe,
-       instance_factory: T| async move {
-        match get_series(&connection, &instance_factory, &qido_params, &search_terms) {
-          Ok(series) => Ok::<_, warp::Rejection>(format!("[{}]", generate_json_response(&series))),
-          Err(e) => Err(warp::reject::custom(ApplicationError {
-            message: e.to_string(),
-          })),
-        }
-      },
-    )
-    .with(warp::reply::with::headers(json_headers.clone()));
+//   // GET {s}/series?... Query for all the series
+//   let series = warp::path("series")
+//     .and(warp::path::end())
+//     .and(warp::query::<QidoQueryParameters>())
+//     .and(query_param_to_search_terms())
+//     .and(with_db(sqlfile))
+//     .and(with_instance_factory(instance_factory.clone()))
+//     .and_then(
+//       |qido_params: QidoQueryParameters,
+//        search_terms: HashMap<Tag, String>,
+//        connection: Connection,
+//        instance_factory: T| async move {
+//         match get_series(&connection, &instance_factory, &qido_params, &search_terms) {
+//           Ok(series) => Ok::<_, warp::Rejection>(format!("[{}]", generate_json_response(&series))),
+//           Err(e) => Err(warp::reject::custom(ApplicationError {
+//             message: e.to_string(),
+//           })),
+//         }
+//       },
+//     )
+//     .with(warp::reply::with::headers(json_headers.clone()));
 
-  // GET {s}/instances?... Query for all the instances
-  let instances = warp::path("instances")
-    .and(warp::path::end())
-    .and(warp::query::<QidoQueryParameters>())
-    .and(query_param_to_search_terms())
-    .and(with_db(sqlfile))
-    .and(with_instance_factory(instance_factory.clone()))
-    .and_then(
-      |qido_params: QidoQueryParameters,
-       search_terms: HashMap<Tag, String>,
-       connection: ConnectionThreadSafe,
-       instance_factory: T| async move {
-        match get_instances(&connection, &instance_factory, &qido_params, &search_terms) {
-          Ok(instances) => {
-            Ok::<_, warp::Rejection>(format!("[{}]", generate_json_response(&instances)))
-          }
-          Err(e) => Err(warp::reject::custom(ApplicationError {
-            message: e.to_string(),
-          })),
-        }
-      },
-    )
-    .with(warp::reply::with::headers(json_headers.clone()));
+//   // GET {s}/instances?... Query for all the instances
+//   let instances = warp::path("instances")
+//     .and(warp::path::end())
+//     .and(warp::query::<QidoQueryParameters>())
+//     .and(query_param_to_search_terms())
+//     .and(with_db(sqlfile))
+//     .and(with_instance_factory(instance_factory.clone()))
+//     .and_then(
+//       |qido_params: QidoQueryParameters,
+//        search_terms: HashMap<Tag, String>,
+//        connection: Connection,
+//        instance_factory: T| async move {
+//         match get_instances(&connection, &instance_factory, &qido_params, &search_terms) {
+//           Ok(instances) => {
+//             Ok::<_, warp::Rejection>(format!("[{}]", generate_json_response(&instances)))
+//           }
+//           Err(e) => Err(warp::reject::custom(ApplicationError {
+//             message: e.to_string(),
+//           })),
+//         }
+//       },
+//     )
+//     .with(warp::reply::with::headers(json_headers.clone()));
 
-  // GET {s}/studies/{study}/series?...  Query for series in a study
-  let studies_series = warp::path("studies")
-    .and(unique_identifier())
-    .and(warp::path("series"))
-    .and(warp::path::end())
-    .and(warp::query::<QidoQueryParameters>())
-    .and(query_param_to_search_terms())
-    .and(with_db(sqlfile))
-    .and(with_instance_factory(instance_factory.clone()))
-    .and_then(
-      |study_uid: String,
-       qido_params: QidoQueryParameters,
-       mut search_terms: HashMap<Tag, String>,
-       connection: ConnectionThreadSafe,
-       instance_factory: T| async move {
-        search_terms.insert(dicom_tags::StudyInstanceUID, study_uid);
-        match get_series(&connection, &instance_factory, &qido_params, &search_terms) {
-          Ok(studies) => {
-            Ok::<_, warp::Rejection>(format!("[{}]", generate_json_response(&studies)))
-          }
-          Err(e) => Err(warp::reject::custom(ApplicationError {
-            message: e.to_string(),
-          })),
-        }
-      },
-    )
-    .with(warp::reply::with::headers(json_headers.clone()));
+//   // GET {s}/studies/{study}/series?...  Query for series in a study
+//   let studies_series = warp::path("studies")
+//     .and(unique_identifier())
+//     .and(warp::path("series"))
+//     .and(warp::path::end())
+//     .and(warp::query::<QidoQueryParameters>())
+//     .and(query_param_to_search_terms())
+//     .and(with_db(sqlfile))
+//     .and(with_instance_factory(instance_factory.clone()))
+//     .and_then(
+//       |study_uid: String,
+//        qido_params: QidoQueryParameters,
+//        mut search_terms: HashMap<Tag, String>,
+//        connection: Connection,
+//        instance_factory: T| async move {
+//         search_terms.insert(dicom_tags::StudyInstanceUID, study_uid);
+//         match get_series(&connection, &instance_factory, &qido_params, &search_terms) {
+//           Ok(studies) => {
+//             Ok::<_, warp::Rejection>(format!("[{}]", generate_json_response(&studies)))
+//           }
+//           Err(e) => Err(warp::reject::custom(ApplicationError {
+//             message: e.to_string(),
+//           })),
+//         }
+//       },
+//     )
+//     .with(warp::reply::with::headers(json_headers.clone()));
 
-  // GET {s}/studies/{study}/series/{series}/instances?... Query for instances in a series
-  let studies_series_instances = warp::path("studies")
-    .and(unique_identifier())
-    .and(warp::path("series"))
-    .and(unique_identifier())
-    .and(warp::path("instances"))
-    .and(warp::path::end())
-    .and(warp::query::<QidoQueryParameters>())
-    .and(query_param_to_search_terms())
-    .and(with_db(sqlfile))
-    .and(with_instance_factory(instance_factory))
-    .and_then(
-      |study_uid: String,
-       series_uid: String,
-       qido_params: QidoQueryParameters,
-       mut search_terms: HashMap<Tag, String>,
-       connection: ConnectionThreadSafe,
-       instance_factory: T| async move {
-        search_terms.insert(dicom_tags::StudyInstanceUID, study_uid);
-        search_terms.insert(dicom_tags::SeriesInstanceUID, series_uid);
-        match get_instances(&connection, &instance_factory, &qido_params, &search_terms) {
-          Ok(studies) => {
-            Ok::<_, warp::Rejection>(format!("[{}]", generate_json_response(&studies)))
-          }
-          Err(e) => Err(warp::reject::custom(ApplicationError {
-            message: e.to_string(),
-          })),
-        }
-      },
-    )
-    .with(warp::reply::with::headers(json_headers.clone()));
+//   // GET {s}/studies/{study}/series/{series}/instances?... Query for instances in a series
+//   let studies_series_instances = warp::path("studies")
+//     .and(unique_identifier())
+//     .and(warp::path("series"))
+//     .and(unique_identifier())
+//     .and(warp::path("instances"))
+//     .and(warp::path::end())
+//     .and(warp::query::<QidoQueryParameters>())
+//     .and(query_param_to_search_terms())
+//     .and(with_db(sqlfile))
+//     .and(with_instance_factory(instance_factory))
+//     .and_then(
+//       |study_uid: String,
+//        series_uid: String,
+//        qido_params: QidoQueryParameters,
+//        mut search_terms: HashMap<Tag, String>,
+//        connection: Connection,
+//        instance_factory: T| async move {
+//         search_terms.insert(dicom_tags::StudyInstanceUID, study_uid);
+//         search_terms.insert(dicom_tags::SeriesInstanceUID, series_uid);
+//         match get_instances(&connection, &instance_factory, &qido_params, &search_terms) {
+//           Ok(studies) => {
+//             Ok::<_, warp::Rejection>(format!("[{}]", generate_json_response(&studies)))
+//           }
+//           Err(e) => Err(warp::reject::custom(ApplicationError {
+//             message: e.to_string(),
+//           })),
+//         }
+//       },
+//     )
+//     .with(warp::reply::with::headers(json_headers.clone()));
 
-  warp::get()
-    .and(studies)
-    .or(series)
-    .or(instances)
-    .or(studies_series)
-    .or(studies_series_instances)
-}
+//   warp::get()
+//     .and(studies)
+//     .or(series)
+//     .or(instances)
+//     .or(studies_series)
+//     .or(studies_series_instances)
+// }
 
 /**
  * https://www.dicomstandard.org/using/dicomweb/retrieve-wado-rs-and-wado-uri/
  */
-fn get_retrieve_api<R: Read + Seek, W: Write, T: InstanceFactory<R, W> + Clone + Send>(
-  sqlfile: &str,
-  instance_factory: T,
-) -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
-  // No literal constructor for HeaderMap, so have to allocate them here...
-  let mut json_headers = HeaderMap::new();
-  json_headers.insert(
-    CONTENT_TYPE,
-    "application/dicom+json; charset=utf-8".parse().unwrap(),
-  );
+// fn get_retrieve_api<T: InstanceFactory + Clone + Send>(
+//   sqlfile: &str,
+//   instance_factory: T,
+// ) -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
+//   // No literal constructor for HeaderMap, so have to allocate them here...
+//   let mut json_headers = HeaderMap::new();
+//   json_headers.insert(
+//     CONTENT_TYPE,
+//     "application/dicom+json; charset=utf-8".parse().unwrap(),
+//   );
 
-  // GET {s}/studies/{study} Retrieve entire study
-  let studies = warp::path("studies")
-    .and(unique_identifier())
-    .and(warp::filters::header::value("accept"))
-    .and(warp::path::end())
-    // TODO: Find a way to return Not Implemented if the accept header is not application/json
-    // .and_then(|study_uid: String, accept_header: HeaderValue| async move {
-    //   if accept_header != "application/json" && accept_header != "application/dicom+json" {
-    //     let message = String::from("Only 'application/json' or 'application/dicom+json' accept header are supported");
-    //     Ok(warp::reply::with_status(message, warp::http::StatusCode::NOT_IMPLEMENTED))
-    //   } else {
-    //     Err(warp::reject::reject())
-    //   }
-    // });
-    .and_then(|study_uid: String, accept_header: HeaderValue| async move {
-      Ok::<_, warp::Rejection>(serde_json::to_string("").unwrap())
-    });
-  // GET {s}/studies/{study}/rendered  Retrieve rendered study
-  let studies_rendered = warp::path("studies")
-    .and(unique_identifier())
-    .and(warp::path("rendered"))
-    .and(warp::query::<WadoQueryParameters>())
-    .and(warp::path::end())
-    .and_then(
-      |study_uid: String, params: WadoQueryParameters| async move {
-        Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
-      },
-    );
-  // GET {s}/studies/{study}/series/{series} Retrieve entire series
-  let studies_series = warp::path("studies")
-    .and(unique_identifier())
-    .and(warp::path("series"))
-    .and(unique_identifier())
-    .and(warp::path::end())
-    .and_then(|study_uid: String, series_uid: String| async move {
-      Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
-    });
-  // GET {s}/studies/{study}/series/{series}/rendered  Retrieve rendered series
-  let studies_series_rendered = warp::path("studies")
-    .and(unique_identifier())
-    .and(warp::path("series"))
-    .and(unique_identifier())
-    .and(warp::path("rendered"))
-    .and(warp::query::<WadoQueryParameters>())
-    .and(warp::path::end())
-    .and_then(
-      |study_uid: String, series_uid: String, params: WadoQueryParameters| async move {
-        Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
-      },
-    );
-  // GET {s}/studies/{study}/series/{series}/metadata  Retrieve series metadata
-  let studies_series_metadata = warp::path("studies")
-    .and(unique_identifier())
-    .and(warp::path("series"))
-    .and(unique_identifier())
-    .and(warp::path("metadata"))
-    .and(warp::path::end())
-    .and_then(|study_uid: String, series_uid: String| async move {
-      Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
-    });
+//   // GET {s}/studies/{study} Retrieve entire study
+//   let studies = warp::path("studies")
+//     .and(unique_identifier())
+//     .and(warp::filters::header::value("accept"))
+//     .and(warp::path::end())
+//     // TODO: Find a way to return Not Implemented if the accept header is not application/json
+//     // .and_then(|study_uid: String, accept_header: HeaderValue| async move {
+//     //   if accept_header != "application/json" && accept_header != "application/dicom+json" {
+//     //     let message = String::from("Only 'application/json' or 'application/dicom+json' accept header are supported");
+//     //     Ok(warp::reply::with_status(message, warp::http::StatusCode::NOT_IMPLEMENTED))
+//     //   } else {
+//     //     Err(warp::reject::reject())
+//     //   }
+//     // });
+//     .and_then(|study_uid: String, accept_header: HeaderValue| async move {
+//       Ok::<_, warp::Rejection>(serde_json::to_string("").unwrap())
+//     });
+//   // GET {s}/studies/{study}/rendered  Retrieve rendered study
+//   let studies_rendered = warp::path("studies")
+//     .and(unique_identifier())
+//     .and(warp::path("rendered"))
+//     .and(warp::query::<WadoQueryParameters>())
+//     .and(warp::path::end())
+//     .and_then(
+//       |study_uid: String, params: WadoQueryParameters| async move {
+//         Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
+//       },
+//     );
+//   // GET {s}/studies/{study}/series/{series} Retrieve entire series
+//   let studies_series = warp::path("studies")
+//     .and(unique_identifier())
+//     .and(warp::path("series"))
+//     .and(unique_identifier())
+//     .and(warp::path::end())
+//     .and_then(|study_uid: String, series_uid: String| async move {
+//       Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
+//     });
+//   // GET {s}/studies/{study}/series/{series}/rendered  Retrieve rendered series
+//   let studies_series_rendered = warp::path("studies")
+//     .and(unique_identifier())
+//     .and(warp::path("series"))
+//     .and(unique_identifier())
+//     .and(warp::path("rendered"))
+//     .and(warp::query::<WadoQueryParameters>())
+//     .and(warp::path::end())
+//     .and_then(
+//       |study_uid: String, series_uid: String, params: WadoQueryParameters| async move {
+//         Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
+//       },
+//     );
+//   // GET {s}/studies/{study}/series/{series}/metadata  Retrieve series metadata
+//   let studies_series_metadata = warp::path("studies")
+//     .and(unique_identifier())
+//     .and(warp::path("series"))
+//     .and(unique_identifier())
+//     .and(warp::path("metadata"))
+//     .and(warp::path::end())
+//     .and_then(|study_uid: String, series_uid: String| async move {
+//       Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
+//     });
 
-  let series = warp::path("series")
-    .and(unique_identifier())
-    .and(warp::path::end())
-    .map(|study_uid: String| warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED));
-  let series_rendered = warp::path("series")
-    .and(unique_identifier())
-    .and(warp::path("rendered"))
-    .and(warp::query::<WadoQueryParameters>())
-    .and(warp::path::end())
-    .and_then(
-      |study_uid: String, params: WadoQueryParameters| async move {
-        Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
-      },
-    );
+//   let series = warp::path("series")
+//     .and(unique_identifier())
+//     .and(warp::path::end())
+//     .map(|study_uid: String| warp::reply::with_status("", warp::http::StatusCode::NOT_IMPLEMENTED));
+//   let series_rendered = warp::path("series")
+//     .and(unique_identifier())
+//     .and(warp::path("rendered"))
+//     .and(warp::query::<WadoQueryParameters>())
+//     .and(warp::path::end())
+//     .and_then(
+//       |study_uid: String, params: WadoQueryParameters| async move {
+//         Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
+//       },
+//     );
 
-  // GET {s}/studies/{study}/series/{series}/instances/{instance}  Retrieve instance
-  let studies_series_instances = warp::path("studies")
-    .and(unique_identifier())
-    .and(warp::path("series"))
-    .and(unique_identifier())
-    .and(warp::path("instances"))
-    .and(unique_identifier())
-    .and(warp::path::end())
-    .and_then(
-      |study_uid: String, series_uid: String, instance_uid: String| async move {
-        Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
-      },
-    );
-  // GET {s}/studies/{study}/series/{series}/instances/{instance}/rendered Retrieve rendered instance
-  let studies_series_instances_rendered =
-    warp::path("studies")
-      .and(unique_identifier())
-      .and(warp::path("series"))
-      .and(unique_identifier())
-      .and(warp::path("instances"))
-      .and(unique_identifier())
-      .and(warp::path("rendered"))
-      .and(warp::query::<WadoQueryParameters>())
-      .and(warp::path::end())
-      .and_then(
-        |study_uid: String,
-         series_uid: String,
-         instance_uid: String,
-         params: WadoQueryParameters| async move {
-          Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
-        },
-      );
-  // GET {s}/studies/{study}/series/{series}/instances/{instance}/metadata Retrieve instance metadata
-  let studies_series_instances_metadata = warp::path("studies")
-    .and(unique_identifier())
-    .and(warp::path("series"))
-    .and(unique_identifier())
-    .and(warp::path("instances"))
-    .and(unique_identifier())
-    .and(warp::path("metadata"))
-    .and(warp::path::end())
-    .and(with_db(sqlfile))
-    .and(with_instance_factory(instance_factory.clone()))
-    .and_then(
-      |study_uid: String,
-       series_uid: String,
-       instance_uid: String,
-       connection: ConnectionThreadSafe,
-       instance_factory: T| async move {
-        let mut search_terms = HashMap::<Tag, String>::new();
-        search_terms.insert(dicom_tags::StudyInstanceUID, study_uid);
-        search_terms.insert(dicom_tags::SeriesInstanceUID, series_uid);
-        search_terms.insert(dicom_tags::SOPInstanceUID, instance_uid);
-        match get_instance(&connection, &instance_factory, &search_terms) {
-          Ok(instances) => Ok::<_, warp::Rejection>(generate_json_response(&instances)),
-          Err(e) => Err(warp::reject::custom(ApplicationError {
-            message: e.to_string(),
-          })),
-        }
-      },
-    );
-  // GET {s}/instances/{instance} Retrieve instance
-  let instance = warp::path("instances")
-    .and(unique_identifier())
-    .and(warp::path::end())
-    .and_then(|instance_uid: String| async move {
-      Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
-    });
-  // GET {s}/instances/{instance}/rendered Retrieve rendered instance
-  let instance_rendered = warp::path("instances")
-    .and(unique_identifier())
-    .and(warp::path("rendered"))
-    .and(warp::query::<WadoQueryParameters>())
-    .and(warp::path::end())
-    .and_then(
-      |instance_uid: String, params: WadoQueryParameters| async move {
-        Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
-      },
-    );
-  // GET {s}/studies/{study}/series/{series}/instances/{instance}/frames/{frames}  Retrieve frames in an instance
-  let studies_series_instances_frames = warp::path("studies")
-    .and(unique_identifier())
-    .and(warp::path("series"))
-    .and(unique_identifier())
-    .and(warp::path("instances"))
-    .and(unique_identifier())
-    .and(warp::path("frames"))
-    .and(unique_identifier())
-    .and(warp::path::end())
-    .and_then(
-      |study_uid: String, series_uid: String, instance_uid: String, frame_uid: String| async move {
-        Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
-      },
-    );
-  // GET {s}/{bulkdataURIReference}
-  let studies_series_instances_bulkdata = warp::path("bulkdata")
-    .and(unique_identifier())
-    .and(unique_identifier())
-    .and(unique_identifier())
-    .and(unique_identifier())
-    .and(warp::path::end())
-    .and(with_db(sqlfile))
-    .and(with_instance_factory(instance_factory.clone()))
-    .and_then(
-      |study_uid: String,
-       series_uid: String,
-       instance_uid: String,
-       tag: String,
-       connection: ConnectionThreadSafe,
-       instance_factory: T| async move {
-        let mut search_terms = HashMap::<Tag, String>::new();
-        search_terms.insert(dicom_tags::StudyInstanceUID, study_uid);
-        search_terms.insert(dicom_tags::SeriesInstanceUID, series_uid);
-        search_terms.insert(dicom_tags::SOPInstanceUID, instance_uid);
-        let tag = Tag::try_from(&tag).or_else(|e| {
-          Err(warp::reject::custom(ApplicationError {
-            message: e.to_string(),
-          }))
-        })?;
-        match get_bulk_tag(&connection, &instance_factory, &search_terms, tag) {
-          Ok(data) => Ok::<_, warp::Rejection>(data),
-          Err(e) => Err(warp::reject::custom(ApplicationError {
-            message: e.to_string(),
-          })),
-        }
-      },
-    );
+//   // GET {s}/studies/{study}/series/{series}/instances/{instance}  Retrieve instance
+//   let studies_series_instances = warp::path("studies")
+//     .and(unique_identifier())
+//     .and(warp::path("series"))
+//     .and(unique_identifier())
+//     .and(warp::path("instances"))
+//     .and(unique_identifier())
+//     .and(warp::path::end())
+//     .and_then(
+//       |study_uid: String, series_uid: String, instance_uid: String| async move {
+//         Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
+//       },
+//     );
+//   // GET {s}/studies/{study}/series/{series}/instances/{instance}/rendered Retrieve rendered instance
+//   let studies_series_instances_rendered =
+//     warp::path("studies")
+//       .and(unique_identifier())
+//       .and(warp::path("series"))
+//       .and(unique_identifier())
+//       .and(warp::path("instances"))
+//       .and(unique_identifier())
+//       .and(warp::path("rendered"))
+//       .and(warp::query::<WadoQueryParameters>())
+//       .and(warp::path::end())
+//       .and_then(
+//         |study_uid: String,
+//          series_uid: String,
+//          instance_uid: String,
+//          params: WadoQueryParameters| async move {
+//           Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
+//         },
+//       );
+//   // GET {s}/studies/{study}/series/{series}/instances/{instance}/metadata Retrieve instance metadata
+//   let studies_series_instances_metadata = warp::path("studies")
+//     .and(unique_identifier())
+//     .and(warp::path("series"))
+//     .and(unique_identifier())
+//     .and(warp::path("instances"))
+//     .and(unique_identifier())
+//     .and(warp::path("metadata"))
+//     .and(warp::path::end())
+//     .and(with_db(sqlfile))
+//     .and(with_instance_factory(instance_factory.clone()))
+//     .and_then(
+//       |study_uid: String,
+//        series_uid: String,
+//        instance_uid: String,
+//        connection: Connection,
+//        instance_factory: T| async move {
+//         let mut search_terms = HashMap::<Tag, String>::new();
+//         search_terms.insert(dicom_tags::StudyInstanceUID, study_uid);
+//         search_terms.insert(dicom_tags::SeriesInstanceUID, series_uid);
+//         search_terms.insert(dicom_tags::SOPInstanceUID, instance_uid);
+//         match get_instance(&connection, &instance_factory, &search_terms) {
+//           Ok(instances) => Ok::<_, warp::Rejection>(generate_json_response(&instances)),
+//           Err(e) => Err(warp::reject::custom(ApplicationError {
+//             message: e.to_string(),
+//           })),
+//         }
+//       },
+//     );
+//   // GET {s}/instances/{instance} Retrieve instance
+//   let instance = warp::path("instances")
+//     .and(unique_identifier())
+//     .and(warp::path::end())
+//     .and_then(|instance_uid: String| async move {
+//       Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
+//     });
+//   // GET {s}/instances/{instance}/rendered Retrieve rendered instance
+//   let instance_rendered = warp::path("instances")
+//     .and(unique_identifier())
+//     .and(warp::path("rendered"))
+//     .and(warp::query::<WadoQueryParameters>())
+//     .and(warp::path::end())
+//     .and_then(
+//       |instance_uid: String, params: WadoQueryParameters| async move {
+//         Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
+//       },
+//     );
+//   // GET {s}/studies/{study}/series/{series}/instances/{instance}/frames/{frames}  Retrieve frames in an instance
+//   let studies_series_instances_frames = warp::path("studies")
+//     .and(unique_identifier())
+//     .and(warp::path("series"))
+//     .and(unique_identifier())
+//     .and(warp::path("instances"))
+//     .and(unique_identifier())
+//     .and(warp::path("frames"))
+//     .and(unique_identifier())
+//     .and(warp::path::end())
+//     .and_then(
+//       |study_uid: String, series_uid: String, instance_uid: String, frame_uid: String| async move {
+//         Err::<&str, Rejection>(warp::reject::custom(MethodNotImplemented {}))
+//       },
+//     );
+//   // GET {s}/{bulkdataURIReference}
+//   let studies_series_instances_bulkdata = warp::path("bulkdata")
+//     .and(unique_identifier())
+//     .and(unique_identifier())
+//     .and(unique_identifier())
+//     .and(unique_identifier())
+//     .and(warp::path::end())
+//     .and(with_db(sqlfile))
+//     .and(with_instance_factory(instance_factory.clone()))
+//     .and_then(
+//       |study_uid: String,
+//        series_uid: String,
+//        instance_uid: String,
+//        tag: String,
+//        connection: Connection,
+//        instance_factory: T| async move {
+//         let mut search_terms = HashMap::<Tag, String>::new();
+//         search_terms.insert(dicom_tags::StudyInstanceUID, study_uid);
+//         search_terms.insert(dicom_tags::SeriesInstanceUID, series_uid);
+//         search_terms.insert(dicom_tags::SOPInstanceUID, instance_uid);
+//         let tag = Tag::try_from(&tag).or_else(|e| {
+//           Err(warp::reject::custom(ApplicationError {
+//             message: e.to_string(),
+//           }))
+//         })?;
+//         match get_bulk_tag(&connection, &instance_factory, &search_terms, tag) {
+//           Ok(data) => Ok::<_, warp::Rejection>(data),
+//           Err(e) => Err(warp::reject::custom(ApplicationError {
+//             message: e.to_string(),
+//           })),
+//         }
+//       },
+//     );
 
-  warp::get()
-    .and(studies)
-    .or(studies_rendered)
-    .or(studies_series)
-    .or(studies_series_rendered)
-    .or(studies_series_metadata)
-    .or(series)
-    .or(series_rendered)
-    .or(studies_series_instances)
-    .or(studies_series_instances_rendered)
-    .or(studies_series_instances_metadata)
-    .or(instance)
-    .or(instance_rendered)
-    .or(studies_series_instances_frames)
-    .or(studies_series_instances_bulkdata)
-}
+//   warp::get()
+//     .and(studies)
+//     .or(studies_rendered)
+//     .or(studies_series)
+//     .or(studies_series_rendered)
+//     .or(studies_series_metadata)
+//     .or(series)
+//     .or(series_rendered)
+//     .or(studies_series_instances)
+//     .or(studies_series_instances_rendered)
+//     .or(studies_series_instances_metadata)
+//     .or(instance)
+//     .or(instance_rendered)
+//     .or(studies_series_instances_frames)
+//     .or(studies_series_instances_bulkdata)
+// }
 
-fn delete_all_studies(connection: &ConnectionThreadSafe) -> Result<(), Box<dyn Error>> {
+fn delete_all_studies(connection: &Connection) -> Result<(), Box<dyn Error>> {
   db::query(connection, "DELETE FROM dicom_index;")?;
   Ok(())
+}
+
+// Convert a IntoResponse to ApiError
+// Used with `WithRejection`
+// from: https://github.com/tokio-rs/axum/blob/main/examples/customize-extractor-error/src/with_rejection.rs
+mod custom_error {
+  use crate::IntoResponse;
+  use crate::JsonRejection;
+  use crate::StatusCode;
+  use axum::Json;
+  use serde_json::json;
+
+  pub struct ApiError {
+    status: StatusCode,
+    error: String,
+  }
+
+  impl From<JsonRejection> for ApiError {
+    fn from(rejection: JsonRejection) -> ApiError {
+      return ApiError {
+        status: rejection.status(),
+        error: rejection.body_text(),
+      };
+    }
+  }
+
+  // We implement `IntoResponse` so ApiError can be used as a response
+  impl IntoResponse for ApiError {
+    fn into_response(self) -> axum::response::Response {
+      let payload = json!({
+        "error": self.error,
+      });
+
+      (self.status, Json(payload)).into_response()
+    }
+  }
+}
+
+#[axum_macros::debug_handler]
+async fn post_studies(
+  axum::extract::State(state): axum::extract::State<Arc<AppState>>,
+  Path(SearchTerms {
+    study_uid,
+    series_uid,
+    instance_uid,
+  }): Path<SearchTerms>,
+  // TODO: Find a way to handle different Content-Type. Now we assume that Content-Type is json
+  WithRejection(Json(dataset), _): WithRejection<
+    Json<BTreeMap<String, DicomAttributeJson>>,
+    custom_error::ApiError,
+  >,
+) -> axum::response::Result<()> {
+  let sop_instance_uid = String::try_from(
+    dataset
+      .get(&dicom_tags::SOPInstanceUID.to_string())
+      .unwrap()
+      .payload
+      .clone()
+      .unwrap(),
+  )
+  .map_err(|e| {
+    tracing::error!(e.details);
+    (
+      StatusCode::BAD_REQUEST,
+      Json("Could not perform STORE").into_response(),
+    )
+  })?;
+  let filename = &format!("{}.dcm", sop_instance_uid);
+  let overwrite = state.config.store_overwrite.unwrap_or(false);
+  let mut writer = state
+    .instance_factory
+    .get_writer(filename, overwrite)
+    .map_err(|e| {
+      tracing::warn!("Could not get a writer for {}: {}", filename, e);
+      (
+        StatusCode::INTERNAL_SERVER_ERROR,
+        Json("Could not perform STORE").into_response(),
+      )
+    })?;
+  // Write the file
+  tracing::debug!("writing {}", filename);
+  json2dcm::json2dcm(&mut writer, &dataset).map_err(|e| {
+    tracing::warn!(
+      "Error while streaming the dicom file to {}: {}",
+      filename,
+      e
+    );
+    (
+      StatusCode::INTERNAL_SERVER_ERROR,
+      Json("Could not perform STORE").into_response(),
+    )
+  })?;
+  // Update the index
+  let mut data: HashMap<String, String> = dataset
+    .iter()
+    .map(|(k, v)| {
+      (
+        Tag::try_from(k).unwrap().name.to_string(),
+        dicom_attribute_json_to_string(v),
+      )
+    })
+    .collect();
+  data.insert("filepath".to_string(), filename.to_string());
+  state
+    .index_store
+    .lock()
+    .unwrap()
+    .write(&data)
+    .map_err(|e| {
+      tracing::warn!(
+        "Error while updating the index file to the DB for {}: {}",
+        filename,
+        e
+      );
+      (
+        StatusCode::INTERNAL_SERVER_ERROR,
+        Json("Could not perform STORE").into_response(),
+      )
+    })?;
+  Ok(())
+}
+
+#[axum_macros::debug_handler]
+async fn delete_studies(
+  axum::extract::State(state): axum::extract::State<Arc<AppState>>,
+  Path(SearchTerms {
+    study_uid,
+    series_uid,
+    instance_uid,
+  }): Path<SearchTerms>,
+) -> impl IntoResponse {
+  let query = if let Some(study_uid) = study_uid {
+    &format!(
+      "DELETE FROM dicom_index WHERE StudyInstanceUID == {};",
+      study_uid
+    )
+  } else {
+    "DELETE FROM dicom_index;"
+  };
+  match db::query(&state.connection.lock().unwrap(), query) {
+    Ok(_) => StatusCode::OK.into_response(),
+    Err(e) => {
+      tracing::error!(e);
+      Json("Could not perform delete").into_response()
+    }
+  }
 }
 
 fn get_delete_api(
@@ -1379,7 +1695,7 @@ fn get_delete_api(
   let delete_all_studies = warp::path("studies")
     .and(warp::path::end())
     .and(with_db(sqlfile))
-    .and_then(|connection: ConnectionThreadSafe| async move {
+    .and_then(|connection: Connection| async move {
       delete_all_studies(&connection)
         .map(|_| warp::reply())
         .map_err(|e| {
@@ -1462,81 +1778,37 @@ async fn handle_rejection(err: Rejection) -> Result<impl warp::Reply, Infallible
 // the database does not exists we create it with respect to the provided
 // config. If no configuration was provided, we check the database exists with a
 // 'dicom_index' table.
-fn check_db(opt: &Opt) -> Result<(String, Vec<String>, ConnectionThreadSafe), Box<dyn Error>> {
+fn check_db(
+  opt: &Opt,
+  config: &config::Config,
+) -> Result<(Vec<String>, ConnectionThreadSafe), Box<dyn Error>> {
   let connection = Connection::open_thread_safe(&opt.sqlfile)?;
-  return match &opt.config {
-    Some(filepath) => {
-      // Load the config
-      let config_file = std::fs::read_to_string(filepath)?;
-      let config: config::Config = serde_yaml::from_str(&config_file)?;
-      let mut indexable_fields = config
-        .indexing
-        .fields
-        .series
-        .into_iter()
-        .chain(
-          config
-            .indexing
-            .fields
-            .studies
-            .into_iter()
-            .chain(config.indexing.fields.instances.into_iter()),
-        )
-        .collect::<Vec<String>>();
-      indexable_fields.push("filepath".to_string());
-      if db::query(
-        &connection,
-        &format!(
-          "SELECT name FROM sqlite_master WHERE type='table' AND name='{}';",
-          config.table_name
-        ),
-      )?
-      .is_empty()
-      {
-        // We will create the requested table with the appropriate fields
-        let table = indexable_fields
-          .iter()
-          .map(|s| s.to_string() + " TEXT NON NULL")
-          .collect::<Vec<String>>()
-          .join(",");
 
-        let create_index_table_request = &format!(
-          "CREATE TABLE IF NOT EXISTS {} ({});",
-          config.table_name, table
-        );
-        connection.execute(create_index_table_request)?;
-      }
-      Ok((config.table_name, indexable_fields, connection))
-    }
-    None => {
-      // Check the database exists and that the dicom_index table also exists.
-      // If not, we need the config to tell us how to create that table.
-      return if db::query(
-        &connection,
-        &format!(
-          "SELECT name FROM sqlite_master WHERE type='table' AND name='{}';",
-          "dicom_index"
-        ),
-      )?
-      .is_empty()
-      {
-        Err(
-          format!(
-            "{} table does not exist in provided database. \
-          To create a database from scratch you must provide a configuration file (--config)",
-            "dicom_index"
-          )
-          .into(),
-        )
-      } else {
-        Ok((
-          "dicom_index".to_string(),
-          get_indexed_fields(&connection)?,
-          connection,
-        ))
-      };
-    }
-  };
+  let mut indexable_fields = config.get_indexable_fields();
+  indexable_fields.push("filepath".to_string());
+  if db::query(
+    &connection,
+    &format!(
+      "SELECT name FROM sqlite_master WHERE type='table' AND name='{}';",
+      config.table_name
+    ),
+  )?
+  .is_empty()
+  {
+    // We will create the requested table with the appropriate fields
+    let table = indexable_fields
+      .iter()
+      .map(|s| s.to_string() + " TEXT NON NULL")
+      .collect::<Vec<String>>()
+      .join(",");
+
+    let create_index_table_request = &format!(
+      "CREATE TABLE IF NOT EXISTS {} ({});",
+      config.table_name, table
+    );
+    connection.execute(create_index_table_request)?;
+  }
+  Ok((indexable_fields, connection))
 }
 
 // A convenient representation of the content of the accept header
@@ -1565,193 +1837,438 @@ fn get_accept_format<'a>(
   )))
 }
 
-/**
- * Convert the Accept/Content-Type header to something like:
- * [ format: application/json, parameters: { boundary: '---abcd1234---' }, ... ]
- */
-fn get_accept_headers(accept_header: &HeaderValue) -> Result<Vec<AcceptHeader>, Box<dyn Error>> {
-  Ok(
-    accept_header
-      .to_str()?
-      .split(',')
-      .map(|entry| {
-        let mut subentries = entry.split(';');
-        let format = subentries.next().unwrap();
-        let mut parameters = HashMap::<String, String>::new();
-        for subentry in subentries {
-          let parameter = subentry
-            .split('=')
-            .map(String::from)
-            .collect::<Vec<String>>();
-          parameters.insert(parameter[0].clone(), parameter[1].clone());
-        }
-        AcceptHeader {
-          format: String::from(format),
-          parameters,
-        }
-      })
-      .collect::<Vec<AcceptHeader>>(),
-  )
+// /**
+//  * Convert the Accept/Content-Type header to something like:
+//  * [ format: application/json, parameters: { boundary: '---abcd1234---' }, ... ]
+//  */
+// fn get_accept_headers(accept_header: &HeaderValue) -> Result<Vec<AcceptHeader>, Box<dyn Error>> {
+//   Ok(
+//     accept_header
+//       .to_str()?
+//       .split(',')
+//       .map(|entry| {
+//         let mut subentries = entry.split(';');
+//         let format = subentries.next().unwrap();
+//         let mut parameters = HashMap::<String, String>::new();
+//         for subentry in subentries {
+//           let parameter = subentry
+//             .split('=')
+//             .map(String::from)
+//             .collect::<Vec<String>>();
+//           parameters.insert(parameter[0].clone(), parameter[1].clone());
+//         }
+//         AcceptHeader {
+//           format: String::from(format),
+//           parameters,
+//         }
+//       })
+//       .collect::<Vec<AcceptHeader>>(),
+//   )
+// }
+
+// fn capabilities(
+//   application: &'static capabilities::Application,
+// ) -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
+//   let handlers = warp::filters::header::value("accept").map(move |accept_header: HeaderValue| {
+//     let accept_header = get_accept_headers(&accept_header).unwrap();
+//     match get_accept_format(
+//       &accept_header,
+//       &[
+//         "",
+//         "*/*",
+//         "application/vnd.sun.wadl+xml",
+//         "application/xml",
+//         "application/dicom+xml",
+//         "application/dicom+json",
+//         "application/json",
+//       ],
+//     ) {
+//       Ok(accept) => match accept.format.as_str() {
+//         "application/vnd.sun.wadl+xml"
+//         | "application/dicom+xml"
+//         | "application/xml"
+//         | ""
+//         | "*/*" => Response::builder()
+//           .header(warp::http::header::CONTENT_ENCODING, &accept.format)
+//           .status(warp::http::StatusCode::OK)
+//           .body(quick_xml::se::to_string(&application).unwrap()),
+//         "application/dicom+json" | "application/json" => Response::builder()
+//           .header(warp::http::header::CONTENT_ENCODING, &accept.format)
+//           .status(warp::http::StatusCode::OK)
+//           // Because of https://github.com/tafia/quick-xml/issues/582, json output
+//           // is polluted with field names starting with "@". We replace them here.
+//           // TODO: Write a intermediary serializer to handle these.
+//           .body(
+//             serde_json::to_string(&application)
+//               .unwrap()
+//               .replace('@', ""),
+//           ),
+//         _ => unreachable!(),
+//       },
+//       Err(e) => {
+//         warn!("Accept header format {:?} not accepted", accept_header);
+//         Response::builder()
+//           .status(warp::http::StatusCode::NOT_IMPLEMENTED)
+//           .body(e.details)
+//       }
+//     }
+//   });
+
+//   // Fresh for a week.
+//   let cache_header =
+//     warp::reply::with::default_header(warp::http::header::CACHE_CONTROL, "max-age=604800");
+
+//   let option = warp::path::end()
+//     // OPTIONS /
+//     .and(warp::options().and(handlers))
+//     .with(cache_header.clone());
+//   // GET /
+//   let get = warp::path::end()
+//     .and(warp::get().and(handlers))
+//     .with(cache_header);
+
+//   option.or(get)
+// }
+
+fn get_accept_formats(headers: HeaderMap) -> Vec<String> {
+  // The following 3 lines could be within a function
+  let accept_types = headers
+    .get(ACCEPT)
+    .and_then(|ct| ct.to_str().ok().map(String::from))
+    .unwrap_or_else(|| "*/*".to_string())
+    .split(",")
+    .map(|s| s.trim().to_string())
+    .collect::<Vec<String>>();
+
+  return accept_types;
 }
 
-fn capabilities(
-  application: &'static capabilities::Application,
-) -> impl Filter<Extract = (impl warp::Reply,), Error = Rejection> + Clone {
-  let handlers = warp::filters::header::value("accept").map(move |accept_header: HeaderValue| {
-    let accept_header = get_accept_headers(&accept_header).unwrap();
-    match get_accept_format(
-      &accept_header,
-      &[
-        "",
-        "*/*",
-        "application/vnd.sun.wadl+xml",
-        "application/xml",
-        "application/dicom+xml",
-        "application/dicom+json",
-        "application/json",
-      ],
-    ) {
-      Ok(accept) => match accept.format.as_str() {
-        "application/vnd.sun.wadl+xml"
-        | "application/dicom+xml"
-        | "application/xml"
-        | ""
-        | "*/*" => Response::builder()
-          .header(warp::http::header::CONTENT_ENCODING, &accept.format)
-          .status(warp::http::StatusCode::OK)
-          .body(quick_xml::se::to_string(&application).unwrap()),
-        "application/dicom+json" | "application/json" => Response::builder()
-          .header(warp::http::header::CONTENT_ENCODING, &accept.format)
-          .status(warp::http::StatusCode::OK)
-          // Because of https://github.com/tafia/quick-xml/issues/582, json output
-          // is polluted with field names starting with "@". We replace them here.
-          // TODO: Write a intermediary serializer to handle these.
-          .body(
-            serde_json::to_string(&application)
-              .unwrap()
-              .replace('@', ""),
-          ),
-        _ => unreachable!(),
-      },
-      Err(e) => {
-        warn!("Accept header format {:?} not accepted", accept_header);
-        Response::builder()
-          .status(warp::http::StatusCode::NOT_IMPLEMENTED)
-          .body(e.details)
-      }
+struct AppState {
+  // TODO: Rework index_store so that we do not need an Arc Mutex here
+  connection: Arc<Mutex<ConnectionThreadSafe>>,
+  index_store: Arc<Mutex<SqlIndexStoreWithMutex>>,
+  instance_factory: Box<dyn InstanceFactory + Sync + Send>,
+  config: config::Config,
+}
+
+async fn print_request_response(
+  req: Request,
+  next: Next,
+) -> Result<impl IntoResponse, (StatusCode, String)> {
+  let (parts, body) = req.into_parts();
+  let bytes = buffer_and_print("request", body).await?;
+  let req = Request::from_parts(parts, Body::from(bytes));
+
+  let res = next.run(req).await;
+
+  let (parts, body) = res.into_parts();
+  let bytes = buffer_and_print("response", body).await?;
+  let res = Response::from_parts(parts, Body::from(bytes));
+
+  Ok(res)
+}
+
+async fn buffer_and_print<B>(direction: &str, body: B) -> Result<Bytes, (StatusCode, String)>
+where
+  B: axum::body::HttpBody<Data = Bytes>,
+  B::Error: std::fmt::Display,
+{
+  let bytes = match body.collect().await {
+    Ok(collected) => collected.to_bytes(),
+    Err(err) => {
+      return Err((
+        StatusCode::BAD_REQUEST,
+        format!("failed to read {direction} body: {err}"),
+      ));
     }
-  });
+  };
 
-  // Fresh for a week.
-  let cache_header =
-    warp::reply::with::default_header(warp::http::header::CACHE_CONTROL, "max-age=604800");
+  if let Ok(body) = std::str::from_utf8(&bytes) {
+    tracing::debug!("{direction} body = {body:?}");
+  }
 
-  let option = warp::path::end()
-    // OPTIONS /
-    .and(warp::options().and(handlers))
-    .with(cache_header.clone());
-  // GET /
-  let get = warp::path::end()
-    .and(warp::get().and(handlers))
-    .with(cache_header);
+  Ok(bytes)
+}
 
-  option.or(get)
+fn get_first_accept_formats(
+  accept_formats: &Vec<String>,
+  proposed_formats: &[&str],
+) -> Option<String> {
+  if accept_formats.len() == 0 {
+    return Some(proposed_formats[0].to_string());
+  }
+  for accept_format in accept_formats.iter() {
+    if proposed_formats.iter().any(|e| e == accept_format) {
+      return Some(accept_format.clone());
+    }
+  }
+  if accept_formats.iter().any(|e| e == "*/*") {
+    return Some(proposed_formats[0].to_string());
+  }
+  None
+}
+
+#[axum_macros::debug_handler]
+async fn get_capabilities(
+  axum::extract::State(state): axum::extract::State<Arc<AppState>>,
+  headers: HeaderMap,
+) -> impl IntoResponse {
+  let mut response_headers = HeaderMap::new();
+  let accept_formats = get_accept_formats(headers);
+  match get_first_accept_formats(
+    &accept_formats,
+    &[
+      "application/vnd.sun.wadl+xml",
+      "application/dicom+xml",
+      "application/xml",
+      "application/json",
+      "application/dicom+json",
+    ],
+  ) {
+    Some(format)
+      if format == "application/vnd.sun.wadl+xml"
+        || format == "application/dicom+xml"
+        || format == "application/xml" =>
+    {
+      response_headers.insert("content-type", "application/dicom+xml".parse().unwrap());
+      (
+        response_headers,
+        capabilities::CAPABILITIES_STR.into_response(),
+      )
+    }
+    Some(format) if format == "application/json" || format == "application/dicom+json" => {
+      response_headers.insert("content-type", "application/dicom+json".parse().unwrap());
+      let application =
+        quick_xml::de::from_str::<capabilities::Application>(capabilities::CAPABILITIES_STR)
+          .unwrap();
+      // Because of https://github.com/tafia/quick-xml/issues/582, json output
+      // is polluted with field names starting with "@". We replace them here.
+      // TODO: Write a intermediary serializer to handle these.
+      (
+        response_headers,
+        serde_json::to_string(&application)
+          .unwrap()
+          .replace('@', "")
+          .into_response(),
+      )
+    }
+    Some(_) | None => (
+      response_headers,
+      StatusCode::UNSUPPORTED_MEDIA_TYPE.into_response(),
+    ),
+  }
+}
+
+fn get_config(opt: &Opt) -> Result<config::Config, Box<dyn Error>> {
+  let default_config_file_path: String = env::var("XDG_CONFIG_HOME")
+    .unwrap_or(env::var("HOME")? + "/.config/")
+    + "/"
+    + env!("CARGO_PKG_NAME")
+    + "/config.yaml";
+
+  // Load the config. We first check if a config file was provided as an option
+  let config_content: String = if let Some(config_file) = &opt.config {
+    // Try to load it
+    match std::fs::read_to_string(&config_file) {
+      Ok(config) => config,
+      Err(e) => Err(format!("error: {e}: {}", config_file.display()))?,
+    }
+  } else {
+    // Otherwise, try the standard path
+    if std::fs::metadata(std::path::Path::new(&default_config_file_path)).is_ok() {
+      // Try to load it
+      match std::fs::read_to_string(&default_config_file_path) {
+        Ok(config) => config,
+        Err(e) => Err(format!("error: {e}: {}", default_config_file_path))?,
+      }
+    } else {
+      // Otherwise, just use the embedded config file
+      DEFAULT_CONFIG.to_string()
+    }
+  };
+  if opt.print_config {
+    // Print the content of the configuration file and exit
+    println!("{}", config_content);
+    std::process::exit(0);
+  }
+
+  let config: config::Config = serde_yaml::from_str(&config_content)?;
+
+  Ok(config)
 }
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
   // Retrieve options
-  let opt = Opt::from_args();
+  let opt = Opt::parse();
 
-  let mut logconfig: Vec<Box<(dyn SharedLogger + 'static)>> = vec![];
-  if opt.verbose {
-    logconfig.push(TermLogger::new(
-      LevelFilter::Warn,
-      Config::default(),
-      TerminalMode::Mixed,
-      ColorChoice::Auto,
-    ));
-  }
-  if let Some(logfile) = opt.logfile.clone() {
-    logconfig.push(WriteLogger::new(
-      LevelFilter::Trace,
-      Config::default(),
-      File::create(logfile)?,
-    ));
-  }
-  CombinedLogger::init(logconfig)?;
+  // Configure a custom event formatter
+  let format = tracing_subscriber::fmt::format()
+    .with_level(true)
+    .with_target(false)
+    .compact();
+  let subscriber = tracing_subscriber::fmt()
+    .event_format(format)
+    .with_max_level(if opt.verbose {
+      Level::TRACE
+    } else {
+      Level::INFO
+    })
+    .finish();
+  tracing::subscriber::set_global_default(subscriber).unwrap();
+
+  // Load a config file if any
+  let config: config::Config = get_config(&opt)?;
 
   // Check the the status of the database and the option are coherent.
-  let (table_name, indexable_fields, connection) = check_db(&opt)?;
+  let (indexable_fields, connection) = check_db(&opt, &config)?;
+  let connection = Arc::new(Mutex::new(connection));
+  let index_store =
+    SqlIndexStoreWithMutex::new(connection.clone(), &config.table_name, indexable_fields)?;
 
-  let log = warp::log::custom(|info| {
-    eprintln!(
-      "{} {} => {} (in {:?})",
-      info.method(),
-      info.path(),
-      info.status(),
-      info.elapsed(),
-    );
-  });
+  let instance_factory: Box<dyn InstanceFactory + Sync + Send> = if opt.dcmpath == ":memory:" {
+    Box::new(MemoryInstanceFactory::new())
+  } else {
+    Box::new(FSInstanceFactory::new(&opt.dcmpath))
+  };
 
-  let server_header: &'static str = concat!("rdicomweb/", env!("CARGO_PKG_VERSION"));
-  let mut headers = HeaderMap::new();
-  headers.insert("server", HeaderValue::from_static(server_header));
-
+  // TODO: Add this header to all response
+  // let server_header: &'static str = concat!("rdicomweb/", env!("CARGO_PKG_VERSION"));
+  // TODO: ??
   static APPLICATION: Lazy<capabilities::Application> =
     Lazy::new(|| quick_xml::de::from_str(capabilities::CAPABILITIES_STR).unwrap());
-
+  // TODO: ??
   let prefix = opt.prefix.unwrap_or("".to_string());
 
-  // GET /
-  let root = warp::get()
-    .and(warp::path("about"))
-    .map(move || server_header);
-
-  let connection = Arc::new(Mutex::new(connection));
-  let index_store = SqlIndexStoreWithMutex::new(connection.clone(), &table_name, indexable_fields)?;
-  let routes = if opt.dcmpath == ":memory:" {
-    let instance_factory = MemoryInstanceFactory::new();
-    root
-      .or(warp::path(prefix.clone()).and(post_store_api(
-        &opt.sqlfile,
-        instance_factory.clone(),
-        index_store,
-      )))
-      .or(warp::path(prefix.clone()).and(get_query_api(&opt.sqlfile, instance_factory.clone())))
-      .or(warp::path(prefix.clone()).and(get_retrieve_api(&opt.sqlfile, instance_factory)))
-      .or(warp::path(prefix.clone()).and(get_delete_api(&opt.sqlfile)))
-      .or(capabilities(&APPLICATION))
-      .with(warp::cors().allow_any_origin())
-      .with(warp::reply::with::headers(headers))
-      .recover(handle_rejection)
-      .with(log)
-      .with(warp::trace::request())
-      .boxed()
-  } else {
-    root
-      .or(warp::path(prefix.clone()).and(post_store_api(
-        &opt.sqlfile,
-        FSInstanceFactory::new(&opt.dcmpath),
-        index_store,
-      )))
-      .or(warp::path(prefix.clone()).and(get_query_api(
-        &opt.sqlfile,
-        FSInstanceFactory::new(&opt.dcmpath),
-      )))
-      .or(warp::path(prefix.clone()).and(get_retrieve_api(
-        &opt.sqlfile,
-        FSInstanceFactory::new(&opt.dcmpath),
-      )))
-      .or(warp::path(prefix.clone()).and(get_delete_api(&opt.sqlfile)))
-      .or(capabilities(&APPLICATION))
-      .with(warp::cors().allow_any_origin())
-      .with(warp::reply::with::headers(headers))
-      .recover(handle_rejection)
-      .with(log)
-      .with(warp::trace::request())
-      .boxed()
+  let app_state = AppState {
+    connection: connection,
+    index_store: Arc::new(Mutex::new(index_store)),
+    instance_factory: instance_factory,
+    config: config,
   };
+
+  // Build our application with a route
+  let mut app = Router::new()
+    .route("/", get(get_capabilities))
+    .route("/", options(get_capabilities))
+    .route("/about", get(|| async { SERVER_HEADER }))
+    // GET
+    .route("/instances", get(get_instances))
+    .route("/instances/{instance_uid}", get(get_instances))
+    .route(
+      "/instances/{instance_uid}/frames/{frame_uid}",
+      get(not_implemented),
+    )
+    .route("/instances/{instance_uid}/rendered", get(not_implemented))
+    .route("/instances/{instance_uid}/thumbnail", get(not_implemented))
+    .route("/instances/{instance_uid}/{tag_id}", get(not_found))
+    .route("/series", get(get_series))
+    .route("/series/{series_uid}", get(get_series))
+    .route("/series/{series_uid}/instances", get(get_instances))
+    .route(
+      "/series/{series_uid}/instances/{instance_uid}",
+      get(get_instances),
+    )
+    .route(
+      "/series/{series_uid}/instances/{instance_uid}/frames/{frame_uid}",
+      get(not_implemented),
+    )
+    .route(
+      "/series/{series_uid}/instances/{instance_uid}/rendered",
+      get(not_implemented),
+    )
+    .route(
+      "/series/{series_uid}/instances/{instance_uid}/thumbnail",
+      get(not_implemented),
+    )
+    .route(
+      "/series/{series_uid}/instances/{instance_uid}/{tag_id}",
+      get(not_implemented),
+    )
+    .route("/studies", get(get_studies))
+    .route("/studies/{study_uid}", get(get_studies))
+    .route("/studies/{study_uid}/series", get(get_series))
+    .route("/studies/{study_uid}/series/{series_uid}", get(get_series))
+    .route(
+      "/studies/{study_uid}/series/{series_uid}/instances",
+      get(get_instances),
+    )
+    .route(
+      "/studies/{study_uid}/series/{series_uid}/instances/{instances_uid}",
+      get(get_instances),
+    )
+    .route(
+      "/studies/{study_uid}/series/{series_uid}/instances/{instances_uid}/frames/{frame_uid}",
+      get(not_implemented),
+    )
+    .route(
+      "/studies/{study_uid}/series/{series_uid}/instances/{instances_uid}/rendered",
+      get(not_implemented),
+    )
+    .route(
+      "/studies/{study_uid}/series/{series_uid}/instances/{instances_uid}/thumbnail",
+      get(not_implemented),
+    )
+    .route(
+      "/studies/{study_uid}/series/{series_uid}/instances/{instances_uid}/{tag_id}",
+      get(not_implemented),
+    )
+    // POST
+    .route("/studies", post(post_studies))
+    .route("/studies/{study_uid}", post(not_implemented))
+    // DELETE (not part of DICOMWeb)
+    .route("/studies", delete(delete_studies))
+    .route("/studies/{study_uid}", delete(delete_studies))
+    .layer(middleware::from_fn(print_request_response))
+    .with_state(Arc::new(app_state));
+  // // GET /
+  // let root = warp::get()
+  //   .and(warp::path("about"))
+  //   .map(move || server_header);
+
+  // let index_store = SqlIndexStoreWithMutex::new(connection, &table_name, indexable_fields)?;
+  // let routes = if opt.dcmpath == ":memory:" {
+  //   let instance_factory = MemoryInstanceFactory::new();
+  //   root
+  //     .or(post_store_api(
+  //       &opt.sqlfile,
+  //       instance_factory.clone(),
+  //       index_store,
+  //     ))
+  //     .or(get_query_api(&opt.sqlfile, instance_factory.clone()))
+  //     .or(get_retrieve_api(&opt.sqlfile, instance_factory))
+  //     .or(get_delete_api(&opt.sqlfile))
+  //     .or(capabilities(&APPLICATION))
+  //     .with(warp::cors().allow_any_origin())
+  //     .with(warp::reply::with::headers(headers))
+  //     .recover(handle_rejection)
+  //     .with(log)
+  //     .with(warp::trace::request())
+  //     .boxed()
+  // } else {
+  //   root
+  //     .or(post_store_api(
+  //       &opt.sqlfile,
+  //       FSInstanceFactory::new(&opt.dcmpath),
+  //       index_store,
+  //     ))
+  //     .or(get_query_api(
+  //       &opt.sqlfile,
+  //       FSInstanceFactory::new(&opt.dcmpath),
+  //     ))
+  //     .or(get_retrieve_api(
+  //       &opt.sqlfile,
+  //       FSInstanceFactory::new(&opt.dcmpath),
+  //     ))
+  //     .or(get_delete_api(&opt.sqlfile))
+  //     .or(capabilities(&APPLICATION))
+  //     .with(warp::cors().allow_any_origin())
+  //     .with(warp::reply::with::headers(headers))
+  //     .recover(handle_rejection)
+  //     .with(log)
+  //     .with(warp::trace::request())
+  //     .boxed()
+  // };
 
   let host = opt.host;
   println!(
@@ -1762,9 +2279,24 @@ async fn main() -> Result<(), Box<dyn Error>> {
     "Serving HTTP on {} port {} (dicom: http://{}:{}/{}) with database {} ...",
     host, opt.port, host, opt.port, &prefix, opt.sqlfile
   );
-  warp::serve(routes)
-    .run((IpAddr::from_str(&host)?, opt.port))
-    .await;
 
+  // Add some logging on each request/response
+  app = app.layer(
+    TraceLayer::new_for_http()
+      .make_span_with(trace::DefaultMakeSpan::new().level(Level::INFO))
+      .on_response(
+        trace::DefaultOnResponse::new()
+          .level(Level::INFO)
+          .include_headers(true),
+      ),
+  );
+
+  // run our app with hyper
+  let listener = tokio::net::TcpListener::bind(format!("{}:{}", host, opt.port))
+    .await
+    .unwrap();
+  tracing::debug!("listening on {}", listener.local_addr().unwrap());
+
+  axum::serve(listener, app).await.unwrap();
   Ok(())
 }
