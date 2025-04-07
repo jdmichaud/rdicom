@@ -2,7 +2,7 @@
 
 - (serve) use `serde` to generate json (get rid of `map_to_entry`)
 
-- (serve) replace `warp` with `axum`
+- (serve) replace `warp` with `axum` - done
 
 - Refactor the instance API. Instead of going from the more general `BufReader`
   to the particular &[u8] type, invert the logic. Accept a &[u8] which converts
@@ -19,3 +19,5 @@
 - Embed a default config file in scan/server.
 
 - Add a logfile to scan logging each files being scanned and the time taken.
+
+- Replace structopt by clap
