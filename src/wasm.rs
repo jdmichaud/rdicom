@@ -62,17 +62,16 @@ fn console_error(s: &str) {
 
 #[panic_handler]
 fn panic(panic_info: &core::panic::PanicInfo<'_>) -> ! {
-  if let Some(message) = panic_info.message() {
-    if let Some(location) = panic_info.location() {
-      console_error(&format!(
-        "panic: {message} ({}:{}:{})",
-        location.file(),
-        location.line(),
-        location.column()
-      ));
-    } else {
-      console_error(&format!("panic: {message:?}"));
-    }
+  if let Some(location) = panic_info.location() {
+    console_error(&format!(
+      "panic: {} ({}:{}:{})",
+      panic_info.message(),
+      location.file(),
+      location.line(),
+      location.column()
+    ));
+  } else {
+    console_error(&format!("panic: {:?}", panic_info.message()));
   }
   core::arch::wasm32::unreachable()
 }
