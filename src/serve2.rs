@@ -18,6 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+// Run serve2 for testing purposes (sqlite in memory and datapath in /tmp)
 // cargo run --bin serve2 --features tools --target x86_64-unknown-linux-musl --\
 //   --sqlfile :memory: --config config.yaml --dcmpath /tmp/ --verbose
 
@@ -609,7 +610,7 @@ fn get_entries(
   let indexed_fields = get_indexed_fields(connection)?;
   // First retrieve the indexed fields present in the DB
   let query = &format!(
-    "SELECT * FROM dicom_index {} group by {} {};",
+    "SELECT * FROM dicom_index {} GROUP BY {} {};",
     // Will restrict the data to what is being searched
     create_where_clause(params, search_terms, &indexed_fields),
     entry_type,
@@ -2186,27 +2187,30 @@ async fn main() -> Result<(), Box<dyn Error>> {
     )
     .route("/studies", get(get_studies))
     .route("/studies/{study_uid}", get(get_studies))
-    .route("/studies/{study_uid}/series", get(get_studies))
+    .route("/studies/{study_uid}/series", get(get_series))
     .route("/studies/{study_uid}/series/{series_uid}", get(get_series))
-    .route("/studies/{study_uid}/series/instances", get(get_instances))
     .route(
-      "/studies/{study_uid}/series/instances/{instances_uid}",
+      "/studies/{study_uid}/series/{series_uid}/instances",
       get(get_instances),
     )
     .route(
-      "/studies/{study_uid}/series/instances/{instances_uid}/frames/{frame_uid}",
+      "/studies/{study_uid}/series/{series_uid}/instances/{instances_uid}",
+      get(get_instances),
+    )
+    .route(
+      "/studies/{study_uid}/series/{series_uid}/instances/{instances_uid}/frames/{frame_uid}",
       get(not_implemented),
     )
     .route(
-      "/studies/{study_uid}/series/instances/{instances_uid}/rendered",
+      "/studies/{study_uid}/series/{series_uid}/instances/{instances_uid}/rendered",
       get(not_implemented),
     )
     .route(
-      "/studies/{study_uid}/series/instances/{instances_uid}/thumbnail",
+      "/studies/{study_uid}/series/{series_uid}/instances/{instances_uid}/thumbnail",
       get(not_implemented),
     )
     .route(
-      "/studies/{study_uid}/series/instances/{instances_uid}/{tag_id}",
+      "/studies/{study_uid}/series/{series_uid}/instances/{instances_uid}/{tag_id}",
       get(not_implemented),
     )
     // POST
