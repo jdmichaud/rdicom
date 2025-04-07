@@ -24,11 +24,11 @@ jobs:
           set -ex
           sudo apt-get update
           sudo apt-get install -y musl-tools
-      - name: Install target
-        run: rustup target add x86_64-unknown-linux-musl
       - name: Update rust
         run: rustup update ${{ matrix.toolchain }} && rustup default ${{ matrix.toolchain }}
+      - name: Install target
+        run: rustup target add x86_64-unknown-linux-musl
       - name: Build
-        run: cargo build --verbose --all-features
+        run: cargo build --verbose --all-features --target x86_64-unknown-linux-musl
       - name: Test
-        run: cargo test --verbose --all-features
+        run: cargo test --verbose --all-features --target x86_64-unknown-linux-musl
