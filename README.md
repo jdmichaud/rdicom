@@ -45,12 +45,12 @@ cargo build --bin serve --release --features=tools --target x86_64-unknown-linux
 
 To compile the tools:
 ```bash
-cargo build --all-features
+cargo build --all-features --target x86_64-unknown-linux-musl
 ```
 
 To compile `released` version:
 ```bash
-cargo build --all-features --release
+cargo build --all-features --release --target x86_64-unknown-linux-musl
 ```
 
 ## `dump`
