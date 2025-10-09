@@ -476,7 +476,7 @@ impl Instance {
    * Recursively parse sequence element.
    * If the tag is not present in the instance, return Ok(None).
    */
-  pub fn get_value(&self, tag: &Tag) -> Result<Option<DicomValue>, DicomError> {
+  pub fn get_value(&self, tag: &Tag) -> Result<Option<DicomValue<'_>>, DicomError> {
     // Fast forward the DICOM prefix
     // TODO: Deal with non-comformant DICOM files
     // println!("get_value: {:?}", tag);
