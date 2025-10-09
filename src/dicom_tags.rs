@@ -53012,3 +53012,9 @@ impl TryFrom<u32> for Tag {
     }
   }
 }
+
+impl From<Tag> for String {
+  fn from(tag: Tag) -> String {
+    format!("{:0>4X}{:0>4X}", tag.group, tag.element)
+  }
+}

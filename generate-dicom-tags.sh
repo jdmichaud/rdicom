@@ -27,6 +27,8 @@ then
   exit 1
 fi
 
+echo "please wait..." 1>&2
+
 echo '// @generated'
 echo '// Copyright (c) 2023 Jean-Daniel Michaud'
 echo '//'
@@ -135,6 +137,14 @@ do
 done
 echo "      _ => Err(DicomError::new(&format!(\"Unknown tag: {:08x}\", field))),"
 echo "    }"
+echo "  }"
+echo "}"
+echo ""
+
+
+echo "impl From<Tag> for String {"
+echo "  fn from(tag: Tag) -> String {"
+echo "    format!(\"{:X}{:X}\", tag.group, tag.element)"
 echo "  }"
 echo "}"
 echo ""
