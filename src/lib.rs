@@ -26,6 +26,7 @@
 extern crate alloc; // We need this in order to use alloc modules
 
 pub mod allocator;
+pub mod config_file;
 pub mod dicom_tags;
 pub mod error;
 pub mod instance;

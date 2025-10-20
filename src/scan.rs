@@ -1,4 +1,4 @@
-// Copyright (c) 2023 Jean-Daniel Michaud
+// Copyright (c) 2023-2025 Jean-Daniel Michaud
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -39,6 +39,7 @@ use std::path::PathBuf;
 use std::str::FromStr;
 use walkdir::WalkDir;
 
+use rdicom::config_file::{self, ConfigProvenance};
 use rdicom::dicom_tags;
 use rdicom::dicom_tags::{MediaStorageSOPClassUID, Modality};
 use rdicom::instance::Instance;
@@ -63,8 +64,11 @@ struct Opt {
   /// If not provided, scan will use a default configuration (see --print-config)
   #[arg(short, long, value_name = "FILE")]
   config: Option<PathBuf>,
-  /// Print the configuration used and exit.
-  #[arg(long)]
+  /// Print the used configuration and exit.
+  /// You can use this option to initialize the default config file with:
+  ///   mkdir -p ~/.config/rdicom/
+  ///   scan --print-config > ~/.config/rdicom/config.yaml
+  #[arg(long, verbatim_doc_comment)]
   print_config: bool,
   /// CSV output file
   #[arg(long)]
@@ -129,20 +133,18 @@ fn main() -> Result<(), Box<dyn Error>> {
   // Retrieve options
   let opt = Opt::parse();
   // Load the config
-  let config_file = if let Some(config_file) = opt.config {
-    match std::fs::read_to_string(&config_file) {
-      Err(e) => {
-        eprintln!("error: {e}: {}", config_file.display());
-        std::process::exit(1);
-      }
-      Ok(config) => config,
-    }
-  } else {
-    DEFAULT_CONFIG.to_string()
-  };
+  let config_access = config_file::get_config(&opt.config, DEFAULT_CONFIG)?;
+
   if opt.print_config {
+    match config_access.provenance {
+      ConfigProvenance::Default => eprintln!("Default internal config:\n"),
+      ConfigProvenance::XdgPath(path) => eprintln!("Default config file {}:\n", path),
+      ConfigProvenance::CustomPath(path) => {
+        eprintln!("Config file provided by command line {}:\n", path)
+      }
+    }
     // Print the content of the configuration file and exit
-    println!("{}", config_file);
+    println!("{}", config_access.content);
     return Ok(());
   }
   // Open log file if need be
@@ -151,7 +153,7 @@ fn main() -> Result<(), Box<dyn Error>> {
   }
   // Are we on a terminal
   let on_a_tty = atty::is(Stream::Stdout);
-  let config: config::Config = serde_yaml::from_str(&config_file)?;
+  let config: config::Config = serde_yaml::from_str(&config_access.content)?;
   // Create an vector of fields to write in the index
   let indexable_fields = config
     .indexing

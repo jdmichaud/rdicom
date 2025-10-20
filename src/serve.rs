@@ -1,4 +1,4 @@
-// Copyright (c) 2023 Jean-Daniel Michaud
+// Copyright (c) 2023-2025 Jean-Daniel Michaud
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -63,6 +63,7 @@ use tracing::Level;
 use crate::dicom_representation::{json2dcm, DicomAttributeJson};
 use crate::index_store::IndexStore;
 use index_store::SqlIndexStoreWithMutex;
+use rdicom::config_file::{self, ConfigProvenance};
 use rdicom::dicom_tags;
 use rdicom::error::DicomError;
 use rdicom::instance::{DicomValue, Instance};
@@ -127,8 +128,8 @@ struct Opt {
   config: Option<PathBuf>,
   /// Print the used configuration and exit.
   /// You can use this option to initialize the default config file with:
-  ///   mkdir -p ~/.config/runner/
-  ///   runner --print-config ~/.config/runner/config.yaml
+  ///   mkdir -p ~/.config/rdicom/
+  ///   serve --print-config > ~/.config/rdicom/config.yaml
   #[arg(long, verbatim_doc_comment)]
   print_config: bool,
   // #[arg(short="V", long)]
@@ -1288,39 +1289,22 @@ async fn get_capabilities(
 }
 
 fn get_config(opt: &Opt) -> Result<config::Config, Box<dyn Error>> {
-  let default_config_file_path: String = env::var("XDG_CONFIG_HOME")
-    .unwrap_or(env::var("HOME")? + "/.config/")
-    + "/"
-    + env!("CARGO_PKG_NAME")
-    + "/config.yaml";
+  let config_access = config_file::get_config(&opt.config, DEFAULT_CONFIG)?;
 
-  // Load the config. We first check if a config file was provided as an option
-  let config_content: String = if let Some(config_file) = &opt.config {
-    // Try to load it
-    match std::fs::read_to_string(&config_file) {
-      Ok(config) => config,
-      Err(e) => Err(format!("error: {e}: {}", config_file.display()))?,
-    }
-  } else {
-    // Otherwise, try the standard path
-    if std::fs::metadata(std::path::Path::new(&default_config_file_path)).is_ok() {
-      // Try to load it
-      match std::fs::read_to_string(&default_config_file_path) {
-        Ok(config) => config,
-        Err(e) => Err(format!("error: {e}: {}", default_config_file_path))?,
-      }
-    } else {
-      // Otherwise, just use the embedded config file
-      DEFAULT_CONFIG.to_string()
-    }
-  };
   if opt.print_config {
+    match config_access.provenance {
+      ConfigProvenance::Default => eprintln!("# Default internal config\n"),
+      ConfigProvenance::XdgPath(path) => eprintln!("# Default config file {}\n", path),
+      ConfigProvenance::CustomPath(path) => {
+        eprintln!("# Config file provided by command line {}\n", path)
+      }
+    }
     // Print the content of the configuration file and exit
-    println!("{}", config_content);
+    println!("{}", config_access.content);
     std::process::exit(0);
   }
 
-  let config: config::Config = serde_yaml::from_str(&config_content)?;
+  let config: config::Config = serde_yaml::from_str(&config_access.content)?;
 
   Ok(config)
 }
