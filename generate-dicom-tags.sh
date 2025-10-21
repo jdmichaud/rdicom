@@ -27,6 +27,15 @@ then
   exit 1
 fi
 
+function isNumber() {
+  local number=$1
+  local re='^[0-9]+$'
+  if [[ "$number" =~ $re ]] ; then
+     return 1
+  fi
+  return 0
+}
+
 echo "please wait..." 1>&2
 
 echo '// @generated'
@@ -73,7 +82,14 @@ do
     # FIXME: In case of something like "US or SS" we only use the first VR for now
     echo "  vr: \"${array[2]:0:2}\","
     # TODO: convert ${array[3]} to a Range
-    echo "  vm: core::ops::Range { start: 0, end: 0 },"
+    isNumber ${array[3]}
+    res=$?
+    if [[ $res -eq 1 ]]
+    then
+      echo "  vm: core::ops::Range { start: ${array[3]}, end: ${array[3]} },"
+    else
+      echo "  vm: core::ops::Range { start: 0, end: 0 },"
+    fi
     echo "  description: \"${array[4]}\","
     echo "};"
     echo ""
@@ -144,7 +160,7 @@ echo ""
 
 echo "impl From<Tag> for String {"
 echo "  fn from(tag: Tag) -> String {"
-echo "    format!(\"{:X}{:X}\", tag.group, tag.element)"
+echo "    format!(\"{:0>4X}{:0>4X}\", tag.group, tag.element)"
 echo "  }"
 echo "}"
 echo ""

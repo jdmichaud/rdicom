@@ -34,7 +34,7 @@ pub const FileMetaInformationGroupLength: Tag = Tag {
   element: 0x0000,
   name: "FileMetaInformationGroupLength",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "File Meta Information Group Length",
 };
 
@@ -43,7 +43,7 @@ pub const FileMetaInformationVersion: Tag = Tag {
   element: 0x0001,
   name: "FileMetaInformationVersion",
   vr: "OB",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "File Meta Information Version",
 };
 
@@ -52,7 +52,7 @@ pub const MediaStorageSOPClassUID: Tag = Tag {
   element: 0x0002,
   name: "MediaStorageSOPClassUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Media Storage SOP Class UID",
 };
 
@@ -61,7 +61,7 @@ pub const MediaStorageSOPInstanceUID: Tag = Tag {
   element: 0x0003,
   name: "MediaStorageSOPInstanceUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Media Storage SOP Instance UID",
 };
 
@@ -70,7 +70,7 @@ pub const TransferSyntaxUID: Tag = Tag {
   element: 0x0010,
   name: "TransferSyntaxUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Transfer Syntax UID",
 };
 
@@ -79,7 +79,7 @@ pub const ImplementationClassUID: Tag = Tag {
   element: 0x0012,
   name: "ImplementationClassUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Implementation Class UID",
 };
 
@@ -88,7 +88,7 @@ pub const ImplementationVersionName: Tag = Tag {
   element: 0x0013,
   name: "ImplementationVersionName",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Implementation Version Name",
 };
 
@@ -97,7 +97,7 @@ pub const SourceApplicationEntityTitle: Tag = Tag {
   element: 0x0016,
   name: "SourceApplicationEntityTitle",
   vr: "AE",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Application Entity Title",
 };
 
@@ -106,7 +106,7 @@ pub const SendingApplicationEntityTitle: Tag = Tag {
   element: 0x0017,
   name: "SendingApplicationEntityTitle",
   vr: "AE",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Sending Application Entity Title",
 };
 
@@ -115,7 +115,7 @@ pub const ReceivingApplicationEntityTitle: Tag = Tag {
   element: 0x0018,
   name: "ReceivingApplicationEntityTitle",
   vr: "AE",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Receiving Application Entity Title",
 };
 
@@ -124,7 +124,7 @@ pub const PrivateInformationCreatorUID: Tag = Tag {
   element: 0x0100,
   name: "PrivateInformationCreatorUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Private Information Creator UID",
 };
 
@@ -133,7 +133,7 @@ pub const PrivateInformation: Tag = Tag {
   element: 0x0102,
   name: "PrivateInformation",
   vr: "OB",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Private Information",
 };
 
@@ -142,7 +142,7 @@ pub const FileSetID: Tag = Tag {
   element: 0x1130,
   name: "FileSetID",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "File-set ID",
 };
 
@@ -160,7 +160,7 @@ pub const SpecificCharacterSetOfFileSetDescriptorFile: Tag = Tag {
   element: 0x1142,
   name: "SpecificCharacterSetOfFileSetDescriptorFile",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Specific Character Set of File-set Descriptor File",
 };
 
@@ -169,7 +169,7 @@ pub const OffsetOfTheFirstDirectoryRecordOfTheRootDirectoryEntity: Tag = Tag {
   element: 0x1200,
   name: "OffsetOfTheFirstDirectoryRecordOfTheRootDirectoryEntity",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Offset of the First Directory Record of the Root Directory Entity",
 };
 
@@ -178,7 +178,7 @@ pub const OffsetOfTheLastDirectoryRecordOfTheRootDirectoryEntity: Tag = Tag {
   element: 0x1202,
   name: "OffsetOfTheLastDirectoryRecordOfTheRootDirectoryEntity",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Offset of the Last Directory Record of the Root Directory Entity",
 };
 
@@ -187,7 +187,7 @@ pub const FileSetConsistencyFlag: Tag = Tag {
   element: 0x1212,
   name: "FileSetConsistencyFlag",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "File-set Consistency Flag",
 };
 
@@ -196,7 +196,7 @@ pub const DirectoryRecordSequence: Tag = Tag {
   element: 0x1220,
   name: "DirectoryRecordSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Directory Record Sequence",
 };
 
@@ -205,7 +205,7 @@ pub const OffsetOfTheNextDirectoryRecord: Tag = Tag {
   element: 0x1400,
   name: "OffsetOfTheNextDirectoryRecord",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Offset of the Next Directory Record",
 };
 
@@ -214,7 +214,7 @@ pub const RecordInUseFlag: Tag = Tag {
   element: 0x1410,
   name: "RecordInUseFlag",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Record In-use Flag",
 };
 
@@ -223,7 +223,7 @@ pub const OffsetOfReferencedLowerLevelDirectoryEntity: Tag = Tag {
   element: 0x1420,
   name: "OffsetOfReferencedLowerLevelDirectoryEntity",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Offset of Referenced Lower-Level Directory Entity",
 };
 
@@ -232,7 +232,7 @@ pub const DirectoryRecordType: Tag = Tag {
   element: 0x1430,
   name: "DirectoryRecordType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Directory Record Type",
 };
 
@@ -241,7 +241,7 @@ pub const PrivateRecordUID: Tag = Tag {
   element: 0x1432,
   name: "PrivateRecordUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Private Record UID",
 };
 
@@ -259,7 +259,7 @@ pub const MRDRDirectoryRecordOffset: Tag = Tag {
   element: 0x1504,
   name: "MRDRDirectoryRecordOffset",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "MRDR Directory Record Offset",
 };
 
@@ -268,7 +268,7 @@ pub const ReferencedSOPClassUIDInFile: Tag = Tag {
   element: 0x1510,
   name: "ReferencedSOPClassUIDInFile",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced SOP Class UID in File",
 };
 
@@ -277,7 +277,7 @@ pub const ReferencedSOPInstanceUIDInFile: Tag = Tag {
   element: 0x1511,
   name: "ReferencedSOPInstanceUIDInFile",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced SOP Instance UID in File",
 };
 
@@ -286,7 +286,7 @@ pub const ReferencedTransferSyntaxUIDInFile: Tag = Tag {
   element: 0x1512,
   name: "ReferencedTransferSyntaxUIDInFile",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Transfer Syntax UID in File",
 };
 
@@ -304,7 +304,7 @@ pub const NumberOfReferences: Tag = Tag {
   element: 0x1600,
   name: "NumberOfReferences",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of References",
 };
 
@@ -313,7 +313,7 @@ pub const LengthToEnd: Tag = Tag {
   element: 0x0001,
   name: "LengthToEnd",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Length to End",
 };
 
@@ -331,7 +331,7 @@ pub const LanguageCodeSequence: Tag = Tag {
   element: 0x0006,
   name: "LanguageCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Language Code Sequence",
 };
 
@@ -349,7 +349,7 @@ pub const RecognitionCode: Tag = Tag {
   element: 0x0010,
   name: "RecognitionCode",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Recognition Code",
 };
 
@@ -358,7 +358,7 @@ pub const InstanceCreationDate: Tag = Tag {
   element: 0x0012,
   name: "InstanceCreationDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Instance Creation Date",
 };
 
@@ -367,7 +367,7 @@ pub const InstanceCreationTime: Tag = Tag {
   element: 0x0013,
   name: "InstanceCreationTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Instance Creation Time",
 };
 
@@ -376,7 +376,7 @@ pub const InstanceCreatorUID: Tag = Tag {
   element: 0x0014,
   name: "InstanceCreatorUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Instance Creator UID",
 };
 
@@ -385,7 +385,7 @@ pub const InstanceCoercionDateTime: Tag = Tag {
   element: 0x0015,
   name: "InstanceCoercionDateTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Instance Coercion DateTime",
 };
 
@@ -394,7 +394,7 @@ pub const SOPClassUID: Tag = Tag {
   element: 0x0016,
   name: "SOPClassUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "SOP Class UID",
 };
 
@@ -403,7 +403,7 @@ pub const SOPInstanceUID: Tag = Tag {
   element: 0x0018,
   name: "SOPInstanceUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "SOP Instance UID",
 };
 
@@ -421,7 +421,7 @@ pub const OriginalSpecializedSOPClassUID: Tag = Tag {
   element: 0x001B,
   name: "OriginalSpecializedSOPClassUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Original Specialized SOP Class UID",
 };
 
@@ -430,7 +430,7 @@ pub const StudyDate: Tag = Tag {
   element: 0x0020,
   name: "StudyDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Study Date",
 };
 
@@ -439,7 +439,7 @@ pub const SeriesDate: Tag = Tag {
   element: 0x0021,
   name: "SeriesDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Series Date",
 };
 
@@ -448,7 +448,7 @@ pub const AcquisitionDate: Tag = Tag {
   element: 0x0022,
   name: "AcquisitionDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Acquisition Date",
 };
 
@@ -457,7 +457,7 @@ pub const ContentDate: Tag = Tag {
   element: 0x0023,
   name: "ContentDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Content Date",
 };
 
@@ -466,7 +466,7 @@ pub const OverlayDate: Tag = Tag {
   element: 0x0024,
   name: "OverlayDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Overlay Date",
 };
 
@@ -475,7 +475,7 @@ pub const CurveDate: Tag = Tag {
   element: 0x0025,
   name: "CurveDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Curve Date",
 };
 
@@ -484,7 +484,7 @@ pub const AcquisitionDateTime: Tag = Tag {
   element: 0x002A,
   name: "AcquisitionDateTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Acquisition DateTime",
 };
 
@@ -493,7 +493,7 @@ pub const StudyTime: Tag = Tag {
   element: 0x0030,
   name: "StudyTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Study Time",
 };
 
@@ -502,7 +502,7 @@ pub const SeriesTime: Tag = Tag {
   element: 0x0031,
   name: "SeriesTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Series Time",
 };
 
@@ -511,7 +511,7 @@ pub const AcquisitionTime: Tag = Tag {
   element: 0x0032,
   name: "AcquisitionTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Acquisition Time",
 };
 
@@ -520,7 +520,7 @@ pub const ContentTime: Tag = Tag {
   element: 0x0033,
   name: "ContentTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Content Time",
 };
 
@@ -529,7 +529,7 @@ pub const OverlayTime: Tag = Tag {
   element: 0x0034,
   name: "OverlayTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Overlay Time",
 };
 
@@ -538,7 +538,7 @@ pub const CurveTime: Tag = Tag {
   element: 0x0035,
   name: "CurveTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Curve Time",
 };
 
@@ -547,7 +547,7 @@ pub const DataSetType: Tag = Tag {
   element: 0x0040,
   name: "DataSetType",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Data Set Type",
 };
 
@@ -556,7 +556,7 @@ pub const DataSetSubtype: Tag = Tag {
   element: 0x0041,
   name: "DataSetSubtype",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Data Set Subtype",
 };
 
@@ -565,7 +565,7 @@ pub const NuclearMedicineSeriesType: Tag = Tag {
   element: 0x0042,
   name: "NuclearMedicineSeriesType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Nuclear Medicine Series Type",
 };
 
@@ -574,7 +574,7 @@ pub const AccessionNumber: Tag = Tag {
   element: 0x0050,
   name: "AccessionNumber",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Accession Number",
 };
 
@@ -583,7 +583,7 @@ pub const IssuerOfAccessionNumberSequence: Tag = Tag {
   element: 0x0051,
   name: "IssuerOfAccessionNumberSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Issuer of Accession Number Sequence",
 };
 
@@ -592,7 +592,7 @@ pub const QueryRetrieveLevel: Tag = Tag {
   element: 0x0052,
   name: "QueryRetrieveLevel",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Query/Retrieve Level",
 };
 
@@ -601,7 +601,7 @@ pub const QueryRetrieveView: Tag = Tag {
   element: 0x0053,
   name: "QueryRetrieveView",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Query/Retrieve View",
 };
 
@@ -619,7 +619,7 @@ pub const InstanceAvailability: Tag = Tag {
   element: 0x0056,
   name: "InstanceAvailability",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Instance Availability",
 };
 
@@ -637,7 +637,7 @@ pub const Modality: Tag = Tag {
   element: 0x0060,
   name: "Modality",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Modality",
 };
 
@@ -664,7 +664,7 @@ pub const ConversionType: Tag = Tag {
   element: 0x0064,
   name: "ConversionType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Conversion Type",
 };
 
@@ -673,7 +673,7 @@ pub const PresentationIntentType: Tag = Tag {
   element: 0x0068,
   name: "PresentationIntentType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Presentation Intent Type",
 };
 
@@ -682,7 +682,7 @@ pub const Manufacturer: Tag = Tag {
   element: 0x0070,
   name: "Manufacturer",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Manufacturer",
 };
 
@@ -691,7 +691,7 @@ pub const InstitutionName: Tag = Tag {
   element: 0x0080,
   name: "InstitutionName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Institution Name",
 };
 
@@ -700,7 +700,7 @@ pub const InstitutionAddress: Tag = Tag {
   element: 0x0081,
   name: "InstitutionAddress",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Institution Address",
 };
 
@@ -709,7 +709,7 @@ pub const InstitutionCodeSequence: Tag = Tag {
   element: 0x0082,
   name: "InstitutionCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Institution Code Sequence",
 };
 
@@ -718,7 +718,7 @@ pub const ReferringPhysicianName: Tag = Tag {
   element: 0x0090,
   name: "ReferringPhysicianName",
   vr: "PN",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referring Physician's Name",
 };
 
@@ -727,7 +727,7 @@ pub const ReferringPhysicianAddress: Tag = Tag {
   element: 0x0092,
   name: "ReferringPhysicianAddress",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referring Physician's Address",
 };
 
@@ -745,7 +745,7 @@ pub const ReferringPhysicianIdentificationSequence: Tag = Tag {
   element: 0x0096,
   name: "ReferringPhysicianIdentificationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referring Physician Identification Sequence",
 };
 
@@ -754,7 +754,7 @@ pub const CodeValue: Tag = Tag {
   element: 0x0100,
   name: "CodeValue",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Code Value",
 };
 
@@ -763,7 +763,7 @@ pub const ExtendedCodeValue: Tag = Tag {
   element: 0x0101,
   name: "ExtendedCodeValue",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Extended Code Value",
 };
 
@@ -772,7 +772,7 @@ pub const CodingSchemeDesignator: Tag = Tag {
   element: 0x0102,
   name: "CodingSchemeDesignator",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Coding Scheme Designator",
 };
 
@@ -781,7 +781,7 @@ pub const CodingSchemeVersion: Tag = Tag {
   element: 0x0103,
   name: "CodingSchemeVersion",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Coding Scheme Version",
 };
 
@@ -790,7 +790,7 @@ pub const CodeMeaning: Tag = Tag {
   element: 0x0104,
   name: "CodeMeaning",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Code Meaning",
 };
 
@@ -799,7 +799,7 @@ pub const MappingResource: Tag = Tag {
   element: 0x0105,
   name: "MappingResource",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Mapping Resource",
 };
 
@@ -808,7 +808,7 @@ pub const ContextGroupVersion: Tag = Tag {
   element: 0x0106,
   name: "ContextGroupVersion",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Context Group Version",
 };
 
@@ -817,7 +817,7 @@ pub const ContextGroupLocalVersion: Tag = Tag {
   element: 0x0107,
   name: "ContextGroupLocalVersion",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Context Group Local Version",
 };
 
@@ -826,7 +826,7 @@ pub const ExtendedCodeMeaning: Tag = Tag {
   element: 0x0108,
   name: "ExtendedCodeMeaning",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Extended Code Meaning",
 };
 
@@ -835,7 +835,7 @@ pub const ContextGroupExtensionFlag: Tag = Tag {
   element: 0x010B,
   name: "ContextGroupExtensionFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Context Group Extension Flag",
 };
 
@@ -844,7 +844,7 @@ pub const CodingSchemeUID: Tag = Tag {
   element: 0x010C,
   name: "CodingSchemeUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Coding Scheme UID",
 };
 
@@ -853,7 +853,7 @@ pub const ContextGroupExtensionCreatorUID: Tag = Tag {
   element: 0x010D,
   name: "ContextGroupExtensionCreatorUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Context Group Extension Creator UID",
 };
 
@@ -862,7 +862,7 @@ pub const ContextIdentifier: Tag = Tag {
   element: 0x010F,
   name: "ContextIdentifier",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Context Identifier",
 };
 
@@ -871,7 +871,7 @@ pub const CodingSchemeIdentificationSequence: Tag = Tag {
   element: 0x0110,
   name: "CodingSchemeIdentificationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Coding Scheme Identification Sequence",
 };
 
@@ -880,7 +880,7 @@ pub const CodingSchemeRegistry: Tag = Tag {
   element: 0x0112,
   name: "CodingSchemeRegistry",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Coding Scheme Registry",
 };
 
@@ -889,7 +889,7 @@ pub const CodingSchemeExternalID: Tag = Tag {
   element: 0x0114,
   name: "CodingSchemeExternalID",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Coding Scheme External ID",
 };
 
@@ -898,7 +898,7 @@ pub const CodingSchemeName: Tag = Tag {
   element: 0x0115,
   name: "CodingSchemeName",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Coding Scheme Name",
 };
 
@@ -907,7 +907,7 @@ pub const CodingSchemeResponsibleOrganization: Tag = Tag {
   element: 0x0116,
   name: "CodingSchemeResponsibleOrganization",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Coding Scheme Responsible Organization",
 };
 
@@ -916,7 +916,7 @@ pub const ContextUID: Tag = Tag {
   element: 0x0117,
   name: "ContextUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Context UID",
 };
 
@@ -925,7 +925,7 @@ pub const TimezoneOffsetFromUTC: Tag = Tag {
   element: 0x0201,
   name: "TimezoneOffsetFromUTC",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Timezone Offset From UTC",
 };
 
@@ -934,7 +934,7 @@ pub const NetworkID: Tag = Tag {
   element: 0x1000,
   name: "NetworkID",
   vr: "AE",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Network ID",
 };
 
@@ -943,7 +943,7 @@ pub const StationName: Tag = Tag {
   element: 0x1010,
   name: "StationName",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Station Name",
 };
 
@@ -952,7 +952,7 @@ pub const StudyDescription: Tag = Tag {
   element: 0x1030,
   name: "StudyDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Study Description",
 };
 
@@ -961,7 +961,7 @@ pub const ProcedureCodeSequence: Tag = Tag {
   element: 0x1032,
   name: "ProcedureCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Procedure Code Sequence",
 };
 
@@ -970,7 +970,7 @@ pub const SeriesDescription: Tag = Tag {
   element: 0x103E,
   name: "SeriesDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Series Description",
 };
 
@@ -979,7 +979,7 @@ pub const SeriesDescriptionCodeSequence: Tag = Tag {
   element: 0x103F,
   name: "SeriesDescriptionCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Series Description Code Sequence",
 };
 
@@ -988,7 +988,7 @@ pub const InstitutionalDepartmentName: Tag = Tag {
   element: 0x1040,
   name: "InstitutionalDepartmentName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Institutional Department Name",
 };
 
@@ -1006,7 +1006,7 @@ pub const PhysiciansOfRecordIdentificationSequence: Tag = Tag {
   element: 0x1049,
   name: "PhysiciansOfRecordIdentificationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Physician(s) of Record Identification Sequence",
 };
 
@@ -1024,7 +1024,7 @@ pub const PerformingPhysicianIdentificationSequence: Tag = Tag {
   element: 0x1052,
   name: "PerformingPhysicianIdentificationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Performing Physician Identification Sequence",
 };
 
@@ -1042,7 +1042,7 @@ pub const PhysiciansReadingStudyIdentificationSequence: Tag = Tag {
   element: 0x1062,
   name: "PhysiciansReadingStudyIdentificationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Physician(s) Reading Study Identification Sequence",
 };
 
@@ -1060,7 +1060,7 @@ pub const OperatorIdentificationSequence: Tag = Tag {
   element: 0x1072,
   name: "OperatorIdentificationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Operator Identification Sequence",
 };
 
@@ -1078,7 +1078,7 @@ pub const AdmittingDiagnosesCodeSequence: Tag = Tag {
   element: 0x1084,
   name: "AdmittingDiagnosesCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Admitting Diagnoses Code Sequence",
 };
 
@@ -1087,7 +1087,7 @@ pub const ManufacturerModelName: Tag = Tag {
   element: 0x1090,
   name: "ManufacturerModelName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Manufacturer's Model Name",
 };
 
@@ -1096,7 +1096,7 @@ pub const ReferencedResultsSequence: Tag = Tag {
   element: 0x1100,
   name: "ReferencedResultsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Results Sequence",
 };
 
@@ -1105,7 +1105,7 @@ pub const ReferencedStudySequence: Tag = Tag {
   element: 0x1110,
   name: "ReferencedStudySequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Study Sequence",
 };
 
@@ -1114,7 +1114,7 @@ pub const ReferencedPerformedProcedureStepSequence: Tag = Tag {
   element: 0x1111,
   name: "ReferencedPerformedProcedureStepSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Performed Procedure Step Sequence",
 };
 
@@ -1123,7 +1123,7 @@ pub const ReferencedSeriesSequence: Tag = Tag {
   element: 0x1115,
   name: "ReferencedSeriesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Series Sequence",
 };
 
@@ -1132,7 +1132,7 @@ pub const ReferencedPatientSequence: Tag = Tag {
   element: 0x1120,
   name: "ReferencedPatientSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Patient Sequence",
 };
 
@@ -1141,7 +1141,7 @@ pub const ReferencedVisitSequence: Tag = Tag {
   element: 0x1125,
   name: "ReferencedVisitSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Visit Sequence",
 };
 
@@ -1150,7 +1150,7 @@ pub const ReferencedOverlaySequence: Tag = Tag {
   element: 0x1130,
   name: "ReferencedOverlaySequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Overlay Sequence",
 };
 
@@ -1159,7 +1159,7 @@ pub const ReferencedStereometricInstanceSequence: Tag = Tag {
   element: 0x1134,
   name: "ReferencedStereometricInstanceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Stereometric Instance Sequence",
 };
 
@@ -1168,7 +1168,7 @@ pub const ReferencedWaveformSequence: Tag = Tag {
   element: 0x113A,
   name: "ReferencedWaveformSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Waveform Sequence",
 };
 
@@ -1177,7 +1177,7 @@ pub const ReferencedImageSequence: Tag = Tag {
   element: 0x1140,
   name: "ReferencedImageSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Image Sequence",
 };
 
@@ -1186,7 +1186,7 @@ pub const ReferencedCurveSequence: Tag = Tag {
   element: 0x1145,
   name: "ReferencedCurveSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Curve Sequence",
 };
 
@@ -1195,7 +1195,7 @@ pub const ReferencedInstanceSequence: Tag = Tag {
   element: 0x114A,
   name: "ReferencedInstanceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Instance Sequence",
 };
 
@@ -1204,7 +1204,7 @@ pub const ReferencedRealWorldValueMappingInstanceSequence: Tag = Tag {
   element: 0x114B,
   name: "ReferencedRealWorldValueMappingInstanceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Real World Value Mapping Instance Sequence",
 };
 
@@ -1213,7 +1213,7 @@ pub const ReferencedSOPClassUID: Tag = Tag {
   element: 0x1150,
   name: "ReferencedSOPClassUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced SOP Class UID",
 };
 
@@ -1222,7 +1222,7 @@ pub const ReferencedSOPInstanceUID: Tag = Tag {
   element: 0x1155,
   name: "ReferencedSOPInstanceUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced SOP Instance UID",
 };
 
@@ -1267,7 +1267,7 @@ pub const TimeRange: Tag = Tag {
   element: 0x1163,
   name: "TimeRange",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Time Range",
 };
 
@@ -1276,7 +1276,7 @@ pub const FrameExtractionSequence: Tag = Tag {
   element: 0x1164,
   name: "FrameExtractionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Frame Extraction Sequence",
 };
 
@@ -1285,7 +1285,7 @@ pub const MultiFrameSourceSOPInstanceUID: Tag = Tag {
   element: 0x1167,
   name: "MultiFrameSourceSOPInstanceUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Multi-frame Source SOP Instance UID",
 };
 
@@ -1294,7 +1294,7 @@ pub const RetrieveURL: Tag = Tag {
   element: 0x1190,
   name: "RetrieveURL",
   vr: "UT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Retrieve URL",
 };
 
@@ -1303,7 +1303,7 @@ pub const TransactionUID: Tag = Tag {
   element: 0x1195,
   name: "TransactionUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Transaction UID",
 };
 
@@ -1312,7 +1312,7 @@ pub const WarningReason: Tag = Tag {
   element: 0x1196,
   name: "WarningReason",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Warning Reason",
 };
 
@@ -1321,7 +1321,7 @@ pub const FailureReason: Tag = Tag {
   element: 0x1197,
   name: "FailureReason",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Failure Reason",
 };
 
@@ -1330,7 +1330,7 @@ pub const FailedSOPSequence: Tag = Tag {
   element: 0x1198,
   name: "FailedSOPSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Failed SOP Sequence",
 };
 
@@ -1339,7 +1339,7 @@ pub const ReferencedSOPSequence: Tag = Tag {
   element: 0x1199,
   name: "ReferencedSOPSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced SOP Sequence",
 };
 
@@ -1348,7 +1348,7 @@ pub const StudiesContainingOtherReferencedInstancesSequence: Tag = Tag {
   element: 0x1200,
   name: "StudiesContainingOtherReferencedInstancesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Studies Containing Other Referenced Instances Sequence",
 };
 
@@ -1357,7 +1357,7 @@ pub const RelatedSeriesSequence: Tag = Tag {
   element: 0x1250,
   name: "RelatedSeriesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Related Series Sequence",
 };
 
@@ -1366,7 +1366,7 @@ pub const LossyImageCompressionRetired: Tag = Tag {
   element: 0x2110,
   name: "LossyImageCompressionRetired",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Lossy Image Compression (Retired)",
 };
 
@@ -1375,7 +1375,7 @@ pub const DerivationDescription: Tag = Tag {
   element: 0x2111,
   name: "DerivationDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Derivation Description",
 };
 
@@ -1384,7 +1384,7 @@ pub const SourceImageSequence: Tag = Tag {
   element: 0x2112,
   name: "SourceImageSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Image Sequence",
 };
 
@@ -1393,7 +1393,7 @@ pub const StageName: Tag = Tag {
   element: 0x2120,
   name: "StageName",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Stage Name",
 };
 
@@ -1402,7 +1402,7 @@ pub const StageNumber: Tag = Tag {
   element: 0x2122,
   name: "StageNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Stage Number",
 };
 
@@ -1411,7 +1411,7 @@ pub const NumberOfStages: Tag = Tag {
   element: 0x2124,
   name: "NumberOfStages",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Stages",
 };
 
@@ -1420,7 +1420,7 @@ pub const ViewName: Tag = Tag {
   element: 0x2127,
   name: "ViewName",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "View Name",
 };
 
@@ -1429,7 +1429,7 @@ pub const ViewNumber: Tag = Tag {
   element: 0x2128,
   name: "ViewNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "View Number",
 };
 
@@ -1438,7 +1438,7 @@ pub const NumberOfEventTimers: Tag = Tag {
   element: 0x2129,
   name: "NumberOfEventTimers",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Event Timers",
 };
 
@@ -1447,7 +1447,7 @@ pub const NumberOfViewsInStage: Tag = Tag {
   element: 0x212A,
   name: "NumberOfViewsInStage",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Views in Stage",
 };
 
@@ -1474,7 +1474,7 @@ pub const EventTimerSequence: Tag = Tag {
   element: 0x2133,
   name: "EventTimerSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Event Timer Sequence",
 };
 
@@ -1483,7 +1483,7 @@ pub const EventTimeOffset: Tag = Tag {
   element: 0x2134,
   name: "EventTimeOffset",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Event Time Offset",
 };
 
@@ -1492,7 +1492,7 @@ pub const EventCodeSequence: Tag = Tag {
   element: 0x2135,
   name: "EventCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Event Code Sequence",
 };
 
@@ -1501,7 +1501,7 @@ pub const StartTrim: Tag = Tag {
   element: 0x2142,
   name: "StartTrim",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Start Trim",
 };
 
@@ -1510,7 +1510,7 @@ pub const StopTrim: Tag = Tag {
   element: 0x2143,
   name: "StopTrim",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Stop Trim",
 };
 
@@ -1519,7 +1519,7 @@ pub const RecommendedDisplayFrameRate: Tag = Tag {
   element: 0x2144,
   name: "RecommendedDisplayFrameRate",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Recommended Display Frame Rate",
 };
 
@@ -1528,7 +1528,7 @@ pub const TransducerPosition: Tag = Tag {
   element: 0x2200,
   name: "TransducerPosition",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Transducer Position",
 };
 
@@ -1537,7 +1537,7 @@ pub const TransducerOrientation: Tag = Tag {
   element: 0x2204,
   name: "TransducerOrientation",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Transducer Orientation",
 };
 
@@ -1546,7 +1546,7 @@ pub const AnatomicStructure: Tag = Tag {
   element: 0x2208,
   name: "AnatomicStructure",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Anatomic Structure",
 };
 
@@ -1555,7 +1555,7 @@ pub const AnatomicRegionSequence: Tag = Tag {
   element: 0x2218,
   name: "AnatomicRegionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Anatomic Region Sequence",
 };
 
@@ -1564,7 +1564,7 @@ pub const AnatomicRegionModifierSequence: Tag = Tag {
   element: 0x2220,
   name: "AnatomicRegionModifierSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Anatomic Region Modifier Sequence",
 };
 
@@ -1573,7 +1573,7 @@ pub const PrimaryAnatomicStructureSequence: Tag = Tag {
   element: 0x2228,
   name: "PrimaryAnatomicStructureSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Primary Anatomic Structure Sequence",
 };
 
@@ -1582,7 +1582,7 @@ pub const AnatomicStructureSpaceOrRegionSequence: Tag = Tag {
   element: 0x2229,
   name: "AnatomicStructureSpaceOrRegionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Anatomic Structure",
 };
 
@@ -1591,7 +1591,7 @@ pub const PrimaryAnatomicStructureModifierSequence: Tag = Tag {
   element: 0x2230,
   name: "PrimaryAnatomicStructureModifierSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Primary Anatomic Structure Modifier Sequence",
 };
 
@@ -1600,7 +1600,7 @@ pub const TransducerPositionSequence: Tag = Tag {
   element: 0x2240,
   name: "TransducerPositionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Transducer Position Sequence",
 };
 
@@ -1609,7 +1609,7 @@ pub const TransducerPositionModifierSequence: Tag = Tag {
   element: 0x2242,
   name: "TransducerPositionModifierSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Transducer Position Modifier Sequence",
 };
 
@@ -1618,7 +1618,7 @@ pub const TransducerOrientationSequence: Tag = Tag {
   element: 0x2244,
   name: "TransducerOrientationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Transducer Orientation Sequence",
 };
 
@@ -1627,7 +1627,7 @@ pub const TransducerOrientationModifierSequence: Tag = Tag {
   element: 0x2246,
   name: "TransducerOrientationModifierSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Transducer Orientation Modifier Sequence",
 };
 
@@ -1636,7 +1636,7 @@ pub const AnatomicStructureSpaceOrRegionCodeSequenceTrial: Tag = Tag {
   element: 0x2251,
   name: "AnatomicStructureSpaceOrRegionCodeSequenceTrial",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Anatomic Structure Space Or Region Code Sequence (Trial)",
 };
 
@@ -1645,7 +1645,7 @@ pub const AnatomicPortalOfEntranceCodeSequenceTrial: Tag = Tag {
   element: 0x2253,
   name: "AnatomicPortalOfEntranceCodeSequenceTrial",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Anatomic Portal Of Entrance Code Sequence (Trial)",
 };
 
@@ -1654,7 +1654,7 @@ pub const AnatomicApproachDirectionCodeSequenceTrial: Tag = Tag {
   element: 0x2255,
   name: "AnatomicApproachDirectionCodeSequenceTrial",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Anatomic Approach Direction Code Sequence (Trial)",
 };
 
@@ -1663,7 +1663,7 @@ pub const AnatomicPerspectiveDescriptionTrial: Tag = Tag {
   element: 0x2256,
   name: "AnatomicPerspectiveDescriptionTrial",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Anatomic Perspective Description (Trial)",
 };
 
@@ -1672,7 +1672,7 @@ pub const AnatomicPerspectiveCodeSequenceTrial: Tag = Tag {
   element: 0x2257,
   name: "AnatomicPerspectiveCodeSequenceTrial",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Anatomic Perspective Code Sequence (Trial)",
 };
 
@@ -1681,7 +1681,7 @@ pub const AnatomicLocationOfExaminingInstrumentDescriptionTrial: Tag = Tag {
   element: 0x2258,
   name: "AnatomicLocationOfExaminingInstrumentDescriptionTrial",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Anatomic Location Of Examining Instrument Description (Trial)",
 };
 
@@ -1690,7 +1690,7 @@ pub const AnatomicLocationOfExaminingInstrumentCodeSequenceTrial: Tag = Tag {
   element: 0x2259,
   name: "AnatomicLocationOfExaminingInstrumentCodeSequenceTrial",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Anatomic Location Of Examining Instrument Code Sequence (Trial)",
 };
 
@@ -1699,7 +1699,7 @@ pub const AnatomicStructureSpaceOrRegionModifierCodeSequenceTrial: Tag = Tag {
   element: 0x225A,
   name: "AnatomicStructureSpaceOrRegionModifierCodeSequenceTrial",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Anatomic Structure Space Or Region Modifier Code Sequence (Trial)",
 };
 
@@ -1708,7 +1708,7 @@ pub const OnAxisBackgroundAnatomicStructureCodeSequenceTrial: Tag = Tag {
   element: 0x225C,
   name: "OnAxisBackgroundAnatomicStructureCodeSequenceTrial",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "OnAxis Background Anatomic Structure Code Sequence (Trial)",
 };
 
@@ -1717,7 +1717,7 @@ pub const AlternateRepresentationSequence: Tag = Tag {
   element: 0x3001,
   name: "AlternateRepresentationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Alternate Representation Sequence",
 };
 
@@ -1735,7 +1735,7 @@ pub const SourceIrradiationEventSequence: Tag = Tag {
   element: 0x3011,
   name: "SourceIrradiationEventSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Irradiation Event Sequence",
 };
 
@@ -1744,7 +1744,7 @@ pub const RadiopharmaceuticalAdministrationEventUID: Tag = Tag {
   element: 0x3012,
   name: "RadiopharmaceuticalAdministrationEventUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Radiopharmaceutical Administration Event UID",
 };
 
@@ -1753,7 +1753,7 @@ pub const IdentifyingComments: Tag = Tag {
   element: 0x4000,
   name: "IdentifyingComments",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Identifying Comments",
 };
 
@@ -1762,7 +1762,7 @@ pub const FrameType: Tag = Tag {
   element: 0x9007,
   name: "FrameType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 4, end: 4 },
   description: "Frame Type",
 };
 
@@ -1771,7 +1771,7 @@ pub const ReferencedImageEvidenceSequence: Tag = Tag {
   element: 0x9092,
   name: "ReferencedImageEvidenceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Image Evidence Sequence",
 };
 
@@ -1780,7 +1780,7 @@ pub const ReferencedRawDataSequence: Tag = Tag {
   element: 0x9121,
   name: "ReferencedRawDataSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Raw Data Sequence",
 };
 
@@ -1789,7 +1789,7 @@ pub const CreatorVersionUID: Tag = Tag {
   element: 0x9123,
   name: "CreatorVersionUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Creator-Version UID",
 };
 
@@ -1798,7 +1798,7 @@ pub const DerivationImageSequence: Tag = Tag {
   element: 0x9124,
   name: "DerivationImageSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Derivation Image Sequence",
 };
 
@@ -1807,7 +1807,7 @@ pub const SourceImageEvidenceSequence: Tag = Tag {
   element: 0x9154,
   name: "SourceImageEvidenceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Image Evidence Sequence",
 };
 
@@ -1816,7 +1816,7 @@ pub const PixelPresentation: Tag = Tag {
   element: 0x9205,
   name: "PixelPresentation",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pixel Presentation",
 };
 
@@ -1825,7 +1825,7 @@ pub const VolumetricProperties: Tag = Tag {
   element: 0x9206,
   name: "VolumetricProperties",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Volumetric Properties",
 };
 
@@ -1834,7 +1834,7 @@ pub const VolumeBasedCalculationTechnique: Tag = Tag {
   element: 0x9207,
   name: "VolumeBasedCalculationTechnique",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Volume Based Calculation Technique",
 };
 
@@ -1843,7 +1843,7 @@ pub const ComplexImageComponent: Tag = Tag {
   element: 0x9208,
   name: "ComplexImageComponent",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Complex Image Component",
 };
 
@@ -1852,7 +1852,7 @@ pub const AcquisitionContrast: Tag = Tag {
   element: 0x9209,
   name: "AcquisitionContrast",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Acquisition Contrast",
 };
 
@@ -1861,7 +1861,7 @@ pub const DerivationCodeSequence: Tag = Tag {
   element: 0x9215,
   name: "DerivationCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Derivation Code Sequence",
 };
 
@@ -1870,7 +1870,7 @@ pub const ReferencedPresentationStateSequence: Tag = Tag {
   element: 0x9237,
   name: "ReferencedPresentationStateSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Presentation State Sequence",
 };
 
@@ -1879,7 +1879,7 @@ pub const ReferencedOtherPlaneSequence: Tag = Tag {
   element: 0x9410,
   name: "ReferencedOtherPlaneSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Other Plane Sequence",
 };
 
@@ -1888,7 +1888,7 @@ pub const FrameDisplaySequence: Tag = Tag {
   element: 0x9458,
   name: "FrameDisplaySequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Frame Display Sequence",
 };
 
@@ -1897,7 +1897,7 @@ pub const RecommendedDisplayFrameRateInFloat: Tag = Tag {
   element: 0x9459,
   name: "RecommendedDisplayFrameRateInFloat",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Recommended Display Frame Rate in Float",
 };
 
@@ -1906,7 +1906,7 @@ pub const SkipFrameRangeFlag: Tag = Tag {
   element: 0x9460,
   name: "SkipFrameRangeFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Skip Frame Range Flag",
 };
 
@@ -1915,7 +1915,7 @@ pub const PatientName: Tag = Tag {
   element: 0x0010,
   name: "PatientName",
   vr: "PN",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient's Name",
 };
 
@@ -1924,7 +1924,7 @@ pub const PatientID: Tag = Tag {
   element: 0x0020,
   name: "PatientID",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient ID",
 };
 
@@ -1933,7 +1933,7 @@ pub const IssuerOfPatientID: Tag = Tag {
   element: 0x0021,
   name: "IssuerOfPatientID",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Issuer of Patient ID",
 };
 
@@ -1942,7 +1942,7 @@ pub const TypeOfPatientID: Tag = Tag {
   element: 0x0022,
   name: "TypeOfPatientID",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Type of Patient ID",
 };
 
@@ -1951,7 +1951,7 @@ pub const IssuerOfPatientIDQualifiersSequence: Tag = Tag {
   element: 0x0024,
   name: "IssuerOfPatientIDQualifiersSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Issuer of Patient ID Qualifiers Sequence",
 };
 
@@ -1960,7 +1960,7 @@ pub const PatientBirthDate: Tag = Tag {
   element: 0x0030,
   name: "PatientBirthDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient's Birth Date",
 };
 
@@ -1969,7 +1969,7 @@ pub const PatientBirthTime: Tag = Tag {
   element: 0x0032,
   name: "PatientBirthTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient's Birth Time",
 };
 
@@ -1978,7 +1978,7 @@ pub const PatientSex: Tag = Tag {
   element: 0x0040,
   name: "PatientSex",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient's Sex",
 };
 
@@ -1987,7 +1987,7 @@ pub const PatientInsurancePlanCodeSequence: Tag = Tag {
   element: 0x0050,
   name: "PatientInsurancePlanCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient's Insurance Plan Code Sequence",
 };
 
@@ -1996,7 +1996,7 @@ pub const PatientPrimaryLanguageCodeSequence: Tag = Tag {
   element: 0x0101,
   name: "PatientPrimaryLanguageCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient's Primary Language Code Sequence",
 };
 
@@ -2005,7 +2005,7 @@ pub const PatientPrimaryLanguageModifierCodeSequence: Tag = Tag {
   element: 0x0102,
   name: "PatientPrimaryLanguageModifierCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient's Primary Language Modifier Code Sequence",
 };
 
@@ -2014,7 +2014,7 @@ pub const QualityControlSubject: Tag = Tag {
   element: 0x0200,
   name: "QualityControlSubject",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Quality Control Subject",
 };
 
@@ -2023,7 +2023,7 @@ pub const QualityControlSubjectTypeCodeSequence: Tag = Tag {
   element: 0x0201,
   name: "QualityControlSubjectTypeCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Quality Control Subject Type Code Sequence",
 };
 
@@ -2050,7 +2050,7 @@ pub const OtherPatientIDsSequence: Tag = Tag {
   element: 0x1002,
   name: "OtherPatientIDsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Other Patient IDs Sequence",
 };
 
@@ -2059,7 +2059,7 @@ pub const PatientBirthName: Tag = Tag {
   element: 0x1005,
   name: "PatientBirthName",
   vr: "PN",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient's Birth Name",
 };
 
@@ -2068,7 +2068,7 @@ pub const PatientAge: Tag = Tag {
   element: 0x1010,
   name: "PatientAge",
   vr: "AS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient's Age",
 };
 
@@ -2077,7 +2077,7 @@ pub const PatientSize: Tag = Tag {
   element: 0x1020,
   name: "PatientSize",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient's Size",
 };
 
@@ -2086,7 +2086,7 @@ pub const PatientSizeCodeSequence: Tag = Tag {
   element: 0x1021,
   name: "PatientSizeCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient's Size Code Sequence",
 };
 
@@ -2095,7 +2095,7 @@ pub const PatientWeight: Tag = Tag {
   element: 0x1030,
   name: "PatientWeight",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient's Weight",
 };
 
@@ -2104,7 +2104,7 @@ pub const PatientAddress: Tag = Tag {
   element: 0x1040,
   name: "PatientAddress",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient's Address",
 };
 
@@ -2122,7 +2122,7 @@ pub const PatientMotherBirthName: Tag = Tag {
   element: 0x1060,
   name: "PatientMotherBirthName",
   vr: "PN",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient's Mother's Birth Name",
 };
 
@@ -2131,7 +2131,7 @@ pub const MilitaryRank: Tag = Tag {
   element: 0x1080,
   name: "MilitaryRank",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Military Rank",
 };
 
@@ -2140,7 +2140,7 @@ pub const BranchOfService: Tag = Tag {
   element: 0x1081,
   name: "BranchOfService",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Branch of Service",
 };
 
@@ -2149,7 +2149,7 @@ pub const MedicalRecordLocator: Tag = Tag {
   element: 0x1090,
   name: "MedicalRecordLocator",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Medical Record Locator",
 };
 
@@ -2158,7 +2158,7 @@ pub const ReferencedPatientPhotoSequence: Tag = Tag {
   element: 0x1100,
   name: "ReferencedPatientPhotoSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Patient Photo Sequence",
 };
 
@@ -2185,7 +2185,7 @@ pub const CountryOfResidence: Tag = Tag {
   element: 0x2150,
   name: "CountryOfResidence",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Country of Residence",
 };
 
@@ -2194,7 +2194,7 @@ pub const RegionOfResidence: Tag = Tag {
   element: 0x2152,
   name: "RegionOfResidence",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Region of Residence",
 };
 
@@ -2212,7 +2212,7 @@ pub const EthnicGroup: Tag = Tag {
   element: 0x2160,
   name: "EthnicGroup",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ethnic Group",
 };
 
@@ -2221,7 +2221,7 @@ pub const Occupation: Tag = Tag {
   element: 0x2180,
   name: "Occupation",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Occupation",
 };
 
@@ -2230,7 +2230,7 @@ pub const SmokingStatus: Tag = Tag {
   element: 0x21A0,
   name: "SmokingStatus",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Smoking Status",
 };
 
@@ -2239,7 +2239,7 @@ pub const AdditionalPatientHistory: Tag = Tag {
   element: 0x21B0,
   name: "AdditionalPatientHistory",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Additional Patient History",
 };
 
@@ -2248,7 +2248,7 @@ pub const PregnancyStatus: Tag = Tag {
   element: 0x21C0,
   name: "PregnancyStatus",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pregnancy Status",
 };
 
@@ -2257,7 +2257,7 @@ pub const LastMenstrualDate: Tag = Tag {
   element: 0x21D0,
   name: "LastMenstrualDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Last Menstrual Date",
 };
 
@@ -2266,7 +2266,7 @@ pub const PatientReligiousPreference: Tag = Tag {
   element: 0x21F0,
   name: "PatientReligiousPreference",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient's Religious Preference",
 };
 
@@ -2275,7 +2275,7 @@ pub const PatientSpeciesDescription: Tag = Tag {
   element: 0x2201,
   name: "PatientSpeciesDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Species Description",
 };
 
@@ -2284,7 +2284,7 @@ pub const PatientSpeciesCodeSequence: Tag = Tag {
   element: 0x2202,
   name: "PatientSpeciesCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Species Code Sequence",
 };
 
@@ -2293,7 +2293,7 @@ pub const PatientSexNeutered: Tag = Tag {
   element: 0x2203,
   name: "PatientSexNeutered",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient's Sex Neutered",
 };
 
@@ -2302,7 +2302,7 @@ pub const AnatomicalOrientationType: Tag = Tag {
   element: 0x2210,
   name: "AnatomicalOrientationType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Anatomical Orientation Type",
 };
 
@@ -2311,7 +2311,7 @@ pub const PatientBreedDescription: Tag = Tag {
   element: 0x2292,
   name: "PatientBreedDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Breed Description",
 };
 
@@ -2320,7 +2320,7 @@ pub const PatientBreedCodeSequence: Tag = Tag {
   element: 0x2293,
   name: "PatientBreedCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Breed Code Sequence",
 };
 
@@ -2329,7 +2329,7 @@ pub const BreedRegistrationSequence: Tag = Tag {
   element: 0x2294,
   name: "BreedRegistrationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Breed Registration Sequence",
 };
 
@@ -2338,7 +2338,7 @@ pub const BreedRegistrationNumber: Tag = Tag {
   element: 0x2295,
   name: "BreedRegistrationNumber",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Breed Registration Number",
 };
 
@@ -2347,7 +2347,7 @@ pub const BreedRegistryCodeSequence: Tag = Tag {
   element: 0x2296,
   name: "BreedRegistryCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Breed Registry Code Sequence",
 };
 
@@ -2356,7 +2356,7 @@ pub const ResponsiblePerson: Tag = Tag {
   element: 0x2297,
   name: "ResponsiblePerson",
   vr: "PN",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Responsible Person",
 };
 
@@ -2365,7 +2365,7 @@ pub const ResponsiblePersonRole: Tag = Tag {
   element: 0x2298,
   name: "ResponsiblePersonRole",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Responsible Person Role",
 };
 
@@ -2374,7 +2374,7 @@ pub const ResponsibleOrganization: Tag = Tag {
   element: 0x2299,
   name: "ResponsibleOrganization",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Responsible Organization",
 };
 
@@ -2383,7 +2383,7 @@ pub const PatientComments: Tag = Tag {
   element: 0x4000,
   name: "PatientComments",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Comments",
 };
 
@@ -2392,7 +2392,7 @@ pub const ExaminedBodyThickness: Tag = Tag {
   element: 0x9431,
   name: "ExaminedBodyThickness",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Examined Body Thickness",
 };
 
@@ -2401,7 +2401,7 @@ pub const ClinicalTrialSponsorName: Tag = Tag {
   element: 0x0010,
   name: "ClinicalTrialSponsorName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Clinical Trial Sponsor Name",
 };
 
@@ -2410,7 +2410,7 @@ pub const ClinicalTrialProtocolID: Tag = Tag {
   element: 0x0020,
   name: "ClinicalTrialProtocolID",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Clinical Trial Protocol ID",
 };
 
@@ -2419,7 +2419,7 @@ pub const ClinicalTrialProtocolName: Tag = Tag {
   element: 0x0021,
   name: "ClinicalTrialProtocolName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Clinical Trial Protocol Name",
 };
 
@@ -2428,7 +2428,7 @@ pub const ClinicalTrialSiteID: Tag = Tag {
   element: 0x0030,
   name: "ClinicalTrialSiteID",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Clinical Trial Site ID",
 };
 
@@ -2437,7 +2437,7 @@ pub const ClinicalTrialSiteName: Tag = Tag {
   element: 0x0031,
   name: "ClinicalTrialSiteName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Clinical Trial Site Name",
 };
 
@@ -2446,7 +2446,7 @@ pub const ClinicalTrialSubjectID: Tag = Tag {
   element: 0x0040,
   name: "ClinicalTrialSubjectID",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Clinical Trial Subject ID",
 };
 
@@ -2455,7 +2455,7 @@ pub const ClinicalTrialSubjectReadingID: Tag = Tag {
   element: 0x0042,
   name: "ClinicalTrialSubjectReadingID",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Clinical Trial Subject Reading ID",
 };
 
@@ -2464,7 +2464,7 @@ pub const ClinicalTrialTimePointID: Tag = Tag {
   element: 0x0050,
   name: "ClinicalTrialTimePointID",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Clinical Trial Time Point ID",
 };
 
@@ -2473,7 +2473,7 @@ pub const ClinicalTrialTimePointDescription: Tag = Tag {
   element: 0x0051,
   name: "ClinicalTrialTimePointDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Clinical Trial Time Point Description",
 };
 
@@ -2482,7 +2482,7 @@ pub const ClinicalTrialCoordinatingCenterName: Tag = Tag {
   element: 0x0060,
   name: "ClinicalTrialCoordinatingCenterName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Clinical Trial Coordinating Center Name",
 };
 
@@ -2491,7 +2491,7 @@ pub const PatientIdentityRemoved: Tag = Tag {
   element: 0x0062,
   name: "PatientIdentityRemoved",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Identity Removed",
 };
 
@@ -2509,7 +2509,7 @@ pub const DeidentificationMethodCodeSequence: Tag = Tag {
   element: 0x0064,
   name: "DeidentificationMethodCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "De-identification Method Code Sequence",
 };
 
@@ -2518,7 +2518,7 @@ pub const ClinicalTrialSeriesID: Tag = Tag {
   element: 0x0071,
   name: "ClinicalTrialSeriesID",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Clinical Trial Series ID",
 };
 
@@ -2527,7 +2527,7 @@ pub const ClinicalTrialSeriesDescription: Tag = Tag {
   element: 0x0072,
   name: "ClinicalTrialSeriesDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Clinical Trial Series Description",
 };
 
@@ -2536,7 +2536,7 @@ pub const ClinicalTrialProtocolEthicsCommitteeName: Tag = Tag {
   element: 0x0081,
   name: "ClinicalTrialProtocolEthicsCommitteeName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Clinical Trial Protocol Ethics Committee Name",
 };
 
@@ -2545,7 +2545,7 @@ pub const ClinicalTrialProtocolEthicsCommitteeApprovalNumber: Tag = Tag {
   element: 0x0082,
   name: "ClinicalTrialProtocolEthicsCommitteeApprovalNumber",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Clinical Trial Protocol Ethics Committee Approval Number",
 };
 
@@ -2554,7 +2554,7 @@ pub const ConsentForClinicalTrialUseSequence: Tag = Tag {
   element: 0x0083,
   name: "ConsentForClinicalTrialUseSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Consent for Clinical Trial Use Sequence",
 };
 
@@ -2563,7 +2563,7 @@ pub const DistributionType: Tag = Tag {
   element: 0x0084,
   name: "DistributionType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Distribution Type",
 };
 
@@ -2572,7 +2572,7 @@ pub const ConsentForDistributionFlag: Tag = Tag {
   element: 0x0085,
   name: "ConsentForDistributionFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Consent for Distribution Flag",
 };
 
@@ -2671,7 +2671,7 @@ pub const MaterialNotes: Tag = Tag {
   element: 0x0046,
   name: "MaterialNotes",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Material Notes",
 };
 
@@ -2680,7 +2680,7 @@ pub const ComponentShape: Tag = Tag {
   element: 0x0050,
   name: "ComponentShape",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Component Shape",
 };
 
@@ -2689,7 +2689,7 @@ pub const CurvatureType: Tag = Tag {
   element: 0x0052,
   name: "CurvatureType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Curvature Type",
 };
 
@@ -2698,7 +2698,7 @@ pub const OuterDiameter: Tag = Tag {
   element: 0x0054,
   name: "OuterDiameter",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Outer Diameter",
 };
 
@@ -2707,7 +2707,7 @@ pub const InnerDiameter: Tag = Tag {
   element: 0x0056,
   name: "InnerDiameter",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Inner Diameter",
 };
 
@@ -2716,7 +2716,7 @@ pub const ActualEnvironmentalConditions: Tag = Tag {
   element: 0x1010,
   name: "ActualEnvironmentalConditions",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Actual Environmental Conditions",
 };
 
@@ -2725,7 +2725,7 @@ pub const ExpiryDate: Tag = Tag {
   element: 0x1020,
   name: "ExpiryDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Expiry Date",
 };
 
@@ -2734,7 +2734,7 @@ pub const EnvironmentalConditions: Tag = Tag {
   element: 0x1040,
   name: "EnvironmentalConditions",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Environmental Conditions",
 };
 
@@ -2743,7 +2743,7 @@ pub const EvaluatorSequence: Tag = Tag {
   element: 0x2002,
   name: "EvaluatorSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Evaluator Sequence",
 };
 
@@ -2752,7 +2752,7 @@ pub const EvaluatorNumber: Tag = Tag {
   element: 0x2004,
   name: "EvaluatorNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Evaluator Number",
 };
 
@@ -2761,7 +2761,7 @@ pub const EvaluatorName: Tag = Tag {
   element: 0x2006,
   name: "EvaluatorName",
   vr: "PN",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Evaluator Name",
 };
 
@@ -2770,7 +2770,7 @@ pub const EvaluationAttempt: Tag = Tag {
   element: 0x2008,
   name: "EvaluationAttempt",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Evaluation Attempt",
 };
 
@@ -2779,7 +2779,7 @@ pub const IndicationSequence: Tag = Tag {
   element: 0x2012,
   name: "IndicationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Indication Sequence",
 };
 
@@ -2788,7 +2788,7 @@ pub const IndicationNumber: Tag = Tag {
   element: 0x2014,
   name: "IndicationNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Indication Number",
 };
 
@@ -2797,7 +2797,7 @@ pub const IndicationLabel: Tag = Tag {
   element: 0x2016,
   name: "IndicationLabel",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Indication Label",
 };
 
@@ -2806,7 +2806,7 @@ pub const IndicationDescription: Tag = Tag {
   element: 0x2018,
   name: "IndicationDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Indication Description",
 };
 
@@ -2824,7 +2824,7 @@ pub const IndicationDisposition: Tag = Tag {
   element: 0x201C,
   name: "IndicationDisposition",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Indication Disposition",
 };
 
@@ -2833,7 +2833,7 @@ pub const IndicationROISequence: Tag = Tag {
   element: 0x201E,
   name: "IndicationROISequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Indication ROI Sequence",
 };
 
@@ -2842,7 +2842,7 @@ pub const IndicationPhysicalPropertySequence: Tag = Tag {
   element: 0x2030,
   name: "IndicationPhysicalPropertySequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Indication Physical Property Sequence",
 };
 
@@ -2851,7 +2851,7 @@ pub const PropertyLabel: Tag = Tag {
   element: 0x2032,
   name: "PropertyLabel",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Property Label",
 };
 
@@ -2860,7 +2860,7 @@ pub const CoordinateSystemNumberOfAxes: Tag = Tag {
   element: 0x2202,
   name: "CoordinateSystemNumberOfAxes",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Coordinate System Number of Axes",
 };
 
@@ -2869,7 +2869,7 @@ pub const CoordinateSystemAxesSequence: Tag = Tag {
   element: 0x2204,
   name: "CoordinateSystemAxesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Coordinate System Axes Sequence",
 };
 
@@ -2878,7 +2878,7 @@ pub const CoordinateSystemAxisDescription: Tag = Tag {
   element: 0x2206,
   name: "CoordinateSystemAxisDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Coordinate System Axis Description",
 };
 
@@ -2887,7 +2887,7 @@ pub const CoordinateSystemDataSetMapping: Tag = Tag {
   element: 0x2208,
   name: "CoordinateSystemDataSetMapping",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Coordinate System Data Set Mapping",
 };
 
@@ -2896,7 +2896,7 @@ pub const CoordinateSystemAxisNumber: Tag = Tag {
   element: 0x220A,
   name: "CoordinateSystemAxisNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Coordinate System Axis Number",
 };
 
@@ -2905,7 +2905,7 @@ pub const CoordinateSystemAxisType: Tag = Tag {
   element: 0x220C,
   name: "CoordinateSystemAxisType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Coordinate System Axis Type",
 };
 
@@ -2914,7 +2914,7 @@ pub const CoordinateSystemAxisUnits: Tag = Tag {
   element: 0x220E,
   name: "CoordinateSystemAxisUnits",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Coordinate System Axis Units",
 };
 
@@ -2923,7 +2923,7 @@ pub const CoordinateSystemAxisValues: Tag = Tag {
   element: 0x2210,
   name: "CoordinateSystemAxisValues",
   vr: "OB",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Coordinate System Axis Values",
 };
 
@@ -2932,7 +2932,7 @@ pub const CoordinateSystemTransformSequence: Tag = Tag {
   element: 0x2220,
   name: "CoordinateSystemTransformSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Coordinate System Transform Sequence",
 };
 
@@ -2941,7 +2941,7 @@ pub const TransformDescription: Tag = Tag {
   element: 0x2222,
   name: "TransformDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Transform Description",
 };
 
@@ -2950,7 +2950,7 @@ pub const TransformNumberOfAxes: Tag = Tag {
   element: 0x2224,
   name: "TransformNumberOfAxes",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Transform Number of Axes",
 };
 
@@ -2968,7 +2968,7 @@ pub const TransformedAxisUnits: Tag = Tag {
   element: 0x2228,
   name: "TransformedAxisUnits",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Transformed Axis Units",
 };
 
@@ -2995,7 +2995,7 @@ pub const InternalDetectorFrameTime: Tag = Tag {
   element: 0x3011,
   name: "InternalDetectorFrameTime",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Internal Detector Frame Time",
 };
 
@@ -3004,7 +3004,7 @@ pub const NumberOfFramesIntegrated: Tag = Tag {
   element: 0x3012,
   name: "NumberOfFramesIntegrated",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Frames Integrated",
 };
 
@@ -3013,7 +3013,7 @@ pub const DetectorTemperatureSequence: Tag = Tag {
   element: 0x3020,
   name: "DetectorTemperatureSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Detector Temperature Sequence",
 };
 
@@ -3022,7 +3022,7 @@ pub const SensorName: Tag = Tag {
   element: 0x3022,
   name: "SensorName",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Sensor Name",
 };
 
@@ -3031,7 +3031,7 @@ pub const HorizontalOffsetOfSensor: Tag = Tag {
   element: 0x3024,
   name: "HorizontalOffsetOfSensor",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Horizontal Offset of Sensor",
 };
 
@@ -3040,7 +3040,7 @@ pub const VerticalOffsetOfSensor: Tag = Tag {
   element: 0x3026,
   name: "VerticalOffsetOfSensor",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Vertical Offset of Sensor",
 };
 
@@ -3049,7 +3049,7 @@ pub const SensorTemperature: Tag = Tag {
   element: 0x3028,
   name: "SensorTemperature",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Sensor Temperature",
 };
 
@@ -3058,7 +3058,7 @@ pub const DarkCurrentSequence: Tag = Tag {
   element: 0x3040,
   name: "DarkCurrentSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Dark Current Sequence",
 };
 
@@ -3067,7 +3067,7 @@ pub const DarkCurrentCounts: Tag = Tag {
   element: 0x3050,
   name: "DarkCurrentCounts",
   vr: "OB",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Dark Current Counts",
 };
 
@@ -3076,7 +3076,7 @@ pub const GainCorrectionReferenceSequence: Tag = Tag {
   element: 0x3060,
   name: "GainCorrectionReferenceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Gain Correction Reference Sequence",
 };
 
@@ -3085,7 +3085,7 @@ pub const AirCounts: Tag = Tag {
   element: 0x3070,
   name: "AirCounts",
   vr: "OB",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Air Counts",
 };
 
@@ -3094,7 +3094,7 @@ pub const KVUsedInGainCalibration: Tag = Tag {
   element: 0x3071,
   name: "KVUsedInGainCalibration",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "KV Used in Gain Calibration",
 };
 
@@ -3103,7 +3103,7 @@ pub const MAUsedInGainCalibration: Tag = Tag {
   element: 0x3072,
   name: "MAUsedInGainCalibration",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "MA Used in Gain Calibration",
 };
 
@@ -3112,7 +3112,7 @@ pub const NumberOfFramesUsedForIntegration: Tag = Tag {
   element: 0x3073,
   name: "NumberOfFramesUsedForIntegration",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Frames Used for Integration",
 };
 
@@ -3121,7 +3121,7 @@ pub const FilterMaterialUsedInGainCalibration: Tag = Tag {
   element: 0x3074,
   name: "FilterMaterialUsedInGainCalibration",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Filter Material Used in Gain Calibration",
 };
 
@@ -3130,7 +3130,7 @@ pub const FilterThicknessUsedInGainCalibration: Tag = Tag {
   element: 0x3075,
   name: "FilterThicknessUsedInGainCalibration",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Filter Thickness Used in Gain Calibration",
 };
 
@@ -3139,7 +3139,7 @@ pub const DateOfGainCalibration: Tag = Tag {
   element: 0x3076,
   name: "DateOfGainCalibration",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Date of Gain Calibration",
 };
 
@@ -3148,7 +3148,7 @@ pub const TimeOfGainCalibration: Tag = Tag {
   element: 0x3077,
   name: "TimeOfGainCalibration",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Time of Gain Calibration",
 };
 
@@ -3157,7 +3157,7 @@ pub const BadPixelImage: Tag = Tag {
   element: 0x3080,
   name: "BadPixelImage",
   vr: "OB",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Bad Pixel Image",
 };
 
@@ -3166,7 +3166,7 @@ pub const CalibrationNotes: Tag = Tag {
   element: 0x3099,
   name: "CalibrationNotes",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Calibration Notes",
 };
 
@@ -3175,7 +3175,7 @@ pub const PulserEquipmentSequence: Tag = Tag {
   element: 0x4002,
   name: "PulserEquipmentSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pulser Equipment Sequence",
 };
 
@@ -3184,7 +3184,7 @@ pub const PulserType: Tag = Tag {
   element: 0x4004,
   name: "PulserType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pulser Type",
 };
 
@@ -3193,7 +3193,7 @@ pub const PulserNotes: Tag = Tag {
   element: 0x4006,
   name: "PulserNotes",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pulser Notes",
 };
 
@@ -3202,7 +3202,7 @@ pub const ReceiverEquipmentSequence: Tag = Tag {
   element: 0x4008,
   name: "ReceiverEquipmentSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Receiver Equipment Sequence",
 };
 
@@ -3211,7 +3211,7 @@ pub const AmplifierType: Tag = Tag {
   element: 0x400A,
   name: "AmplifierType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Amplifier Type",
 };
 
@@ -3220,7 +3220,7 @@ pub const ReceiverNotes: Tag = Tag {
   element: 0x400C,
   name: "ReceiverNotes",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Receiver Notes",
 };
 
@@ -3229,7 +3229,7 @@ pub const PreAmplifierEquipmentSequence: Tag = Tag {
   element: 0x400E,
   name: "PreAmplifierEquipmentSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pre-Amplifier Equipment Sequence",
 };
 
@@ -3238,7 +3238,7 @@ pub const PreAmplifierNotes: Tag = Tag {
   element: 0x400F,
   name: "PreAmplifierNotes",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pre-Amplifier Notes",
 };
 
@@ -3247,7 +3247,7 @@ pub const TransmitTransducerSequence: Tag = Tag {
   element: 0x4010,
   name: "TransmitTransducerSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Transmit Transducer Sequence",
 };
 
@@ -3256,7 +3256,7 @@ pub const ReceiveTransducerSequence: Tag = Tag {
   element: 0x4011,
   name: "ReceiveTransducerSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Receive Transducer Sequence",
 };
 
@@ -3265,7 +3265,7 @@ pub const NumberOfElements: Tag = Tag {
   element: 0x4012,
   name: "NumberOfElements",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Elements",
 };
 
@@ -3274,7 +3274,7 @@ pub const ElementShape: Tag = Tag {
   element: 0x4013,
   name: "ElementShape",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Element Shape",
 };
 
@@ -3283,7 +3283,7 @@ pub const ElementDimensionA: Tag = Tag {
   element: 0x4014,
   name: "ElementDimensionA",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Element Dimension A",
 };
 
@@ -3292,7 +3292,7 @@ pub const ElementDimensionB: Tag = Tag {
   element: 0x4015,
   name: "ElementDimensionB",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Element Dimension B",
 };
 
@@ -3301,7 +3301,7 @@ pub const ElementPitchA: Tag = Tag {
   element: 0x4016,
   name: "ElementPitchA",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Element Pitch A",
 };
 
@@ -3310,7 +3310,7 @@ pub const MeasuredBeamDimensionA: Tag = Tag {
   element: 0x4017,
   name: "MeasuredBeamDimensionA",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Measured Beam Dimension A",
 };
 
@@ -3319,7 +3319,7 @@ pub const MeasuredBeamDimensionB: Tag = Tag {
   element: 0x4018,
   name: "MeasuredBeamDimensionB",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Measured Beam Dimension B",
 };
 
@@ -3328,7 +3328,7 @@ pub const LocationOfMeasuredBeamDiameter: Tag = Tag {
   element: 0x4019,
   name: "LocationOfMeasuredBeamDiameter",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Location of Measured Beam Diameter",
 };
 
@@ -3337,7 +3337,7 @@ pub const NominalFrequency: Tag = Tag {
   element: 0x401A,
   name: "NominalFrequency",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Nominal Frequency",
 };
 
@@ -3346,7 +3346,7 @@ pub const MeasuredCenterFrequency: Tag = Tag {
   element: 0x401B,
   name: "MeasuredCenterFrequency",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Measured Center Frequency",
 };
 
@@ -3355,7 +3355,7 @@ pub const MeasuredBandwidth: Tag = Tag {
   element: 0x401C,
   name: "MeasuredBandwidth",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Measured Bandwidth",
 };
 
@@ -3364,7 +3364,7 @@ pub const ElementPitchB: Tag = Tag {
   element: 0x401D,
   name: "ElementPitchB",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Element Pitch B",
 };
 
@@ -3373,7 +3373,7 @@ pub const PulserSettingsSequence: Tag = Tag {
   element: 0x4020,
   name: "PulserSettingsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pulser Settings Sequence",
 };
 
@@ -3382,7 +3382,7 @@ pub const PulseWidth: Tag = Tag {
   element: 0x4022,
   name: "PulseWidth",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pulse Width",
 };
 
@@ -3391,7 +3391,7 @@ pub const ExcitationFrequency: Tag = Tag {
   element: 0x4024,
   name: "ExcitationFrequency",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Excitation Frequency",
 };
 
@@ -3400,7 +3400,7 @@ pub const ModulationType: Tag = Tag {
   element: 0x4026,
   name: "ModulationType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Modulation Type",
 };
 
@@ -3409,7 +3409,7 @@ pub const Damping: Tag = Tag {
   element: 0x4028,
   name: "Damping",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Damping",
 };
 
@@ -3418,7 +3418,7 @@ pub const ReceiverSettingsSequence: Tag = Tag {
   element: 0x4030,
   name: "ReceiverSettingsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Receiver Settings Sequence",
 };
 
@@ -3427,7 +3427,7 @@ pub const AcquiredSoundpathLength: Tag = Tag {
   element: 0x4031,
   name: "AcquiredSoundpathLength",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Acquired Soundpath Length",
 };
 
@@ -3436,7 +3436,7 @@ pub const AcquisitionCompressionType: Tag = Tag {
   element: 0x4032,
   name: "AcquisitionCompressionType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Acquisition Compression Type",
 };
 
@@ -3445,7 +3445,7 @@ pub const AcquisitionSampleSize: Tag = Tag {
   element: 0x4033,
   name: "AcquisitionSampleSize",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Acquisition Sample Size",
 };
 
@@ -3454,7 +3454,7 @@ pub const RectifierSmoothing: Tag = Tag {
   element: 0x4034,
   name: "RectifierSmoothing",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Rectifier Smoothing",
 };
 
@@ -3463,7 +3463,7 @@ pub const DACSequence: Tag = Tag {
   element: 0x4035,
   name: "DACSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "DAC Sequence",
 };
 
@@ -3472,7 +3472,7 @@ pub const DACType: Tag = Tag {
   element: 0x4036,
   name: "DACType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "DAC Type",
 };
 
@@ -3508,7 +3508,7 @@ pub const PreAmplifierSettingsSequence: Tag = Tag {
   element: 0x4040,
   name: "PreAmplifierSettingsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pre-Amplifier Settings Sequence",
 };
 
@@ -3517,7 +3517,7 @@ pub const TransmitTransducerSettingsSequence: Tag = Tag {
   element: 0x4050,
   name: "TransmitTransducerSettingsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Transmit Transducer Settings Sequence",
 };
 
@@ -3526,7 +3526,7 @@ pub const ReceiveTransducerSettingsSequence: Tag = Tag {
   element: 0x4051,
   name: "ReceiveTransducerSettingsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Receive Transducer Settings Sequence",
 };
 
@@ -3535,7 +3535,7 @@ pub const IncidentAngle: Tag = Tag {
   element: 0x4052,
   name: "IncidentAngle",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Incident Angle",
 };
 
@@ -3544,7 +3544,7 @@ pub const CouplingTechnique: Tag = Tag {
   element: 0x4054,
   name: "CouplingTechnique",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Coupling Technique",
 };
 
@@ -3553,7 +3553,7 @@ pub const CouplingMedium: Tag = Tag {
   element: 0x4056,
   name: "CouplingMedium",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Coupling Medium",
 };
 
@@ -3562,7 +3562,7 @@ pub const CouplingVelocity: Tag = Tag {
   element: 0x4057,
   name: "CouplingVelocity",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Coupling Velocity",
 };
 
@@ -3571,7 +3571,7 @@ pub const ProbeCenterLocationX: Tag = Tag {
   element: 0x4058,
   name: "ProbeCenterLocationX",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Probe Center Location X",
 };
 
@@ -3580,7 +3580,7 @@ pub const ProbeCenterLocationZ: Tag = Tag {
   element: 0x4059,
   name: "ProbeCenterLocationZ",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Probe Center Location Z",
 };
 
@@ -3589,7 +3589,7 @@ pub const SoundPathLength: Tag = Tag {
   element: 0x405A,
   name: "SoundPathLength",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Sound Path Length",
 };
 
@@ -3598,7 +3598,7 @@ pub const DelayLawIdentifier: Tag = Tag {
   element: 0x405C,
   name: "DelayLawIdentifier",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Delay Law Identifier",
 };
 
@@ -3607,7 +3607,7 @@ pub const GateSettingsSequence: Tag = Tag {
   element: 0x4060,
   name: "GateSettingsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Gate Settings Sequence",
 };
 
@@ -3616,7 +3616,7 @@ pub const GateThreshold: Tag = Tag {
   element: 0x4062,
   name: "GateThreshold",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Gate Threshold",
 };
 
@@ -3625,7 +3625,7 @@ pub const VelocityOfSound: Tag = Tag {
   element: 0x4064,
   name: "VelocityOfSound",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Velocity of Sound",
 };
 
@@ -3634,7 +3634,7 @@ pub const CalibrationSettingsSequence: Tag = Tag {
   element: 0x4070,
   name: "CalibrationSettingsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Calibration Settings Sequence",
 };
 
@@ -3643,7 +3643,7 @@ pub const CalibrationProcedure: Tag = Tag {
   element: 0x4072,
   name: "CalibrationProcedure",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Calibration Procedure",
 };
 
@@ -3652,7 +3652,7 @@ pub const ProcedureVersion: Tag = Tag {
   element: 0x4074,
   name: "ProcedureVersion",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Procedure Version",
 };
 
@@ -3661,7 +3661,7 @@ pub const ProcedureCreationDate: Tag = Tag {
   element: 0x4076,
   name: "ProcedureCreationDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Procedure Creation Date",
 };
 
@@ -3670,7 +3670,7 @@ pub const ProcedureExpirationDate: Tag = Tag {
   element: 0x4078,
   name: "ProcedureExpirationDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Procedure Expiration Date",
 };
 
@@ -3679,7 +3679,7 @@ pub const ProcedureLastModifiedDate: Tag = Tag {
   element: 0x407A,
   name: "ProcedureLastModifiedDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Procedure Last Modified Date",
 };
 
@@ -3706,7 +3706,7 @@ pub const ProbeDriveEquipmentSequence: Tag = Tag {
   element: 0x4080,
   name: "ProbeDriveEquipmentSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Probe Drive Equipment Sequence",
 };
 
@@ -3715,7 +3715,7 @@ pub const DriveType: Tag = Tag {
   element: 0x4081,
   name: "DriveType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Drive Type",
 };
 
@@ -3724,7 +3724,7 @@ pub const ProbeDriveNotes: Tag = Tag {
   element: 0x4082,
   name: "ProbeDriveNotes",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Probe Drive Notes",
 };
 
@@ -3733,7 +3733,7 @@ pub const DriveProbeSequence: Tag = Tag {
   element: 0x4083,
   name: "DriveProbeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Drive Probe Sequence",
 };
 
@@ -3742,7 +3742,7 @@ pub const ProbeInductance: Tag = Tag {
   element: 0x4084,
   name: "ProbeInductance",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Probe Inductance",
 };
 
@@ -3751,7 +3751,7 @@ pub const ProbeResistance: Tag = Tag {
   element: 0x4085,
   name: "ProbeResistance",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Probe Resistance",
 };
 
@@ -3760,7 +3760,7 @@ pub const ReceiveProbeSequence: Tag = Tag {
   element: 0x4086,
   name: "ReceiveProbeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Receive Probe Sequence",
 };
 
@@ -3769,7 +3769,7 @@ pub const ProbeDriveSettingsSequence: Tag = Tag {
   element: 0x4087,
   name: "ProbeDriveSettingsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Probe Drive Settings Sequence",
 };
 
@@ -3778,7 +3778,7 @@ pub const BridgeResistors: Tag = Tag {
   element: 0x4088,
   name: "BridgeResistors",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Bridge Resistors",
 };
 
@@ -3787,7 +3787,7 @@ pub const ProbeOrientationAngle: Tag = Tag {
   element: 0x4089,
   name: "ProbeOrientationAngle",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Probe Orientation Angle",
 };
 
@@ -3796,7 +3796,7 @@ pub const UserSelectedGainY: Tag = Tag {
   element: 0x408B,
   name: "UserSelectedGainY",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "User Selected Gain Y",
 };
 
@@ -3805,7 +3805,7 @@ pub const UserSelectedPhase: Tag = Tag {
   element: 0x408C,
   name: "UserSelectedPhase",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "User Selected Phase",
 };
 
@@ -3814,7 +3814,7 @@ pub const UserSelectedOffsetX: Tag = Tag {
   element: 0x408D,
   name: "UserSelectedOffsetX",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "User Selected Offset X",
 };
 
@@ -3823,7 +3823,7 @@ pub const UserSelectedOffsetY: Tag = Tag {
   element: 0x408E,
   name: "UserSelectedOffsetY",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "User Selected Offset Y",
 };
 
@@ -3832,7 +3832,7 @@ pub const ChannelSettingsSequence: Tag = Tag {
   element: 0x4091,
   name: "ChannelSettingsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Settings Sequence",
 };
 
@@ -3841,7 +3841,7 @@ pub const ChannelThreshold: Tag = Tag {
   element: 0x4092,
   name: "ChannelThreshold",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Threshold",
 };
 
@@ -3850,7 +3850,7 @@ pub const ScannerSettingsSequence: Tag = Tag {
   element: 0x409A,
   name: "ScannerSettingsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scanner Settings Sequence",
 };
 
@@ -3859,7 +3859,7 @@ pub const ScanProcedure: Tag = Tag {
   element: 0x409B,
   name: "ScanProcedure",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scan Procedure",
 };
 
@@ -3868,7 +3868,7 @@ pub const TranslationRateX: Tag = Tag {
   element: 0x409C,
   name: "TranslationRateX",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Translation Rate X",
 };
 
@@ -3877,7 +3877,7 @@ pub const TranslationRateY: Tag = Tag {
   element: 0x409D,
   name: "TranslationRateY",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Translation Rate Y",
 };
 
@@ -3886,7 +3886,7 @@ pub const ChannelOverlap: Tag = Tag {
   element: 0x409F,
   name: "ChannelOverlap",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Overlap",
 };
 
@@ -3895,7 +3895,7 @@ pub const ImageQualityIndicatorType: Tag = Tag {
   element: 0x40A0,
   name: "ImageQualityIndicatorType",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Quality Indicator Type",
 };
 
@@ -3904,7 +3904,7 @@ pub const ImageQualityIndicatorMaterial: Tag = Tag {
   element: 0x40A1,
   name: "ImageQualityIndicatorMaterial",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Quality Indicator Material",
 };
 
@@ -3913,7 +3913,7 @@ pub const ImageQualityIndicatorSize: Tag = Tag {
   element: 0x40A2,
   name: "ImageQualityIndicatorSize",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Quality Indicator Size",
 };
 
@@ -3922,7 +3922,7 @@ pub const LINACEnergy: Tag = Tag {
   element: 0x5002,
   name: "LINACEnergy",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "LINAC Energy",
 };
 
@@ -3931,7 +3931,7 @@ pub const LINACOutput: Tag = Tag {
   element: 0x5004,
   name: "LINACOutput",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "LINAC Output",
 };
 
@@ -3940,7 +3940,7 @@ pub const ContrastBolusAgent: Tag = Tag {
   element: 0x0010,
   name: "ContrastBolusAgent",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contrast/Bolus Agent",
 };
 
@@ -3949,7 +3949,7 @@ pub const ContrastBolusAgentSequence: Tag = Tag {
   element: 0x0012,
   name: "ContrastBolusAgentSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contrast/Bolus Agent Sequence",
 };
 
@@ -3958,7 +3958,7 @@ pub const ContrastBolusT1Relaxivity: Tag = Tag {
   element: 0x0013,
   name: "ContrastBolusT1Relaxivity",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contrast/Bolus T1 Relaxivity",
 };
 
@@ -3967,7 +3967,7 @@ pub const ContrastBolusAdministrationRouteSequence: Tag = Tag {
   element: 0x0014,
   name: "ContrastBolusAdministrationRouteSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contrast/Bolus Administration Route Sequence",
 };
 
@@ -3976,7 +3976,7 @@ pub const BodyPartExamined: Tag = Tag {
   element: 0x0015,
   name: "BodyPartExamined",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Body Part Examined",
 };
 
@@ -4012,7 +4012,7 @@ pub const MRAcquisitionType: Tag = Tag {
   element: 0x0023,
   name: "MRAcquisitionType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "MR Acquisition Type",
 };
 
@@ -4021,7 +4021,7 @@ pub const SequenceName: Tag = Tag {
   element: 0x0024,
   name: "SequenceName",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Sequence Name",
 };
 
@@ -4030,7 +4030,7 @@ pub const AngioFlag: Tag = Tag {
   element: 0x0025,
   name: "AngioFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Angio Flag",
 };
 
@@ -4039,7 +4039,7 @@ pub const InterventionDrugInformationSequence: Tag = Tag {
   element: 0x0026,
   name: "InterventionDrugInformationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Intervention Drug Information Sequence",
 };
 
@@ -4048,7 +4048,7 @@ pub const InterventionDrugStopTime: Tag = Tag {
   element: 0x0027,
   name: "InterventionDrugStopTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Intervention Drug Stop Time",
 };
 
@@ -4057,7 +4057,7 @@ pub const InterventionDrugDose: Tag = Tag {
   element: 0x0028,
   name: "InterventionDrugDose",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Intervention Drug Dose",
 };
 
@@ -4066,7 +4066,7 @@ pub const InterventionDrugCodeSequence: Tag = Tag {
   element: 0x0029,
   name: "InterventionDrugCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Intervention Drug Code Sequence",
 };
 
@@ -4075,7 +4075,7 @@ pub const AdditionalDrugSequence: Tag = Tag {
   element: 0x002A,
   name: "AdditionalDrugSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Additional Drug Sequence",
 };
 
@@ -4093,7 +4093,7 @@ pub const Radiopharmaceutical: Tag = Tag {
   element: 0x0031,
   name: "Radiopharmaceutical",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Radiopharmaceutical",
 };
 
@@ -4102,7 +4102,7 @@ pub const EnergyWindowCenterline: Tag = Tag {
   element: 0x0032,
   name: "EnergyWindowCenterline",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Energy Window Centerline",
 };
 
@@ -4120,7 +4120,7 @@ pub const InterventionDrugName: Tag = Tag {
   element: 0x0034,
   name: "InterventionDrugName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Intervention Drug Name",
 };
 
@@ -4129,7 +4129,7 @@ pub const InterventionDrugStartTime: Tag = Tag {
   element: 0x0035,
   name: "InterventionDrugStartTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Intervention Drug Start Time",
 };
 
@@ -4138,7 +4138,7 @@ pub const InterventionSequence: Tag = Tag {
   element: 0x0036,
   name: "InterventionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Intervention Sequence",
 };
 
@@ -4147,7 +4147,7 @@ pub const TherapyType: Tag = Tag {
   element: 0x0037,
   name: "TherapyType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Therapy Type",
 };
 
@@ -4156,7 +4156,7 @@ pub const InterventionStatus: Tag = Tag {
   element: 0x0038,
   name: "InterventionStatus",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Intervention Status",
 };
 
@@ -4165,7 +4165,7 @@ pub const TherapyDescription: Tag = Tag {
   element: 0x0039,
   name: "TherapyDescription",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Therapy Description",
 };
 
@@ -4174,7 +4174,7 @@ pub const InterventionDescription: Tag = Tag {
   element: 0x003A,
   name: "InterventionDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Intervention Description",
 };
 
@@ -4183,7 +4183,7 @@ pub const CineRate: Tag = Tag {
   element: 0x0040,
   name: "CineRate",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Cine Rate",
 };
 
@@ -4192,7 +4192,7 @@ pub const InitialCineRunState: Tag = Tag {
   element: 0x0042,
   name: "InitialCineRunState",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Initial Cine Run State",
 };
 
@@ -4201,7 +4201,7 @@ pub const SliceThickness: Tag = Tag {
   element: 0x0050,
   name: "SliceThickness",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Slice Thickness",
 };
 
@@ -4210,7 +4210,7 @@ pub const KVP: Tag = Tag {
   element: 0x0060,
   name: "KVP",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "KVP",
 };
 
@@ -4219,7 +4219,7 @@ pub const CountsAccumulated: Tag = Tag {
   element: 0x0070,
   name: "CountsAccumulated",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Counts Accumulated",
 };
 
@@ -4228,7 +4228,7 @@ pub const AcquisitionTerminationCondition: Tag = Tag {
   element: 0x0071,
   name: "AcquisitionTerminationCondition",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Acquisition Termination Condition",
 };
 
@@ -4237,7 +4237,7 @@ pub const EffectiveDuration: Tag = Tag {
   element: 0x0072,
   name: "EffectiveDuration",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Effective Duration",
 };
 
@@ -4246,7 +4246,7 @@ pub const AcquisitionStartCondition: Tag = Tag {
   element: 0x0073,
   name: "AcquisitionStartCondition",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Acquisition Start Condition",
 };
 
@@ -4255,7 +4255,7 @@ pub const AcquisitionStartConditionData: Tag = Tag {
   element: 0x0074,
   name: "AcquisitionStartConditionData",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Acquisition Start Condition Data",
 };
 
@@ -4264,7 +4264,7 @@ pub const AcquisitionTerminationConditionData: Tag = Tag {
   element: 0x0075,
   name: "AcquisitionTerminationConditionData",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Acquisition Termination Condition Data",
 };
 
@@ -4273,7 +4273,7 @@ pub const RepetitionTime: Tag = Tag {
   element: 0x0080,
   name: "RepetitionTime",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Repetition Time",
 };
 
@@ -4282,7 +4282,7 @@ pub const EchoTime: Tag = Tag {
   element: 0x0081,
   name: "EchoTime",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Echo Time",
 };
 
@@ -4291,7 +4291,7 @@ pub const InversionTime: Tag = Tag {
   element: 0x0082,
   name: "InversionTime",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Inversion Time",
 };
 
@@ -4300,7 +4300,7 @@ pub const NumberOfAverages: Tag = Tag {
   element: 0x0083,
   name: "NumberOfAverages",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Averages",
 };
 
@@ -4309,7 +4309,7 @@ pub const ImagingFrequency: Tag = Tag {
   element: 0x0084,
   name: "ImagingFrequency",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Imaging Frequency",
 };
 
@@ -4318,7 +4318,7 @@ pub const ImagedNucleus: Tag = Tag {
   element: 0x0085,
   name: "ImagedNucleus",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Imaged Nucleus",
 };
 
@@ -4336,7 +4336,7 @@ pub const MagneticFieldStrength: Tag = Tag {
   element: 0x0087,
   name: "MagneticFieldStrength",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Magnetic Field Strength",
 };
 
@@ -4345,7 +4345,7 @@ pub const SpacingBetweenSlices: Tag = Tag {
   element: 0x0088,
   name: "SpacingBetweenSlices",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Spacing Between Slices",
 };
 
@@ -4354,7 +4354,7 @@ pub const NumberOfPhaseEncodingSteps: Tag = Tag {
   element: 0x0089,
   name: "NumberOfPhaseEncodingSteps",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Phase Encoding Steps",
 };
 
@@ -4363,7 +4363,7 @@ pub const DataCollectionDiameter: Tag = Tag {
   element: 0x0090,
   name: "DataCollectionDiameter",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Data Collection Diameter",
 };
 
@@ -4372,7 +4372,7 @@ pub const EchoTrainLength: Tag = Tag {
   element: 0x0091,
   name: "EchoTrainLength",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Echo Train Length",
 };
 
@@ -4381,7 +4381,7 @@ pub const PercentSampling: Tag = Tag {
   element: 0x0093,
   name: "PercentSampling",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Percent Sampling",
 };
 
@@ -4390,7 +4390,7 @@ pub const PercentPhaseFieldOfView: Tag = Tag {
   element: 0x0094,
   name: "PercentPhaseFieldOfView",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Percent Phase Field of View",
 };
 
@@ -4399,7 +4399,7 @@ pub const PixelBandwidth: Tag = Tag {
   element: 0x0095,
   name: "PixelBandwidth",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pixel Bandwidth",
 };
 
@@ -4408,7 +4408,7 @@ pub const DeviceSerialNumber: Tag = Tag {
   element: 0x1000,
   name: "DeviceSerialNumber",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Device Serial Number",
 };
 
@@ -4417,7 +4417,7 @@ pub const DeviceUID: Tag = Tag {
   element: 0x1002,
   name: "DeviceUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Device UID",
 };
 
@@ -4426,7 +4426,7 @@ pub const DeviceID: Tag = Tag {
   element: 0x1003,
   name: "DeviceID",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Device ID",
 };
 
@@ -4435,7 +4435,7 @@ pub const PlateID: Tag = Tag {
   element: 0x1004,
   name: "PlateID",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Plate ID",
 };
 
@@ -4444,7 +4444,7 @@ pub const GeneratorID: Tag = Tag {
   element: 0x1005,
   name: "GeneratorID",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Generator ID",
 };
 
@@ -4453,7 +4453,7 @@ pub const GridID: Tag = Tag {
   element: 0x1006,
   name: "GridID",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Grid ID",
 };
 
@@ -4462,7 +4462,7 @@ pub const CassetteID: Tag = Tag {
   element: 0x1007,
   name: "CassetteID",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Cassette ID",
 };
 
@@ -4471,7 +4471,7 @@ pub const GantryID: Tag = Tag {
   element: 0x1008,
   name: "GantryID",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Gantry ID",
 };
 
@@ -4480,7 +4480,7 @@ pub const SecondaryCaptureDeviceID: Tag = Tag {
   element: 0x1010,
   name: "SecondaryCaptureDeviceID",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Secondary Capture Device ID",
 };
 
@@ -4489,7 +4489,7 @@ pub const HardcopyCreationDeviceID: Tag = Tag {
   element: 0x1011,
   name: "HardcopyCreationDeviceID",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Hardcopy Creation Device ID",
 };
 
@@ -4498,7 +4498,7 @@ pub const DateOfSecondaryCapture: Tag = Tag {
   element: 0x1012,
   name: "DateOfSecondaryCapture",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Date of Secondary Capture",
 };
 
@@ -4507,7 +4507,7 @@ pub const TimeOfSecondaryCapture: Tag = Tag {
   element: 0x1014,
   name: "TimeOfSecondaryCapture",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Time of Secondary Capture",
 };
 
@@ -4516,7 +4516,7 @@ pub const SecondaryCaptureDeviceManufacturer: Tag = Tag {
   element: 0x1016,
   name: "SecondaryCaptureDeviceManufacturer",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Secondary Capture Device Manufacturer",
 };
 
@@ -4525,7 +4525,7 @@ pub const HardcopyDeviceManufacturer: Tag = Tag {
   element: 0x1017,
   name: "HardcopyDeviceManufacturer",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Hardcopy Device Manufacturer",
 };
 
@@ -4534,7 +4534,7 @@ pub const SecondaryCaptureDeviceManufacturerModelName: Tag = Tag {
   element: 0x1018,
   name: "SecondaryCaptureDeviceManufacturerModelName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Secondary Capture Device Manufacturer's Model Name",
 };
 
@@ -4561,7 +4561,7 @@ pub const HardcopyDeviceManufacturerModelName: Tag = Tag {
   element: 0x101B,
   name: "HardcopyDeviceManufacturerModelName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Hardcopy Device Manufacturer's Model Name",
 };
 
@@ -4579,7 +4579,7 @@ pub const VideoImageFormatAcquired: Tag = Tag {
   element: 0x1022,
   name: "VideoImageFormatAcquired",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Video Image Format Acquired",
 };
 
@@ -4588,7 +4588,7 @@ pub const DigitalImageFormatAcquired: Tag = Tag {
   element: 0x1023,
   name: "DigitalImageFormatAcquired",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Digital Image Format Acquired",
 };
 
@@ -4597,7 +4597,7 @@ pub const ProtocolName: Tag = Tag {
   element: 0x1030,
   name: "ProtocolName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Protocol Name",
 };
 
@@ -4606,7 +4606,7 @@ pub const ContrastBolusRoute: Tag = Tag {
   element: 0x1040,
   name: "ContrastBolusRoute",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contrast/Bolus Route",
 };
 
@@ -4615,7 +4615,7 @@ pub const ContrastBolusVolume: Tag = Tag {
   element: 0x1041,
   name: "ContrastBolusVolume",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contrast/Bolus Volume",
 };
 
@@ -4624,7 +4624,7 @@ pub const ContrastBolusStartTime: Tag = Tag {
   element: 0x1042,
   name: "ContrastBolusStartTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contrast/Bolus Start Time",
 };
 
@@ -4633,7 +4633,7 @@ pub const ContrastBolusStopTime: Tag = Tag {
   element: 0x1043,
   name: "ContrastBolusStopTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contrast/Bolus Stop Time",
 };
 
@@ -4642,7 +4642,7 @@ pub const ContrastBolusTotalDose: Tag = Tag {
   element: 0x1044,
   name: "ContrastBolusTotalDose",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contrast/Bolus Total Dose",
 };
 
@@ -4651,7 +4651,7 @@ pub const SyringeCounts: Tag = Tag {
   element: 0x1045,
   name: "SyringeCounts",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Syringe Counts",
 };
 
@@ -4678,7 +4678,7 @@ pub const ContrastBolusIngredient: Tag = Tag {
   element: 0x1048,
   name: "ContrastBolusIngredient",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contrast/Bolus Ingredient",
 };
 
@@ -4687,7 +4687,7 @@ pub const ContrastBolusIngredientConcentration: Tag = Tag {
   element: 0x1049,
   name: "ContrastBolusIngredientConcentration",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contrast/Bolus Ingredient Concentration",
 };
 
@@ -4696,7 +4696,7 @@ pub const SpatialResolution: Tag = Tag {
   element: 0x1050,
   name: "SpatialResolution",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Spatial Resolution",
 };
 
@@ -4705,7 +4705,7 @@ pub const TriggerTime: Tag = Tag {
   element: 0x1060,
   name: "TriggerTime",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Trigger Time",
 };
 
@@ -4714,7 +4714,7 @@ pub const TriggerSourceOrType: Tag = Tag {
   element: 0x1061,
   name: "TriggerSourceOrType",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Trigger Source or Type",
 };
 
@@ -4723,7 +4723,7 @@ pub const NominalInterval: Tag = Tag {
   element: 0x1062,
   name: "NominalInterval",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Nominal Interval",
 };
 
@@ -4732,7 +4732,7 @@ pub const FrameTime: Tag = Tag {
   element: 0x1063,
   name: "FrameTime",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Frame Time",
 };
 
@@ -4741,7 +4741,7 @@ pub const CardiacFramingType: Tag = Tag {
   element: 0x1064,
   name: "CardiacFramingType",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Cardiac Framing Type",
 };
 
@@ -4759,7 +4759,7 @@ pub const FrameDelay: Tag = Tag {
   element: 0x1066,
   name: "FrameDelay",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Frame Delay",
 };
 
@@ -4768,7 +4768,7 @@ pub const ImageTriggerDelay: Tag = Tag {
   element: 0x1067,
   name: "ImageTriggerDelay",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Trigger Delay",
 };
 
@@ -4777,7 +4777,7 @@ pub const MultiplexGroupTimeOffset: Tag = Tag {
   element: 0x1068,
   name: "MultiplexGroupTimeOffset",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Multiplex Group Time Offset",
 };
 
@@ -4786,7 +4786,7 @@ pub const TriggerTimeOffset: Tag = Tag {
   element: 0x1069,
   name: "TriggerTimeOffset",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Trigger Time Offset",
 };
 
@@ -4795,7 +4795,7 @@ pub const SynchronizationTrigger: Tag = Tag {
   element: 0x106A,
   name: "SynchronizationTrigger",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Synchronization Trigger",
 };
 
@@ -4804,7 +4804,7 @@ pub const SynchronizationChannel: Tag = Tag {
   element: 0x106C,
   name: "SynchronizationChannel",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Synchronization Channel",
 };
 
@@ -4813,7 +4813,7 @@ pub const TriggerSamplePosition: Tag = Tag {
   element: 0x106E,
   name: "TriggerSamplePosition",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Trigger Sample Position",
 };
 
@@ -4822,7 +4822,7 @@ pub const RadiopharmaceuticalRoute: Tag = Tag {
   element: 0x1070,
   name: "RadiopharmaceuticalRoute",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Radiopharmaceutical Route",
 };
 
@@ -4831,7 +4831,7 @@ pub const RadiopharmaceuticalVolume: Tag = Tag {
   element: 0x1071,
   name: "RadiopharmaceuticalVolume",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Radiopharmaceutical Volume",
 };
 
@@ -4840,7 +4840,7 @@ pub const RadiopharmaceuticalStartTime: Tag = Tag {
   element: 0x1072,
   name: "RadiopharmaceuticalStartTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Radiopharmaceutical Start Time",
 };
 
@@ -4849,7 +4849,7 @@ pub const RadiopharmaceuticalStopTime: Tag = Tag {
   element: 0x1073,
   name: "RadiopharmaceuticalStopTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Radiopharmaceutical Stop Time",
 };
 
@@ -4858,7 +4858,7 @@ pub const RadionuclideTotalDose: Tag = Tag {
   element: 0x1074,
   name: "RadionuclideTotalDose",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Radionuclide Total Dose",
 };
 
@@ -4867,7 +4867,7 @@ pub const RadionuclideHalfLife: Tag = Tag {
   element: 0x1075,
   name: "RadionuclideHalfLife",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Radionuclide Half Life",
 };
 
@@ -4876,7 +4876,7 @@ pub const RadionuclidePositronFraction: Tag = Tag {
   element: 0x1076,
   name: "RadionuclidePositronFraction",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Radionuclide Positron Fraction",
 };
 
@@ -4885,7 +4885,7 @@ pub const RadiopharmaceuticalSpecificActivity: Tag = Tag {
   element: 0x1077,
   name: "RadiopharmaceuticalSpecificActivity",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Radiopharmaceutical Specific Activity",
 };
 
@@ -4894,7 +4894,7 @@ pub const RadiopharmaceuticalStartDateTime: Tag = Tag {
   element: 0x1078,
   name: "RadiopharmaceuticalStartDateTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Radiopharmaceutical Start DateTime",
 };
 
@@ -4903,7 +4903,7 @@ pub const RadiopharmaceuticalStopDateTime: Tag = Tag {
   element: 0x1079,
   name: "RadiopharmaceuticalStopDateTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Radiopharmaceutical Stop DateTime",
 };
 
@@ -4912,7 +4912,7 @@ pub const BeatRejectionFlag: Tag = Tag {
   element: 0x1080,
   name: "BeatRejectionFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Beat Rejection Flag",
 };
 
@@ -4921,7 +4921,7 @@ pub const LowRRValue: Tag = Tag {
   element: 0x1081,
   name: "LowRRValue",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Low R-R Value",
 };
 
@@ -4930,7 +4930,7 @@ pub const HighRRValue: Tag = Tag {
   element: 0x1082,
   name: "HighRRValue",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "High R-R Value",
 };
 
@@ -4939,7 +4939,7 @@ pub const IntervalsAcquired: Tag = Tag {
   element: 0x1083,
   name: "IntervalsAcquired",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Intervals Acquired",
 };
 
@@ -4948,7 +4948,7 @@ pub const IntervalsRejected: Tag = Tag {
   element: 0x1084,
   name: "IntervalsRejected",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Intervals Rejected",
 };
 
@@ -4957,7 +4957,7 @@ pub const PVCRejection: Tag = Tag {
   element: 0x1085,
   name: "PVCRejection",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "PVC Rejection",
 };
 
@@ -4966,7 +4966,7 @@ pub const SkipBeats: Tag = Tag {
   element: 0x1086,
   name: "SkipBeats",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Skip Beats",
 };
 
@@ -4975,7 +4975,7 @@ pub const HeartRate: Tag = Tag {
   element: 0x1088,
   name: "HeartRate",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Heart Rate",
 };
 
@@ -4984,7 +4984,7 @@ pub const CardiacNumberOfImages: Tag = Tag {
   element: 0x1090,
   name: "CardiacNumberOfImages",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Cardiac Number of Images",
 };
 
@@ -4993,7 +4993,7 @@ pub const TriggerWindow: Tag = Tag {
   element: 0x1094,
   name: "TriggerWindow",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Trigger Window",
 };
 
@@ -5002,7 +5002,7 @@ pub const ReconstructionDiameter: Tag = Tag {
   element: 0x1100,
   name: "ReconstructionDiameter",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Reconstruction Diameter",
 };
 
@@ -5011,7 +5011,7 @@ pub const DistanceSourceToDetector: Tag = Tag {
   element: 0x1110,
   name: "DistanceSourceToDetector",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Distance Source to Detector",
 };
 
@@ -5020,7 +5020,7 @@ pub const DistanceSourceToPatient: Tag = Tag {
   element: 0x1111,
   name: "DistanceSourceToPatient",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Distance Source to Patient",
 };
 
@@ -5029,7 +5029,7 @@ pub const EstimatedRadiographicMagnificationFactor: Tag = Tag {
   element: 0x1114,
   name: "EstimatedRadiographicMagnificationFactor",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Estimated Radiographic Magnification Factor",
 };
 
@@ -5038,7 +5038,7 @@ pub const GantryDetectorTilt: Tag = Tag {
   element: 0x1120,
   name: "GantryDetectorTilt",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Gantry/Detector Tilt",
 };
 
@@ -5047,7 +5047,7 @@ pub const GantryDetectorSlew: Tag = Tag {
   element: 0x1121,
   name: "GantryDetectorSlew",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Gantry/Detector Slew",
 };
 
@@ -5056,7 +5056,7 @@ pub const TableHeight: Tag = Tag {
   element: 0x1130,
   name: "TableHeight",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Height",
 };
 
@@ -5065,7 +5065,7 @@ pub const TableTraverse: Tag = Tag {
   element: 0x1131,
   name: "TableTraverse",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Traverse",
 };
 
@@ -5074,7 +5074,7 @@ pub const TableMotion: Tag = Tag {
   element: 0x1134,
   name: "TableMotion",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Motion",
 };
 
@@ -5110,7 +5110,7 @@ pub const TableAngle: Tag = Tag {
   element: 0x1138,
   name: "TableAngle",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Angle",
 };
 
@@ -5119,7 +5119,7 @@ pub const TableType: Tag = Tag {
   element: 0x113A,
   name: "TableType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Type",
 };
 
@@ -5128,7 +5128,7 @@ pub const RotationDirection: Tag = Tag {
   element: 0x1140,
   name: "RotationDirection",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Rotation Direction",
 };
 
@@ -5137,7 +5137,7 @@ pub const AngularPosition: Tag = Tag {
   element: 0x1141,
   name: "AngularPosition",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Angular Position",
 };
 
@@ -5155,7 +5155,7 @@ pub const ScanArc: Tag = Tag {
   element: 0x1143,
   name: "ScanArc",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scan Arc",
 };
 
@@ -5164,7 +5164,7 @@ pub const AngularStep: Tag = Tag {
   element: 0x1144,
   name: "AngularStep",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Angular Step",
 };
 
@@ -5173,7 +5173,7 @@ pub const CenterOfRotationOffset: Tag = Tag {
   element: 0x1145,
   name: "CenterOfRotationOffset",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Center of Rotation Offset",
 };
 
@@ -5191,7 +5191,7 @@ pub const FieldOfViewShape: Tag = Tag {
   element: 0x1147,
   name: "FieldOfViewShape",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Field of View Shape",
 };
 
@@ -5209,7 +5209,7 @@ pub const ExposureTime: Tag = Tag {
   element: 0x1150,
   name: "ExposureTime",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Exposure Time",
 };
 
@@ -5218,7 +5218,7 @@ pub const XRayTubeCurrent: Tag = Tag {
   element: 0x1151,
   name: "XRayTubeCurrent",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "X-Ray Tube Current",
 };
 
@@ -5227,7 +5227,7 @@ pub const Exposure: Tag = Tag {
   element: 0x1152,
   name: "Exposure",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Exposure",
 };
 
@@ -5236,7 +5236,7 @@ pub const ExposureInuAs: Tag = Tag {
   element: 0x1153,
   name: "ExposureInuAs",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Exposure in µAs",
 };
 
@@ -5245,7 +5245,7 @@ pub const AveragePulseWidth: Tag = Tag {
   element: 0x1154,
   name: "AveragePulseWidth",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Average Pulse Width",
 };
 
@@ -5254,7 +5254,7 @@ pub const RadiationSetting: Tag = Tag {
   element: 0x1155,
   name: "RadiationSetting",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Radiation Setting",
 };
 
@@ -5263,7 +5263,7 @@ pub const RectificationType: Tag = Tag {
   element: 0x1156,
   name: "RectificationType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Rectification Type",
 };
 
@@ -5272,7 +5272,7 @@ pub const RadiationMode: Tag = Tag {
   element: 0x115A,
   name: "RadiationMode",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Radiation Mode",
 };
 
@@ -5281,7 +5281,7 @@ pub const ImageAndFluoroscopyAreaDoseProduct: Tag = Tag {
   element: 0x115E,
   name: "ImageAndFluoroscopyAreaDoseProduct",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image and Fluoroscopy Area Dose Product",
 };
 
@@ -5290,7 +5290,7 @@ pub const FilterType: Tag = Tag {
   element: 0x1160,
   name: "FilterType",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Filter Type",
 };
 
@@ -5308,7 +5308,7 @@ pub const IntensifierSize: Tag = Tag {
   element: 0x1162,
   name: "IntensifierSize",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Intensifier Size",
 };
 
@@ -5317,7 +5317,7 @@ pub const ImagerPixelSpacing: Tag = Tag {
   element: 0x1164,
   name: "ImagerPixelSpacing",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Imager Pixel Spacing",
 };
 
@@ -5335,7 +5335,7 @@ pub const GeneratorPower: Tag = Tag {
   element: 0x1170,
   name: "GeneratorPower",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Generator Power",
 };
 
@@ -5344,7 +5344,7 @@ pub const CollimatorGridName: Tag = Tag {
   element: 0x1180,
   name: "CollimatorGridName",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Collimator/grid Name",
 };
 
@@ -5353,7 +5353,7 @@ pub const CollimatorType: Tag = Tag {
   element: 0x1181,
   name: "CollimatorType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Collimator Type",
 };
 
@@ -5398,7 +5398,7 @@ pub const AnodeTargetMaterial: Tag = Tag {
   element: 0x1191,
   name: "AnodeTargetMaterial",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Anode Target Material",
 };
 
@@ -5407,7 +5407,7 @@ pub const BodyPartThickness: Tag = Tag {
   element: 0x11A0,
   name: "BodyPartThickness",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Body Part Thickness",
 };
 
@@ -5416,7 +5416,7 @@ pub const CompressionForce: Tag = Tag {
   element: 0x11A2,
   name: "CompressionForce",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Compression Force",
 };
 
@@ -5425,7 +5425,7 @@ pub const PaddleDescription: Tag = Tag {
   element: 0x11A4,
   name: "PaddleDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Paddle Description",
 };
 
@@ -5452,7 +5452,7 @@ pub const DateTimeOfLastCalibration: Tag = Tag {
   element: 0x1202,
   name: "DateTimeOfLastCalibration",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "DateTime of Last Calibration",
 };
 
@@ -5479,7 +5479,7 @@ pub const ActualFrameDuration: Tag = Tag {
   element: 0x1242,
   name: "ActualFrameDuration",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Actual Frame Duration",
 };
 
@@ -5488,7 +5488,7 @@ pub const CountRate: Tag = Tag {
   element: 0x1243,
   name: "CountRate",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Count Rate",
 };
 
@@ -5497,7 +5497,7 @@ pub const PreferredPlaybackSequencing: Tag = Tag {
   element: 0x1244,
   name: "PreferredPlaybackSequencing",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Preferred Playback Sequencing",
 };
 
@@ -5506,7 +5506,7 @@ pub const ReceiveCoilName: Tag = Tag {
   element: 0x1250,
   name: "ReceiveCoilName",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Receive Coil Name",
 };
 
@@ -5515,7 +5515,7 @@ pub const TransmitCoilName: Tag = Tag {
   element: 0x1251,
   name: "TransmitCoilName",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Transmit Coil Name",
 };
 
@@ -5524,7 +5524,7 @@ pub const PlateType: Tag = Tag {
   element: 0x1260,
   name: "PlateType",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Plate Type",
 };
 
@@ -5533,7 +5533,7 @@ pub const PhosphorType: Tag = Tag {
   element: 0x1261,
   name: "PhosphorType",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Phosphor Type",
 };
 
@@ -5542,7 +5542,7 @@ pub const ScanVelocity: Tag = Tag {
   element: 0x1300,
   name: "ScanVelocity",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scan Velocity",
 };
 
@@ -5560,7 +5560,7 @@ pub const ScanLength: Tag = Tag {
   element: 0x1302,
   name: "ScanLength",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scan Length",
 };
 
@@ -5569,7 +5569,7 @@ pub const AcquisitionMatrix: Tag = Tag {
   element: 0x1310,
   name: "AcquisitionMatrix",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 4, end: 4 },
   description: "Acquisition Matrix",
 };
 
@@ -5578,7 +5578,7 @@ pub const InPlanePhaseEncodingDirection: Tag = Tag {
   element: 0x1312,
   name: "InPlanePhaseEncodingDirection",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "In-plane Phase Encoding Direction",
 };
 
@@ -5587,7 +5587,7 @@ pub const FlipAngle: Tag = Tag {
   element: 0x1314,
   name: "FlipAngle",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Flip Angle",
 };
 
@@ -5596,7 +5596,7 @@ pub const VariableFlipAngleFlag: Tag = Tag {
   element: 0x1315,
   name: "VariableFlipAngleFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Variable Flip Angle Flag",
 };
 
@@ -5605,7 +5605,7 @@ pub const SAR: Tag = Tag {
   element: 0x1316,
   name: "SAR",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "SAR",
 };
 
@@ -5614,7 +5614,7 @@ pub const dBdt: Tag = Tag {
   element: 0x1318,
   name: "dBdt",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "dB/dt",
 };
 
@@ -5623,7 +5623,7 @@ pub const AcquisitionDeviceProcessingDescription: Tag = Tag {
   element: 0x1400,
   name: "AcquisitionDeviceProcessingDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Acquisition Device Processing Description",
 };
 
@@ -5632,7 +5632,7 @@ pub const AcquisitionDeviceProcessingCode: Tag = Tag {
   element: 0x1401,
   name: "AcquisitionDeviceProcessingCode",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Acquisition Device Processing Code",
 };
 
@@ -5641,7 +5641,7 @@ pub const CassetteOrientation: Tag = Tag {
   element: 0x1402,
   name: "CassetteOrientation",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Cassette Orientation",
 };
 
@@ -5650,7 +5650,7 @@ pub const CassetteSize: Tag = Tag {
   element: 0x1403,
   name: "CassetteSize",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Cassette Size",
 };
 
@@ -5659,7 +5659,7 @@ pub const ExposuresOnPlate: Tag = Tag {
   element: 0x1404,
   name: "ExposuresOnPlate",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Exposures on Plate",
 };
 
@@ -5668,7 +5668,7 @@ pub const RelativeXRayExposure: Tag = Tag {
   element: 0x1405,
   name: "RelativeXRayExposure",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Relative X-Ray Exposure",
 };
 
@@ -5677,7 +5677,7 @@ pub const ExposureIndex: Tag = Tag {
   element: 0x1411,
   name: "ExposureIndex",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Exposure Index",
 };
 
@@ -5686,7 +5686,7 @@ pub const TargetExposureIndex: Tag = Tag {
   element: 0x1412,
   name: "TargetExposureIndex",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Target Exposure Index",
 };
 
@@ -5695,7 +5695,7 @@ pub const DeviationIndex: Tag = Tag {
   element: 0x1413,
   name: "DeviationIndex",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Deviation Index",
 };
 
@@ -5704,7 +5704,7 @@ pub const ColumnAngulation: Tag = Tag {
   element: 0x1450,
   name: "ColumnAngulation",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Column Angulation",
 };
 
@@ -5713,7 +5713,7 @@ pub const TomoLayerHeight: Tag = Tag {
   element: 0x1460,
   name: "TomoLayerHeight",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Tomo Layer Height",
 };
 
@@ -5722,7 +5722,7 @@ pub const TomoAngle: Tag = Tag {
   element: 0x1470,
   name: "TomoAngle",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Tomo Angle",
 };
 
@@ -5731,7 +5731,7 @@ pub const TomoTime: Tag = Tag {
   element: 0x1480,
   name: "TomoTime",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Tomo Time",
 };
 
@@ -5740,7 +5740,7 @@ pub const TomoType: Tag = Tag {
   element: 0x1490,
   name: "TomoType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Tomo Type",
 };
 
@@ -5749,7 +5749,7 @@ pub const TomoClass: Tag = Tag {
   element: 0x1491,
   name: "TomoClass",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Tomo Class",
 };
 
@@ -5758,7 +5758,7 @@ pub const NumberOfTomosynthesisSourceImages: Tag = Tag {
   element: 0x1495,
   name: "NumberOfTomosynthesisSourceImages",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Tomosynthesis Source Images",
 };
 
@@ -5767,7 +5767,7 @@ pub const PositionerMotion: Tag = Tag {
   element: 0x1500,
   name: "PositionerMotion",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Positioner Motion",
 };
 
@@ -5776,7 +5776,7 @@ pub const PositionerType: Tag = Tag {
   element: 0x1508,
   name: "PositionerType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Positioner Type",
 };
 
@@ -5785,7 +5785,7 @@ pub const PositionerPrimaryAngle: Tag = Tag {
   element: 0x1510,
   name: "PositionerPrimaryAngle",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Positioner Primary Angle",
 };
 
@@ -5794,7 +5794,7 @@ pub const PositionerSecondaryAngle: Tag = Tag {
   element: 0x1511,
   name: "PositionerSecondaryAngle",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Positioner Secondary Angle",
 };
 
@@ -5821,7 +5821,7 @@ pub const DetectorPrimaryAngle: Tag = Tag {
   element: 0x1530,
   name: "DetectorPrimaryAngle",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Detector Primary Angle",
 };
 
@@ -5830,7 +5830,7 @@ pub const DetectorSecondaryAngle: Tag = Tag {
   element: 0x1531,
   name: "DetectorSecondaryAngle",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Detector Secondary Angle",
 };
 
@@ -5848,7 +5848,7 @@ pub const ShutterLeftVerticalEdge: Tag = Tag {
   element: 0x1602,
   name: "ShutterLeftVerticalEdge",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Shutter Left Vertical Edge",
 };
 
@@ -5857,7 +5857,7 @@ pub const ShutterRightVerticalEdge: Tag = Tag {
   element: 0x1604,
   name: "ShutterRightVerticalEdge",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Shutter Right Vertical Edge",
 };
 
@@ -5866,7 +5866,7 @@ pub const ShutterUpperHorizontalEdge: Tag = Tag {
   element: 0x1606,
   name: "ShutterUpperHorizontalEdge",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Shutter Upper Horizontal Edge",
 };
 
@@ -5875,7 +5875,7 @@ pub const ShutterLowerHorizontalEdge: Tag = Tag {
   element: 0x1608,
   name: "ShutterLowerHorizontalEdge",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Shutter Lower Horizontal Edge",
 };
 
@@ -5884,7 +5884,7 @@ pub const CenterOfCircularShutter: Tag = Tag {
   element: 0x1610,
   name: "CenterOfCircularShutter",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Center of Circular Shutter",
 };
 
@@ -5893,7 +5893,7 @@ pub const RadiusOfCircularShutter: Tag = Tag {
   element: 0x1612,
   name: "RadiusOfCircularShutter",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Radius of Circular Shutter",
 };
 
@@ -5911,7 +5911,7 @@ pub const ShutterPresentationValue: Tag = Tag {
   element: 0x1622,
   name: "ShutterPresentationValue",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Shutter Presentation Value",
 };
 
@@ -5920,7 +5920,7 @@ pub const ShutterOverlayGroup: Tag = Tag {
   element: 0x1623,
   name: "ShutterOverlayGroup",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Shutter Overlay Group",
 };
 
@@ -5929,7 +5929,7 @@ pub const ShutterPresentationColorCIELabValue: Tag = Tag {
   element: 0x1624,
   name: "ShutterPresentationColorCIELabValue",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Shutter Presentation Color CIELab Value",
 };
 
@@ -5947,7 +5947,7 @@ pub const CollimatorLeftVerticalEdge: Tag = Tag {
   element: 0x1702,
   name: "CollimatorLeftVerticalEdge",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Collimator Left Vertical Edge",
 };
 
@@ -5956,7 +5956,7 @@ pub const CollimatorRightVerticalEdge: Tag = Tag {
   element: 0x1704,
   name: "CollimatorRightVerticalEdge",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Collimator Right Vertical Edge",
 };
 
@@ -5965,7 +5965,7 @@ pub const CollimatorUpperHorizontalEdge: Tag = Tag {
   element: 0x1706,
   name: "CollimatorUpperHorizontalEdge",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Collimator Upper Horizontal Edge",
 };
 
@@ -5974,7 +5974,7 @@ pub const CollimatorLowerHorizontalEdge: Tag = Tag {
   element: 0x1708,
   name: "CollimatorLowerHorizontalEdge",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Collimator Lower Horizontal Edge",
 };
 
@@ -5983,7 +5983,7 @@ pub const CenterOfCircularCollimator: Tag = Tag {
   element: 0x1710,
   name: "CenterOfCircularCollimator",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Center of Circular Collimator",
 };
 
@@ -5992,7 +5992,7 @@ pub const RadiusOfCircularCollimator: Tag = Tag {
   element: 0x1712,
   name: "RadiusOfCircularCollimator",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Radius of Circular Collimator",
 };
 
@@ -6010,7 +6010,7 @@ pub const AcquisitionTimeSynchronized: Tag = Tag {
   element: 0x1800,
   name: "AcquisitionTimeSynchronized",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Acquisition Time Synchronized",
 };
 
@@ -6019,7 +6019,7 @@ pub const TimeSource: Tag = Tag {
   element: 0x1801,
   name: "TimeSource",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Time Source",
 };
 
@@ -6028,7 +6028,7 @@ pub const TimeDistributionProtocol: Tag = Tag {
   element: 0x1802,
   name: "TimeDistributionProtocol",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Time Distribution Protocol",
 };
 
@@ -6037,7 +6037,7 @@ pub const NTPSourceAddress: Tag = Tag {
   element: 0x1803,
   name: "NTPSourceAddress",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "NTP Source Address",
 };
 
@@ -6100,7 +6100,7 @@ pub const NominalScannedPixelSpacing: Tag = Tag {
   element: 0x2010,
   name: "NominalScannedPixelSpacing",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Nominal Scanned Pixel Spacing",
 };
 
@@ -6109,7 +6109,7 @@ pub const DigitizingDeviceTransportDirection: Tag = Tag {
   element: 0x2020,
   name: "DigitizingDeviceTransportDirection",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Digitizing Device Transport Direction",
 };
 
@@ -6118,7 +6118,7 @@ pub const RotationOfScannedFilm: Tag = Tag {
   element: 0x2030,
   name: "RotationOfScannedFilm",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Rotation of Scanned Film",
 };
 
@@ -6127,7 +6127,7 @@ pub const BiopsyTargetSequence: Tag = Tag {
   element: 0x2041,
   name: "BiopsyTargetSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Biopsy Target Sequence",
 };
 
@@ -6136,7 +6136,7 @@ pub const TargetUID: Tag = Tag {
   element: 0x2042,
   name: "TargetUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Target UID",
 };
 
@@ -6145,7 +6145,7 @@ pub const LocalizingCursorPosition: Tag = Tag {
   element: 0x2043,
   name: "LocalizingCursorPosition",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Localizing Cursor Position",
 };
 
@@ -6154,7 +6154,7 @@ pub const CalculatedTargetPosition: Tag = Tag {
   element: 0x2044,
   name: "CalculatedTargetPosition",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Calculated Target Position",
 };
 
@@ -6163,7 +6163,7 @@ pub const TargetLabel: Tag = Tag {
   element: 0x2045,
   name: "TargetLabel",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Target Label",
 };
 
@@ -6172,7 +6172,7 @@ pub const DisplayedZValue: Tag = Tag {
   element: 0x2046,
   name: "DisplayedZValue",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Displayed Z Value",
 };
 
@@ -6181,7 +6181,7 @@ pub const IVUSAcquisition: Tag = Tag {
   element: 0x3100,
   name: "IVUSAcquisition",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "IVUS Acquisition",
 };
 
@@ -6190,7 +6190,7 @@ pub const IVUSPullbackRate: Tag = Tag {
   element: 0x3101,
   name: "IVUSPullbackRate",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "IVUS Pullback Rate",
 };
 
@@ -6199,7 +6199,7 @@ pub const IVUSGatedRate: Tag = Tag {
   element: 0x3102,
   name: "IVUSGatedRate",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "IVUS Gated Rate",
 };
 
@@ -6208,7 +6208,7 @@ pub const IVUSPullbackStartFrameNumber: Tag = Tag {
   element: 0x3103,
   name: "IVUSPullbackStartFrameNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "IVUS Pullback Start Frame Number",
 };
 
@@ -6217,7 +6217,7 @@ pub const IVUSPullbackStopFrameNumber: Tag = Tag {
   element: 0x3104,
   name: "IVUSPullbackStopFrameNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "IVUS Pullback Stop Frame Number",
 };
 
@@ -6235,7 +6235,7 @@ pub const AcquisitionComments: Tag = Tag {
   element: 0x4000,
   name: "AcquisitionComments",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Acquisition Comments",
 };
 
@@ -6262,7 +6262,7 @@ pub const FocusDepth: Tag = Tag {
   element: 0x5012,
   name: "FocusDepth",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Focus Depth",
 };
 
@@ -6271,7 +6271,7 @@ pub const ProcessingFunction: Tag = Tag {
   element: 0x5020,
   name: "ProcessingFunction",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Processing Function",
 };
 
@@ -6280,7 +6280,7 @@ pub const PostprocessingFunction: Tag = Tag {
   element: 0x5021,
   name: "PostprocessingFunction",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Postprocessing Function",
 };
 
@@ -6289,7 +6289,7 @@ pub const MechanicalIndex: Tag = Tag {
   element: 0x5022,
   name: "MechanicalIndex",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Mechanical Index",
 };
 
@@ -6298,7 +6298,7 @@ pub const BoneThermalIndex: Tag = Tag {
   element: 0x5024,
   name: "BoneThermalIndex",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Bone Thermal Index",
 };
 
@@ -6307,7 +6307,7 @@ pub const CranialThermalIndex: Tag = Tag {
   element: 0x5026,
   name: "CranialThermalIndex",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Cranial Thermal Index",
 };
 
@@ -6316,7 +6316,7 @@ pub const SoftTissueThermalIndex: Tag = Tag {
   element: 0x5027,
   name: "SoftTissueThermalIndex",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Soft Tissue Thermal Index",
 };
 
@@ -6325,7 +6325,7 @@ pub const SoftTissueFocusThermalIndex: Tag = Tag {
   element: 0x5028,
   name: "SoftTissueFocusThermalIndex",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Soft Tissue-focus Thermal Index",
 };
 
@@ -6334,7 +6334,7 @@ pub const SoftTissueSurfaceThermalIndex: Tag = Tag {
   element: 0x5029,
   name: "SoftTissueSurfaceThermalIndex",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Soft Tissue-surface Thermal Index",
 };
 
@@ -6343,7 +6343,7 @@ pub const DynamicRange: Tag = Tag {
   element: 0x5030,
   name: "DynamicRange",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Dynamic Range",
 };
 
@@ -6352,7 +6352,7 @@ pub const TotalGain: Tag = Tag {
   element: 0x5040,
   name: "TotalGain",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Total Gain",
 };
 
@@ -6361,7 +6361,7 @@ pub const DepthOfScanField: Tag = Tag {
   element: 0x5050,
   name: "DepthOfScanField",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Depth of Scan Field",
 };
 
@@ -6370,7 +6370,7 @@ pub const PatientPosition: Tag = Tag {
   element: 0x5100,
   name: "PatientPosition",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Position",
 };
 
@@ -6379,7 +6379,7 @@ pub const ViewPosition: Tag = Tag {
   element: 0x5101,
   name: "ViewPosition",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "View Position",
 };
 
@@ -6388,7 +6388,7 @@ pub const ProjectionEponymousNameCodeSequence: Tag = Tag {
   element: 0x5104,
   name: "ProjectionEponymousNameCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Projection Eponymous Name Code Sequence",
 };
 
@@ -6397,7 +6397,7 @@ pub const ImageTransformationMatrix: Tag = Tag {
   element: 0x5210,
   name: "ImageTransformationMatrix",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 6, end: 6 },
   description: "Image Transformation Matrix",
 };
 
@@ -6406,7 +6406,7 @@ pub const ImageTranslationVector: Tag = Tag {
   element: 0x5212,
   name: "ImageTranslationVector",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Image Translation Vector",
 };
 
@@ -6415,7 +6415,7 @@ pub const Sensitivity: Tag = Tag {
   element: 0x6000,
   name: "Sensitivity",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Sensitivity",
 };
 
@@ -6424,7 +6424,7 @@ pub const SequenceOfUltrasoundRegions: Tag = Tag {
   element: 0x6011,
   name: "SequenceOfUltrasoundRegions",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Sequence of Ultrasound Regions",
 };
 
@@ -6433,7 +6433,7 @@ pub const RegionSpatialFormat: Tag = Tag {
   element: 0x6012,
   name: "RegionSpatialFormat",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Region Spatial Format",
 };
 
@@ -6442,7 +6442,7 @@ pub const RegionDataType: Tag = Tag {
   element: 0x6014,
   name: "RegionDataType",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Region Data Type",
 };
 
@@ -6451,7 +6451,7 @@ pub const RegionFlags: Tag = Tag {
   element: 0x6016,
   name: "RegionFlags",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Region Flags",
 };
 
@@ -6460,7 +6460,7 @@ pub const RegionLocationMinX0: Tag = Tag {
   element: 0x6018,
   name: "RegionLocationMinX0",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Region Location Min X0",
 };
 
@@ -6469,7 +6469,7 @@ pub const RegionLocationMinY0: Tag = Tag {
   element: 0x601A,
   name: "RegionLocationMinY0",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Region Location Min Y0",
 };
 
@@ -6478,7 +6478,7 @@ pub const RegionLocationMaxX1: Tag = Tag {
   element: 0x601C,
   name: "RegionLocationMaxX1",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Region Location Max X1",
 };
 
@@ -6487,7 +6487,7 @@ pub const RegionLocationMaxY1: Tag = Tag {
   element: 0x601E,
   name: "RegionLocationMaxY1",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Region Location Max Y1",
 };
 
@@ -6496,7 +6496,7 @@ pub const ReferencePixelX0: Tag = Tag {
   element: 0x6020,
   name: "ReferencePixelX0",
   vr: "SL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Reference Pixel X0",
 };
 
@@ -6505,7 +6505,7 @@ pub const ReferencePixelY0: Tag = Tag {
   element: 0x6022,
   name: "ReferencePixelY0",
   vr: "SL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Reference Pixel Y0",
 };
 
@@ -6514,7 +6514,7 @@ pub const PhysicalUnitsXDirection: Tag = Tag {
   element: 0x6024,
   name: "PhysicalUnitsXDirection",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Physical Units X Direction",
 };
 
@@ -6523,7 +6523,7 @@ pub const PhysicalUnitsYDirection: Tag = Tag {
   element: 0x6026,
   name: "PhysicalUnitsYDirection",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Physical Units Y Direction",
 };
 
@@ -6532,7 +6532,7 @@ pub const ReferencePixelPhysicalValueX: Tag = Tag {
   element: 0x6028,
   name: "ReferencePixelPhysicalValueX",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Reference Pixel Physical Value X",
 };
 
@@ -6541,7 +6541,7 @@ pub const ReferencePixelPhysicalValueY: Tag = Tag {
   element: 0x602A,
   name: "ReferencePixelPhysicalValueY",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Reference Pixel Physical Value Y",
 };
 
@@ -6550,7 +6550,7 @@ pub const PhysicalDeltaX: Tag = Tag {
   element: 0x602C,
   name: "PhysicalDeltaX",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Physical Delta X",
 };
 
@@ -6559,7 +6559,7 @@ pub const PhysicalDeltaY: Tag = Tag {
   element: 0x602E,
   name: "PhysicalDeltaY",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Physical Delta Y",
 };
 
@@ -6568,7 +6568,7 @@ pub const TransducerFrequency: Tag = Tag {
   element: 0x6030,
   name: "TransducerFrequency",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Transducer Frequency",
 };
 
@@ -6577,7 +6577,7 @@ pub const TransducerType: Tag = Tag {
   element: 0x6031,
   name: "TransducerType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Transducer Type",
 };
 
@@ -6586,7 +6586,7 @@ pub const PulseRepetitionFrequency: Tag = Tag {
   element: 0x6032,
   name: "PulseRepetitionFrequency",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pulse Repetition Frequency",
 };
 
@@ -6595,7 +6595,7 @@ pub const DopplerCorrectionAngle: Tag = Tag {
   element: 0x6034,
   name: "DopplerCorrectionAngle",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Doppler Correction Angle",
 };
 
@@ -6604,7 +6604,7 @@ pub const SteeringAngle: Tag = Tag {
   element: 0x6036,
   name: "SteeringAngle",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Steering Angle",
 };
 
@@ -6613,7 +6613,7 @@ pub const DopplerSampleVolumeXPositionRetired: Tag = Tag {
   element: 0x6038,
   name: "DopplerSampleVolumeXPositionRetired",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Doppler Sample Volume X Position (Retired)",
 };
 
@@ -6622,7 +6622,7 @@ pub const DopplerSampleVolumeXPosition: Tag = Tag {
   element: 0x6039,
   name: "DopplerSampleVolumeXPosition",
   vr: "SL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Doppler Sample Volume X Position",
 };
 
@@ -6631,7 +6631,7 @@ pub const DopplerSampleVolumeYPositionRetired: Tag = Tag {
   element: 0x603A,
   name: "DopplerSampleVolumeYPositionRetired",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Doppler Sample Volume Y Position (Retired)",
 };
 
@@ -6640,7 +6640,7 @@ pub const DopplerSampleVolumeYPosition: Tag = Tag {
   element: 0x603B,
   name: "DopplerSampleVolumeYPosition",
   vr: "SL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Doppler Sample Volume Y Position",
 };
 
@@ -6649,7 +6649,7 @@ pub const TMLinePositionX0Retired: Tag = Tag {
   element: 0x603C,
   name: "TMLinePositionX0Retired",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "TM-Line Position X0 (Retired)",
 };
 
@@ -6658,7 +6658,7 @@ pub const TMLinePositionX0: Tag = Tag {
   element: 0x603D,
   name: "TMLinePositionX0",
   vr: "SL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "TM-Line Position X0",
 };
 
@@ -6667,7 +6667,7 @@ pub const TMLinePositionY0Retired: Tag = Tag {
   element: 0x603E,
   name: "TMLinePositionY0Retired",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "TM-Line Position Y0 (Retired)",
 };
 
@@ -6676,7 +6676,7 @@ pub const TMLinePositionY0: Tag = Tag {
   element: 0x603F,
   name: "TMLinePositionY0",
   vr: "SL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "TM-Line Position Y0",
 };
 
@@ -6685,7 +6685,7 @@ pub const TMLinePositionX1Retired: Tag = Tag {
   element: 0x6040,
   name: "TMLinePositionX1Retired",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "TM-Line Position X1 (Retired)",
 };
 
@@ -6694,7 +6694,7 @@ pub const TMLinePositionX1: Tag = Tag {
   element: 0x6041,
   name: "TMLinePositionX1",
   vr: "SL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "TM-Line Position X1",
 };
 
@@ -6703,7 +6703,7 @@ pub const TMLinePositionY1Retired: Tag = Tag {
   element: 0x6042,
   name: "TMLinePositionY1Retired",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "TM-Line Position Y1 (Retired)",
 };
 
@@ -6712,7 +6712,7 @@ pub const TMLinePositionY1: Tag = Tag {
   element: 0x6043,
   name: "TMLinePositionY1",
   vr: "SL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "TM-Line Position Y1",
 };
 
@@ -6721,7 +6721,7 @@ pub const PixelComponentOrganization: Tag = Tag {
   element: 0x6044,
   name: "PixelComponentOrganization",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pixel Component Organization",
 };
 
@@ -6730,7 +6730,7 @@ pub const PixelComponentMask: Tag = Tag {
   element: 0x6046,
   name: "PixelComponentMask",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pixel Component Mask",
 };
 
@@ -6739,7 +6739,7 @@ pub const PixelComponentRangeStart: Tag = Tag {
   element: 0x6048,
   name: "PixelComponentRangeStart",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pixel Component Range Start",
 };
 
@@ -6748,7 +6748,7 @@ pub const PixelComponentRangeStop: Tag = Tag {
   element: 0x604A,
   name: "PixelComponentRangeStop",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pixel Component Range Stop",
 };
 
@@ -6757,7 +6757,7 @@ pub const PixelComponentPhysicalUnits: Tag = Tag {
   element: 0x604C,
   name: "PixelComponentPhysicalUnits",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pixel Component Physical Units",
 };
 
@@ -6766,7 +6766,7 @@ pub const PixelComponentDataType: Tag = Tag {
   element: 0x604E,
   name: "PixelComponentDataType",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pixel Component Data Type",
 };
 
@@ -6775,7 +6775,7 @@ pub const NumberOfTableBreakPoints: Tag = Tag {
   element: 0x6050,
   name: "NumberOfTableBreakPoints",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Table Break Points",
 };
 
@@ -6802,7 +6802,7 @@ pub const NumberOfTableEntries: Tag = Tag {
   element: 0x6056,
   name: "NumberOfTableEntries",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Table Entries",
 };
 
@@ -6838,7 +6838,7 @@ pub const DetectorConditionsNominalFlag: Tag = Tag {
   element: 0x7000,
   name: "DetectorConditionsNominalFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Detector Conditions Nominal Flag",
 };
 
@@ -6847,7 +6847,7 @@ pub const DetectorTemperature: Tag = Tag {
   element: 0x7001,
   name: "DetectorTemperature",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Detector Temperature",
 };
 
@@ -6856,7 +6856,7 @@ pub const DetectorType: Tag = Tag {
   element: 0x7004,
   name: "DetectorType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Detector Type",
 };
 
@@ -6865,7 +6865,7 @@ pub const DetectorConfiguration: Tag = Tag {
   element: 0x7005,
   name: "DetectorConfiguration",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Detector Configuration",
 };
 
@@ -6874,7 +6874,7 @@ pub const DetectorDescription: Tag = Tag {
   element: 0x7006,
   name: "DetectorDescription",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Detector Description",
 };
 
@@ -6883,7 +6883,7 @@ pub const DetectorMode: Tag = Tag {
   element: 0x7008,
   name: "DetectorMode",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Detector Mode",
 };
 
@@ -6892,7 +6892,7 @@ pub const DetectorID: Tag = Tag {
   element: 0x700A,
   name: "DetectorID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Detector ID",
 };
 
@@ -6901,7 +6901,7 @@ pub const DateOfLastDetectorCalibration: Tag = Tag {
   element: 0x700C,
   name: "DateOfLastDetectorCalibration",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Date of Last Detector Calibration",
 };
 
@@ -6910,7 +6910,7 @@ pub const TimeOfLastDetectorCalibration: Tag = Tag {
   element: 0x700E,
   name: "TimeOfLastDetectorCalibration",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Time of Last Detector Calibration",
 };
 
@@ -6919,7 +6919,7 @@ pub const ExposuresOnDetectorSinceLastCalibration: Tag = Tag {
   element: 0x7010,
   name: "ExposuresOnDetectorSinceLastCalibration",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Exposures on Detector Since Last Calibration",
 };
 
@@ -6928,7 +6928,7 @@ pub const ExposuresOnDetectorSinceManufactured: Tag = Tag {
   element: 0x7011,
   name: "ExposuresOnDetectorSinceManufactured",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Exposures on Detector Since Manufactured",
 };
 
@@ -6937,7 +6937,7 @@ pub const DetectorTimeSinceLastExposure: Tag = Tag {
   element: 0x7012,
   name: "DetectorTimeSinceLastExposure",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Detector Time Since Last Exposure",
 };
 
@@ -6946,7 +6946,7 @@ pub const DetectorActiveTime: Tag = Tag {
   element: 0x7014,
   name: "DetectorActiveTime",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Detector Active Time",
 };
 
@@ -6955,7 +6955,7 @@ pub const DetectorActivationOffsetFromExposure: Tag = Tag {
   element: 0x7016,
   name: "DetectorActivationOffsetFromExposure",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Detector Activation Offset From Exposure",
 };
 
@@ -6964,7 +6964,7 @@ pub const DetectorBinning: Tag = Tag {
   element: 0x701A,
   name: "DetectorBinning",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Detector Binning",
 };
 
@@ -6973,7 +6973,7 @@ pub const DetectorElementPhysicalSize: Tag = Tag {
   element: 0x7020,
   name: "DetectorElementPhysicalSize",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Detector Element Physical Size",
 };
 
@@ -6982,7 +6982,7 @@ pub const DetectorElementSpacing: Tag = Tag {
   element: 0x7022,
   name: "DetectorElementSpacing",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Detector Element Spacing",
 };
 
@@ -6991,7 +6991,7 @@ pub const DetectorActiveShape: Tag = Tag {
   element: 0x7024,
   name: "DetectorActiveShape",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Detector Active Shape",
 };
 
@@ -7009,7 +7009,7 @@ pub const DetectorActiveOrigin: Tag = Tag {
   element: 0x7028,
   name: "DetectorActiveOrigin",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Detector Active Origin",
 };
 
@@ -7018,7 +7018,7 @@ pub const DetectorManufacturerName: Tag = Tag {
   element: 0x702A,
   name: "DetectorManufacturerName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Detector Manufacturer Name",
 };
 
@@ -7027,7 +7027,7 @@ pub const DetectorManufacturerModelName: Tag = Tag {
   element: 0x702B,
   name: "DetectorManufacturerModelName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Detector Manufacturer's Model Name",
 };
 
@@ -7036,7 +7036,7 @@ pub const FieldOfViewOrigin: Tag = Tag {
   element: 0x7030,
   name: "FieldOfViewOrigin",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Field of View Origin",
 };
 
@@ -7045,7 +7045,7 @@ pub const FieldOfViewRotation: Tag = Tag {
   element: 0x7032,
   name: "FieldOfViewRotation",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Field of View Rotation",
 };
 
@@ -7054,7 +7054,7 @@ pub const FieldOfViewHorizontalFlip: Tag = Tag {
   element: 0x7034,
   name: "FieldOfViewHorizontalFlip",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Field of View Horizontal Flip",
 };
 
@@ -7063,7 +7063,7 @@ pub const PixelDataAreaOriginRelativeToFOV: Tag = Tag {
   element: 0x7036,
   name: "PixelDataAreaOriginRelativeToFOV",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Pixel Data Area Origin Relative To FOV",
 };
 
@@ -7072,7 +7072,7 @@ pub const PixelDataAreaRotationAngleRelativeToFOV: Tag = Tag {
   element: 0x7038,
   name: "PixelDataAreaRotationAngleRelativeToFOV",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pixel Data Area Rotation Angle Relative To FOV",
 };
 
@@ -7081,7 +7081,7 @@ pub const GridAbsorbingMaterial: Tag = Tag {
   element: 0x7040,
   name: "GridAbsorbingMaterial",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Grid Absorbing Material",
 };
 
@@ -7090,7 +7090,7 @@ pub const GridSpacingMaterial: Tag = Tag {
   element: 0x7041,
   name: "GridSpacingMaterial",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Grid Spacing Material",
 };
 
@@ -7099,7 +7099,7 @@ pub const GridThickness: Tag = Tag {
   element: 0x7042,
   name: "GridThickness",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Grid Thickness",
 };
 
@@ -7108,7 +7108,7 @@ pub const GridPitch: Tag = Tag {
   element: 0x7044,
   name: "GridPitch",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Grid Pitch",
 };
 
@@ -7117,7 +7117,7 @@ pub const GridAspectRatio: Tag = Tag {
   element: 0x7046,
   name: "GridAspectRatio",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Grid Aspect Ratio",
 };
 
@@ -7126,7 +7126,7 @@ pub const GridPeriod: Tag = Tag {
   element: 0x7048,
   name: "GridPeriod",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Grid Period",
 };
 
@@ -7135,7 +7135,7 @@ pub const GridFocalDistance: Tag = Tag {
   element: 0x704C,
   name: "GridFocalDistance",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Grid Focal Distance",
 };
 
@@ -7189,7 +7189,7 @@ pub const ExposureControlMode: Tag = Tag {
   element: 0x7060,
   name: "ExposureControlMode",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Exposure Control Mode",
 };
 
@@ -7198,7 +7198,7 @@ pub const ExposureControlModeDescription: Tag = Tag {
   element: 0x7062,
   name: "ExposureControlModeDescription",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Exposure Control Mode Description",
 };
 
@@ -7207,7 +7207,7 @@ pub const ExposureStatus: Tag = Tag {
   element: 0x7064,
   name: "ExposureStatus",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Exposure Status",
 };
 
@@ -7216,7 +7216,7 @@ pub const PhototimerSetting: Tag = Tag {
   element: 0x7065,
   name: "PhototimerSetting",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Phototimer Setting",
 };
 
@@ -7225,7 +7225,7 @@ pub const ExposureTimeInuS: Tag = Tag {
   element: 0x8150,
   name: "ExposureTimeInuS",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Exposure Time in µS",
 };
 
@@ -7234,7 +7234,7 @@ pub const XRayTubeCurrentInuA: Tag = Tag {
   element: 0x8151,
   name: "XRayTubeCurrentInuA",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "X-Ray Tube Current in µA",
 };
 
@@ -7243,7 +7243,7 @@ pub const ContentQualification: Tag = Tag {
   element: 0x9004,
   name: "ContentQualification",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Content Qualification",
 };
 
@@ -7252,7 +7252,7 @@ pub const PulseSequenceName: Tag = Tag {
   element: 0x9005,
   name: "PulseSequenceName",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pulse Sequence Name",
 };
 
@@ -7261,7 +7261,7 @@ pub const MRImagingModifierSequence: Tag = Tag {
   element: 0x9006,
   name: "MRImagingModifierSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "MR Imaging Modifier Sequence",
 };
 
@@ -7270,7 +7270,7 @@ pub const EchoPulseSequence: Tag = Tag {
   element: 0x9008,
   name: "EchoPulseSequence",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Echo Pulse Sequence",
 };
 
@@ -7279,7 +7279,7 @@ pub const InversionRecovery: Tag = Tag {
   element: 0x9009,
   name: "InversionRecovery",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Inversion Recovery",
 };
 
@@ -7288,7 +7288,7 @@ pub const FlowCompensation: Tag = Tag {
   element: 0x9010,
   name: "FlowCompensation",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Flow Compensation",
 };
 
@@ -7297,7 +7297,7 @@ pub const MultipleSpinEcho: Tag = Tag {
   element: 0x9011,
   name: "MultipleSpinEcho",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Multiple Spin Echo",
 };
 
@@ -7306,7 +7306,7 @@ pub const MultiPlanarExcitation: Tag = Tag {
   element: 0x9012,
   name: "MultiPlanarExcitation",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Multi-planar Excitation",
 };
 
@@ -7315,7 +7315,7 @@ pub const PhaseContrast: Tag = Tag {
   element: 0x9014,
   name: "PhaseContrast",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Phase Contrast",
 };
 
@@ -7324,7 +7324,7 @@ pub const TimeOfFlightContrast: Tag = Tag {
   element: 0x9015,
   name: "TimeOfFlightContrast",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Time of Flight Contrast",
 };
 
@@ -7333,7 +7333,7 @@ pub const Spoiling: Tag = Tag {
   element: 0x9016,
   name: "Spoiling",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Spoiling",
 };
 
@@ -7342,7 +7342,7 @@ pub const SteadyStatePulseSequence: Tag = Tag {
   element: 0x9017,
   name: "SteadyStatePulseSequence",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Steady State Pulse Sequence",
 };
 
@@ -7351,7 +7351,7 @@ pub const EchoPlanarPulseSequence: Tag = Tag {
   element: 0x9018,
   name: "EchoPlanarPulseSequence",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Echo Planar Pulse Sequence",
 };
 
@@ -7360,7 +7360,7 @@ pub const TagAngleFirstAxis: Tag = Tag {
   element: 0x9019,
   name: "TagAngleFirstAxis",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Tag Angle First Axis",
 };
 
@@ -7369,7 +7369,7 @@ pub const MagnetizationTransfer: Tag = Tag {
   element: 0x9020,
   name: "MagnetizationTransfer",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Magnetization Transfer",
 };
 
@@ -7378,7 +7378,7 @@ pub const T2Preparation: Tag = Tag {
   element: 0x9021,
   name: "T2Preparation",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "T2 Preparation",
 };
 
@@ -7387,7 +7387,7 @@ pub const BloodSignalNulling: Tag = Tag {
   element: 0x9022,
   name: "BloodSignalNulling",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Blood Signal Nulling",
 };
 
@@ -7396,7 +7396,7 @@ pub const SaturationRecovery: Tag = Tag {
   element: 0x9024,
   name: "SaturationRecovery",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Saturation Recovery",
 };
 
@@ -7405,7 +7405,7 @@ pub const SpectrallySelectedSuppression: Tag = Tag {
   element: 0x9025,
   name: "SpectrallySelectedSuppression",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Spectrally Selected Suppression",
 };
 
@@ -7414,7 +7414,7 @@ pub const SpectrallySelectedExcitation: Tag = Tag {
   element: 0x9026,
   name: "SpectrallySelectedExcitation",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Spectrally Selected Excitation",
 };
 
@@ -7423,7 +7423,7 @@ pub const SpatialPresaturation: Tag = Tag {
   element: 0x9027,
   name: "SpatialPresaturation",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Spatial Pre-saturation",
 };
 
@@ -7432,7 +7432,7 @@ pub const Tagging: Tag = Tag {
   element: 0x9028,
   name: "Tagging",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Tagging",
 };
 
@@ -7441,7 +7441,7 @@ pub const OversamplingPhase: Tag = Tag {
   element: 0x9029,
   name: "OversamplingPhase",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Oversampling Phase",
 };
 
@@ -7450,7 +7450,7 @@ pub const TagSpacingFirstDimension: Tag = Tag {
   element: 0x9030,
   name: "TagSpacingFirstDimension",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Tag Spacing First Dimension",
 };
 
@@ -7459,7 +7459,7 @@ pub const GeometryOfKSpaceTraversal: Tag = Tag {
   element: 0x9032,
   name: "GeometryOfKSpaceTraversal",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Geometry of k-Space Traversal",
 };
 
@@ -7468,7 +7468,7 @@ pub const SegmentedKSpaceTraversal: Tag = Tag {
   element: 0x9033,
   name: "SegmentedKSpaceTraversal",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Segmented k-Space Traversal",
 };
 
@@ -7477,7 +7477,7 @@ pub const RectilinearPhaseEncodeReordering: Tag = Tag {
   element: 0x9034,
   name: "RectilinearPhaseEncodeReordering",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Rectilinear Phase Encode Reordering",
 };
 
@@ -7486,7 +7486,7 @@ pub const TagThickness: Tag = Tag {
   element: 0x9035,
   name: "TagThickness",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Tag Thickness",
 };
 
@@ -7495,7 +7495,7 @@ pub const PartialFourierDirection: Tag = Tag {
   element: 0x9036,
   name: "PartialFourierDirection",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Partial Fourier Direction",
 };
 
@@ -7504,7 +7504,7 @@ pub const CardiacSynchronizationTechnique: Tag = Tag {
   element: 0x9037,
   name: "CardiacSynchronizationTechnique",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Cardiac Synchronization Technique",
 };
 
@@ -7513,7 +7513,7 @@ pub const ReceiveCoilManufacturerName: Tag = Tag {
   element: 0x9041,
   name: "ReceiveCoilManufacturerName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Receive Coil Manufacturer Name",
 };
 
@@ -7522,7 +7522,7 @@ pub const MRReceiveCoilSequence: Tag = Tag {
   element: 0x9042,
   name: "MRReceiveCoilSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "MR Receive Coil Sequence",
 };
 
@@ -7531,7 +7531,7 @@ pub const ReceiveCoilType: Tag = Tag {
   element: 0x9043,
   name: "ReceiveCoilType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Receive Coil Type",
 };
 
@@ -7540,7 +7540,7 @@ pub const QuadratureReceiveCoil: Tag = Tag {
   element: 0x9044,
   name: "QuadratureReceiveCoil",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Quadrature Receive Coil",
 };
 
@@ -7549,7 +7549,7 @@ pub const MultiCoilDefinitionSequence: Tag = Tag {
   element: 0x9045,
   name: "MultiCoilDefinitionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Multi-Coil Definition Sequence",
 };
 
@@ -7558,7 +7558,7 @@ pub const MultiCoilConfiguration: Tag = Tag {
   element: 0x9046,
   name: "MultiCoilConfiguration",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Multi-Coil Configuration",
 };
 
@@ -7567,7 +7567,7 @@ pub const MultiCoilElementName: Tag = Tag {
   element: 0x9047,
   name: "MultiCoilElementName",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Multi-Coil Element Name",
 };
 
@@ -7576,7 +7576,7 @@ pub const MultiCoilElementUsed: Tag = Tag {
   element: 0x9048,
   name: "MultiCoilElementUsed",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Multi-Coil Element Used",
 };
 
@@ -7585,7 +7585,7 @@ pub const MRTransmitCoilSequence: Tag = Tag {
   element: 0x9049,
   name: "MRTransmitCoilSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "MR Transmit Coil Sequence",
 };
 
@@ -7594,7 +7594,7 @@ pub const TransmitCoilManufacturerName: Tag = Tag {
   element: 0x9050,
   name: "TransmitCoilManufacturerName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Transmit Coil Manufacturer Name",
 };
 
@@ -7603,7 +7603,7 @@ pub const TransmitCoilType: Tag = Tag {
   element: 0x9051,
   name: "TransmitCoilType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Transmit Coil Type",
 };
 
@@ -7630,7 +7630,7 @@ pub const VolumeLocalizationTechnique: Tag = Tag {
   element: 0x9054,
   name: "VolumeLocalizationTechnique",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Volume Localization Technique",
 };
 
@@ -7639,7 +7639,7 @@ pub const MRAcquisitionFrequencyEncodingSteps: Tag = Tag {
   element: 0x9058,
   name: "MRAcquisitionFrequencyEncodingSteps",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "MR Acquisition Frequency Encoding Steps",
 };
 
@@ -7648,7 +7648,7 @@ pub const Decoupling: Tag = Tag {
   element: 0x9059,
   name: "Decoupling",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "De-coupling",
 };
 
@@ -7675,7 +7675,7 @@ pub const DecouplingMethod: Tag = Tag {
   element: 0x9062,
   name: "DecouplingMethod",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "De-coupling Method",
 };
 
@@ -7693,7 +7693,7 @@ pub const KSpaceFiltering: Tag = Tag {
   element: 0x9064,
   name: "KSpaceFiltering",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "k-space Filtering",
 };
 
@@ -7720,7 +7720,7 @@ pub const BaselineCorrection: Tag = Tag {
   element: 0x9067,
   name: "BaselineCorrection",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Baseline Correction",
 };
 
@@ -7729,7 +7729,7 @@ pub const ParallelReductionFactorInPlane: Tag = Tag {
   element: 0x9069,
   name: "ParallelReductionFactorInPlane",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Parallel Reduction Factor In-plane",
 };
 
@@ -7738,7 +7738,7 @@ pub const CardiacRRIntervalSpecified: Tag = Tag {
   element: 0x9070,
   name: "CardiacRRIntervalSpecified",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Cardiac R-R Interval Specified",
 };
 
@@ -7747,7 +7747,7 @@ pub const AcquisitionDuration: Tag = Tag {
   element: 0x9073,
   name: "AcquisitionDuration",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Acquisition Duration",
 };
 
@@ -7756,7 +7756,7 @@ pub const FrameAcquisitionDateTime: Tag = Tag {
   element: 0x9074,
   name: "FrameAcquisitionDateTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Frame Acquisition DateTime",
 };
 
@@ -7765,7 +7765,7 @@ pub const DiffusionDirectionality: Tag = Tag {
   element: 0x9075,
   name: "DiffusionDirectionality",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Diffusion Directionality",
 };
 
@@ -7774,7 +7774,7 @@ pub const DiffusionGradientDirectionSequence: Tag = Tag {
   element: 0x9076,
   name: "DiffusionGradientDirectionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Diffusion Gradient Direction Sequence",
 };
 
@@ -7783,7 +7783,7 @@ pub const ParallelAcquisition: Tag = Tag {
   element: 0x9077,
   name: "ParallelAcquisition",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Parallel Acquisition",
 };
 
@@ -7792,7 +7792,7 @@ pub const ParallelAcquisitionTechnique: Tag = Tag {
   element: 0x9078,
   name: "ParallelAcquisitionTechnique",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Parallel Acquisition Technique",
 };
 
@@ -7810,7 +7810,7 @@ pub const MetaboliteMapDescription: Tag = Tag {
   element: 0x9080,
   name: "MetaboliteMapDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Metabolite Map Description",
 };
 
@@ -7819,7 +7819,7 @@ pub const PartialFourier: Tag = Tag {
   element: 0x9081,
   name: "PartialFourier",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Partial Fourier",
 };
 
@@ -7828,7 +7828,7 @@ pub const EffectiveEchoTime: Tag = Tag {
   element: 0x9082,
   name: "EffectiveEchoTime",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Effective Echo Time",
 };
 
@@ -7837,7 +7837,7 @@ pub const MetaboliteMapCodeSequence: Tag = Tag {
   element: 0x9083,
   name: "MetaboliteMapCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Metabolite Map Code Sequence",
 };
 
@@ -7846,7 +7846,7 @@ pub const ChemicalShiftSequence: Tag = Tag {
   element: 0x9084,
   name: "ChemicalShiftSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Chemical Shift Sequence",
 };
 
@@ -7855,7 +7855,7 @@ pub const CardiacSignalSource: Tag = Tag {
   element: 0x9085,
   name: "CardiacSignalSource",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Cardiac Signal Source",
 };
 
@@ -7864,7 +7864,7 @@ pub const DiffusionBValue: Tag = Tag {
   element: 0x9087,
   name: "DiffusionBValue",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Diffusion b-value",
 };
 
@@ -7873,7 +7873,7 @@ pub const DiffusionGradientOrientation: Tag = Tag {
   element: 0x9089,
   name: "DiffusionGradientOrientation",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Diffusion Gradient Orientation",
 };
 
@@ -7882,7 +7882,7 @@ pub const VelocityEncodingDirection: Tag = Tag {
   element: 0x9090,
   name: "VelocityEncodingDirection",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Velocity Encoding Direction",
 };
 
@@ -7891,7 +7891,7 @@ pub const VelocityEncodingMinimumValue: Tag = Tag {
   element: 0x9091,
   name: "VelocityEncodingMinimumValue",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Velocity Encoding Minimum Value",
 };
 
@@ -7900,7 +7900,7 @@ pub const VelocityEncodingAcquisitionSequence: Tag = Tag {
   element: 0x9092,
   name: "VelocityEncodingAcquisitionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Velocity Encoding Acquisition Sequence",
 };
 
@@ -7909,7 +7909,7 @@ pub const NumberOfKSpaceTrajectories: Tag = Tag {
   element: 0x9093,
   name: "NumberOfKSpaceTrajectories",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of k-Space Trajectories",
 };
 
@@ -7918,7 +7918,7 @@ pub const CoverageOfKSpace: Tag = Tag {
   element: 0x9094,
   name: "CoverageOfKSpace",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Coverage of k-Space",
 };
 
@@ -7927,7 +7927,7 @@ pub const SpectroscopyAcquisitionPhaseRows: Tag = Tag {
   element: 0x9095,
   name: "SpectroscopyAcquisitionPhaseRows",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Spectroscopy Acquisition Phase Rows",
 };
 
@@ -7936,7 +7936,7 @@ pub const ParallelReductionFactorInPlaneRetired: Tag = Tag {
   element: 0x9096,
   name: "ParallelReductionFactorInPlaneRetired",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Parallel Reduction Factor In-plane (Retired)",
 };
 
@@ -7963,7 +7963,7 @@ pub const FrequencyCorrection: Tag = Tag {
   element: 0x9101,
   name: "FrequencyCorrection",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Frequency Correction",
 };
 
@@ -7972,7 +7972,7 @@ pub const MRSpectroscopyFOVGeometrySequence: Tag = Tag {
   element: 0x9103,
   name: "MRSpectroscopyFOVGeometrySequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "MR Spectroscopy FOV/Geometry Sequence",
 };
 
@@ -7981,7 +7981,7 @@ pub const SlabThickness: Tag = Tag {
   element: 0x9104,
   name: "SlabThickness",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Slab Thickness",
 };
 
@@ -7990,7 +7990,7 @@ pub const SlabOrientation: Tag = Tag {
   element: 0x9105,
   name: "SlabOrientation",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Slab Orientation",
 };
 
@@ -7999,7 +7999,7 @@ pub const MidSlabPosition: Tag = Tag {
   element: 0x9106,
   name: "MidSlabPosition",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Mid Slab Position",
 };
 
@@ -8008,7 +8008,7 @@ pub const MRSpatialSaturationSequence: Tag = Tag {
   element: 0x9107,
   name: "MRSpatialSaturationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "MR Spatial Saturation Sequence",
 };
 
@@ -8017,7 +8017,7 @@ pub const MRTimingAndRelatedParametersSequence: Tag = Tag {
   element: 0x9112,
   name: "MRTimingAndRelatedParametersSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "MR Timing and Related Parameters Sequence",
 };
 
@@ -8026,7 +8026,7 @@ pub const MREchoSequence: Tag = Tag {
   element: 0x9114,
   name: "MREchoSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "MR Echo Sequence",
 };
 
@@ -8035,7 +8035,7 @@ pub const MRModifierSequence: Tag = Tag {
   element: 0x9115,
   name: "MRModifierSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "MR Modifier Sequence",
 };
 
@@ -8044,7 +8044,7 @@ pub const MRDiffusionSequence: Tag = Tag {
   element: 0x9117,
   name: "MRDiffusionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "MR Diffusion Sequence",
 };
 
@@ -8053,7 +8053,7 @@ pub const CardiacSynchronizationSequence: Tag = Tag {
   element: 0x9118,
   name: "CardiacSynchronizationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Cardiac Synchronization Sequence",
 };
 
@@ -8062,7 +8062,7 @@ pub const MRAveragesSequence: Tag = Tag {
   element: 0x9119,
   name: "MRAveragesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "MR Averages Sequence",
 };
 
@@ -8071,7 +8071,7 @@ pub const MRFOVGeometrySequence: Tag = Tag {
   element: 0x9125,
   name: "MRFOVGeometrySequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "MR FOV/Geometry Sequence",
 };
 
@@ -8080,7 +8080,7 @@ pub const VolumeLocalizationSequence: Tag = Tag {
   element: 0x9126,
   name: "VolumeLocalizationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Volume Localization Sequence",
 };
 
@@ -8089,7 +8089,7 @@ pub const SpectroscopyAcquisitionDataColumns: Tag = Tag {
   element: 0x9127,
   name: "SpectroscopyAcquisitionDataColumns",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Spectroscopy Acquisition Data Columns",
 };
 
@@ -8098,7 +8098,7 @@ pub const DiffusionAnisotropyType: Tag = Tag {
   element: 0x9147,
   name: "DiffusionAnisotropyType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Diffusion Anisotropy Type",
 };
 
@@ -8107,7 +8107,7 @@ pub const FrameReferenceDateTime: Tag = Tag {
   element: 0x9151,
   name: "FrameReferenceDateTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Frame Reference DateTime",
 };
 
@@ -8116,7 +8116,7 @@ pub const MRMetaboliteMapSequence: Tag = Tag {
   element: 0x9152,
   name: "MRMetaboliteMapSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "MR Metabolite Map Sequence",
 };
 
@@ -8125,7 +8125,7 @@ pub const ParallelReductionFactorOutOfPlane: Tag = Tag {
   element: 0x9155,
   name: "ParallelReductionFactorOutOfPlane",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Parallel Reduction Factor out-of-plane",
 };
 
@@ -8134,7 +8134,7 @@ pub const SpectroscopyAcquisitionOutOfPlanePhaseSteps: Tag = Tag {
   element: 0x9159,
   name: "SpectroscopyAcquisitionOutOfPlanePhaseSteps",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Spectroscopy Acquisition Out-of-plane Phase Steps",
 };
 
@@ -8143,7 +8143,7 @@ pub const BulkMotionStatus: Tag = Tag {
   element: 0x9166,
   name: "BulkMotionStatus",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Bulk Motion Status",
 };
 
@@ -8152,7 +8152,7 @@ pub const ParallelReductionFactorSecondInPlane: Tag = Tag {
   element: 0x9168,
   name: "ParallelReductionFactorSecondInPlane",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Parallel Reduction Factor Second In-plane",
 };
 
@@ -8161,7 +8161,7 @@ pub const CardiacBeatRejectionTechnique: Tag = Tag {
   element: 0x9169,
   name: "CardiacBeatRejectionTechnique",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Cardiac Beat Rejection Technique",
 };
 
@@ -8170,7 +8170,7 @@ pub const RespiratoryMotionCompensationTechnique: Tag = Tag {
   element: 0x9170,
   name: "RespiratoryMotionCompensationTechnique",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Respiratory Motion Compensation Technique",
 };
 
@@ -8179,7 +8179,7 @@ pub const RespiratorySignalSource: Tag = Tag {
   element: 0x9171,
   name: "RespiratorySignalSource",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Respiratory Signal Source",
 };
 
@@ -8188,7 +8188,7 @@ pub const BulkMotionCompensationTechnique: Tag = Tag {
   element: 0x9172,
   name: "BulkMotionCompensationTechnique",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Bulk Motion Compensation Technique",
 };
 
@@ -8197,7 +8197,7 @@ pub const BulkMotionSignalSource: Tag = Tag {
   element: 0x9173,
   name: "BulkMotionSignalSource",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Bulk Motion Signal Source",
 };
 
@@ -8206,7 +8206,7 @@ pub const ApplicableSafetyStandardAgency: Tag = Tag {
   element: 0x9174,
   name: "ApplicableSafetyStandardAgency",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Applicable Safety Standard Agency",
 };
 
@@ -8215,7 +8215,7 @@ pub const ApplicableSafetyStandardDescription: Tag = Tag {
   element: 0x9175,
   name: "ApplicableSafetyStandardDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Applicable Safety Standard Description",
 };
 
@@ -8224,7 +8224,7 @@ pub const OperatingModeSequence: Tag = Tag {
   element: 0x9176,
   name: "OperatingModeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Operating Mode Sequence",
 };
 
@@ -8233,7 +8233,7 @@ pub const OperatingModeType: Tag = Tag {
   element: 0x9177,
   name: "OperatingModeType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Operating Mode Type",
 };
 
@@ -8242,7 +8242,7 @@ pub const OperatingMode: Tag = Tag {
   element: 0x9178,
   name: "OperatingMode",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Operating Mode",
 };
 
@@ -8251,7 +8251,7 @@ pub const SpecificAbsorptionRateDefinition: Tag = Tag {
   element: 0x9179,
   name: "SpecificAbsorptionRateDefinition",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Specific Absorption Rate Definition",
 };
 
@@ -8260,7 +8260,7 @@ pub const GradientOutputType: Tag = Tag {
   element: 0x9180,
   name: "GradientOutputType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Gradient Output Type",
 };
 
@@ -8269,7 +8269,7 @@ pub const SpecificAbsorptionRateValue: Tag = Tag {
   element: 0x9181,
   name: "SpecificAbsorptionRateValue",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Specific Absorption Rate Value",
 };
 
@@ -8278,7 +8278,7 @@ pub const GradientOutput: Tag = Tag {
   element: 0x9182,
   name: "GradientOutput",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Gradient Output",
 };
 
@@ -8287,7 +8287,7 @@ pub const FlowCompensationDirection: Tag = Tag {
   element: 0x9183,
   name: "FlowCompensationDirection",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Flow Compensation Direction",
 };
 
@@ -8296,7 +8296,7 @@ pub const TaggingDelay: Tag = Tag {
   element: 0x9184,
   name: "TaggingDelay",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Tagging Delay",
 };
 
@@ -8305,7 +8305,7 @@ pub const RespiratoryMotionCompensationTechniqueDescription: Tag = Tag {
   element: 0x9185,
   name: "RespiratoryMotionCompensationTechniqueDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Respiratory Motion Compensation Technique Description",
 };
 
@@ -8314,7 +8314,7 @@ pub const RespiratorySignalSourceID: Tag = Tag {
   element: 0x9186,
   name: "RespiratorySignalSourceID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Respiratory Signal Source ID",
 };
 
@@ -8323,7 +8323,7 @@ pub const ChemicalShiftMinimumIntegrationLimitInHz: Tag = Tag {
   element: 0x9195,
   name: "ChemicalShiftMinimumIntegrationLimitInHz",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Chemical Shift Minimum Integration Limit in Hz",
 };
 
@@ -8332,7 +8332,7 @@ pub const ChemicalShiftMaximumIntegrationLimitInHz: Tag = Tag {
   element: 0x9196,
   name: "ChemicalShiftMaximumIntegrationLimitInHz",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Chemical Shift Maximum Integration Limit in Hz",
 };
 
@@ -8341,7 +8341,7 @@ pub const MRVelocityEncodingSequence: Tag = Tag {
   element: 0x9197,
   name: "MRVelocityEncodingSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "MR Velocity Encoding Sequence",
 };
 
@@ -8350,7 +8350,7 @@ pub const FirstOrderPhaseCorrection: Tag = Tag {
   element: 0x9198,
   name: "FirstOrderPhaseCorrection",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "First Order Phase Correction",
 };
 
@@ -8359,7 +8359,7 @@ pub const WaterReferencedPhaseCorrection: Tag = Tag {
   element: 0x9199,
   name: "WaterReferencedPhaseCorrection",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Water Referenced Phase Correction",
 };
 
@@ -8368,7 +8368,7 @@ pub const MRSpectroscopyAcquisitionType: Tag = Tag {
   element: 0x9200,
   name: "MRSpectroscopyAcquisitionType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "MR Spectroscopy Acquisition Type",
 };
 
@@ -8377,7 +8377,7 @@ pub const RespiratoryCyclePosition: Tag = Tag {
   element: 0x9214,
   name: "RespiratoryCyclePosition",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Respiratory Cycle Position",
 };
 
@@ -8386,7 +8386,7 @@ pub const VelocityEncodingMaximumValue: Tag = Tag {
   element: 0x9217,
   name: "VelocityEncodingMaximumValue",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Velocity Encoding Maximum Value",
 };
 
@@ -8395,7 +8395,7 @@ pub const TagSpacingSecondDimension: Tag = Tag {
   element: 0x9218,
   name: "TagSpacingSecondDimension",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Tag Spacing Second Dimension",
 };
 
@@ -8404,7 +8404,7 @@ pub const TagAngleSecondAxis: Tag = Tag {
   element: 0x9219,
   name: "TagAngleSecondAxis",
   vr: "SS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Tag Angle Second Axis",
 };
 
@@ -8413,7 +8413,7 @@ pub const FrameAcquisitionDuration: Tag = Tag {
   element: 0x9220,
   name: "FrameAcquisitionDuration",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Frame Acquisition Duration",
 };
 
@@ -8422,7 +8422,7 @@ pub const MRImageFrameTypeSequence: Tag = Tag {
   element: 0x9226,
   name: "MRImageFrameTypeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "MR Image Frame Type Sequence",
 };
 
@@ -8431,7 +8431,7 @@ pub const MRSpectroscopyFrameTypeSequence: Tag = Tag {
   element: 0x9227,
   name: "MRSpectroscopyFrameTypeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "MR Spectroscopy Frame Type Sequence",
 };
 
@@ -8440,7 +8440,7 @@ pub const MRAcquisitionPhaseEncodingStepsInPlane: Tag = Tag {
   element: 0x9231,
   name: "MRAcquisitionPhaseEncodingStepsInPlane",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "MR Acquisition Phase Encoding Steps in-plane",
 };
 
@@ -8449,7 +8449,7 @@ pub const MRAcquisitionPhaseEncodingStepsOutOfPlane: Tag = Tag {
   element: 0x9232,
   name: "MRAcquisitionPhaseEncodingStepsOutOfPlane",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "MR Acquisition Phase Encoding Steps out-of-plane",
 };
 
@@ -8458,7 +8458,7 @@ pub const SpectroscopyAcquisitionPhaseColumns: Tag = Tag {
   element: 0x9234,
   name: "SpectroscopyAcquisitionPhaseColumns",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Spectroscopy Acquisition Phase Columns",
 };
 
@@ -8467,7 +8467,7 @@ pub const CardiacCyclePosition: Tag = Tag {
   element: 0x9236,
   name: "CardiacCyclePosition",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Cardiac Cycle Position",
 };
 
@@ -8476,7 +8476,7 @@ pub const SpecificAbsorptionRateSequence: Tag = Tag {
   element: 0x9239,
   name: "SpecificAbsorptionRateSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Specific Absorption Rate Sequence",
 };
 
@@ -8485,7 +8485,7 @@ pub const RFEchoTrainLength: Tag = Tag {
   element: 0x9240,
   name: "RFEchoTrainLength",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "RF Echo Train Length",
 };
 
@@ -8494,7 +8494,7 @@ pub const GradientEchoTrainLength: Tag = Tag {
   element: 0x9241,
   name: "GradientEchoTrainLength",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Gradient Echo Train Length",
 };
 
@@ -8503,7 +8503,7 @@ pub const ArterialSpinLabelingContrast: Tag = Tag {
   element: 0x9250,
   name: "ArterialSpinLabelingContrast",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Arterial Spin Labeling Contrast",
 };
 
@@ -8512,7 +8512,7 @@ pub const MRArterialSpinLabelingSequence: Tag = Tag {
   element: 0x9251,
   name: "MRArterialSpinLabelingSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "MR Arterial Spin Labeling Sequence",
 };
 
@@ -8521,7 +8521,7 @@ pub const ASLTechniqueDescription: Tag = Tag {
   element: 0x9252,
   name: "ASLTechniqueDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ASL Technique Description",
 };
 
@@ -8530,7 +8530,7 @@ pub const ASLSlabNumber: Tag = Tag {
   element: 0x9253,
   name: "ASLSlabNumber",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ASL Slab Number",
 };
 
@@ -8539,7 +8539,7 @@ pub const ASLSlabThickness: Tag = Tag {
   element: 0x9254,
   name: "ASLSlabThickness",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ASL Slab Thickness",
 };
 
@@ -8548,7 +8548,7 @@ pub const ASLSlabOrientation: Tag = Tag {
   element: 0x9255,
   name: "ASLSlabOrientation",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "ASL Slab Orientation",
 };
 
@@ -8557,7 +8557,7 @@ pub const ASLMidSlabPosition: Tag = Tag {
   element: 0x9256,
   name: "ASLMidSlabPosition",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "ASL Mid Slab Position",
 };
 
@@ -8566,7 +8566,7 @@ pub const ASLContext: Tag = Tag {
   element: 0x9257,
   name: "ASLContext",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ASL Context",
 };
 
@@ -8575,7 +8575,7 @@ pub const ASLPulseTrainDuration: Tag = Tag {
   element: 0x9258,
   name: "ASLPulseTrainDuration",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ASL Pulse Train Duration",
 };
 
@@ -8584,7 +8584,7 @@ pub const ASLCrusherFlag: Tag = Tag {
   element: 0x9259,
   name: "ASLCrusherFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ASL Crusher Flag",
 };
 
@@ -8593,7 +8593,7 @@ pub const ASLCrusherFlowLimit: Tag = Tag {
   element: 0x925A,
   name: "ASLCrusherFlowLimit",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ASL Crusher Flow Limit",
 };
 
@@ -8602,7 +8602,7 @@ pub const ASLCrusherDescription: Tag = Tag {
   element: 0x925B,
   name: "ASLCrusherDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ASL Crusher Description",
 };
 
@@ -8611,7 +8611,7 @@ pub const ASLBolusCutoffFlag: Tag = Tag {
   element: 0x925C,
   name: "ASLBolusCutoffFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ASL Bolus Cut-off Flag",
 };
 
@@ -8620,7 +8620,7 @@ pub const ASLBolusCutoffTimingSequence: Tag = Tag {
   element: 0x925D,
   name: "ASLBolusCutoffTimingSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ASL Bolus Cut-off Timing Sequence",
 };
 
@@ -8629,7 +8629,7 @@ pub const ASLBolusCutoffTechnique: Tag = Tag {
   element: 0x925E,
   name: "ASLBolusCutoffTechnique",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ASL Bolus Cut-off Technique",
 };
 
@@ -8638,7 +8638,7 @@ pub const ASLBolusCutoffDelayTime: Tag = Tag {
   element: 0x925F,
   name: "ASLBolusCutoffDelayTime",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ASL Bolus Cut-off Delay Time",
 };
 
@@ -8647,7 +8647,7 @@ pub const ASLSlabSequence: Tag = Tag {
   element: 0x9260,
   name: "ASLSlabSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ASL Slab Sequence",
 };
 
@@ -8656,7 +8656,7 @@ pub const ChemicalShiftMinimumIntegrationLimitInppm: Tag = Tag {
   element: 0x9295,
   name: "ChemicalShiftMinimumIntegrationLimitInppm",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Chemical Shift Minimum Integration Limit in ppm",
 };
 
@@ -8665,7 +8665,7 @@ pub const ChemicalShiftMaximumIntegrationLimitInppm: Tag = Tag {
   element: 0x9296,
   name: "ChemicalShiftMaximumIntegrationLimitInppm",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Chemical Shift Maximum Integration Limit in ppm",
 };
 
@@ -8674,7 +8674,7 @@ pub const WaterReferenceAcquisition: Tag = Tag {
   element: 0x9297,
   name: "WaterReferenceAcquisition",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Water Reference Acquisition",
 };
 
@@ -8683,7 +8683,7 @@ pub const EchoPeakPosition: Tag = Tag {
   element: 0x9298,
   name: "EchoPeakPosition",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Echo Peak Position",
 };
 
@@ -8692,7 +8692,7 @@ pub const CTAcquisitionTypeSequence: Tag = Tag {
   element: 0x9301,
   name: "CTAcquisitionTypeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "CT Acquisition Type Sequence",
 };
 
@@ -8701,7 +8701,7 @@ pub const AcquisitionType: Tag = Tag {
   element: 0x9302,
   name: "AcquisitionType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Acquisition Type",
 };
 
@@ -8710,7 +8710,7 @@ pub const TubeAngle: Tag = Tag {
   element: 0x9303,
   name: "TubeAngle",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Tube Angle",
 };
 
@@ -8719,7 +8719,7 @@ pub const CTAcquisitionDetailsSequence: Tag = Tag {
   element: 0x9304,
   name: "CTAcquisitionDetailsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "CT Acquisition Details Sequence",
 };
 
@@ -8728,7 +8728,7 @@ pub const RevolutionTime: Tag = Tag {
   element: 0x9305,
   name: "RevolutionTime",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Revolution Time",
 };
 
@@ -8737,7 +8737,7 @@ pub const SingleCollimationWidth: Tag = Tag {
   element: 0x9306,
   name: "SingleCollimationWidth",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Single Collimation Width",
 };
 
@@ -8746,7 +8746,7 @@ pub const TotalCollimationWidth: Tag = Tag {
   element: 0x9307,
   name: "TotalCollimationWidth",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Total Collimation Width",
 };
 
@@ -8755,7 +8755,7 @@ pub const CTTableDynamicsSequence: Tag = Tag {
   element: 0x9308,
   name: "CTTableDynamicsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "CT Table Dynamics Sequence",
 };
 
@@ -8764,7 +8764,7 @@ pub const TableSpeed: Tag = Tag {
   element: 0x9309,
   name: "TableSpeed",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Speed",
 };
 
@@ -8773,7 +8773,7 @@ pub const TableFeedPerRotation: Tag = Tag {
   element: 0x9310,
   name: "TableFeedPerRotation",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Feed per Rotation",
 };
 
@@ -8782,7 +8782,7 @@ pub const SpiralPitchFactor: Tag = Tag {
   element: 0x9311,
   name: "SpiralPitchFactor",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Spiral Pitch Factor",
 };
 
@@ -8791,7 +8791,7 @@ pub const CTGeometrySequence: Tag = Tag {
   element: 0x9312,
   name: "CTGeometrySequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "CT Geometry Sequence",
 };
 
@@ -8800,7 +8800,7 @@ pub const DataCollectionCenterPatient: Tag = Tag {
   element: 0x9313,
   name: "DataCollectionCenterPatient",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Data Collection Center (Patient)",
 };
 
@@ -8809,7 +8809,7 @@ pub const CTReconstructionSequence: Tag = Tag {
   element: 0x9314,
   name: "CTReconstructionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "CT Reconstruction Sequence",
 };
 
@@ -8818,7 +8818,7 @@ pub const ReconstructionAlgorithm: Tag = Tag {
   element: 0x9315,
   name: "ReconstructionAlgorithm",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Reconstruction Algorithm",
 };
 
@@ -8827,7 +8827,7 @@ pub const ConvolutionKernelGroup: Tag = Tag {
   element: 0x9316,
   name: "ConvolutionKernelGroup",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Convolution Kernel Group",
 };
 
@@ -8836,7 +8836,7 @@ pub const ReconstructionFieldOfView: Tag = Tag {
   element: 0x9317,
   name: "ReconstructionFieldOfView",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Reconstruction Field of View",
 };
 
@@ -8845,7 +8845,7 @@ pub const ReconstructionTargetCenterPatient: Tag = Tag {
   element: 0x9318,
   name: "ReconstructionTargetCenterPatient",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Reconstruction Target Center (Patient)",
 };
 
@@ -8854,7 +8854,7 @@ pub const ReconstructionAngle: Tag = Tag {
   element: 0x9319,
   name: "ReconstructionAngle",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Reconstruction Angle",
 };
 
@@ -8863,7 +8863,7 @@ pub const ImageFilter: Tag = Tag {
   element: 0x9320,
   name: "ImageFilter",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Filter",
 };
 
@@ -8872,7 +8872,7 @@ pub const CTExposureSequence: Tag = Tag {
   element: 0x9321,
   name: "CTExposureSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "CT Exposure Sequence",
 };
 
@@ -8881,7 +8881,7 @@ pub const ReconstructionPixelSpacing: Tag = Tag {
   element: 0x9322,
   name: "ReconstructionPixelSpacing",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Reconstruction Pixel Spacing",
 };
 
@@ -8890,7 +8890,7 @@ pub const ExposureModulationType: Tag = Tag {
   element: 0x9323,
   name: "ExposureModulationType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Exposure Modulation Type",
 };
 
@@ -8899,7 +8899,7 @@ pub const EstimatedDoseSaving: Tag = Tag {
   element: 0x9324,
   name: "EstimatedDoseSaving",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Estimated Dose Saving",
 };
 
@@ -8908,7 +8908,7 @@ pub const CTXRayDetailsSequence: Tag = Tag {
   element: 0x9325,
   name: "CTXRayDetailsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "CT X-Ray Details Sequence",
 };
 
@@ -8917,7 +8917,7 @@ pub const CTPositionSequence: Tag = Tag {
   element: 0x9326,
   name: "CTPositionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "CT Position Sequence",
 };
 
@@ -8926,7 +8926,7 @@ pub const TablePosition: Tag = Tag {
   element: 0x9327,
   name: "TablePosition",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Position",
 };
 
@@ -8935,7 +8935,7 @@ pub const ExposureTimeInms: Tag = Tag {
   element: 0x9328,
   name: "ExposureTimeInms",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Exposure Time in ms",
 };
 
@@ -8944,7 +8944,7 @@ pub const CTImageFrameTypeSequence: Tag = Tag {
   element: 0x9329,
   name: "CTImageFrameTypeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "CT Image Frame Type Sequence",
 };
 
@@ -8953,7 +8953,7 @@ pub const XRayTubeCurrentInmA: Tag = Tag {
   element: 0x9330,
   name: "XRayTubeCurrentInmA",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "X-Ray Tube Current in mA",
 };
 
@@ -8962,7 +8962,7 @@ pub const ExposureInmAs: Tag = Tag {
   element: 0x9332,
   name: "ExposureInmAs",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Exposure in mAs",
 };
 
@@ -8971,7 +8971,7 @@ pub const ConstantVolumeFlag: Tag = Tag {
   element: 0x9333,
   name: "ConstantVolumeFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Constant Volume Flag",
 };
 
@@ -8980,7 +8980,7 @@ pub const FluoroscopyFlag: Tag = Tag {
   element: 0x9334,
   name: "FluoroscopyFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fluoroscopy Flag",
 };
 
@@ -8989,7 +8989,7 @@ pub const DistanceSourceToDataCollectionCenter: Tag = Tag {
   element: 0x9335,
   name: "DistanceSourceToDataCollectionCenter",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Distance Source to Data Collection Center",
 };
 
@@ -8998,7 +8998,7 @@ pub const ContrastBolusAgentNumber: Tag = Tag {
   element: 0x9337,
   name: "ContrastBolusAgentNumber",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contrast/Bolus Agent Number",
 };
 
@@ -9007,7 +9007,7 @@ pub const ContrastBolusIngredientCodeSequence: Tag = Tag {
   element: 0x9338,
   name: "ContrastBolusIngredientCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contrast/Bolus Ingredient Code Sequence",
 };
 
@@ -9016,7 +9016,7 @@ pub const ContrastAdministrationProfileSequence: Tag = Tag {
   element: 0x9340,
   name: "ContrastAdministrationProfileSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contrast Administration Profile Sequence",
 };
 
@@ -9025,7 +9025,7 @@ pub const ContrastBolusUsageSequence: Tag = Tag {
   element: 0x9341,
   name: "ContrastBolusUsageSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contrast/Bolus Usage Sequence",
 };
 
@@ -9034,7 +9034,7 @@ pub const ContrastBolusAgentAdministered: Tag = Tag {
   element: 0x9342,
   name: "ContrastBolusAgentAdministered",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contrast/Bolus Agent Administered",
 };
 
@@ -9043,7 +9043,7 @@ pub const ContrastBolusAgentDetected: Tag = Tag {
   element: 0x9343,
   name: "ContrastBolusAgentDetected",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contrast/Bolus Agent Detected",
 };
 
@@ -9052,7 +9052,7 @@ pub const ContrastBolusAgentPhase: Tag = Tag {
   element: 0x9344,
   name: "ContrastBolusAgentPhase",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contrast/Bolus Agent Phase",
 };
 
@@ -9061,7 +9061,7 @@ pub const CTDIvol: Tag = Tag {
   element: 0x9345,
   name: "CTDIvol",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "CTDIvol",
 };
 
@@ -9070,7 +9070,7 @@ pub const CTDIPhantomTypeCodeSequence: Tag = Tag {
   element: 0x9346,
   name: "CTDIPhantomTypeCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "CTDI Phantom Type Code Sequence",
 };
 
@@ -9079,7 +9079,7 @@ pub const CalciumScoringMassFactorPatient: Tag = Tag {
   element: 0x9351,
   name: "CalciumScoringMassFactorPatient",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Calcium Scoring Mass Factor Patient",
 };
 
@@ -9088,7 +9088,7 @@ pub const CalciumScoringMassFactorDevice: Tag = Tag {
   element: 0x9352,
   name: "CalciumScoringMassFactorDevice",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Calcium Scoring Mass Factor Device",
 };
 
@@ -9097,7 +9097,7 @@ pub const EnergyWeightingFactor: Tag = Tag {
   element: 0x9353,
   name: "EnergyWeightingFactor",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Energy Weighting Factor",
 };
 
@@ -9106,7 +9106,7 @@ pub const CTAdditionalXRaySourceSequence: Tag = Tag {
   element: 0x9360,
   name: "CTAdditionalXRaySourceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "CT Additional X-Ray Source Sequence",
 };
 
@@ -9115,7 +9115,7 @@ pub const ProjectionPixelCalibrationSequence: Tag = Tag {
   element: 0x9401,
   name: "ProjectionPixelCalibrationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Projection Pixel Calibration Sequence",
 };
 
@@ -9124,7 +9124,7 @@ pub const DistanceSourceToIsocenter: Tag = Tag {
   element: 0x9402,
   name: "DistanceSourceToIsocenter",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Distance Source to Isocenter",
 };
 
@@ -9133,7 +9133,7 @@ pub const DistanceObjectToTableTop: Tag = Tag {
   element: 0x9403,
   name: "DistanceObjectToTableTop",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Distance Object to Table Top",
 };
 
@@ -9142,7 +9142,7 @@ pub const ObjectPixelSpacingInCenterOfBeam: Tag = Tag {
   element: 0x9404,
   name: "ObjectPixelSpacingInCenterOfBeam",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Object Pixel Spacing in Center of Beam",
 };
 
@@ -9151,7 +9151,7 @@ pub const PositionerPositionSequence: Tag = Tag {
   element: 0x9405,
   name: "PositionerPositionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Positioner Position Sequence",
 };
 
@@ -9160,7 +9160,7 @@ pub const TablePositionSequence: Tag = Tag {
   element: 0x9406,
   name: "TablePositionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Position Sequence",
 };
 
@@ -9169,7 +9169,7 @@ pub const CollimatorShapeSequence: Tag = Tag {
   element: 0x9407,
   name: "CollimatorShapeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Collimator Shape Sequence",
 };
 
@@ -9178,7 +9178,7 @@ pub const PlanesInAcquisition: Tag = Tag {
   element: 0x9410,
   name: "PlanesInAcquisition",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Planes in Acquisition",
 };
 
@@ -9187,7 +9187,7 @@ pub const XAXRFFrameCharacteristicsSequence: Tag = Tag {
   element: 0x9412,
   name: "XAXRFFrameCharacteristicsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "XA/XRF Frame Characteristics Sequence",
 };
 
@@ -9196,7 +9196,7 @@ pub const FrameAcquisitionSequence: Tag = Tag {
   element: 0x9417,
   name: "FrameAcquisitionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Frame Acquisition Sequence",
 };
 
@@ -9205,7 +9205,7 @@ pub const XRayReceptorType: Tag = Tag {
   element: 0x9420,
   name: "XRayReceptorType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "X-Ray Receptor Type",
 };
 
@@ -9214,7 +9214,7 @@ pub const AcquisitionProtocolName: Tag = Tag {
   element: 0x9423,
   name: "AcquisitionProtocolName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Acquisition Protocol Name",
 };
 
@@ -9223,7 +9223,7 @@ pub const AcquisitionProtocolDescription: Tag = Tag {
   element: 0x9424,
   name: "AcquisitionProtocolDescription",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Acquisition Protocol Description",
 };
 
@@ -9232,7 +9232,7 @@ pub const ContrastBolusIngredientOpaque: Tag = Tag {
   element: 0x9425,
   name: "ContrastBolusIngredientOpaque",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contrast/Bolus Ingredient Opaque",
 };
 
@@ -9241,7 +9241,7 @@ pub const DistanceReceptorPlaneToDetectorHousing: Tag = Tag {
   element: 0x9426,
   name: "DistanceReceptorPlaneToDetectorHousing",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Distance Receptor Plane to Detector Housing",
 };
 
@@ -9250,7 +9250,7 @@ pub const IntensifierActiveShape: Tag = Tag {
   element: 0x9427,
   name: "IntensifierActiveShape",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Intensifier Active Shape",
 };
 
@@ -9268,7 +9268,7 @@ pub const PhysicalDetectorSize: Tag = Tag {
   element: 0x9429,
   name: "PhysicalDetectorSize",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Physical Detector Size",
 };
 
@@ -9277,7 +9277,7 @@ pub const PositionOfIsocenterProjection: Tag = Tag {
   element: 0x9430,
   name: "PositionOfIsocenterProjection",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Position of Isocenter Projection",
 };
 
@@ -9286,7 +9286,7 @@ pub const FieldOfViewSequence: Tag = Tag {
   element: 0x9432,
   name: "FieldOfViewSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Field of View Sequence",
 };
 
@@ -9295,7 +9295,7 @@ pub const FieldOfViewDescription: Tag = Tag {
   element: 0x9433,
   name: "FieldOfViewDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Field of View Description",
 };
 
@@ -9304,7 +9304,7 @@ pub const ExposureControlSensingRegionsSequence: Tag = Tag {
   element: 0x9434,
   name: "ExposureControlSensingRegionsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Exposure Control Sensing Regions Sequence",
 };
 
@@ -9313,7 +9313,7 @@ pub const ExposureControlSensingRegionShape: Tag = Tag {
   element: 0x9435,
   name: "ExposureControlSensingRegionShape",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Exposure Control Sensing Region Shape",
 };
 
@@ -9322,7 +9322,7 @@ pub const ExposureControlSensingRegionLeftVerticalEdge: Tag = Tag {
   element: 0x9436,
   name: "ExposureControlSensingRegionLeftVerticalEdge",
   vr: "SS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Exposure Control Sensing Region Left Vertical Edge",
 };
 
@@ -9331,7 +9331,7 @@ pub const ExposureControlSensingRegionRightVerticalEdge: Tag = Tag {
   element: 0x9437,
   name: "ExposureControlSensingRegionRightVerticalEdge",
   vr: "SS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Exposure Control Sensing Region Right Vertical Edge",
 };
 
@@ -9340,7 +9340,7 @@ pub const ExposureControlSensingRegionUpperHorizontalEdge: Tag = Tag {
   element: 0x9438,
   name: "ExposureControlSensingRegionUpperHorizontalEdge",
   vr: "SS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Exposure Control Sensing Region Upper Horizontal Edge",
 };
 
@@ -9349,7 +9349,7 @@ pub const ExposureControlSensingRegionLowerHorizontalEdge: Tag = Tag {
   element: 0x9439,
   name: "ExposureControlSensingRegionLowerHorizontalEdge",
   vr: "SS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Exposure Control Sensing Region Lower Horizontal Edge",
 };
 
@@ -9358,7 +9358,7 @@ pub const CenterOfCircularExposureControlSensingRegion: Tag = Tag {
   element: 0x9440,
   name: "CenterOfCircularExposureControlSensingRegion",
   vr: "SS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Center of Circular Exposure Control Sensing Region",
 };
 
@@ -9367,7 +9367,7 @@ pub const RadiusOfCircularExposureControlSensingRegion: Tag = Tag {
   element: 0x9441,
   name: "RadiusOfCircularExposureControlSensingRegion",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Radius of Circular Exposure Control Sensing Region",
 };
 
@@ -9385,7 +9385,7 @@ pub const ColumnAngulationPatient: Tag = Tag {
   element: 0x9447,
   name: "ColumnAngulationPatient",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Column Angulation (Patient)",
 };
 
@@ -9394,7 +9394,7 @@ pub const BeamAngle: Tag = Tag {
   element: 0x9449,
   name: "BeamAngle",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Beam Angle",
 };
 
@@ -9403,7 +9403,7 @@ pub const FrameDetectorParametersSequence: Tag = Tag {
   element: 0x9451,
   name: "FrameDetectorParametersSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Frame Detector Parameters Sequence",
 };
 
@@ -9412,7 +9412,7 @@ pub const CalculatedAnatomyThickness: Tag = Tag {
   element: 0x9452,
   name: "CalculatedAnatomyThickness",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Calculated Anatomy Thickness",
 };
 
@@ -9421,7 +9421,7 @@ pub const CalibrationSequence: Tag = Tag {
   element: 0x9455,
   name: "CalibrationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Calibration Sequence",
 };
 
@@ -9430,7 +9430,7 @@ pub const ObjectThicknessSequence: Tag = Tag {
   element: 0x9456,
   name: "ObjectThicknessSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Object Thickness Sequence",
 };
 
@@ -9439,7 +9439,7 @@ pub const PlaneIdentification: Tag = Tag {
   element: 0x9457,
   name: "PlaneIdentification",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Plane Identification",
 };
 
@@ -9457,7 +9457,7 @@ pub const IsocenterReferenceSystemSequence: Tag = Tag {
   element: 0x9462,
   name: "IsocenterReferenceSystemSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Isocenter Reference System Sequence",
 };
 
@@ -9466,7 +9466,7 @@ pub const PositionerIsocenterPrimaryAngle: Tag = Tag {
   element: 0x9463,
   name: "PositionerIsocenterPrimaryAngle",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Positioner Isocenter Primary Angle",
 };
 
@@ -9475,7 +9475,7 @@ pub const PositionerIsocenterSecondaryAngle: Tag = Tag {
   element: 0x9464,
   name: "PositionerIsocenterSecondaryAngle",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Positioner Isocenter Secondary Angle",
 };
 
@@ -9484,7 +9484,7 @@ pub const PositionerIsocenterDetectorRotationAngle: Tag = Tag {
   element: 0x9465,
   name: "PositionerIsocenterDetectorRotationAngle",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Positioner Isocenter Detector Rotation Angle",
 };
 
@@ -9493,7 +9493,7 @@ pub const TableXPositionToIsocenter: Tag = Tag {
   element: 0x9466,
   name: "TableXPositionToIsocenter",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table X Position to Isocenter",
 };
 
@@ -9502,7 +9502,7 @@ pub const TableYPositionToIsocenter: Tag = Tag {
   element: 0x9467,
   name: "TableYPositionToIsocenter",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Y Position to Isocenter",
 };
 
@@ -9511,7 +9511,7 @@ pub const TableZPositionToIsocenter: Tag = Tag {
   element: 0x9468,
   name: "TableZPositionToIsocenter",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Z Position to Isocenter",
 };
 
@@ -9520,7 +9520,7 @@ pub const TableHorizontalRotationAngle: Tag = Tag {
   element: 0x9469,
   name: "TableHorizontalRotationAngle",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Horizontal Rotation Angle",
 };
 
@@ -9529,7 +9529,7 @@ pub const TableHeadTiltAngle: Tag = Tag {
   element: 0x9470,
   name: "TableHeadTiltAngle",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Head Tilt Angle",
 };
 
@@ -9538,7 +9538,7 @@ pub const TableCradleTiltAngle: Tag = Tag {
   element: 0x9471,
   name: "TableCradleTiltAngle",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Cradle Tilt Angle",
 };
 
@@ -9547,7 +9547,7 @@ pub const FrameDisplayShutterSequence: Tag = Tag {
   element: 0x9472,
   name: "FrameDisplayShutterSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Frame Display Shutter Sequence",
 };
 
@@ -9556,7 +9556,7 @@ pub const AcquiredImageAreaDoseProduct: Tag = Tag {
   element: 0x9473,
   name: "AcquiredImageAreaDoseProduct",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Acquired Image Area Dose Product",
 };
 
@@ -9565,7 +9565,7 @@ pub const CArmPositionerTabletopRelationship: Tag = Tag {
   element: 0x9474,
   name: "CArmPositionerTabletopRelationship",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "C-arm Positioner Tabletop Relationship",
 };
 
@@ -9574,7 +9574,7 @@ pub const XRayGeometrySequence: Tag = Tag {
   element: 0x9476,
   name: "XRayGeometrySequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "X-Ray Geometry Sequence",
 };
 
@@ -9583,7 +9583,7 @@ pub const IrradiationEventIdentificationSequence: Tag = Tag {
   element: 0x9477,
   name: "IrradiationEventIdentificationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Irradiation Event Identification Sequence",
 };
 
@@ -9592,7 +9592,7 @@ pub const XRay3DFrameTypeSequence: Tag = Tag {
   element: 0x9504,
   name: "XRay3DFrameTypeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "X-Ray 3D Frame Type Sequence",
 };
 
@@ -9601,7 +9601,7 @@ pub const ContributingSourcesSequence: Tag = Tag {
   element: 0x9506,
   name: "ContributingSourcesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contributing Sources Sequence",
 };
 
@@ -9610,7 +9610,7 @@ pub const XRay3DAcquisitionSequence: Tag = Tag {
   element: 0x9507,
   name: "XRay3DAcquisitionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "X-Ray 3D Acquisition Sequence",
 };
 
@@ -9619,7 +9619,7 @@ pub const PrimaryPositionerScanArc: Tag = Tag {
   element: 0x9508,
   name: "PrimaryPositionerScanArc",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Primary Positioner Scan Arc",
 };
 
@@ -9628,7 +9628,7 @@ pub const SecondaryPositionerScanArc: Tag = Tag {
   element: 0x9509,
   name: "SecondaryPositionerScanArc",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Secondary Positioner Scan Arc",
 };
 
@@ -9637,7 +9637,7 @@ pub const PrimaryPositionerScanStartAngle: Tag = Tag {
   element: 0x9510,
   name: "PrimaryPositionerScanStartAngle",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Primary Positioner Scan Start Angle",
 };
 
@@ -9646,7 +9646,7 @@ pub const SecondaryPositionerScanStartAngle: Tag = Tag {
   element: 0x9511,
   name: "SecondaryPositionerScanStartAngle",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Secondary Positioner Scan Start Angle",
 };
 
@@ -9655,7 +9655,7 @@ pub const PrimaryPositionerIncrement: Tag = Tag {
   element: 0x9514,
   name: "PrimaryPositionerIncrement",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Primary Positioner Increment",
 };
 
@@ -9664,7 +9664,7 @@ pub const SecondaryPositionerIncrement: Tag = Tag {
   element: 0x9515,
   name: "SecondaryPositionerIncrement",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Secondary Positioner Increment",
 };
 
@@ -9673,7 +9673,7 @@ pub const StartAcquisitionDateTime: Tag = Tag {
   element: 0x9516,
   name: "StartAcquisitionDateTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Start Acquisition DateTime",
 };
 
@@ -9682,7 +9682,7 @@ pub const EndAcquisitionDateTime: Tag = Tag {
   element: 0x9517,
   name: "EndAcquisitionDateTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "End Acquisition DateTime",
 };
 
@@ -9691,7 +9691,7 @@ pub const PrimaryPositionerIncrementSign: Tag = Tag {
   element: 0x9518,
   name: "PrimaryPositionerIncrementSign",
   vr: "SS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Primary Positioner Increment Sign",
 };
 
@@ -9700,7 +9700,7 @@ pub const SecondaryPositionerIncrementSign: Tag = Tag {
   element: 0x9519,
   name: "SecondaryPositionerIncrementSign",
   vr: "SS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Secondary Positioner Increment Sign",
 };
 
@@ -9709,7 +9709,7 @@ pub const ApplicationName: Tag = Tag {
   element: 0x9524,
   name: "ApplicationName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Application Name",
 };
 
@@ -9718,7 +9718,7 @@ pub const ApplicationVersion: Tag = Tag {
   element: 0x9525,
   name: "ApplicationVersion",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Application Version",
 };
 
@@ -9727,7 +9727,7 @@ pub const ApplicationManufacturer: Tag = Tag {
   element: 0x9526,
   name: "ApplicationManufacturer",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Application Manufacturer",
 };
 
@@ -9736,7 +9736,7 @@ pub const AlgorithmType: Tag = Tag {
   element: 0x9527,
   name: "AlgorithmType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Algorithm Type",
 };
 
@@ -9745,7 +9745,7 @@ pub const AlgorithmDescription: Tag = Tag {
   element: 0x9528,
   name: "AlgorithmDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Algorithm Description",
 };
 
@@ -9754,7 +9754,7 @@ pub const XRay3DReconstructionSequence: Tag = Tag {
   element: 0x9530,
   name: "XRay3DReconstructionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "X-Ray 3D Reconstruction Sequence",
 };
 
@@ -9763,7 +9763,7 @@ pub const ReconstructionDescription: Tag = Tag {
   element: 0x9531,
   name: "ReconstructionDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Reconstruction Description",
 };
 
@@ -9772,7 +9772,7 @@ pub const PerProjectionAcquisitionSequence: Tag = Tag {
   element: 0x9538,
   name: "PerProjectionAcquisitionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Per Projection Acquisition Sequence",
 };
 
@@ -9781,7 +9781,7 @@ pub const DetectorPositionSequence: Tag = Tag {
   element: 0x9541,
   name: "DetectorPositionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Detector Position Sequence",
 };
 
@@ -9790,7 +9790,7 @@ pub const XRayAcquisitionDoseSequence: Tag = Tag {
   element: 0x9542,
   name: "XRayAcquisitionDoseSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "X-Ray Acquisition Dose Sequence",
 };
 
@@ -9799,7 +9799,7 @@ pub const XRaySourceIsocenterPrimaryAngle: Tag = Tag {
   element: 0x9543,
   name: "XRaySourceIsocenterPrimaryAngle",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "X-Ray Source Isocenter Primary Angle",
 };
 
@@ -9808,7 +9808,7 @@ pub const XRaySourceIsocenterSecondaryAngle: Tag = Tag {
   element: 0x9544,
   name: "XRaySourceIsocenterSecondaryAngle",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "X-Ray Source Isocenter Secondary Angle",
 };
 
@@ -9817,7 +9817,7 @@ pub const BreastSupportIsocenterPrimaryAngle: Tag = Tag {
   element: 0x9545,
   name: "BreastSupportIsocenterPrimaryAngle",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Breast Support Isocenter Primary Angle",
 };
 
@@ -9826,7 +9826,7 @@ pub const BreastSupportIsocenterSecondaryAngle: Tag = Tag {
   element: 0x9546,
   name: "BreastSupportIsocenterSecondaryAngle",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Breast Support Isocenter Secondary Angle",
 };
 
@@ -9835,7 +9835,7 @@ pub const BreastSupportXPositionToIsocenter: Tag = Tag {
   element: 0x9547,
   name: "BreastSupportXPositionToIsocenter",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Breast Support X Position to Isocenter",
 };
 
@@ -9844,7 +9844,7 @@ pub const BreastSupportYPositionToIsocenter: Tag = Tag {
   element: 0x9548,
   name: "BreastSupportYPositionToIsocenter",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Breast Support Y Position to Isocenter",
 };
 
@@ -9853,7 +9853,7 @@ pub const BreastSupportZPositionToIsocenter: Tag = Tag {
   element: 0x9549,
   name: "BreastSupportZPositionToIsocenter",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Breast Support Z Position to Isocenter",
 };
 
@@ -9862,7 +9862,7 @@ pub const DetectorIsocenterPrimaryAngle: Tag = Tag {
   element: 0x9550,
   name: "DetectorIsocenterPrimaryAngle",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Detector Isocenter Primary Angle",
 };
 
@@ -9871,7 +9871,7 @@ pub const DetectorIsocenterSecondaryAngle: Tag = Tag {
   element: 0x9551,
   name: "DetectorIsocenterSecondaryAngle",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Detector Isocenter Secondary Angle",
 };
 
@@ -9880,7 +9880,7 @@ pub const DetectorXPositionToIsocenter: Tag = Tag {
   element: 0x9552,
   name: "DetectorXPositionToIsocenter",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Detector X Position to Isocenter",
 };
 
@@ -9889,7 +9889,7 @@ pub const DetectorYPositionToIsocenter: Tag = Tag {
   element: 0x9553,
   name: "DetectorYPositionToIsocenter",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Detector Y Position to Isocenter",
 };
 
@@ -9898,7 +9898,7 @@ pub const DetectorZPositionToIsocenter: Tag = Tag {
   element: 0x9554,
   name: "DetectorZPositionToIsocenter",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Detector Z Position to Isocenter",
 };
 
@@ -9907,7 +9907,7 @@ pub const XRayGridSequence: Tag = Tag {
   element: 0x9555,
   name: "XRayGridSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "X-Ray Grid Sequence",
 };
 
@@ -9916,7 +9916,7 @@ pub const XRayFilterSequence: Tag = Tag {
   element: 0x9556,
   name: "XRayFilterSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "X-Ray Filter Sequence",
 };
 
@@ -9925,7 +9925,7 @@ pub const DetectorActiveAreaTLHCPosition: Tag = Tag {
   element: 0x9557,
   name: "DetectorActiveAreaTLHCPosition",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Detector Active Area TLHC Position",
 };
 
@@ -9934,7 +9934,7 @@ pub const DetectorActiveAreaOrientation: Tag = Tag {
   element: 0x9558,
   name: "DetectorActiveAreaOrientation",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 6, end: 6 },
   description: "Detector Active Area Orientation",
 };
 
@@ -9943,7 +9943,7 @@ pub const PositionerPrimaryAngleDirection: Tag = Tag {
   element: 0x9559,
   name: "PositionerPrimaryAngleDirection",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Positioner Primary Angle Direction",
 };
 
@@ -9952,7 +9952,7 @@ pub const DiffusionBMatrixSequence: Tag = Tag {
   element: 0x9601,
   name: "DiffusionBMatrixSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Diffusion b-matrix Sequence",
 };
 
@@ -9961,7 +9961,7 @@ pub const DiffusionBValueXX: Tag = Tag {
   element: 0x9602,
   name: "DiffusionBValueXX",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Diffusion b-value XX",
 };
 
@@ -9970,7 +9970,7 @@ pub const DiffusionBValueXY: Tag = Tag {
   element: 0x9603,
   name: "DiffusionBValueXY",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Diffusion b-value XY",
 };
 
@@ -9979,7 +9979,7 @@ pub const DiffusionBValueXZ: Tag = Tag {
   element: 0x9604,
   name: "DiffusionBValueXZ",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Diffusion b-value XZ",
 };
 
@@ -9988,7 +9988,7 @@ pub const DiffusionBValueYY: Tag = Tag {
   element: 0x9605,
   name: "DiffusionBValueYY",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Diffusion b-value YY",
 };
 
@@ -9997,7 +9997,7 @@ pub const DiffusionBValueYZ: Tag = Tag {
   element: 0x9606,
   name: "DiffusionBValueYZ",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Diffusion b-value YZ",
 };
 
@@ -10006,7 +10006,7 @@ pub const DiffusionBValueZZ: Tag = Tag {
   element: 0x9607,
   name: "DiffusionBValueZZ",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Diffusion b-value ZZ",
 };
 
@@ -10015,7 +10015,7 @@ pub const DecayCorrectionDateTime: Tag = Tag {
   element: 0x9701,
   name: "DecayCorrectionDateTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Decay Correction DateTime",
 };
 
@@ -10024,7 +10024,7 @@ pub const StartDensityThreshold: Tag = Tag {
   element: 0x9715,
   name: "StartDensityThreshold",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Start Density Threshold",
 };
 
@@ -10033,7 +10033,7 @@ pub const StartRelativeDensityDifferenceThreshold: Tag = Tag {
   element: 0x9716,
   name: "StartRelativeDensityDifferenceThreshold",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Start Relative Density Difference Threshold",
 };
 
@@ -10042,7 +10042,7 @@ pub const StartCardiacTriggerCountThreshold: Tag = Tag {
   element: 0x9717,
   name: "StartCardiacTriggerCountThreshold",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Start Cardiac Trigger Count Threshold",
 };
 
@@ -10051,7 +10051,7 @@ pub const StartRespiratoryTriggerCountThreshold: Tag = Tag {
   element: 0x9718,
   name: "StartRespiratoryTriggerCountThreshold",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Start Respiratory Trigger Count Threshold",
 };
 
@@ -10060,7 +10060,7 @@ pub const TerminationCountsThreshold: Tag = Tag {
   element: 0x9719,
   name: "TerminationCountsThreshold",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Termination Counts Threshold",
 };
 
@@ -10069,7 +10069,7 @@ pub const TerminationDensityThreshold: Tag = Tag {
   element: 0x9720,
   name: "TerminationDensityThreshold",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Termination Density Threshold",
 };
 
@@ -10078,7 +10078,7 @@ pub const TerminationRelativeDensityThreshold: Tag = Tag {
   element: 0x9721,
   name: "TerminationRelativeDensityThreshold",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Termination Relative Density Threshold",
 };
 
@@ -10087,7 +10087,7 @@ pub const TerminationTimeThreshold: Tag = Tag {
   element: 0x9722,
   name: "TerminationTimeThreshold",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Termination Time Threshold",
 };
 
@@ -10096,7 +10096,7 @@ pub const TerminationCardiacTriggerCountThreshold: Tag = Tag {
   element: 0x9723,
   name: "TerminationCardiacTriggerCountThreshold",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Termination Cardiac Trigger Count Threshold",
 };
 
@@ -10105,7 +10105,7 @@ pub const TerminationRespiratoryTriggerCountThreshold: Tag = Tag {
   element: 0x9724,
   name: "TerminationRespiratoryTriggerCountThreshold",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Termination Respiratory Trigger Count Threshold",
 };
 
@@ -10114,7 +10114,7 @@ pub const DetectorGeometry: Tag = Tag {
   element: 0x9725,
   name: "DetectorGeometry",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Detector Geometry",
 };
 
@@ -10123,7 +10123,7 @@ pub const TransverseDetectorSeparation: Tag = Tag {
   element: 0x9726,
   name: "TransverseDetectorSeparation",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Transverse Detector Separation",
 };
 
@@ -10132,7 +10132,7 @@ pub const AxialDetectorDimension: Tag = Tag {
   element: 0x9727,
   name: "AxialDetectorDimension",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Axial Detector Dimension",
 };
 
@@ -10141,7 +10141,7 @@ pub const RadiopharmaceuticalAgentNumber: Tag = Tag {
   element: 0x9729,
   name: "RadiopharmaceuticalAgentNumber",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Radiopharmaceutical Agent Number",
 };
 
@@ -10150,7 +10150,7 @@ pub const PETFrameAcquisitionSequence: Tag = Tag {
   element: 0x9732,
   name: "PETFrameAcquisitionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "PET Frame Acquisition Sequence",
 };
 
@@ -10159,7 +10159,7 @@ pub const PETDetectorMotionDetailsSequence: Tag = Tag {
   element: 0x9733,
   name: "PETDetectorMotionDetailsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "PET Detector Motion Details Sequence",
 };
 
@@ -10168,7 +10168,7 @@ pub const PETTableDynamicsSequence: Tag = Tag {
   element: 0x9734,
   name: "PETTableDynamicsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "PET Table Dynamics Sequence",
 };
 
@@ -10177,7 +10177,7 @@ pub const PETPositionSequence: Tag = Tag {
   element: 0x9735,
   name: "PETPositionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "PET Position Sequence",
 };
 
@@ -10186,7 +10186,7 @@ pub const PETFrameCorrectionFactorsSequence: Tag = Tag {
   element: 0x9736,
   name: "PETFrameCorrectionFactorsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "PET Frame Correction Factors Sequence",
 };
 
@@ -10195,7 +10195,7 @@ pub const RadiopharmaceuticalUsageSequence: Tag = Tag {
   element: 0x9737,
   name: "RadiopharmaceuticalUsageSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Radiopharmaceutical Usage Sequence",
 };
 
@@ -10204,7 +10204,7 @@ pub const AttenuationCorrectionSource: Tag = Tag {
   element: 0x9738,
   name: "AttenuationCorrectionSource",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Attenuation Correction Source",
 };
 
@@ -10213,7 +10213,7 @@ pub const NumberOfIterations: Tag = Tag {
   element: 0x9739,
   name: "NumberOfIterations",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Iterations",
 };
 
@@ -10222,7 +10222,7 @@ pub const NumberOfSubsets: Tag = Tag {
   element: 0x9740,
   name: "NumberOfSubsets",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Subsets",
 };
 
@@ -10231,7 +10231,7 @@ pub const PETReconstructionSequence: Tag = Tag {
   element: 0x9749,
   name: "PETReconstructionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "PET Reconstruction Sequence",
 };
 
@@ -10240,7 +10240,7 @@ pub const PETFrameTypeSequence: Tag = Tag {
   element: 0x9751,
   name: "PETFrameTypeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "PET Frame Type Sequence",
 };
 
@@ -10249,7 +10249,7 @@ pub const TimeOfFlightInformationUsed: Tag = Tag {
   element: 0x9755,
   name: "TimeOfFlightInformationUsed",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Time of Flight Information Used",
 };
 
@@ -10258,7 +10258,7 @@ pub const ReconstructionType: Tag = Tag {
   element: 0x9756,
   name: "ReconstructionType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Reconstruction Type",
 };
 
@@ -10267,7 +10267,7 @@ pub const DecayCorrected: Tag = Tag {
   element: 0x9758,
   name: "DecayCorrected",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Decay Corrected",
 };
 
@@ -10276,7 +10276,7 @@ pub const AttenuationCorrected: Tag = Tag {
   element: 0x9759,
   name: "AttenuationCorrected",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Attenuation Corrected",
 };
 
@@ -10285,7 +10285,7 @@ pub const ScatterCorrected: Tag = Tag {
   element: 0x9760,
   name: "ScatterCorrected",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scatter Corrected",
 };
 
@@ -10294,7 +10294,7 @@ pub const DeadTimeCorrected: Tag = Tag {
   element: 0x9761,
   name: "DeadTimeCorrected",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Dead Time Corrected",
 };
 
@@ -10303,7 +10303,7 @@ pub const GantryMotionCorrected: Tag = Tag {
   element: 0x9762,
   name: "GantryMotionCorrected",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Gantry Motion Corrected",
 };
 
@@ -10312,7 +10312,7 @@ pub const PatientMotionCorrected: Tag = Tag {
   element: 0x9763,
   name: "PatientMotionCorrected",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Motion Corrected",
 };
 
@@ -10321,7 +10321,7 @@ pub const CountLossNormalizationCorrected: Tag = Tag {
   element: 0x9764,
   name: "CountLossNormalizationCorrected",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Count Loss Normalization Corrected",
 };
 
@@ -10330,7 +10330,7 @@ pub const RandomsCorrected: Tag = Tag {
   element: 0x9765,
   name: "RandomsCorrected",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Randoms Corrected",
 };
 
@@ -10339,7 +10339,7 @@ pub const NonUniformRadialSamplingCorrected: Tag = Tag {
   element: 0x9766,
   name: "NonUniformRadialSamplingCorrected",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Non-uniform Radial Sampling Corrected",
 };
 
@@ -10348,7 +10348,7 @@ pub const SensitivityCalibrated: Tag = Tag {
   element: 0x9767,
   name: "SensitivityCalibrated",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Sensitivity Calibrated",
 };
 
@@ -10357,7 +10357,7 @@ pub const DetectorNormalizationCorrection: Tag = Tag {
   element: 0x9768,
   name: "DetectorNormalizationCorrection",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Detector Normalization Correction",
 };
 
@@ -10366,7 +10366,7 @@ pub const IterativeReconstructionMethod: Tag = Tag {
   element: 0x9769,
   name: "IterativeReconstructionMethod",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Iterative Reconstruction Method",
 };
 
@@ -10375,7 +10375,7 @@ pub const AttenuationCorrectionTemporalRelationship: Tag = Tag {
   element: 0x9770,
   name: "AttenuationCorrectionTemporalRelationship",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Attenuation Correction Temporal Relationship",
 };
 
@@ -10384,7 +10384,7 @@ pub const PatientPhysiologicalStateSequence: Tag = Tag {
   element: 0x9771,
   name: "PatientPhysiologicalStateSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Physiological State Sequence",
 };
 
@@ -10393,7 +10393,7 @@ pub const PatientPhysiologicalStateCodeSequence: Tag = Tag {
   element: 0x9772,
   name: "PatientPhysiologicalStateCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Physiological State Code Sequence",
 };
 
@@ -10411,7 +10411,7 @@ pub const ExcludedIntervalsSequence: Tag = Tag {
   element: 0x9803,
   name: "ExcludedIntervalsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Excluded Intervals Sequence",
 };
 
@@ -10420,7 +10420,7 @@ pub const ExclusionStartDateTime: Tag = Tag {
   element: 0x9804,
   name: "ExclusionStartDateTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Exclusion Start DateTime",
 };
 
@@ -10429,7 +10429,7 @@ pub const ExclusionDuration: Tag = Tag {
   element: 0x9805,
   name: "ExclusionDuration",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Exclusion Duration",
 };
 
@@ -10438,7 +10438,7 @@ pub const USImageDescriptionSequence: Tag = Tag {
   element: 0x9806,
   name: "USImageDescriptionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "US Image Description Sequence",
 };
 
@@ -10447,7 +10447,7 @@ pub const ImageDataTypeSequence: Tag = Tag {
   element: 0x9807,
   name: "ImageDataTypeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Data Type Sequence",
 };
 
@@ -10456,7 +10456,7 @@ pub const DataType: Tag = Tag {
   element: 0x9808,
   name: "DataType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Data Type",
 };
 
@@ -10465,7 +10465,7 @@ pub const TransducerScanPatternCodeSequence: Tag = Tag {
   element: 0x9809,
   name: "TransducerScanPatternCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Transducer Scan Pattern Code Sequence",
 };
 
@@ -10474,7 +10474,7 @@ pub const AliasedDataType: Tag = Tag {
   element: 0x980B,
   name: "AliasedDataType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Aliased Data Type",
 };
 
@@ -10483,7 +10483,7 @@ pub const PositionMeasuringDeviceUsed: Tag = Tag {
   element: 0x980C,
   name: "PositionMeasuringDeviceUsed",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Position Measuring Device Used",
 };
 
@@ -10492,7 +10492,7 @@ pub const TransducerGeometryCodeSequence: Tag = Tag {
   element: 0x980D,
   name: "TransducerGeometryCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Transducer Geometry Code Sequence",
 };
 
@@ -10501,7 +10501,7 @@ pub const TransducerBeamSteeringCodeSequence: Tag = Tag {
   element: 0x980E,
   name: "TransducerBeamSteeringCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Transducer Beam Steering Code Sequence",
 };
 
@@ -10510,7 +10510,7 @@ pub const TransducerApplicationCodeSequence: Tag = Tag {
   element: 0x980F,
   name: "TransducerApplicationCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Transducer Application Code Sequence",
 };
 
@@ -10519,7 +10519,7 @@ pub const ZeroVelocityPixelValue: Tag = Tag {
   element: 0x9810,
   name: "ZeroVelocityPixelValue",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Zero Velocity Pixel Value",
 };
 
@@ -10528,7 +10528,7 @@ pub const ContributingEquipmentSequence: Tag = Tag {
   element: 0xA001,
   name: "ContributingEquipmentSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contributing Equipment Sequence",
 };
 
@@ -10537,7 +10537,7 @@ pub const ContributionDateTime: Tag = Tag {
   element: 0xA002,
   name: "ContributionDateTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contribution DateTime",
 };
 
@@ -10546,7 +10546,7 @@ pub const ContributionDescription: Tag = Tag {
   element: 0xA003,
   name: "ContributionDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contribution Description",
 };
 
@@ -10555,7 +10555,7 @@ pub const StudyInstanceUID: Tag = Tag {
   element: 0x000D,
   name: "StudyInstanceUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Study Instance UID",
 };
 
@@ -10564,7 +10564,7 @@ pub const SeriesInstanceUID: Tag = Tag {
   element: 0x000E,
   name: "SeriesInstanceUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Series Instance UID",
 };
 
@@ -10573,7 +10573,7 @@ pub const StudyID: Tag = Tag {
   element: 0x0010,
   name: "StudyID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Study ID",
 };
 
@@ -10582,7 +10582,7 @@ pub const SeriesNumber: Tag = Tag {
   element: 0x0011,
   name: "SeriesNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Series Number",
 };
 
@@ -10591,7 +10591,7 @@ pub const AcquisitionNumber: Tag = Tag {
   element: 0x0012,
   name: "AcquisitionNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Acquisition Number",
 };
 
@@ -10600,7 +10600,7 @@ pub const InstanceNumber: Tag = Tag {
   element: 0x0013,
   name: "InstanceNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Instance Number",
 };
 
@@ -10609,7 +10609,7 @@ pub const IsotopeNumber: Tag = Tag {
   element: 0x0014,
   name: "IsotopeNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Isotope Number",
 };
 
@@ -10618,7 +10618,7 @@ pub const PhaseNumber: Tag = Tag {
   element: 0x0015,
   name: "PhaseNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Phase Number",
 };
 
@@ -10627,7 +10627,7 @@ pub const IntervalNumber: Tag = Tag {
   element: 0x0016,
   name: "IntervalNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Interval Number",
 };
 
@@ -10636,7 +10636,7 @@ pub const TimeSlotNumber: Tag = Tag {
   element: 0x0017,
   name: "TimeSlotNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Time Slot Number",
 };
 
@@ -10645,7 +10645,7 @@ pub const AngleNumber: Tag = Tag {
   element: 0x0018,
   name: "AngleNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Angle Number",
 };
 
@@ -10654,7 +10654,7 @@ pub const ItemNumber: Tag = Tag {
   element: 0x0019,
   name: "ItemNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Item Number",
 };
 
@@ -10663,7 +10663,7 @@ pub const PatientOrientation: Tag = Tag {
   element: 0x0020,
   name: "PatientOrientation",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Patient Orientation",
 };
 
@@ -10672,7 +10672,7 @@ pub const OverlayNumber: Tag = Tag {
   element: 0x0022,
   name: "OverlayNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Overlay Number",
 };
 
@@ -10681,7 +10681,7 @@ pub const CurveNumber: Tag = Tag {
   element: 0x0024,
   name: "CurveNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Curve Number",
 };
 
@@ -10690,7 +10690,7 @@ pub const LUTNumber: Tag = Tag {
   element: 0x0026,
   name: "LUTNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "LUT Number",
 };
 
@@ -10699,7 +10699,7 @@ pub const ImagePosition: Tag = Tag {
   element: 0x0030,
   name: "ImagePosition",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Image Position",
 };
 
@@ -10708,7 +10708,7 @@ pub const ImagePositionPatient: Tag = Tag {
   element: 0x0032,
   name: "ImagePositionPatient",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Image Position (Patient)",
 };
 
@@ -10717,7 +10717,7 @@ pub const ImageOrientation: Tag = Tag {
   element: 0x0035,
   name: "ImageOrientation",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 6, end: 6 },
   description: "Image Orientation",
 };
 
@@ -10726,7 +10726,7 @@ pub const ImageOrientationPatient: Tag = Tag {
   element: 0x0037,
   name: "ImageOrientationPatient",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 6, end: 6 },
   description: "Image Orientation (Patient)",
 };
 
@@ -10735,7 +10735,7 @@ pub const Location: Tag = Tag {
   element: 0x0050,
   name: "Location",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Location",
 };
 
@@ -10744,7 +10744,7 @@ pub const FrameOfReferenceUID: Tag = Tag {
   element: 0x0052,
   name: "FrameOfReferenceUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Frame of Reference UID",
 };
 
@@ -10753,7 +10753,7 @@ pub const Laterality: Tag = Tag {
   element: 0x0060,
   name: "Laterality",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Laterality",
 };
 
@@ -10762,7 +10762,7 @@ pub const ImageLaterality: Tag = Tag {
   element: 0x0062,
   name: "ImageLaterality",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Laterality",
 };
 
@@ -10771,7 +10771,7 @@ pub const ImageGeometryType: Tag = Tag {
   element: 0x0070,
   name: "ImageGeometryType",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Geometry Type",
 };
 
@@ -10789,7 +10789,7 @@ pub const ReportNumber: Tag = Tag {
   element: 0x00AA,
   name: "ReportNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Report Number",
 };
 
@@ -10798,7 +10798,7 @@ pub const TemporalPositionIdentifier: Tag = Tag {
   element: 0x0100,
   name: "TemporalPositionIdentifier",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Temporal Position Identifier",
 };
 
@@ -10807,7 +10807,7 @@ pub const NumberOfTemporalPositions: Tag = Tag {
   element: 0x0105,
   name: "NumberOfTemporalPositions",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Temporal Positions",
 };
 
@@ -10816,7 +10816,7 @@ pub const TemporalResolution: Tag = Tag {
   element: 0x0110,
   name: "TemporalResolution",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Temporal Resolution",
 };
 
@@ -10825,7 +10825,7 @@ pub const SynchronizationFrameOfReferenceUID: Tag = Tag {
   element: 0x0200,
   name: "SynchronizationFrameOfReferenceUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Synchronization Frame of Reference UID",
 };
 
@@ -10834,7 +10834,7 @@ pub const SOPInstanceUIDOfConcatenationSource: Tag = Tag {
   element: 0x0242,
   name: "SOPInstanceUIDOfConcatenationSource",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "SOP Instance UID of Concatenation Source",
 };
 
@@ -10843,7 +10843,7 @@ pub const SeriesInStudy: Tag = Tag {
   element: 0x1000,
   name: "SeriesInStudy",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Series in Study",
 };
 
@@ -10852,7 +10852,7 @@ pub const AcquisitionsInSeries: Tag = Tag {
   element: 0x1001,
   name: "AcquisitionsInSeries",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Acquisitions in Series",
 };
 
@@ -10861,7 +10861,7 @@ pub const ImagesInAcquisition: Tag = Tag {
   element: 0x1002,
   name: "ImagesInAcquisition",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Images in Acquisition",
 };
 
@@ -10870,7 +10870,7 @@ pub const ImagesInSeries: Tag = Tag {
   element: 0x1003,
   name: "ImagesInSeries",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Images in Series",
 };
 
@@ -10879,7 +10879,7 @@ pub const AcquisitionsInStudy: Tag = Tag {
   element: 0x1004,
   name: "AcquisitionsInStudy",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Acquisitions in Study",
 };
 
@@ -10888,7 +10888,7 @@ pub const ImagesInStudy: Tag = Tag {
   element: 0x1005,
   name: "ImagesInStudy",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Images in Study",
 };
 
@@ -10906,7 +10906,7 @@ pub const PositionReferenceIndicator: Tag = Tag {
   element: 0x1040,
   name: "PositionReferenceIndicator",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Position Reference Indicator",
 };
 
@@ -10915,7 +10915,7 @@ pub const SliceLocation: Tag = Tag {
   element: 0x1041,
   name: "SliceLocation",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Slice Location",
 };
 
@@ -10933,7 +10933,7 @@ pub const NumberOfPatientRelatedStudies: Tag = Tag {
   element: 0x1200,
   name: "NumberOfPatientRelatedStudies",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Patient Related Studies",
 };
 
@@ -10942,7 +10942,7 @@ pub const NumberOfPatientRelatedSeries: Tag = Tag {
   element: 0x1202,
   name: "NumberOfPatientRelatedSeries",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Patient Related Series",
 };
 
@@ -10951,7 +10951,7 @@ pub const NumberOfPatientRelatedInstances: Tag = Tag {
   element: 0x1204,
   name: "NumberOfPatientRelatedInstances",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Patient Related Instances",
 };
 
@@ -10960,7 +10960,7 @@ pub const NumberOfStudyRelatedSeries: Tag = Tag {
   element: 0x1206,
   name: "NumberOfStudyRelatedSeries",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Study Related Series",
 };
 
@@ -10969,7 +10969,7 @@ pub const NumberOfStudyRelatedInstances: Tag = Tag {
   element: 0x1208,
   name: "NumberOfStudyRelatedInstances",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Study Related Instances",
 };
 
@@ -10978,7 +10978,7 @@ pub const NumberOfSeriesRelatedInstances: Tag = Tag {
   element: 0x1209,
   name: "NumberOfSeriesRelatedInstances",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Series Related Instances",
 };
 
@@ -10987,7 +10987,7 @@ pub const ModifyingDeviceID: Tag = Tag {
   element: 0x3401,
   name: "ModifyingDeviceID",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Modifying Device ID",
 };
 
@@ -10996,7 +10996,7 @@ pub const ModifiedImageID: Tag = Tag {
   element: 0x3402,
   name: "ModifiedImageID",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Modified Image ID",
 };
 
@@ -11005,7 +11005,7 @@ pub const ModifiedImageDate: Tag = Tag {
   element: 0x3403,
   name: "ModifiedImageDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Modified Image Date",
 };
 
@@ -11014,7 +11014,7 @@ pub const ModifyingDeviceManufacturer: Tag = Tag {
   element: 0x3404,
   name: "ModifyingDeviceManufacturer",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Modifying Device Manufacturer",
 };
 
@@ -11023,7 +11023,7 @@ pub const ModifiedImageTime: Tag = Tag {
   element: 0x3405,
   name: "ModifiedImageTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Modified Image Time",
 };
 
@@ -11032,7 +11032,7 @@ pub const ModifiedImageDescription: Tag = Tag {
   element: 0x3406,
   name: "ModifiedImageDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Modified Image Description",
 };
 
@@ -11041,7 +11041,7 @@ pub const ImageComments: Tag = Tag {
   element: 0x4000,
   name: "ImageComments",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Comments",
 };
 
@@ -11068,7 +11068,7 @@ pub const StackID: Tag = Tag {
   element: 0x9056,
   name: "StackID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Stack ID",
 };
 
@@ -11077,7 +11077,7 @@ pub const InStackPositionNumber: Tag = Tag {
   element: 0x9057,
   name: "InStackPositionNumber",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "In-Stack Position Number",
 };
 
@@ -11086,7 +11086,7 @@ pub const FrameAnatomySequence: Tag = Tag {
   element: 0x9071,
   name: "FrameAnatomySequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Frame Anatomy Sequence",
 };
 
@@ -11095,7 +11095,7 @@ pub const FrameLaterality: Tag = Tag {
   element: 0x9072,
   name: "FrameLaterality",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Frame Laterality",
 };
 
@@ -11104,7 +11104,7 @@ pub const FrameContentSequence: Tag = Tag {
   element: 0x9111,
   name: "FrameContentSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Frame Content Sequence",
 };
 
@@ -11113,7 +11113,7 @@ pub const PlanePositionSequence: Tag = Tag {
   element: 0x9113,
   name: "PlanePositionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Plane Position Sequence",
 };
 
@@ -11122,7 +11122,7 @@ pub const PlaneOrientationSequence: Tag = Tag {
   element: 0x9116,
   name: "PlaneOrientationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Plane Orientation Sequence",
 };
 
@@ -11131,7 +11131,7 @@ pub const TemporalPositionIndex: Tag = Tag {
   element: 0x9128,
   name: "TemporalPositionIndex",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Temporal Position Index",
 };
 
@@ -11140,7 +11140,7 @@ pub const NominalCardiacTriggerDelayTime: Tag = Tag {
   element: 0x9153,
   name: "NominalCardiacTriggerDelayTime",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Nominal Cardiac Trigger Delay Time",
 };
 
@@ -11149,7 +11149,7 @@ pub const NominalCardiacTriggerTimePriorToRPeak: Tag = Tag {
   element: 0x9154,
   name: "NominalCardiacTriggerTimePriorToRPeak",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Nominal Cardiac Trigger Time Prior To R-Peak",
 };
 
@@ -11158,7 +11158,7 @@ pub const ActualCardiacTriggerTimePriorToRPeak: Tag = Tag {
   element: 0x9155,
   name: "ActualCardiacTriggerTimePriorToRPeak",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Actual Cardiac Trigger Time Prior To R-Peak",
 };
 
@@ -11167,7 +11167,7 @@ pub const FrameAcquisitionNumber: Tag = Tag {
   element: 0x9156,
   name: "FrameAcquisitionNumber",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Frame Acquisition Number",
 };
 
@@ -11185,7 +11185,7 @@ pub const FrameComments: Tag = Tag {
   element: 0x9158,
   name: "FrameComments",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Frame Comments",
 };
 
@@ -11194,7 +11194,7 @@ pub const ConcatenationUID: Tag = Tag {
   element: 0x9161,
   name: "ConcatenationUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Concatenation UID",
 };
 
@@ -11203,7 +11203,7 @@ pub const InConcatenationNumber: Tag = Tag {
   element: 0x9162,
   name: "InConcatenationNumber",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "In-concatenation Number",
 };
 
@@ -11212,7 +11212,7 @@ pub const InConcatenationTotalNumber: Tag = Tag {
   element: 0x9163,
   name: "InConcatenationTotalNumber",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "In-concatenation Total Number",
 };
 
@@ -11221,7 +11221,7 @@ pub const DimensionOrganizationUID: Tag = Tag {
   element: 0x9164,
   name: "DimensionOrganizationUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Dimension Organization UID",
 };
 
@@ -11230,7 +11230,7 @@ pub const DimensionIndexPointer: Tag = Tag {
   element: 0x9165,
   name: "DimensionIndexPointer",
   vr: "AT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Dimension Index Pointer",
 };
 
@@ -11239,7 +11239,7 @@ pub const FunctionalGroupPointer: Tag = Tag {
   element: 0x9167,
   name: "FunctionalGroupPointer",
   vr: "AT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Functional Group Pointer",
 };
 
@@ -11248,7 +11248,7 @@ pub const UnassignedSharedConvertedAttributesSequence: Tag = Tag {
   element: 0x9170,
   name: "UnassignedSharedConvertedAttributesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Unassigned Shared Converted Attributes Sequence",
 };
 
@@ -11257,7 +11257,7 @@ pub const UnassignedPerFrameConvertedAttributesSequence: Tag = Tag {
   element: 0x9171,
   name: "UnassignedPerFrameConvertedAttributesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Unassigned Per-Frame Converted Attributes Sequence",
 };
 
@@ -11266,7 +11266,7 @@ pub const ConversionSourceAttributesSequence: Tag = Tag {
   element: 0x9172,
   name: "ConversionSourceAttributesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Conversion Source Attributes Sequence",
 };
 
@@ -11275,7 +11275,7 @@ pub const DimensionIndexPrivateCreator: Tag = Tag {
   element: 0x9213,
   name: "DimensionIndexPrivateCreator",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Dimension Index Private Creator",
 };
 
@@ -11284,7 +11284,7 @@ pub const DimensionOrganizationSequence: Tag = Tag {
   element: 0x9221,
   name: "DimensionOrganizationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Dimension Organization Sequence",
 };
 
@@ -11293,7 +11293,7 @@ pub const DimensionIndexSequence: Tag = Tag {
   element: 0x9222,
   name: "DimensionIndexSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Dimension Index Sequence",
 };
 
@@ -11302,7 +11302,7 @@ pub const ConcatenationFrameOffsetNumber: Tag = Tag {
   element: 0x9228,
   name: "ConcatenationFrameOffsetNumber",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Concatenation Frame Offset Number",
 };
 
@@ -11311,7 +11311,7 @@ pub const FunctionalGroupPrivateCreator: Tag = Tag {
   element: 0x9238,
   name: "FunctionalGroupPrivateCreator",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Functional Group Private Creator",
 };
 
@@ -11320,7 +11320,7 @@ pub const NominalPercentageOfCardiacPhase: Tag = Tag {
   element: 0x9241,
   name: "NominalPercentageOfCardiacPhase",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Nominal Percentage of Cardiac Phase",
 };
 
@@ -11329,7 +11329,7 @@ pub const NominalPercentageOfRespiratoryPhase: Tag = Tag {
   element: 0x9245,
   name: "NominalPercentageOfRespiratoryPhase",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Nominal Percentage of Respiratory Phase",
 };
 
@@ -11338,7 +11338,7 @@ pub const StartingRespiratoryAmplitude: Tag = Tag {
   element: 0x9246,
   name: "StartingRespiratoryAmplitude",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Starting Respiratory Amplitude",
 };
 
@@ -11347,7 +11347,7 @@ pub const StartingRespiratoryPhase: Tag = Tag {
   element: 0x9247,
   name: "StartingRespiratoryPhase",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Starting Respiratory Phase",
 };
 
@@ -11356,7 +11356,7 @@ pub const EndingRespiratoryAmplitude: Tag = Tag {
   element: 0x9248,
   name: "EndingRespiratoryAmplitude",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ending Respiratory Amplitude",
 };
 
@@ -11365,7 +11365,7 @@ pub const EndingRespiratoryPhase: Tag = Tag {
   element: 0x9249,
   name: "EndingRespiratoryPhase",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ending Respiratory Phase",
 };
 
@@ -11374,7 +11374,7 @@ pub const RespiratoryTriggerType: Tag = Tag {
   element: 0x9250,
   name: "RespiratoryTriggerType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Respiratory Trigger Type",
 };
 
@@ -11383,7 +11383,7 @@ pub const RRIntervalTimeNominal: Tag = Tag {
   element: 0x9251,
   name: "RRIntervalTimeNominal",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "R-R Interval Time Nominal",
 };
 
@@ -11392,7 +11392,7 @@ pub const ActualCardiacTriggerDelayTime: Tag = Tag {
   element: 0x9252,
   name: "ActualCardiacTriggerDelayTime",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Actual Cardiac Trigger Delay Time",
 };
 
@@ -11401,7 +11401,7 @@ pub const RespiratorySynchronizationSequence: Tag = Tag {
   element: 0x9253,
   name: "RespiratorySynchronizationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Respiratory Synchronization Sequence",
 };
 
@@ -11410,7 +11410,7 @@ pub const RespiratoryIntervalTime: Tag = Tag {
   element: 0x9254,
   name: "RespiratoryIntervalTime",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Respiratory Interval Time",
 };
 
@@ -11419,7 +11419,7 @@ pub const NominalRespiratoryTriggerDelayTime: Tag = Tag {
   element: 0x9255,
   name: "NominalRespiratoryTriggerDelayTime",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Nominal Respiratory Trigger Delay Time",
 };
 
@@ -11428,7 +11428,7 @@ pub const RespiratoryTriggerDelayThreshold: Tag = Tag {
   element: 0x9256,
   name: "RespiratoryTriggerDelayThreshold",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Respiratory Trigger Delay Threshold",
 };
 
@@ -11437,7 +11437,7 @@ pub const ActualRespiratoryTriggerDelayTime: Tag = Tag {
   element: 0x9257,
   name: "ActualRespiratoryTriggerDelayTime",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Actual Respiratory Trigger Delay Time",
 };
 
@@ -11446,7 +11446,7 @@ pub const ImagePositionVolume: Tag = Tag {
   element: 0x9301,
   name: "ImagePositionVolume",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Image Position (Volume)",
 };
 
@@ -11455,7 +11455,7 @@ pub const ImageOrientationVolume: Tag = Tag {
   element: 0x9302,
   name: "ImageOrientationVolume",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 6, end: 6 },
   description: "Image Orientation (Volume)",
 };
 
@@ -11464,7 +11464,7 @@ pub const UltrasoundAcquisitionGeometry: Tag = Tag {
   element: 0x9307,
   name: "UltrasoundAcquisitionGeometry",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ultrasound Acquisition Geometry",
 };
 
@@ -11473,7 +11473,7 @@ pub const ApexPosition: Tag = Tag {
   element: 0x9308,
   name: "ApexPosition",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Apex Position",
 };
 
@@ -11482,7 +11482,7 @@ pub const VolumeToTransducerMappingMatrix: Tag = Tag {
   element: 0x9309,
   name: "VolumeToTransducerMappingMatrix",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 16, end: 16 },
   description: "Volume to Transducer Mapping Matrix",
 };
 
@@ -11491,7 +11491,7 @@ pub const VolumeToTableMappingMatrix: Tag = Tag {
   element: 0x930A,
   name: "VolumeToTableMappingMatrix",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 16, end: 16 },
   description: "Volume to Table Mapping Matrix",
 };
 
@@ -11500,7 +11500,7 @@ pub const VolumeToTransducerRelationship: Tag = Tag {
   element: 0x930B,
   name: "VolumeToTransducerRelationship",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Volume to Transducer Relationship",
 };
 
@@ -11509,7 +11509,7 @@ pub const PatientFrameOfReferenceSource: Tag = Tag {
   element: 0x930C,
   name: "PatientFrameOfReferenceSource",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Frame of Reference Source",
 };
 
@@ -11518,7 +11518,7 @@ pub const TemporalPositionTimeOffset: Tag = Tag {
   element: 0x930D,
   name: "TemporalPositionTimeOffset",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Temporal Position Time Offset",
 };
 
@@ -11527,7 +11527,7 @@ pub const PlanePositionVolumeSequence: Tag = Tag {
   element: 0x930E,
   name: "PlanePositionVolumeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Plane Position (Volume) Sequence",
 };
 
@@ -11536,7 +11536,7 @@ pub const PlaneOrientationVolumeSequence: Tag = Tag {
   element: 0x930F,
   name: "PlaneOrientationVolumeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Plane Orientation (Volume) Sequence",
 };
 
@@ -11545,7 +11545,7 @@ pub const TemporalPositionSequence: Tag = Tag {
   element: 0x9310,
   name: "TemporalPositionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Temporal Position Sequence",
 };
 
@@ -11554,7 +11554,7 @@ pub const DimensionOrganizationType: Tag = Tag {
   element: 0x9311,
   name: "DimensionOrganizationType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Dimension Organization Type",
 };
 
@@ -11563,7 +11563,7 @@ pub const VolumeFrameOfReferenceUID: Tag = Tag {
   element: 0x9312,
   name: "VolumeFrameOfReferenceUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Volume Frame of Reference UID",
 };
 
@@ -11572,7 +11572,7 @@ pub const TableFrameOfReferenceUID: Tag = Tag {
   element: 0x9313,
   name: "TableFrameOfReferenceUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Frame of Reference UID",
 };
 
@@ -11581,7 +11581,7 @@ pub const DimensionDescriptionLabel: Tag = Tag {
   element: 0x9421,
   name: "DimensionDescriptionLabel",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Dimension Description Label",
 };
 
@@ -11590,7 +11590,7 @@ pub const PatientOrientationInFrameSequence: Tag = Tag {
   element: 0x9450,
   name: "PatientOrientationInFrameSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Orientation in Frame Sequence",
 };
 
@@ -11599,7 +11599,7 @@ pub const FrameLabel: Tag = Tag {
   element: 0x9453,
   name: "FrameLabel",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Frame Label",
 };
 
@@ -11617,7 +11617,7 @@ pub const ContributingSOPInstancesReferenceSequence: Tag = Tag {
   element: 0x9529,
   name: "ContributingSOPInstancesReferenceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contributing SOP Instances Reference Sequence",
 };
 
@@ -11626,7 +11626,7 @@ pub const ReconstructionIndex: Tag = Tag {
   element: 0x9536,
   name: "ReconstructionIndex",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Reconstruction Index",
 };
 
@@ -11635,7 +11635,7 @@ pub const LightPathFilterPassThroughWavelength: Tag = Tag {
   element: 0x0001,
   name: "LightPathFilterPassThroughWavelength",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Light Path Filter Pass-Through Wavelength",
 };
 
@@ -11644,7 +11644,7 @@ pub const LightPathFilterPassBand: Tag = Tag {
   element: 0x0002,
   name: "LightPathFilterPassBand",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Light Path Filter Pass Band",
 };
 
@@ -11653,7 +11653,7 @@ pub const ImagePathFilterPassThroughWavelength: Tag = Tag {
   element: 0x0003,
   name: "ImagePathFilterPassThroughWavelength",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Path Filter Pass-Through Wavelength",
 };
 
@@ -11662,7 +11662,7 @@ pub const ImagePathFilterPassBand: Tag = Tag {
   element: 0x0004,
   name: "ImagePathFilterPassBand",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Image Path Filter Pass Band",
 };
 
@@ -11671,7 +11671,7 @@ pub const PatientEyeMovementCommanded: Tag = Tag {
   element: 0x0005,
   name: "PatientEyeMovementCommanded",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Eye Movement Commanded",
 };
 
@@ -11680,7 +11680,7 @@ pub const PatientEyeMovementCommandCodeSequence: Tag = Tag {
   element: 0x0006,
   name: "PatientEyeMovementCommandCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Eye Movement Command Code Sequence",
 };
 
@@ -11689,7 +11689,7 @@ pub const SphericalLensPower: Tag = Tag {
   element: 0x0007,
   name: "SphericalLensPower",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Spherical Lens Power",
 };
 
@@ -11698,7 +11698,7 @@ pub const CylinderLensPower: Tag = Tag {
   element: 0x0008,
   name: "CylinderLensPower",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Cylinder Lens Power",
 };
 
@@ -11707,7 +11707,7 @@ pub const CylinderAxis: Tag = Tag {
   element: 0x0009,
   name: "CylinderAxis",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Cylinder Axis",
 };
 
@@ -11716,7 +11716,7 @@ pub const EmmetropicMagnification: Tag = Tag {
   element: 0x000A,
   name: "EmmetropicMagnification",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Emmetropic Magnification",
 };
 
@@ -11725,7 +11725,7 @@ pub const IntraOcularPressure: Tag = Tag {
   element: 0x000B,
   name: "IntraOcularPressure",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Intra Ocular Pressure",
 };
 
@@ -11734,7 +11734,7 @@ pub const HorizontalFieldOfView: Tag = Tag {
   element: 0x000C,
   name: "HorizontalFieldOfView",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Horizontal Field of View",
 };
 
@@ -11743,7 +11743,7 @@ pub const PupilDilated: Tag = Tag {
   element: 0x000D,
   name: "PupilDilated",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pupil Dilated",
 };
 
@@ -11752,7 +11752,7 @@ pub const DegreeOfDilation: Tag = Tag {
   element: 0x000E,
   name: "DegreeOfDilation",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Degree of Dilation",
 };
 
@@ -11761,7 +11761,7 @@ pub const StereoBaselineAngle: Tag = Tag {
   element: 0x0010,
   name: "StereoBaselineAngle",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Stereo Baseline Angle",
 };
 
@@ -11770,7 +11770,7 @@ pub const StereoBaselineDisplacement: Tag = Tag {
   element: 0x0011,
   name: "StereoBaselineDisplacement",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Stereo Baseline Displacement",
 };
 
@@ -11779,7 +11779,7 @@ pub const StereoHorizontalPixelOffset: Tag = Tag {
   element: 0x0012,
   name: "StereoHorizontalPixelOffset",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Stereo Horizontal Pixel Offset",
 };
 
@@ -11788,7 +11788,7 @@ pub const StereoVerticalPixelOffset: Tag = Tag {
   element: 0x0013,
   name: "StereoVerticalPixelOffset",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Stereo Vertical Pixel Offset",
 };
 
@@ -11797,7 +11797,7 @@ pub const StereoRotation: Tag = Tag {
   element: 0x0014,
   name: "StereoRotation",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Stereo Rotation",
 };
 
@@ -11806,7 +11806,7 @@ pub const AcquisitionDeviceTypeCodeSequence: Tag = Tag {
   element: 0x0015,
   name: "AcquisitionDeviceTypeCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Acquisition Device Type Code Sequence",
 };
 
@@ -11815,7 +11815,7 @@ pub const IlluminationTypeCodeSequence: Tag = Tag {
   element: 0x0016,
   name: "IlluminationTypeCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Illumination Type Code Sequence",
 };
 
@@ -11824,7 +11824,7 @@ pub const LightPathFilterTypeStackCodeSequence: Tag = Tag {
   element: 0x0017,
   name: "LightPathFilterTypeStackCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Light Path Filter Type Stack Code Sequence",
 };
 
@@ -11833,7 +11833,7 @@ pub const ImagePathFilterTypeStackCodeSequence: Tag = Tag {
   element: 0x0018,
   name: "ImagePathFilterTypeStackCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Path Filter Type Stack Code Sequence",
 };
 
@@ -11842,7 +11842,7 @@ pub const LensesCodeSequence: Tag = Tag {
   element: 0x0019,
   name: "LensesCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Lenses Code Sequence",
 };
 
@@ -11851,7 +11851,7 @@ pub const ChannelDescriptionCodeSequence: Tag = Tag {
   element: 0x001A,
   name: "ChannelDescriptionCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Description Code Sequence",
 };
 
@@ -11860,7 +11860,7 @@ pub const RefractiveStateSequence: Tag = Tag {
   element: 0x001B,
   name: "RefractiveStateSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Refractive State Sequence",
 };
 
@@ -11869,7 +11869,7 @@ pub const MydriaticAgentCodeSequence: Tag = Tag {
   element: 0x001C,
   name: "MydriaticAgentCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Mydriatic Agent Code Sequence",
 };
 
@@ -11878,7 +11878,7 @@ pub const RelativeImagePositionCodeSequence: Tag = Tag {
   element: 0x001D,
   name: "RelativeImagePositionCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Relative Image Position Code Sequence",
 };
 
@@ -11887,7 +11887,7 @@ pub const CameraAngleOfView: Tag = Tag {
   element: 0x001E,
   name: "CameraAngleOfView",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Camera Angle of View",
 };
 
@@ -11896,7 +11896,7 @@ pub const StereoPairsSequence: Tag = Tag {
   element: 0x0020,
   name: "StereoPairsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Stereo Pairs Sequence",
 };
 
@@ -11905,7 +11905,7 @@ pub const LeftImageSequence: Tag = Tag {
   element: 0x0021,
   name: "LeftImageSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Left Image Sequence",
 };
 
@@ -11914,7 +11914,7 @@ pub const RightImageSequence: Tag = Tag {
   element: 0x0022,
   name: "RightImageSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Right Image Sequence",
 };
 
@@ -11923,7 +11923,7 @@ pub const AxialLengthOfTheEye: Tag = Tag {
   element: 0x0030,
   name: "AxialLengthOfTheEye",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Axial Length of the Eye",
 };
 
@@ -11932,7 +11932,7 @@ pub const OphthalmicFrameLocationSequence: Tag = Tag {
   element: 0x0031,
   name: "OphthalmicFrameLocationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ophthalmic Frame Location Sequence",
 };
 
@@ -11950,7 +11950,7 @@ pub const DepthSpatialResolution: Tag = Tag {
   element: 0x0035,
   name: "DepthSpatialResolution",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Depth Spatial Resolution",
 };
 
@@ -11959,7 +11959,7 @@ pub const MaximumDepthDistortion: Tag = Tag {
   element: 0x0036,
   name: "MaximumDepthDistortion",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Maximum Depth Distortion",
 };
 
@@ -11968,7 +11968,7 @@ pub const AlongScanSpatialResolution: Tag = Tag {
   element: 0x0037,
   name: "AlongScanSpatialResolution",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Along-scan Spatial Resolution",
 };
 
@@ -11977,7 +11977,7 @@ pub const MaximumAlongScanDistortion: Tag = Tag {
   element: 0x0038,
   name: "MaximumAlongScanDistortion",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Maximum Along-scan Distortion",
 };
 
@@ -11986,7 +11986,7 @@ pub const OphthalmicImageOrientation: Tag = Tag {
   element: 0x0039,
   name: "OphthalmicImageOrientation",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ophthalmic Image Orientation",
 };
 
@@ -11995,7 +11995,7 @@ pub const DepthOfTransverseImage: Tag = Tag {
   element: 0x0041,
   name: "DepthOfTransverseImage",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Depth of Transverse Image",
 };
 
@@ -12004,7 +12004,7 @@ pub const MydriaticAgentConcentrationUnitsSequence: Tag = Tag {
   element: 0x0042,
   name: "MydriaticAgentConcentrationUnitsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Mydriatic Agent Concentration Units Sequence",
 };
 
@@ -12013,7 +12013,7 @@ pub const AcrossScanSpatialResolution: Tag = Tag {
   element: 0x0048,
   name: "AcrossScanSpatialResolution",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Across-scan Spatial Resolution",
 };
 
@@ -12022,7 +12022,7 @@ pub const MaximumAcrossScanDistortion: Tag = Tag {
   element: 0x0049,
   name: "MaximumAcrossScanDistortion",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Maximum Across-scan Distortion",
 };
 
@@ -12031,7 +12031,7 @@ pub const MydriaticAgentConcentration: Tag = Tag {
   element: 0x004E,
   name: "MydriaticAgentConcentration",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Mydriatic Agent Concentration",
 };
 
@@ -12040,7 +12040,7 @@ pub const IlluminationWaveLength: Tag = Tag {
   element: 0x0055,
   name: "IlluminationWaveLength",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Illumination Wave Length",
 };
 
@@ -12049,7 +12049,7 @@ pub const IlluminationPower: Tag = Tag {
   element: 0x0056,
   name: "IlluminationPower",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Illumination Power",
 };
 
@@ -12058,7 +12058,7 @@ pub const IlluminationBandwidth: Tag = Tag {
   element: 0x0057,
   name: "IlluminationBandwidth",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Illumination Bandwidth",
 };
 
@@ -12067,7 +12067,7 @@ pub const MydriaticAgentSequence: Tag = Tag {
   element: 0x0058,
   name: "MydriaticAgentSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Mydriatic Agent Sequence",
 };
 
@@ -12076,7 +12076,7 @@ pub const OphthalmicAxialMeasurementsRightEyeSequence: Tag = Tag {
   element: 0x1007,
   name: "OphthalmicAxialMeasurementsRightEyeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ophthalmic Axial Measurements Right Eye Sequence",
 };
 
@@ -12085,7 +12085,7 @@ pub const OphthalmicAxialMeasurementsLeftEyeSequence: Tag = Tag {
   element: 0x1008,
   name: "OphthalmicAxialMeasurementsLeftEyeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ophthalmic Axial Measurements Left Eye Sequence",
 };
 
@@ -12094,7 +12094,7 @@ pub const OphthalmicAxialMeasurementsDeviceType: Tag = Tag {
   element: 0x1009,
   name: "OphthalmicAxialMeasurementsDeviceType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ophthalmic Axial Measurements Device Type",
 };
 
@@ -12103,7 +12103,7 @@ pub const OphthalmicAxialLengthMeasurementsType: Tag = Tag {
   element: 0x1010,
   name: "OphthalmicAxialLengthMeasurementsType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ophthalmic Axial Length Measurements Type",
 };
 
@@ -12112,7 +12112,7 @@ pub const OphthalmicAxialLengthSequence: Tag = Tag {
   element: 0x1012,
   name: "OphthalmicAxialLengthSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ophthalmic Axial Length Sequence",
 };
 
@@ -12121,7 +12121,7 @@ pub const OphthalmicAxialLength: Tag = Tag {
   element: 0x1019,
   name: "OphthalmicAxialLength",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ophthalmic Axial Length",
 };
 
@@ -12130,7 +12130,7 @@ pub const LensStatusCodeSequence: Tag = Tag {
   element: 0x1024,
   name: "LensStatusCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Lens Status Code Sequence",
 };
 
@@ -12139,7 +12139,7 @@ pub const VitreousStatusCodeSequence: Tag = Tag {
   element: 0x1025,
   name: "VitreousStatusCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Vitreous Status Code Sequence",
 };
 
@@ -12148,7 +12148,7 @@ pub const IOLFormulaCodeSequence: Tag = Tag {
   element: 0x1028,
   name: "IOLFormulaCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "IOL Formula Code Sequence",
 };
 
@@ -12157,7 +12157,7 @@ pub const IOLFormulaDetail: Tag = Tag {
   element: 0x1029,
   name: "IOLFormulaDetail",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "IOL Formula Detail",
 };
 
@@ -12166,7 +12166,7 @@ pub const KeratometerIndex: Tag = Tag {
   element: 0x1033,
   name: "KeratometerIndex",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Keratometer Index",
 };
 
@@ -12175,7 +12175,7 @@ pub const SourceOfOphthalmicAxialLengthCodeSequence: Tag = Tag {
   element: 0x1035,
   name: "SourceOfOphthalmicAxialLengthCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source of Ophthalmic Axial Length Code Sequence",
 };
 
@@ -12184,7 +12184,7 @@ pub const TargetRefraction: Tag = Tag {
   element: 0x1037,
   name: "TargetRefraction",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Target Refraction",
 };
 
@@ -12193,7 +12193,7 @@ pub const RefractiveProcedureOccurred: Tag = Tag {
   element: 0x1039,
   name: "RefractiveProcedureOccurred",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Refractive Procedure Occurred",
 };
 
@@ -12202,7 +12202,7 @@ pub const RefractiveSurgeryTypeCodeSequence: Tag = Tag {
   element: 0x1040,
   name: "RefractiveSurgeryTypeCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Refractive Surgery Type Code Sequence",
 };
 
@@ -12211,7 +12211,7 @@ pub const OphthalmicUltrasoundMethodCodeSequence: Tag = Tag {
   element: 0x1044,
   name: "OphthalmicUltrasoundMethodCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ophthalmic Ultrasound Method Code Sequence",
 };
 
@@ -12220,7 +12220,7 @@ pub const OphthalmicAxialLengthMeasurementsSequence: Tag = Tag {
   element: 0x1050,
   name: "OphthalmicAxialLengthMeasurementsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ophthalmic Axial Length Measurements Sequence",
 };
 
@@ -12229,7 +12229,7 @@ pub const IOLPower: Tag = Tag {
   element: 0x1053,
   name: "IOLPower",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "IOL Power",
 };
 
@@ -12238,7 +12238,7 @@ pub const PredictedRefractiveError: Tag = Tag {
   element: 0x1054,
   name: "PredictedRefractiveError",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Predicted Refractive Error",
 };
 
@@ -12247,7 +12247,7 @@ pub const OphthalmicAxialLengthVelocity: Tag = Tag {
   element: 0x1059,
   name: "OphthalmicAxialLengthVelocity",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ophthalmic Axial Length Velocity",
 };
 
@@ -12256,7 +12256,7 @@ pub const LensStatusDescription: Tag = Tag {
   element: 0x1065,
   name: "LensStatusDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Lens Status Description",
 };
 
@@ -12265,7 +12265,7 @@ pub const VitreousStatusDescription: Tag = Tag {
   element: 0x1066,
   name: "VitreousStatusDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Vitreous Status Description",
 };
 
@@ -12274,7 +12274,7 @@ pub const IOLPowerSequence: Tag = Tag {
   element: 0x1090,
   name: "IOLPowerSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "IOL Power Sequence",
 };
 
@@ -12283,7 +12283,7 @@ pub const LensConstantSequence: Tag = Tag {
   element: 0x1092,
   name: "LensConstantSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Lens Constant Sequence",
 };
 
@@ -12292,7 +12292,7 @@ pub const IOLManufacturer: Tag = Tag {
   element: 0x1093,
   name: "IOLManufacturer",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "IOL Manufacturer",
 };
 
@@ -12301,7 +12301,7 @@ pub const LensConstantDescription: Tag = Tag {
   element: 0x1094,
   name: "LensConstantDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Lens Constant Description",
 };
 
@@ -12310,7 +12310,7 @@ pub const ImplantName: Tag = Tag {
   element: 0x1095,
   name: "ImplantName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Implant Name",
 };
 
@@ -12319,7 +12319,7 @@ pub const KeratometryMeasurementTypeCodeSequence: Tag = Tag {
   element: 0x1096,
   name: "KeratometryMeasurementTypeCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Keratometry Measurement Type Code Sequence",
 };
 
@@ -12328,7 +12328,7 @@ pub const ImplantPartNumber: Tag = Tag {
   element: 0x1097,
   name: "ImplantPartNumber",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Implant Part Number",
 };
 
@@ -12337,7 +12337,7 @@ pub const ReferencedOphthalmicAxialMeasurementsSequence: Tag = Tag {
   element: 0x1100,
   name: "ReferencedOphthalmicAxialMeasurementsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Ophthalmic Axial Measurements Sequence",
 };
 
@@ -12346,7 +12346,7 @@ pub const OphthalmicAxialLengthMeasurementsSegmentNameCodeSequence: Tag = Tag {
   element: 0x1101,
   name: "OphthalmicAxialLengthMeasurementsSegmentNameCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ophthalmic Axial Length Measurements Segment Name Code Sequence",
 };
 
@@ -12355,7 +12355,7 @@ pub const RefractiveErrorBeforeRefractiveSurgeryCodeSequence: Tag = Tag {
   element: 0x1103,
   name: "RefractiveErrorBeforeRefractiveSurgeryCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Refractive Error Before Refractive Surgery Code Sequence",
 };
 
@@ -12364,7 +12364,7 @@ pub const IOLPowerForExactEmmetropia: Tag = Tag {
   element: 0x1121,
   name: "IOLPowerForExactEmmetropia",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "IOL Power For Exact Emmetropia",
 };
 
@@ -12373,7 +12373,7 @@ pub const IOLPowerForExactTargetRefraction: Tag = Tag {
   element: 0x1122,
   name: "IOLPowerForExactTargetRefraction",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "IOL Power For Exact Target Refraction",
 };
 
@@ -12382,7 +12382,7 @@ pub const AnteriorChamberDepthDefinitionCodeSequence: Tag = Tag {
   element: 0x1125,
   name: "AnteriorChamberDepthDefinitionCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Anterior Chamber Depth Definition Code Sequence",
 };
 
@@ -12391,7 +12391,7 @@ pub const LensThicknessSequence: Tag = Tag {
   element: 0x1127,
   name: "LensThicknessSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Lens Thickness Sequence",
 };
 
@@ -12400,7 +12400,7 @@ pub const AnteriorChamberDepthSequence: Tag = Tag {
   element: 0x1128,
   name: "AnteriorChamberDepthSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Anterior Chamber Depth Sequence",
 };
 
@@ -12409,7 +12409,7 @@ pub const LensThickness: Tag = Tag {
   element: 0x1130,
   name: "LensThickness",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Lens Thickness",
 };
 
@@ -12418,7 +12418,7 @@ pub const AnteriorChamberDepth: Tag = Tag {
   element: 0x1131,
   name: "AnteriorChamberDepth",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Anterior Chamber Depth",
 };
 
@@ -12427,7 +12427,7 @@ pub const SourceOfLensThicknessDataCodeSequence: Tag = Tag {
   element: 0x1132,
   name: "SourceOfLensThicknessDataCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source of Lens Thickness Data Code Sequence",
 };
 
@@ -12436,7 +12436,7 @@ pub const SourceOfAnteriorChamberDepthDataCodeSequence: Tag = Tag {
   element: 0x1133,
   name: "SourceOfAnteriorChamberDepthDataCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source of Anterior Chamber Depth Data Code Sequence",
 };
 
@@ -12445,7 +12445,7 @@ pub const SourceOfRefractiveMeasurementsSequence: Tag = Tag {
   element: 0x1134,
   name: "SourceOfRefractiveMeasurementsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source of Refractive Measurements Sequence",
 };
 
@@ -12454,7 +12454,7 @@ pub const SourceOfRefractiveMeasurementsCodeSequence: Tag = Tag {
   element: 0x1135,
   name: "SourceOfRefractiveMeasurementsCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source of Refractive Measurements Code Sequence",
 };
 
@@ -12463,7 +12463,7 @@ pub const OphthalmicAxialLengthMeasurementModified: Tag = Tag {
   element: 0x1140,
   name: "OphthalmicAxialLengthMeasurementModified",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ophthalmic Axial Length Measurement Modified",
 };
 
@@ -12472,7 +12472,7 @@ pub const OphthalmicAxialLengthDataSourceCodeSequence: Tag = Tag {
   element: 0x1150,
   name: "OphthalmicAxialLengthDataSourceCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ophthalmic Axial Length Data Source Code Sequence",
 };
 
@@ -12481,7 +12481,7 @@ pub const OphthalmicAxialLengthAcquisitionMethodCodeSequence: Tag = Tag {
   element: 0x1153,
   name: "OphthalmicAxialLengthAcquisitionMethodCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ophthalmic Axial Length Acquisition Method Code Sequence",
 };
 
@@ -12490,7 +12490,7 @@ pub const SignalToNoiseRatio: Tag = Tag {
   element: 0x1155,
   name: "SignalToNoiseRatio",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Signal to Noise Ratio",
 };
 
@@ -12499,7 +12499,7 @@ pub const OphthalmicAxialLengthDataSourceDescription: Tag = Tag {
   element: 0x1159,
   name: "OphthalmicAxialLengthDataSourceDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ophthalmic Axial Length Data Source Description",
 };
 
@@ -12508,7 +12508,7 @@ pub const OphthalmicAxialLengthMeasurementsTotalLengthSequence: Tag = Tag {
   element: 0x1210,
   name: "OphthalmicAxialLengthMeasurementsTotalLengthSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ophthalmic Axial Length Measurements Total Length Sequence",
 };
 
@@ -12517,7 +12517,7 @@ pub const OphthalmicAxialLengthMeasurementsSegmentalLengthSequence: Tag = Tag {
   element: 0x1211,
   name: "OphthalmicAxialLengthMeasurementsSegmentalLengthSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ophthalmic Axial Length Measurements Segmental Length Sequence",
 };
 
@@ -12526,7 +12526,7 @@ pub const OphthalmicAxialLengthMeasurementsLengthSummationSequence: Tag = Tag {
   element: 0x1212,
   name: "OphthalmicAxialLengthMeasurementsLengthSummationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ophthalmic Axial Length Measurements Length Summation Sequence",
 };
 
@@ -12535,7 +12535,7 @@ pub const UltrasoundOphthalmicAxialLengthMeasurementsSequence: Tag = Tag {
   element: 0x1220,
   name: "UltrasoundOphthalmicAxialLengthMeasurementsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ultrasound Ophthalmic Axial Length Measurements Sequence",
 };
 
@@ -12544,7 +12544,7 @@ pub const OpticalOphthalmicAxialLengthMeasurementsSequence: Tag = Tag {
   element: 0x1225,
   name: "OpticalOphthalmicAxialLengthMeasurementsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Optical Ophthalmic Axial Length Measurements Sequence",
 };
 
@@ -12553,7 +12553,7 @@ pub const UltrasoundSelectedOphthalmicAxialLengthSequence: Tag = Tag {
   element: 0x1230,
   name: "UltrasoundSelectedOphthalmicAxialLengthSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ultrasound Selected Ophthalmic Axial Length Sequence",
 };
 
@@ -12562,7 +12562,7 @@ pub const OphthalmicAxialLengthSelectionMethodCodeSequence: Tag = Tag {
   element: 0x1250,
   name: "OphthalmicAxialLengthSelectionMethodCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ophthalmic Axial Length Selection Method Code Sequence",
 };
 
@@ -12571,7 +12571,7 @@ pub const OpticalSelectedOphthalmicAxialLengthSequence: Tag = Tag {
   element: 0x1255,
   name: "OpticalSelectedOphthalmicAxialLengthSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Optical Selected Ophthalmic Axial Length Sequence",
 };
 
@@ -12580,7 +12580,7 @@ pub const SelectedSegmentalOphthalmicAxialLengthSequence: Tag = Tag {
   element: 0x1257,
   name: "SelectedSegmentalOphthalmicAxialLengthSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Selected Segmental Ophthalmic Axial Length Sequence",
 };
 
@@ -12589,7 +12589,7 @@ pub const SelectedTotalOphthalmicAxialLengthSequence: Tag = Tag {
   element: 0x1260,
   name: "SelectedTotalOphthalmicAxialLengthSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Selected Total Ophthalmic Axial Length Sequence",
 };
 
@@ -12598,7 +12598,7 @@ pub const OphthalmicAxialLengthQualityMetricSequence: Tag = Tag {
   element: 0x1262,
   name: "OphthalmicAxialLengthQualityMetricSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ophthalmic Axial Length Quality Metric Sequence",
 };
 
@@ -12607,7 +12607,7 @@ pub const OphthalmicAxialLengthQualityMetricTypeCodeSequence: Tag = Tag {
   element: 0x1265,
   name: "OphthalmicAxialLengthQualityMetricTypeCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ophthalmic Axial Length Quality Metric Type Code Sequence",
 };
 
@@ -12616,7 +12616,7 @@ pub const OphthalmicAxialLengthQualityMetricTypeDescription: Tag = Tag {
   element: 0x1273,
   name: "OphthalmicAxialLengthQualityMetricTypeDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ophthalmic Axial Length Quality Metric Type Description",
 };
 
@@ -12625,7 +12625,7 @@ pub const IntraocularLensCalculationsRightEyeSequence: Tag = Tag {
   element: 0x1300,
   name: "IntraocularLensCalculationsRightEyeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Intraocular Lens Calculations Right Eye Sequence",
 };
 
@@ -12634,7 +12634,7 @@ pub const IntraocularLensCalculationsLeftEyeSequence: Tag = Tag {
   element: 0x1310,
   name: "IntraocularLensCalculationsLeftEyeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Intraocular Lens Calculations Left Eye Sequence",
 };
 
@@ -12643,7 +12643,7 @@ pub const ReferencedOphthalmicAxialLengthMeasurementQCImageSequence: Tag = Tag {
   element: 0x1330,
   name: "ReferencedOphthalmicAxialLengthMeasurementQCImageSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Ophthalmic Axial Length Measurement QC Image Sequence",
 };
 
@@ -12652,7 +12652,7 @@ pub const OphthalmicMappingDeviceType: Tag = Tag {
   element: 0x1415,
   name: "OphthalmicMappingDeviceType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ophthalmic Mapping Device Type",
 };
 
@@ -12661,7 +12661,7 @@ pub const AcquisitionMethodCodeSequence: Tag = Tag {
   element: 0x1420,
   name: "AcquisitionMethodCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Acquisition Method Code Sequence",
 };
 
@@ -12670,7 +12670,7 @@ pub const AcquisitionMethodAlgorithmSequence: Tag = Tag {
   element: 0x1423,
   name: "AcquisitionMethodAlgorithmSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Acquisition Method Algorithm Sequence",
 };
 
@@ -12679,7 +12679,7 @@ pub const OphthalmicThicknessMapTypeCodeSequence: Tag = Tag {
   element: 0x1436,
   name: "OphthalmicThicknessMapTypeCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ophthalmic Thickness Map Type Code Sequence",
 };
 
@@ -12688,7 +12688,7 @@ pub const OphthalmicThicknessMappingNormalsSequence: Tag = Tag {
   element: 0x1443,
   name: "OphthalmicThicknessMappingNormalsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ophthalmic Thickness Mapping Normals Sequence",
 };
 
@@ -12697,7 +12697,7 @@ pub const RetinalThicknessDefinitionCodeSequence: Tag = Tag {
   element: 0x1445,
   name: "RetinalThicknessDefinitionCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Retinal Thickness Definition Code Sequence",
 };
 
@@ -12706,7 +12706,7 @@ pub const PixelValueMappingToCodedConceptSequence: Tag = Tag {
   element: 0x1450,
   name: "PixelValueMappingToCodedConceptSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pixel Value Mapping to Coded Concept Sequence",
 };
 
@@ -12715,7 +12715,7 @@ pub const MappedPixelValue: Tag = Tag {
   element: 0x1452,
   name: "MappedPixelValue",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Mapped Pixel Value",
 };
 
@@ -12724,7 +12724,7 @@ pub const PixelValueMappingExplanation: Tag = Tag {
   element: 0x1454,
   name: "PixelValueMappingExplanation",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pixel Value Mapping Explanation",
 };
 
@@ -12733,7 +12733,7 @@ pub const OphthalmicThicknessMapQualityThresholdSequence: Tag = Tag {
   element: 0x1458,
   name: "OphthalmicThicknessMapQualityThresholdSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ophthalmic Thickness Map Quality Threshold Sequence",
 };
 
@@ -12742,7 +12742,7 @@ pub const OphthalmicThicknessMapThresholdQualityRating: Tag = Tag {
   element: 0x1460,
   name: "OphthalmicThicknessMapThresholdQualityRating",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ophthalmic Thickness Map Threshold Quality Rating",
 };
 
@@ -12751,7 +12751,7 @@ pub const AnatomicStructureReferencePoint: Tag = Tag {
   element: 0x1463,
   name: "AnatomicStructureReferencePoint",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Anatomic Structure Reference Point",
 };
 
@@ -12760,7 +12760,7 @@ pub const RegistrationToLocalizerSequence: Tag = Tag {
   element: 0x1465,
   name: "RegistrationToLocalizerSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Registration to Localizer Sequence",
 };
 
@@ -12769,7 +12769,7 @@ pub const RegisteredLocalizerUnits: Tag = Tag {
   element: 0x1466,
   name: "RegisteredLocalizerUnits",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Registered Localizer Units",
 };
 
@@ -12778,7 +12778,7 @@ pub const RegisteredLocalizerTopLeftHandCorner: Tag = Tag {
   element: 0x1467,
   name: "RegisteredLocalizerTopLeftHandCorner",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Registered Localizer Top Left Hand Corner",
 };
 
@@ -12787,7 +12787,7 @@ pub const RegisteredLocalizerBottomRightHandCorner: Tag = Tag {
   element: 0x1468,
   name: "RegisteredLocalizerBottomRightHandCorner",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Registered Localizer Bottom Right Hand Corner",
 };
 
@@ -12796,7 +12796,7 @@ pub const OphthalmicThicknessMapQualityRatingSequence: Tag = Tag {
   element: 0x1470,
   name: "OphthalmicThicknessMapQualityRatingSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ophthalmic Thickness Map Quality Rating Sequence",
 };
 
@@ -12805,7 +12805,7 @@ pub const RelevantOPTAttributesSequence: Tag = Tag {
   element: 0x1472,
   name: "RelevantOPTAttributesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Relevant OPT Attributes Sequence",
 };
 
@@ -12814,7 +12814,7 @@ pub const VisualFieldHorizontalExtent: Tag = Tag {
   element: 0x0010,
   name: "VisualFieldHorizontalExtent",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Visual Field Horizontal Extent",
 };
 
@@ -12823,7 +12823,7 @@ pub const VisualFieldVerticalExtent: Tag = Tag {
   element: 0x0011,
   name: "VisualFieldVerticalExtent",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Visual Field Vertical Extent",
 };
 
@@ -12832,7 +12832,7 @@ pub const VisualFieldShape: Tag = Tag {
   element: 0x0012,
   name: "VisualFieldShape",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Visual Field Shape",
 };
 
@@ -12841,7 +12841,7 @@ pub const ScreeningTestModeCodeSequence: Tag = Tag {
   element: 0x0016,
   name: "ScreeningTestModeCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Screening Test Mode Code Sequence",
 };
 
@@ -12850,7 +12850,7 @@ pub const MaximumStimulusLuminance: Tag = Tag {
   element: 0x0018,
   name: "MaximumStimulusLuminance",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Maximum Stimulus Luminance",
 };
 
@@ -12859,7 +12859,7 @@ pub const BackgroundLuminance: Tag = Tag {
   element: 0x0020,
   name: "BackgroundLuminance",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Background Luminance",
 };
 
@@ -12868,7 +12868,7 @@ pub const StimulusColorCodeSequence: Tag = Tag {
   element: 0x0021,
   name: "StimulusColorCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Stimulus Color Code Sequence",
 };
 
@@ -12877,7 +12877,7 @@ pub const BackgroundIlluminationColorCodeSequence: Tag = Tag {
   element: 0x0024,
   name: "BackgroundIlluminationColorCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Background Illumination Color Code Sequence",
 };
 
@@ -12886,7 +12886,7 @@ pub const StimulusArea: Tag = Tag {
   element: 0x0025,
   name: "StimulusArea",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Stimulus Area",
 };
 
@@ -12895,7 +12895,7 @@ pub const StimulusPresentationTime: Tag = Tag {
   element: 0x0028,
   name: "StimulusPresentationTime",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Stimulus Presentation Time",
 };
 
@@ -12904,7 +12904,7 @@ pub const FixationSequence: Tag = Tag {
   element: 0x0032,
   name: "FixationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fixation Sequence",
 };
 
@@ -12913,7 +12913,7 @@ pub const FixationMonitoringCodeSequence: Tag = Tag {
   element: 0x0033,
   name: "FixationMonitoringCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fixation Monitoring Code Sequence",
 };
 
@@ -12922,7 +12922,7 @@ pub const VisualFieldCatchTrialSequence: Tag = Tag {
   element: 0x0034,
   name: "VisualFieldCatchTrialSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Visual Field Catch Trial Sequence",
 };
 
@@ -12931,7 +12931,7 @@ pub const FixationCheckedQuantity: Tag = Tag {
   element: 0x0035,
   name: "FixationCheckedQuantity",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fixation Checked Quantity",
 };
 
@@ -12940,7 +12940,7 @@ pub const PatientNotProperlyFixatedQuantity: Tag = Tag {
   element: 0x0036,
   name: "PatientNotProperlyFixatedQuantity",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Not Properly Fixated Quantity",
 };
 
@@ -12949,7 +12949,7 @@ pub const PresentedVisualStimuliDataFlag: Tag = Tag {
   element: 0x0037,
   name: "PresentedVisualStimuliDataFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Presented Visual Stimuli Data Flag",
 };
 
@@ -12958,7 +12958,7 @@ pub const NumberOfVisualStimuli: Tag = Tag {
   element: 0x0038,
   name: "NumberOfVisualStimuli",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Visual Stimuli",
 };
 
@@ -12967,7 +12967,7 @@ pub const ExcessiveFixationLossesDataFlag: Tag = Tag {
   element: 0x0039,
   name: "ExcessiveFixationLossesDataFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Excessive Fixation Losses Data Flag",
 };
 
@@ -12976,7 +12976,7 @@ pub const ExcessiveFixationLosses: Tag = Tag {
   element: 0x0040,
   name: "ExcessiveFixationLosses",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Excessive Fixation Losses",
 };
 
@@ -12985,7 +12985,7 @@ pub const StimuliRetestingQuantity: Tag = Tag {
   element: 0x0042,
   name: "StimuliRetestingQuantity",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Stimuli Retesting Quantity",
 };
 
@@ -12994,7 +12994,7 @@ pub const CommentsOnPatientPerformanceOfVisualField: Tag = Tag {
   element: 0x0044,
   name: "CommentsOnPatientPerformanceOfVisualField",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Comments on Patient's Performance of Visual Field",
 };
 
@@ -13003,7 +13003,7 @@ pub const FalseNegativesEstimateFlag: Tag = Tag {
   element: 0x0045,
   name: "FalseNegativesEstimateFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "False Negatives Estimate Flag",
 };
 
@@ -13012,7 +13012,7 @@ pub const FalseNegativesEstimate: Tag = Tag {
   element: 0x0046,
   name: "FalseNegativesEstimate",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "False Negatives Estimate",
 };
 
@@ -13021,7 +13021,7 @@ pub const NegativeCatchTrialsQuantity: Tag = Tag {
   element: 0x0048,
   name: "NegativeCatchTrialsQuantity",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Negative Catch Trials Quantity",
 };
 
@@ -13030,7 +13030,7 @@ pub const FalseNegativesQuantity: Tag = Tag {
   element: 0x0050,
   name: "FalseNegativesQuantity",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "False Negatives Quantity",
 };
 
@@ -13039,7 +13039,7 @@ pub const ExcessiveFalseNegativesDataFlag: Tag = Tag {
   element: 0x0051,
   name: "ExcessiveFalseNegativesDataFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Excessive False Negatives Data Flag",
 };
 
@@ -13048,7 +13048,7 @@ pub const ExcessiveFalseNegatives: Tag = Tag {
   element: 0x0052,
   name: "ExcessiveFalseNegatives",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Excessive False Negatives",
 };
 
@@ -13057,7 +13057,7 @@ pub const FalsePositivesEstimateFlag: Tag = Tag {
   element: 0x0053,
   name: "FalsePositivesEstimateFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "False Positives Estimate Flag",
 };
 
@@ -13066,7 +13066,7 @@ pub const FalsePositivesEstimate: Tag = Tag {
   element: 0x0054,
   name: "FalsePositivesEstimate",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "False Positives Estimate",
 };
 
@@ -13075,7 +13075,7 @@ pub const CatchTrialsDataFlag: Tag = Tag {
   element: 0x0055,
   name: "CatchTrialsDataFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Catch Trials Data Flag",
 };
 
@@ -13084,7 +13084,7 @@ pub const PositiveCatchTrialsQuantity: Tag = Tag {
   element: 0x0056,
   name: "PositiveCatchTrialsQuantity",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Positive Catch Trials Quantity",
 };
 
@@ -13093,7 +13093,7 @@ pub const TestPointNormalsDataFlag: Tag = Tag {
   element: 0x0057,
   name: "TestPointNormalsDataFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Test Point Normals Data Flag",
 };
 
@@ -13102,7 +13102,7 @@ pub const TestPointNormalsSequence: Tag = Tag {
   element: 0x0058,
   name: "TestPointNormalsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Test Point Normals Sequence",
 };
 
@@ -13111,7 +13111,7 @@ pub const GlobalDeviationProbabilityNormalsFlag: Tag = Tag {
   element: 0x0059,
   name: "GlobalDeviationProbabilityNormalsFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Global Deviation Probability Normals Flag",
 };
 
@@ -13120,7 +13120,7 @@ pub const FalsePositivesQuantity: Tag = Tag {
   element: 0x0060,
   name: "FalsePositivesQuantity",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "False Positives Quantity",
 };
 
@@ -13129,7 +13129,7 @@ pub const ExcessiveFalsePositivesDataFlag: Tag = Tag {
   element: 0x0061,
   name: "ExcessiveFalsePositivesDataFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Excessive False Positives Data Flag",
 };
 
@@ -13138,7 +13138,7 @@ pub const ExcessiveFalsePositives: Tag = Tag {
   element: 0x0062,
   name: "ExcessiveFalsePositives",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Excessive False Positives",
 };
 
@@ -13147,7 +13147,7 @@ pub const VisualFieldTestNormalsFlag: Tag = Tag {
   element: 0x0063,
   name: "VisualFieldTestNormalsFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Visual Field Test Normals Flag",
 };
 
@@ -13156,7 +13156,7 @@ pub const ResultsNormalsSequence: Tag = Tag {
   element: 0x0064,
   name: "ResultsNormalsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Results Normals Sequence",
 };
 
@@ -13165,7 +13165,7 @@ pub const AgeCorrectedSensitivityDeviationAlgorithmSequence: Tag = Tag {
   element: 0x0065,
   name: "AgeCorrectedSensitivityDeviationAlgorithmSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Age Corrected Sensitivity Deviation Algorithm Sequence",
 };
 
@@ -13174,7 +13174,7 @@ pub const GlobalDeviationFromNormal: Tag = Tag {
   element: 0x0066,
   name: "GlobalDeviationFromNormal",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Global Deviation From Normal",
 };
 
@@ -13183,7 +13183,7 @@ pub const GeneralizedDefectSensitivityDeviationAlgorithmSequence: Tag = Tag {
   element: 0x0067,
   name: "GeneralizedDefectSensitivityDeviationAlgorithmSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Generalized Defect Sensitivity Deviation Algorithm Sequence",
 };
 
@@ -13192,7 +13192,7 @@ pub const LocalizedDeviationFromNormal: Tag = Tag {
   element: 0x0068,
   name: "LocalizedDeviationFromNormal",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Localized Deviation From Normal",
 };
 
@@ -13201,7 +13201,7 @@ pub const PatientReliabilityIndicator: Tag = Tag {
   element: 0x0069,
   name: "PatientReliabilityIndicator",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Reliability Indicator",
 };
 
@@ -13210,7 +13210,7 @@ pub const VisualFieldMeanSensitivity: Tag = Tag {
   element: 0x0070,
   name: "VisualFieldMeanSensitivity",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Visual Field Mean Sensitivity",
 };
 
@@ -13219,7 +13219,7 @@ pub const GlobalDeviationProbability: Tag = Tag {
   element: 0x0071,
   name: "GlobalDeviationProbability",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Global Deviation Probability",
 };
 
@@ -13228,7 +13228,7 @@ pub const LocalDeviationProbabilityNormalsFlag: Tag = Tag {
   element: 0x0072,
   name: "LocalDeviationProbabilityNormalsFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Local Deviation Probability Normals Flag",
 };
 
@@ -13237,7 +13237,7 @@ pub const LocalizedDeviationProbability: Tag = Tag {
   element: 0x0073,
   name: "LocalizedDeviationProbability",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Localized Deviation Probability",
 };
 
@@ -13246,7 +13246,7 @@ pub const ShortTermFluctuationCalculated: Tag = Tag {
   element: 0x0074,
   name: "ShortTermFluctuationCalculated",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Short Term Fluctuation Calculated",
 };
 
@@ -13255,7 +13255,7 @@ pub const ShortTermFluctuation: Tag = Tag {
   element: 0x0075,
   name: "ShortTermFluctuation",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Short Term Fluctuation",
 };
 
@@ -13264,7 +13264,7 @@ pub const ShortTermFluctuationProbabilityCalculated: Tag = Tag {
   element: 0x0076,
   name: "ShortTermFluctuationProbabilityCalculated",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Short Term Fluctuation Probability Calculated",
 };
 
@@ -13273,7 +13273,7 @@ pub const ShortTermFluctuationProbability: Tag = Tag {
   element: 0x0077,
   name: "ShortTermFluctuationProbability",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Short Term Fluctuation Probability",
 };
 
@@ -13282,7 +13282,7 @@ pub const CorrectedLocalizedDeviationFromNormalCalculated: Tag = Tag {
   element: 0x0078,
   name: "CorrectedLocalizedDeviationFromNormalCalculated",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Corrected Localized Deviation From Normal Calculated",
 };
 
@@ -13291,7 +13291,7 @@ pub const CorrectedLocalizedDeviationFromNormal: Tag = Tag {
   element: 0x0079,
   name: "CorrectedLocalizedDeviationFromNormal",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Corrected Localized Deviation From Normal",
 };
 
@@ -13300,7 +13300,7 @@ pub const CorrectedLocalizedDeviationFromNormalProbabilityCalculated: Tag = Tag 
   element: 0x0080,
   name: "CorrectedLocalizedDeviationFromNormalProbabilityCalculated",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Corrected Localized Deviation From Normal Probability Calculated",
 };
 
@@ -13309,7 +13309,7 @@ pub const CorrectedLocalizedDeviationFromNormalProbability: Tag = Tag {
   element: 0x0081,
   name: "CorrectedLocalizedDeviationFromNormalProbability",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Corrected Localized Deviation From Normal Probability",
 };
 
@@ -13318,7 +13318,7 @@ pub const GlobalDeviationProbabilitySequence: Tag = Tag {
   element: 0x0083,
   name: "GlobalDeviationProbabilitySequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Global Deviation Probability Sequence",
 };
 
@@ -13327,7 +13327,7 @@ pub const LocalizedDeviationProbabilitySequence: Tag = Tag {
   element: 0x0085,
   name: "LocalizedDeviationProbabilitySequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Localized Deviation Probability Sequence",
 };
 
@@ -13336,7 +13336,7 @@ pub const FovealSensitivityMeasured: Tag = Tag {
   element: 0x0086,
   name: "FovealSensitivityMeasured",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Foveal Sensitivity Measured",
 };
 
@@ -13345,7 +13345,7 @@ pub const FovealSensitivity: Tag = Tag {
   element: 0x0087,
   name: "FovealSensitivity",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Foveal Sensitivity",
 };
 
@@ -13354,7 +13354,7 @@ pub const VisualFieldTestDuration: Tag = Tag {
   element: 0x0088,
   name: "VisualFieldTestDuration",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Visual Field Test Duration",
 };
 
@@ -13363,7 +13363,7 @@ pub const VisualFieldTestPointSequence: Tag = Tag {
   element: 0x0089,
   name: "VisualFieldTestPointSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Visual Field Test Point Sequence",
 };
 
@@ -13372,7 +13372,7 @@ pub const VisualFieldTestPointXCoordinate: Tag = Tag {
   element: 0x0090,
   name: "VisualFieldTestPointXCoordinate",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Visual Field Test Point X-Coordinate",
 };
 
@@ -13381,7 +13381,7 @@ pub const VisualFieldTestPointYCoordinate: Tag = Tag {
   element: 0x0091,
   name: "VisualFieldTestPointYCoordinate",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Visual Field Test Point Y-Coordinate",
 };
 
@@ -13390,7 +13390,7 @@ pub const AgeCorrectedSensitivityDeviationValue: Tag = Tag {
   element: 0x0092,
   name: "AgeCorrectedSensitivityDeviationValue",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Age Corrected Sensitivity Deviation Value",
 };
 
@@ -13399,7 +13399,7 @@ pub const StimulusResults: Tag = Tag {
   element: 0x0093,
   name: "StimulusResults",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Stimulus Results",
 };
 
@@ -13408,7 +13408,7 @@ pub const SensitivityValue: Tag = Tag {
   element: 0x0094,
   name: "SensitivityValue",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Sensitivity Value",
 };
 
@@ -13417,7 +13417,7 @@ pub const RetestStimulusSeen: Tag = Tag {
   element: 0x0095,
   name: "RetestStimulusSeen",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Retest Stimulus Seen",
 };
 
@@ -13426,7 +13426,7 @@ pub const RetestSensitivityValue: Tag = Tag {
   element: 0x0096,
   name: "RetestSensitivityValue",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Retest Sensitivity Value",
 };
 
@@ -13435,7 +13435,7 @@ pub const VisualFieldTestPointNormalsSequence: Tag = Tag {
   element: 0x0097,
   name: "VisualFieldTestPointNormalsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Visual Field Test Point Normals Sequence",
 };
 
@@ -13444,7 +13444,7 @@ pub const QuantifiedDefect: Tag = Tag {
   element: 0x0098,
   name: "QuantifiedDefect",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Quantified Defect",
 };
 
@@ -13453,7 +13453,7 @@ pub const AgeCorrectedSensitivityDeviationProbabilityValue: Tag = Tag {
   element: 0x0100,
   name: "AgeCorrectedSensitivityDeviationProbabilityValue",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Age Corrected Sensitivity Deviation Probability Value",
 };
 
@@ -13462,7 +13462,7 @@ pub const GeneralizedDefectCorrectedSensitivityDeviationFlag: Tag = Tag {
   element: 0x0102,
   name: "GeneralizedDefectCorrectedSensitivityDeviationFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Generalized Defect Corrected Sensitivity Deviation Flag",
 };
 
@@ -13471,7 +13471,7 @@ pub const GeneralizedDefectCorrectedSensitivityDeviationValue: Tag = Tag {
   element: 0x0103,
   name: "GeneralizedDefectCorrectedSensitivityDeviationValue",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Generalized Defect Corrected Sensitivity Deviation Value",
 };
 
@@ -13480,7 +13480,7 @@ pub const GeneralizedDefectCorrectedSensitivityDeviationProbabilityValue: Tag = 
   element: 0x0104,
   name: "GeneralizedDefectCorrectedSensitivityDeviationProbabilityValue",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Generalized Defect Corrected Sensitivity Deviation Probability Value",
 };
 
@@ -13489,7 +13489,7 @@ pub const MinimumSensitivityValue: Tag = Tag {
   element: 0x0105,
   name: "MinimumSensitivityValue",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Minimum Sensitivity Value",
 };
 
@@ -13498,7 +13498,7 @@ pub const BlindSpotLocalized: Tag = Tag {
   element: 0x0106,
   name: "BlindSpotLocalized",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Blind Spot Localized",
 };
 
@@ -13507,7 +13507,7 @@ pub const BlindSpotXCoordinate: Tag = Tag {
   element: 0x0107,
   name: "BlindSpotXCoordinate",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Blind Spot X-Coordinate",
 };
 
@@ -13516,7 +13516,7 @@ pub const BlindSpotYCoordinate: Tag = Tag {
   element: 0x0108,
   name: "BlindSpotYCoordinate",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Blind Spot Y-Coordinate",
 };
 
@@ -13525,7 +13525,7 @@ pub const VisualAcuityMeasurementSequence: Tag = Tag {
   element: 0x0110,
   name: "VisualAcuityMeasurementSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Visual Acuity Measurement Sequence",
 };
 
@@ -13534,7 +13534,7 @@ pub const RefractiveParametersUsedOnPatientSequence: Tag = Tag {
   element: 0x0112,
   name: "RefractiveParametersUsedOnPatientSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Refractive Parameters Used on Patient Sequence",
 };
 
@@ -13543,7 +13543,7 @@ pub const MeasurementLaterality: Tag = Tag {
   element: 0x0113,
   name: "MeasurementLaterality",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Measurement Laterality",
 };
 
@@ -13552,7 +13552,7 @@ pub const OphthalmicPatientClinicalInformationLeftEyeSequence: Tag = Tag {
   element: 0x0114,
   name: "OphthalmicPatientClinicalInformationLeftEyeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ophthalmic Patient Clinical Information Left Eye Sequence",
 };
 
@@ -13561,7 +13561,7 @@ pub const OphthalmicPatientClinicalInformationRightEyeSequence: Tag = Tag {
   element: 0x0115,
   name: "OphthalmicPatientClinicalInformationRightEyeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ophthalmic Patient Clinical Information Right Eye Sequence",
 };
 
@@ -13570,7 +13570,7 @@ pub const FovealPointNormativeDataFlag: Tag = Tag {
   element: 0x0117,
   name: "FovealPointNormativeDataFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Foveal Point Normative Data Flag",
 };
 
@@ -13579,7 +13579,7 @@ pub const FovealPointProbabilityValue: Tag = Tag {
   element: 0x0118,
   name: "FovealPointProbabilityValue",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Foveal Point Probability Value",
 };
 
@@ -13588,7 +13588,7 @@ pub const ScreeningBaselineMeasured: Tag = Tag {
   element: 0x0120,
   name: "ScreeningBaselineMeasured",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Screening Baseline Measured",
 };
 
@@ -13597,7 +13597,7 @@ pub const ScreeningBaselineMeasuredSequence: Tag = Tag {
   element: 0x0122,
   name: "ScreeningBaselineMeasuredSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Screening Baseline Measured Sequence",
 };
 
@@ -13606,7 +13606,7 @@ pub const ScreeningBaselineType: Tag = Tag {
   element: 0x0124,
   name: "ScreeningBaselineType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Screening Baseline Type",
 };
 
@@ -13615,7 +13615,7 @@ pub const ScreeningBaselineValue: Tag = Tag {
   element: 0x0126,
   name: "ScreeningBaselineValue",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Screening Baseline Value",
 };
 
@@ -13624,7 +13624,7 @@ pub const AlgorithmSource: Tag = Tag {
   element: 0x0202,
   name: "AlgorithmSource",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Algorithm Source",
 };
 
@@ -13633,7 +13633,7 @@ pub const DataSetName: Tag = Tag {
   element: 0x0306,
   name: "DataSetName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Data Set Name",
 };
 
@@ -13642,7 +13642,7 @@ pub const DataSetVersion: Tag = Tag {
   element: 0x0307,
   name: "DataSetVersion",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Data Set Version",
 };
 
@@ -13651,7 +13651,7 @@ pub const DataSetSource: Tag = Tag {
   element: 0x0308,
   name: "DataSetSource",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Data Set Source",
 };
 
@@ -13660,7 +13660,7 @@ pub const DataSetDescription: Tag = Tag {
   element: 0x0309,
   name: "DataSetDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Data Set Description",
 };
 
@@ -13669,7 +13669,7 @@ pub const VisualFieldTestReliabilityGlobalIndexSequence: Tag = Tag {
   element: 0x0317,
   name: "VisualFieldTestReliabilityGlobalIndexSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Visual Field Test Reliability Global Index Sequence",
 };
 
@@ -13678,7 +13678,7 @@ pub const VisualFieldGlobalResultsIndexSequence: Tag = Tag {
   element: 0x0320,
   name: "VisualFieldGlobalResultsIndexSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Visual Field Global Results Index Sequence",
 };
 
@@ -13687,7 +13687,7 @@ pub const DataObservationSequence: Tag = Tag {
   element: 0x0325,
   name: "DataObservationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Data Observation Sequence",
 };
 
@@ -13696,7 +13696,7 @@ pub const IndexNormalsFlag: Tag = Tag {
   element: 0x0338,
   name: "IndexNormalsFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Index Normals Flag",
 };
 
@@ -13705,7 +13705,7 @@ pub const IndexProbability: Tag = Tag {
   element: 0x0341,
   name: "IndexProbability",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Index Probability",
 };
 
@@ -13714,7 +13714,7 @@ pub const IndexProbabilitySequence: Tag = Tag {
   element: 0x0344,
   name: "IndexProbabilitySequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Index Probability Sequence",
 };
 
@@ -13723,7 +13723,7 @@ pub const SamplesPerPixel: Tag = Tag {
   element: 0x0002,
   name: "SamplesPerPixel",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Samples per Pixel",
 };
 
@@ -13732,7 +13732,7 @@ pub const SamplesPerPixelUsed: Tag = Tag {
   element: 0x0003,
   name: "SamplesPerPixelUsed",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Samples per Pixel Used",
 };
 
@@ -13741,7 +13741,7 @@ pub const PhotometricInterpretation: Tag = Tag {
   element: 0x0004,
   name: "PhotometricInterpretation",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Photometric Interpretation",
 };
 
@@ -13750,7 +13750,7 @@ pub const ImageDimensions: Tag = Tag {
   element: 0x0005,
   name: "ImageDimensions",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Dimensions",
 };
 
@@ -13759,7 +13759,7 @@ pub const PlanarConfiguration: Tag = Tag {
   element: 0x0006,
   name: "PlanarConfiguration",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Planar Configuration",
 };
 
@@ -13768,7 +13768,7 @@ pub const NumberOfFrames: Tag = Tag {
   element: 0x0008,
   name: "NumberOfFrames",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Frames",
 };
 
@@ -13795,7 +13795,7 @@ pub const Rows: Tag = Tag {
   element: 0x0010,
   name: "Rows",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Rows",
 };
 
@@ -13804,7 +13804,7 @@ pub const Columns: Tag = Tag {
   element: 0x0011,
   name: "Columns",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Columns",
 };
 
@@ -13813,7 +13813,7 @@ pub const Planes: Tag = Tag {
   element: 0x0012,
   name: "Planes",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Planes",
 };
 
@@ -13822,7 +13822,7 @@ pub const UltrasoundColorDataPresent: Tag = Tag {
   element: 0x0014,
   name: "UltrasoundColorDataPresent",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ultrasound Color Data Present",
 };
 
@@ -13831,7 +13831,7 @@ pub const PixelSpacing: Tag = Tag {
   element: 0x0030,
   name: "PixelSpacing",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Pixel Spacing",
 };
 
@@ -13840,7 +13840,7 @@ pub const ZoomFactor: Tag = Tag {
   element: 0x0031,
   name: "ZoomFactor",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Zoom Factor",
 };
 
@@ -13849,7 +13849,7 @@ pub const ZoomCenter: Tag = Tag {
   element: 0x0032,
   name: "ZoomCenter",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Zoom Center",
 };
 
@@ -13858,7 +13858,7 @@ pub const PixelAspectRatio: Tag = Tag {
   element: 0x0034,
   name: "PixelAspectRatio",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Pixel Aspect Ratio",
 };
 
@@ -13867,7 +13867,7 @@ pub const ImageFormat: Tag = Tag {
   element: 0x0040,
   name: "ImageFormat",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Format",
 };
 
@@ -13894,7 +13894,7 @@ pub const CompressionRecognitionCode: Tag = Tag {
   element: 0x005F,
   name: "CompressionRecognitionCode",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Compression Recognition Code",
 };
 
@@ -13903,7 +13903,7 @@ pub const CompressionCode: Tag = Tag {
   element: 0x0060,
   name: "CompressionCode",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Compression Code",
 };
 
@@ -13912,7 +13912,7 @@ pub const CompressionOriginator: Tag = Tag {
   element: 0x0061,
   name: "CompressionOriginator",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Compression Originator",
 };
 
@@ -13921,7 +13921,7 @@ pub const CompressionLabel: Tag = Tag {
   element: 0x0062,
   name: "CompressionLabel",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Compression Label",
 };
 
@@ -13930,7 +13930,7 @@ pub const CompressionDescription: Tag = Tag {
   element: 0x0063,
   name: "CompressionDescription",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Compression Description",
 };
 
@@ -13957,7 +13957,7 @@ pub const RepeatInterval: Tag = Tag {
   element: 0x0068,
   name: "RepeatInterval",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Repeat Interval",
 };
 
@@ -13966,7 +13966,7 @@ pub const BitsGrouped: Tag = Tag {
   element: 0x0069,
   name: "BitsGrouped",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Bits Grouped",
 };
 
@@ -13984,7 +13984,7 @@ pub const PerimeterValue: Tag = Tag {
   element: 0x0071,
   name: "PerimeterValue",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Perimeter Value",
 };
 
@@ -13993,7 +13993,7 @@ pub const PredictorRows: Tag = Tag {
   element: 0x0080,
   name: "PredictorRows",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Predictor Rows",
 };
 
@@ -14002,7 +14002,7 @@ pub const PredictorColumns: Tag = Tag {
   element: 0x0081,
   name: "PredictorColumns",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Predictor Columns",
 };
 
@@ -14020,7 +14020,7 @@ pub const BlockedPixels: Tag = Tag {
   element: 0x0090,
   name: "BlockedPixels",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Blocked Pixels",
 };
 
@@ -14029,7 +14029,7 @@ pub const BlockRows: Tag = Tag {
   element: 0x0091,
   name: "BlockRows",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Block Rows",
 };
 
@@ -14038,7 +14038,7 @@ pub const BlockColumns: Tag = Tag {
   element: 0x0092,
   name: "BlockColumns",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Block Columns",
 };
 
@@ -14047,7 +14047,7 @@ pub const RowOverlap: Tag = Tag {
   element: 0x0093,
   name: "RowOverlap",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Row Overlap",
 };
 
@@ -14056,7 +14056,7 @@ pub const ColumnOverlap: Tag = Tag {
   element: 0x0094,
   name: "ColumnOverlap",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Column Overlap",
 };
 
@@ -14065,7 +14065,7 @@ pub const BitsAllocated: Tag = Tag {
   element: 0x0100,
   name: "BitsAllocated",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Bits Allocated",
 };
 
@@ -14074,7 +14074,7 @@ pub const BitsStored: Tag = Tag {
   element: 0x0101,
   name: "BitsStored",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Bits Stored",
 };
 
@@ -14083,7 +14083,7 @@ pub const HighBit: Tag = Tag {
   element: 0x0102,
   name: "HighBit",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "High Bit",
 };
 
@@ -14092,7 +14092,7 @@ pub const PixelRepresentation: Tag = Tag {
   element: 0x0103,
   name: "PixelRepresentation",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pixel Representation",
 };
 
@@ -14101,7 +14101,7 @@ pub const SmallestValidPixelValue: Tag = Tag {
   element: 0x0104,
   name: "SmallestValidPixelValue",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Smallest Valid Pixel Value",
 };
 
@@ -14110,7 +14110,7 @@ pub const LargestValidPixelValue: Tag = Tag {
   element: 0x0105,
   name: "LargestValidPixelValue",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Largest Valid Pixel Value",
 };
 
@@ -14119,7 +14119,7 @@ pub const SmallestImagePixelValue: Tag = Tag {
   element: 0x0106,
   name: "SmallestImagePixelValue",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Smallest Image Pixel Value",
 };
 
@@ -14128,7 +14128,7 @@ pub const LargestImagePixelValue: Tag = Tag {
   element: 0x0107,
   name: "LargestImagePixelValue",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Largest Image Pixel Value",
 };
 
@@ -14137,7 +14137,7 @@ pub const SmallestPixelValueInSeries: Tag = Tag {
   element: 0x0108,
   name: "SmallestPixelValueInSeries",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Smallest Pixel Value in Series",
 };
 
@@ -14146,7 +14146,7 @@ pub const LargestPixelValueInSeries: Tag = Tag {
   element: 0x0109,
   name: "LargestPixelValueInSeries",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Largest Pixel Value in Series",
 };
 
@@ -14155,7 +14155,7 @@ pub const SmallestImagePixelValueInPlane: Tag = Tag {
   element: 0x0110,
   name: "SmallestImagePixelValueInPlane",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Smallest Image Pixel Value in Plane",
 };
 
@@ -14164,7 +14164,7 @@ pub const LargestImagePixelValueInPlane: Tag = Tag {
   element: 0x0111,
   name: "LargestImagePixelValueInPlane",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Largest Image Pixel Value in Plane",
 };
 
@@ -14173,7 +14173,7 @@ pub const PixelPaddingValue: Tag = Tag {
   element: 0x0120,
   name: "PixelPaddingValue",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pixel Padding Value",
 };
 
@@ -14182,7 +14182,7 @@ pub const PixelPaddingRangeLimit: Tag = Tag {
   element: 0x0121,
   name: "PixelPaddingRangeLimit",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pixel Padding Range Limit",
 };
 
@@ -14191,7 +14191,7 @@ pub const ImageLocation: Tag = Tag {
   element: 0x0200,
   name: "ImageLocation",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Location",
 };
 
@@ -14200,7 +14200,7 @@ pub const QualityControlImage: Tag = Tag {
   element: 0x0300,
   name: "QualityControlImage",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Quality Control Image",
 };
 
@@ -14209,7 +14209,7 @@ pub const BurnedInAnnotation: Tag = Tag {
   element: 0x0301,
   name: "BurnedInAnnotation",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Burned In Annotation",
 };
 
@@ -14218,7 +14218,7 @@ pub const RecognizableVisualFeatures: Tag = Tag {
   element: 0x0302,
   name: "RecognizableVisualFeatures",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Recognizable Visual Features",
 };
 
@@ -14227,7 +14227,7 @@ pub const LongitudinalTemporalInformationModified: Tag = Tag {
   element: 0x0303,
   name: "LongitudinalTemporalInformationModified",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Longitudinal Temporal Information Modified",
 };
 
@@ -14236,7 +14236,7 @@ pub const ReferencedColorPaletteInstanceUID: Tag = Tag {
   element: 0x0304,
   name: "ReferencedColorPaletteInstanceUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Color Palette Instance UID",
 };
 
@@ -14245,7 +14245,7 @@ pub const TransformLabel: Tag = Tag {
   element: 0x0400,
   name: "TransformLabel",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Transform Label",
 };
 
@@ -14254,7 +14254,7 @@ pub const TransformVersionNumber: Tag = Tag {
   element: 0x0401,
   name: "TransformVersionNumber",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Transform Version Number",
 };
 
@@ -14263,7 +14263,7 @@ pub const NumberOfTransformSteps: Tag = Tag {
   element: 0x0402,
   name: "NumberOfTransformSteps",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Transform Steps",
 };
 
@@ -14290,7 +14290,7 @@ pub const DCTLabel: Tag = Tag {
   element: 0x0700,
   name: "DCTLabel",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "DCT Label",
 };
 
@@ -14317,7 +14317,7 @@ pub const NormalizationFactorFormat: Tag = Tag {
   element: 0x0710,
   name: "NormalizationFactorFormat",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Normalization Factor Format",
 };
 
@@ -14326,7 +14326,7 @@ pub const ZonalMapNumberFormat: Tag = Tag {
   element: 0x0720,
   name: "ZonalMapNumberFormat",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Zonal Map Number Format",
 };
 
@@ -14344,7 +14344,7 @@ pub const ZonalMapFormat: Tag = Tag {
   element: 0x0722,
   name: "ZonalMapFormat",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Zonal Map Format",
 };
 
@@ -14353,7 +14353,7 @@ pub const AdaptiveMapFormat: Tag = Tag {
   element: 0x0730,
   name: "AdaptiveMapFormat",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Adaptive Map Format",
 };
 
@@ -14362,7 +14362,7 @@ pub const CodeNumberFormat: Tag = Tag {
   element: 0x0740,
   name: "CodeNumberFormat",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Code Number Format",
 };
 
@@ -14371,7 +14371,7 @@ pub const PixelSpacingCalibrationType: Tag = Tag {
   element: 0x0A02,
   name: "PixelSpacingCalibrationType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pixel Spacing Calibration Type",
 };
 
@@ -14380,7 +14380,7 @@ pub const PixelSpacingCalibrationDescription: Tag = Tag {
   element: 0x0A04,
   name: "PixelSpacingCalibrationDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pixel Spacing Calibration Description",
 };
 
@@ -14389,7 +14389,7 @@ pub const PixelIntensityRelationship: Tag = Tag {
   element: 0x1040,
   name: "PixelIntensityRelationship",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pixel Intensity Relationship",
 };
 
@@ -14398,7 +14398,7 @@ pub const PixelIntensityRelationshipSign: Tag = Tag {
   element: 0x1041,
   name: "PixelIntensityRelationshipSign",
   vr: "SS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pixel Intensity Relationship Sign",
 };
 
@@ -14425,7 +14425,7 @@ pub const RescaleIntercept: Tag = Tag {
   element: 0x1052,
   name: "RescaleIntercept",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Rescale Intercept",
 };
 
@@ -14434,7 +14434,7 @@ pub const RescaleSlope: Tag = Tag {
   element: 0x1053,
   name: "RescaleSlope",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Rescale Slope",
 };
 
@@ -14443,7 +14443,7 @@ pub const RescaleType: Tag = Tag {
   element: 0x1054,
   name: "RescaleType",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Rescale Type",
 };
 
@@ -14461,7 +14461,7 @@ pub const VOILUTFunction: Tag = Tag {
   element: 0x1056,
   name: "VOILUTFunction",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "VOI LUT Function",
 };
 
@@ -14470,7 +14470,7 @@ pub const GrayScale: Tag = Tag {
   element: 0x1080,
   name: "GrayScale",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Gray Scale",
 };
 
@@ -14479,7 +14479,7 @@ pub const RecommendedViewingMode: Tag = Tag {
   element: 0x1090,
   name: "RecommendedViewingMode",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Recommended Viewing Mode",
 };
 
@@ -14488,7 +14488,7 @@ pub const GrayLookupTableDescriptor: Tag = Tag {
   element: 0x1100,
   name: "GrayLookupTableDescriptor",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Gray Lookup Table Descriptor",
 };
 
@@ -14497,7 +14497,7 @@ pub const RedPaletteColorLookupTableDescriptor: Tag = Tag {
   element: 0x1101,
   name: "RedPaletteColorLookupTableDescriptor",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Red Palette Color Lookup Table Descriptor",
 };
 
@@ -14506,7 +14506,7 @@ pub const GreenPaletteColorLookupTableDescriptor: Tag = Tag {
   element: 0x1102,
   name: "GreenPaletteColorLookupTableDescriptor",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Green Palette Color Lookup Table Descriptor",
 };
 
@@ -14515,7 +14515,7 @@ pub const BluePaletteColorLookupTableDescriptor: Tag = Tag {
   element: 0x1103,
   name: "BluePaletteColorLookupTableDescriptor",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Blue Palette Color Lookup Table Descriptor",
 };
 
@@ -14524,7 +14524,7 @@ pub const AlphaPaletteColorLookupTableDescriptor: Tag = Tag {
   element: 0x1104,
   name: "AlphaPaletteColorLookupTableDescriptor",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Alpha Palette Color Lookup Table Descriptor",
 };
 
@@ -14533,7 +14533,7 @@ pub const LargeRedPaletteColorLookupTableDescriptor: Tag = Tag {
   element: 0x1111,
   name: "LargeRedPaletteColorLookupTableDescriptor",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 4, end: 4 },
   description: "Large Red Palette Color Lookup Table Descriptor",
 };
 
@@ -14542,7 +14542,7 @@ pub const LargeGreenPaletteColorLookupTableDescriptor: Tag = Tag {
   element: 0x1112,
   name: "LargeGreenPaletteColorLookupTableDescriptor",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 4, end: 4 },
   description: "Large Green Palette Color Lookup Table Descriptor",
 };
 
@@ -14551,7 +14551,7 @@ pub const LargeBluePaletteColorLookupTableDescriptor: Tag = Tag {
   element: 0x1113,
   name: "LargeBluePaletteColorLookupTableDescriptor",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 4, end: 4 },
   description: "Large Blue Palette Color Lookup Table Descriptor",
 };
 
@@ -14560,7 +14560,7 @@ pub const PaletteColorLookupTableUID: Tag = Tag {
   element: 0x1199,
   name: "PaletteColorLookupTableUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Palette Color Lookup Table UID",
 };
 
@@ -14578,7 +14578,7 @@ pub const RedPaletteColorLookupTableData: Tag = Tag {
   element: 0x1201,
   name: "RedPaletteColorLookupTableData",
   vr: "OW",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Red Palette Color Lookup Table Data",
 };
 
@@ -14587,7 +14587,7 @@ pub const GreenPaletteColorLookupTableData: Tag = Tag {
   element: 0x1202,
   name: "GreenPaletteColorLookupTableData",
   vr: "OW",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Green Palette Color Lookup Table Data",
 };
 
@@ -14596,7 +14596,7 @@ pub const BluePaletteColorLookupTableData: Tag = Tag {
   element: 0x1203,
   name: "BluePaletteColorLookupTableData",
   vr: "OW",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Blue Palette Color Lookup Table Data",
 };
 
@@ -14605,7 +14605,7 @@ pub const AlphaPaletteColorLookupTableData: Tag = Tag {
   element: 0x1204,
   name: "AlphaPaletteColorLookupTableData",
   vr: "OW",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Alpha Palette Color Lookup Table Data",
 };
 
@@ -14614,7 +14614,7 @@ pub const LargeRedPaletteColorLookupTableData: Tag = Tag {
   element: 0x1211,
   name: "LargeRedPaletteColorLookupTableData",
   vr: "OW",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Large Red Palette Color Lookup Table Data",
 };
 
@@ -14623,7 +14623,7 @@ pub const LargeGreenPaletteColorLookupTableData: Tag = Tag {
   element: 0x1212,
   name: "LargeGreenPaletteColorLookupTableData",
   vr: "OW",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Large Green Palette Color Lookup Table Data",
 };
 
@@ -14632,7 +14632,7 @@ pub const LargeBluePaletteColorLookupTableData: Tag = Tag {
   element: 0x1213,
   name: "LargeBluePaletteColorLookupTableData",
   vr: "OW",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Large Blue Palette Color Lookup Table Data",
 };
 
@@ -14641,7 +14641,7 @@ pub const LargePaletteColorLookupTableUID: Tag = Tag {
   element: 0x1214,
   name: "LargePaletteColorLookupTableUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Large Palette Color Lookup Table UID",
 };
 
@@ -14650,7 +14650,7 @@ pub const SegmentedRedPaletteColorLookupTableData: Tag = Tag {
   element: 0x1221,
   name: "SegmentedRedPaletteColorLookupTableData",
   vr: "OW",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Segmented Red Palette Color Lookup Table Data",
 };
 
@@ -14659,7 +14659,7 @@ pub const SegmentedGreenPaletteColorLookupTableData: Tag = Tag {
   element: 0x1222,
   name: "SegmentedGreenPaletteColorLookupTableData",
   vr: "OW",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Segmented Green Palette Color Lookup Table Data",
 };
 
@@ -14668,7 +14668,7 @@ pub const SegmentedBluePaletteColorLookupTableData: Tag = Tag {
   element: 0x1223,
   name: "SegmentedBluePaletteColorLookupTableData",
   vr: "OW",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Segmented Blue Palette Color Lookup Table Data",
 };
 
@@ -14677,7 +14677,7 @@ pub const BreastImplantPresent: Tag = Tag {
   element: 0x1300,
   name: "BreastImplantPresent",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Breast Implant Present",
 };
 
@@ -14686,7 +14686,7 @@ pub const PartialView: Tag = Tag {
   element: 0x1350,
   name: "PartialView",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Partial View",
 };
 
@@ -14695,7 +14695,7 @@ pub const PartialViewDescription: Tag = Tag {
   element: 0x1351,
   name: "PartialViewDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Partial View Description",
 };
 
@@ -14704,7 +14704,7 @@ pub const PartialViewCodeSequence: Tag = Tag {
   element: 0x1352,
   name: "PartialViewCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Partial View Code Sequence",
 };
 
@@ -14713,7 +14713,7 @@ pub const SpatialLocationsPreserved: Tag = Tag {
   element: 0x135A,
   name: "SpatialLocationsPreserved",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Spatial Locations Preserved",
 };
 
@@ -14722,7 +14722,7 @@ pub const DataFrameAssignmentSequence: Tag = Tag {
   element: 0x1401,
   name: "DataFrameAssignmentSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Data Frame Assignment Sequence",
 };
 
@@ -14731,7 +14731,7 @@ pub const DataPathAssignment: Tag = Tag {
   element: 0x1402,
   name: "DataPathAssignment",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Data Path Assignment",
 };
 
@@ -14740,7 +14740,7 @@ pub const BitsMappedToColorLookupTable: Tag = Tag {
   element: 0x1403,
   name: "BitsMappedToColorLookupTable",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Bits Mapped to Color Lookup Table",
 };
 
@@ -14749,7 +14749,7 @@ pub const BlendingLUT1Sequence: Tag = Tag {
   element: 0x1404,
   name: "BlendingLUT1Sequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Blending LUT 1 Sequence",
 };
 
@@ -14758,7 +14758,7 @@ pub const BlendingLUT1TransferFunction: Tag = Tag {
   element: 0x1405,
   name: "BlendingLUT1TransferFunction",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Blending LUT 1 Transfer Function",
 };
 
@@ -14767,7 +14767,7 @@ pub const BlendingWeightConstant: Tag = Tag {
   element: 0x1406,
   name: "BlendingWeightConstant",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Blending Weight Constant",
 };
 
@@ -14776,7 +14776,7 @@ pub const BlendingLookupTableDescriptor: Tag = Tag {
   element: 0x1407,
   name: "BlendingLookupTableDescriptor",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Blending Lookup Table Descriptor",
 };
 
@@ -14785,7 +14785,7 @@ pub const BlendingLookupTableData: Tag = Tag {
   element: 0x1408,
   name: "BlendingLookupTableData",
   vr: "OW",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Blending Lookup Table Data",
 };
 
@@ -14794,7 +14794,7 @@ pub const EnhancedPaletteColorLookupTableSequence: Tag = Tag {
   element: 0x140B,
   name: "EnhancedPaletteColorLookupTableSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Enhanced Palette Color Lookup Table Sequence",
 };
 
@@ -14803,7 +14803,7 @@ pub const BlendingLUT2Sequence: Tag = Tag {
   element: 0x140C,
   name: "BlendingLUT2Sequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Blending LUT 2 Sequence",
 };
 
@@ -14812,7 +14812,7 @@ pub const BlendingLUT2TransferFunction: Tag = Tag {
   element: 0x140D,
   name: "BlendingLUT2TransferFunction",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Blending LUT 2 Transfer Function",
 };
 
@@ -14821,7 +14821,7 @@ pub const DataPathID: Tag = Tag {
   element: 0x140E,
   name: "DataPathID",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Data Path ID",
 };
 
@@ -14830,7 +14830,7 @@ pub const RGBLUTTransferFunction: Tag = Tag {
   element: 0x140F,
   name: "RGBLUTTransferFunction",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "RGB LUT Transfer Function",
 };
 
@@ -14839,7 +14839,7 @@ pub const AlphaLUTTransferFunction: Tag = Tag {
   element: 0x1410,
   name: "AlphaLUTTransferFunction",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Alpha LUT Transfer Function",
 };
 
@@ -14848,7 +14848,7 @@ pub const ICCProfile: Tag = Tag {
   element: 0x2000,
   name: "ICCProfile",
   vr: "OB",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ICC Profile",
 };
 
@@ -14857,7 +14857,7 @@ pub const LossyImageCompression: Tag = Tag {
   element: 0x2110,
   name: "LossyImageCompression",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Lossy Image Compression",
 };
 
@@ -14884,7 +14884,7 @@ pub const ModalityLUTSequence: Tag = Tag {
   element: 0x3000,
   name: "ModalityLUTSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Modality LUT Sequence",
 };
 
@@ -14893,7 +14893,7 @@ pub const LUTDescriptor: Tag = Tag {
   element: 0x3002,
   name: "LUTDescriptor",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "LUT Descriptor",
 };
 
@@ -14902,7 +14902,7 @@ pub const LUTExplanation: Tag = Tag {
   element: 0x3003,
   name: "LUTExplanation",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "LUT Explanation",
 };
 
@@ -14911,7 +14911,7 @@ pub const ModalityLUTType: Tag = Tag {
   element: 0x3004,
   name: "ModalityLUTType",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Modality LUT Type",
 };
 
@@ -14929,7 +14929,7 @@ pub const VOILUTSequence: Tag = Tag {
   element: 0x3010,
   name: "VOILUTSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "VOI LUT Sequence",
 };
 
@@ -14938,7 +14938,7 @@ pub const SoftcopyVOILUTSequence: Tag = Tag {
   element: 0x3110,
   name: "SoftcopyVOILUTSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Softcopy VOI LUT Sequence",
 };
 
@@ -14947,7 +14947,7 @@ pub const ImagePresentationComments: Tag = Tag {
   element: 0x4000,
   name: "ImagePresentationComments",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Presentation Comments",
 };
 
@@ -14956,7 +14956,7 @@ pub const BiPlaneAcquisitionSequence: Tag = Tag {
   element: 0x5000,
   name: "BiPlaneAcquisitionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Bi-Plane Acquisition Sequence",
 };
 
@@ -14965,7 +14965,7 @@ pub const RepresentativeFrameNumber: Tag = Tag {
   element: 0x6010,
   name: "RepresentativeFrameNumber",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Representative Frame Number",
 };
 
@@ -15019,7 +15019,7 @@ pub const MaskSubtractionSequence: Tag = Tag {
   element: 0x6100,
   name: "MaskSubtractionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Mask Subtraction Sequence",
 };
 
@@ -15028,7 +15028,7 @@ pub const MaskOperation: Tag = Tag {
   element: 0x6101,
   name: "MaskOperation",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Mask Operation",
 };
 
@@ -15055,7 +15055,7 @@ pub const ContrastFrameAveraging: Tag = Tag {
   element: 0x6112,
   name: "ContrastFrameAveraging",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contrast Frame Averaging",
 };
 
@@ -15064,7 +15064,7 @@ pub const MaskSubPixelShift: Tag = Tag {
   element: 0x6114,
   name: "MaskSubPixelShift",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Mask Sub-pixel Shift",
 };
 
@@ -15073,7 +15073,7 @@ pub const TIDOffset: Tag = Tag {
   element: 0x6120,
   name: "TIDOffset",
   vr: "SS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "TID Offset",
 };
 
@@ -15082,7 +15082,7 @@ pub const MaskOperationExplanation: Tag = Tag {
   element: 0x6190,
   name: "MaskOperationExplanation",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Mask Operation Explanation",
 };
 
@@ -15091,7 +15091,7 @@ pub const EquipmentAdministratorSequence: Tag = Tag {
   element: 0x7000,
   name: "EquipmentAdministratorSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Equipment Administrator Sequence",
 };
 
@@ -15100,7 +15100,7 @@ pub const NumberOfDisplaySubsystems: Tag = Tag {
   element: 0x7001,
   name: "NumberOfDisplaySubsystems",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Display Subsystems",
 };
 
@@ -15109,7 +15109,7 @@ pub const CurrentConfigurationID: Tag = Tag {
   element: 0x7002,
   name: "CurrentConfigurationID",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Current Configuration ID",
 };
 
@@ -15118,7 +15118,7 @@ pub const DisplaySubsystemID: Tag = Tag {
   element: 0x7003,
   name: "DisplaySubsystemID",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Display Subsystem ID",
 };
 
@@ -15127,7 +15127,7 @@ pub const DisplaySubsystemName: Tag = Tag {
   element: 0x7004,
   name: "DisplaySubsystemName",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Display Subsystem Name",
 };
 
@@ -15136,7 +15136,7 @@ pub const DisplaySubsystemDescription: Tag = Tag {
   element: 0x7005,
   name: "DisplaySubsystemDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Display Subsystem Description",
 };
 
@@ -15145,7 +15145,7 @@ pub const SystemStatus: Tag = Tag {
   element: 0x7006,
   name: "SystemStatus",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "System Status",
 };
 
@@ -15154,7 +15154,7 @@ pub const SystemStatusComment: Tag = Tag {
   element: 0x7007,
   name: "SystemStatusComment",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "System Status Comment",
 };
 
@@ -15163,7 +15163,7 @@ pub const TargetLuminanceCharacteristicsSequence: Tag = Tag {
   element: 0x7008,
   name: "TargetLuminanceCharacteristicsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Target Luminance Characteristics Sequence",
 };
 
@@ -15172,7 +15172,7 @@ pub const LuminanceCharacteristicsID: Tag = Tag {
   element: 0x7009,
   name: "LuminanceCharacteristicsID",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Luminance Characteristics ID",
 };
 
@@ -15181,7 +15181,7 @@ pub const DisplaySubsystemConfigurationSequence: Tag = Tag {
   element: 0x700A,
   name: "DisplaySubsystemConfigurationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Display Subsystem Configuration Sequence",
 };
 
@@ -15190,7 +15190,7 @@ pub const ConfigurationID: Tag = Tag {
   element: 0x700B,
   name: "ConfigurationID",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Configuration ID",
 };
 
@@ -15199,7 +15199,7 @@ pub const ConfigurationName: Tag = Tag {
   element: 0x700C,
   name: "ConfigurationName",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Configuration Name",
 };
 
@@ -15208,7 +15208,7 @@ pub const ConfigurationDescription: Tag = Tag {
   element: 0x700D,
   name: "ConfigurationDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Configuration Description",
 };
 
@@ -15217,7 +15217,7 @@ pub const ReferencedTargetLuminanceCharacteristicsID: Tag = Tag {
   element: 0x700E,
   name: "ReferencedTargetLuminanceCharacteristicsID",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Target Luminance Characteristics ID",
 };
 
@@ -15226,7 +15226,7 @@ pub const QAResultsSequence: Tag = Tag {
   element: 0x700F,
   name: "QAResultsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "QA Results Sequence",
 };
 
@@ -15235,7 +15235,7 @@ pub const DisplaySubsystemQAResultsSequence: Tag = Tag {
   element: 0x7010,
   name: "DisplaySubsystemQAResultsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Display Subsystem QA Results Sequence",
 };
 
@@ -15244,7 +15244,7 @@ pub const ConfigurationQAResultsSequence: Tag = Tag {
   element: 0x7011,
   name: "ConfigurationQAResultsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Configuration QA Results Sequence",
 };
 
@@ -15253,7 +15253,7 @@ pub const MeasurementEquipmentSequence: Tag = Tag {
   element: 0x7012,
   name: "MeasurementEquipmentSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Measurement Equipment Sequence",
 };
 
@@ -15271,7 +15271,7 @@ pub const MeasurementEquipmentType: Tag = Tag {
   element: 0x7014,
   name: "MeasurementEquipmentType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Measurement Equipment Type",
 };
 
@@ -15280,7 +15280,7 @@ pub const VisualEvaluationResultSequence: Tag = Tag {
   element: 0x7015,
   name: "VisualEvaluationResultSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Visual Evaluation Result Sequence",
 };
 
@@ -15289,7 +15289,7 @@ pub const DisplayCalibrationResultSequence: Tag = Tag {
   element: 0x7016,
   name: "DisplayCalibrationResultSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Display Calibration Result Sequence",
 };
 
@@ -15298,7 +15298,7 @@ pub const DDLValue: Tag = Tag {
   element: 0x7017,
   name: "DDLValue",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "DDL Value",
 };
 
@@ -15307,7 +15307,7 @@ pub const CIExyWhitePoint: Tag = Tag {
   element: 0x7018,
   name: "CIExyWhitePoint",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "CIExy White Point",
 };
 
@@ -15316,7 +15316,7 @@ pub const DisplayFunctionType: Tag = Tag {
   element: 0x7019,
   name: "DisplayFunctionType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Display Function Type",
 };
 
@@ -15325,7 +15325,7 @@ pub const GammaValue: Tag = Tag {
   element: 0x701A,
   name: "GammaValue",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Gamma Value",
 };
 
@@ -15334,7 +15334,7 @@ pub const NumberOfLuminancePoints: Tag = Tag {
   element: 0x701B,
   name: "NumberOfLuminancePoints",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Luminance Points",
 };
 
@@ -15343,7 +15343,7 @@ pub const LuminanceResponseSequence: Tag = Tag {
   element: 0x701C,
   name: "LuminanceResponseSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Luminance Response Sequence",
 };
 
@@ -15352,7 +15352,7 @@ pub const TargetMinimumLuminance: Tag = Tag {
   element: 0x701D,
   name: "TargetMinimumLuminance",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Target Minimum Luminance",
 };
 
@@ -15361,7 +15361,7 @@ pub const TargetMaximumLuminance: Tag = Tag {
   element: 0x701E,
   name: "TargetMaximumLuminance",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Target Maximum Luminance",
 };
 
@@ -15370,7 +15370,7 @@ pub const LuminanceValue: Tag = Tag {
   element: 0x701F,
   name: "LuminanceValue",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Luminance Value",
 };
 
@@ -15379,7 +15379,7 @@ pub const LuminanceResponseDescription: Tag = Tag {
   element: 0x7020,
   name: "LuminanceResponseDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Luminance Response Description",
 };
 
@@ -15388,7 +15388,7 @@ pub const WhitePointFlag: Tag = Tag {
   element: 0x7021,
   name: "WhitePointFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "White Point Flag",
 };
 
@@ -15397,7 +15397,7 @@ pub const DisplayDeviceTypeCodeSequence: Tag = Tag {
   element: 0x7022,
   name: "DisplayDeviceTypeCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Display Device Type Code Sequence",
 };
 
@@ -15406,7 +15406,7 @@ pub const DisplaySubsystemSequence: Tag = Tag {
   element: 0x7023,
   name: "DisplaySubsystemSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Display Subsystem Sequence",
 };
 
@@ -15415,7 +15415,7 @@ pub const LuminanceResultSequence: Tag = Tag {
   element: 0x7024,
   name: "LuminanceResultSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Luminance Result Sequence",
 };
 
@@ -15424,7 +15424,7 @@ pub const AmbientLightValueSource: Tag = Tag {
   element: 0x7025,
   name: "AmbientLightValueSource",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ambient Light Value Source",
 };
 
@@ -15442,7 +15442,7 @@ pub const LuminanceUniformityResultSequence: Tag = Tag {
   element: 0x7027,
   name: "LuminanceUniformityResultSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Luminance Uniformity Result Sequence",
 };
 
@@ -15451,7 +15451,7 @@ pub const VisualEvaluationTestSequence: Tag = Tag {
   element: 0x7028,
   name: "VisualEvaluationTestSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Visual Evaluation Test Sequence",
 };
 
@@ -15460,7 +15460,7 @@ pub const TestResult: Tag = Tag {
   element: 0x7029,
   name: "TestResult",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Test Result",
 };
 
@@ -15469,7 +15469,7 @@ pub const TestResultComment: Tag = Tag {
   element: 0x702A,
   name: "TestResultComment",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Test Result Comment",
 };
 
@@ -15478,7 +15478,7 @@ pub const TestImageValidation: Tag = Tag {
   element: 0x702B,
   name: "TestImageValidation",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Test Image Validation",
 };
 
@@ -15487,7 +15487,7 @@ pub const TestPatternCodeSequence: Tag = Tag {
   element: 0x702C,
   name: "TestPatternCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Test Pattern Code Sequence",
 };
 
@@ -15496,7 +15496,7 @@ pub const MeasurementPatternCodeSequence: Tag = Tag {
   element: 0x702D,
   name: "MeasurementPatternCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Measurement Pattern Code Sequence",
 };
 
@@ -15505,7 +15505,7 @@ pub const VisualEvaluationMethodCodeSequence: Tag = Tag {
   element: 0x702E,
   name: "VisualEvaluationMethodCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Visual Evaluation Method Code Sequence",
 };
 
@@ -15514,7 +15514,7 @@ pub const PixelDataProviderURL: Tag = Tag {
   element: 0x7FE0,
   name: "PixelDataProviderURL",
   vr: "UT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pixel Data Provider URL",
 };
 
@@ -15523,7 +15523,7 @@ pub const DataPointRows: Tag = Tag {
   element: 0x9001,
   name: "DataPointRows",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Data Point Rows",
 };
 
@@ -15532,7 +15532,7 @@ pub const DataPointColumns: Tag = Tag {
   element: 0x9002,
   name: "DataPointColumns",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Data Point Columns",
 };
 
@@ -15541,7 +15541,7 @@ pub const SignalDomainColumns: Tag = Tag {
   element: 0x9003,
   name: "SignalDomainColumns",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Signal Domain Columns",
 };
 
@@ -15550,7 +15550,7 @@ pub const LargestMonochromePixelValue: Tag = Tag {
   element: 0x9099,
   name: "LargestMonochromePixelValue",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Largest Monochrome Pixel Value",
 };
 
@@ -15559,7 +15559,7 @@ pub const DataRepresentation: Tag = Tag {
   element: 0x9108,
   name: "DataRepresentation",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Data Representation",
 };
 
@@ -15568,7 +15568,7 @@ pub const PixelMeasuresSequence: Tag = Tag {
   element: 0x9110,
   name: "PixelMeasuresSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pixel Measures Sequence",
 };
 
@@ -15577,7 +15577,7 @@ pub const FrameVOILUTSequence: Tag = Tag {
   element: 0x9132,
   name: "FrameVOILUTSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Frame VOI LUT Sequence",
 };
 
@@ -15586,7 +15586,7 @@ pub const PixelValueTransformationSequence: Tag = Tag {
   element: 0x9145,
   name: "PixelValueTransformationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pixel Value Transformation Sequence",
 };
 
@@ -15595,7 +15595,7 @@ pub const SignalDomainRows: Tag = Tag {
   element: 0x9235,
   name: "SignalDomainRows",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Signal Domain Rows",
 };
 
@@ -15604,7 +15604,7 @@ pub const DisplayFilterPercentage: Tag = Tag {
   element: 0x9411,
   name: "DisplayFilterPercentage",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Display Filter Percentage",
 };
 
@@ -15613,7 +15613,7 @@ pub const FramePixelShiftSequence: Tag = Tag {
   element: 0x9415,
   name: "FramePixelShiftSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Frame Pixel Shift Sequence",
 };
 
@@ -15622,7 +15622,7 @@ pub const SubtractionItemID: Tag = Tag {
   element: 0x9416,
   name: "SubtractionItemID",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Subtraction Item ID",
 };
 
@@ -15631,7 +15631,7 @@ pub const PixelIntensityRelationshipLUTSequence: Tag = Tag {
   element: 0x9422,
   name: "PixelIntensityRelationshipLUTSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pixel Intensity Relationship LUT Sequence",
 };
 
@@ -15640,7 +15640,7 @@ pub const FramePixelDataPropertiesSequence: Tag = Tag {
   element: 0x9443,
   name: "FramePixelDataPropertiesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Frame Pixel Data Properties Sequence",
 };
 
@@ -15649,7 +15649,7 @@ pub const GeometricalProperties: Tag = Tag {
   element: 0x9444,
   name: "GeometricalProperties",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Geometrical Properties",
 };
 
@@ -15658,7 +15658,7 @@ pub const GeometricMaximumDistortion: Tag = Tag {
   element: 0x9445,
   name: "GeometricMaximumDistortion",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Geometric Maximum Distortion",
 };
 
@@ -15676,7 +15676,7 @@ pub const MaskSelectionMode: Tag = Tag {
   element: 0x9454,
   name: "MaskSelectionMode",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Mask Selection Mode",
 };
 
@@ -15685,7 +15685,7 @@ pub const LUTFunction: Tag = Tag {
   element: 0x9474,
   name: "LUTFunction",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "LUT Function",
 };
 
@@ -15694,7 +15694,7 @@ pub const MaskVisibilityPercentage: Tag = Tag {
   element: 0x9478,
   name: "MaskVisibilityPercentage",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Mask Visibility Percentage",
 };
 
@@ -15703,7 +15703,7 @@ pub const PixelShiftSequence: Tag = Tag {
   element: 0x9501,
   name: "PixelShiftSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pixel Shift Sequence",
 };
 
@@ -15712,7 +15712,7 @@ pub const RegionPixelShiftSequence: Tag = Tag {
   element: 0x9502,
   name: "RegionPixelShiftSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Region Pixel Shift Sequence",
 };
 
@@ -15730,7 +15730,7 @@ pub const MultiFramePresentationSequence: Tag = Tag {
   element: 0x9505,
   name: "MultiFramePresentationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Multi-frame Presentation Sequence",
 };
 
@@ -15757,7 +15757,7 @@ pub const ImageToEquipmentMappingMatrix: Tag = Tag {
   element: 0x9520,
   name: "ImageToEquipmentMappingMatrix",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 16, end: 16 },
   description: "Image to Equipment Mapping Matrix",
 };
 
@@ -15766,7 +15766,7 @@ pub const EquipmentCoordinateSystemIdentification: Tag = Tag {
   element: 0x9537,
   name: "EquipmentCoordinateSystemIdentification",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Equipment Coordinate System Identification",
 };
 
@@ -15775,7 +15775,7 @@ pub const StudyStatusID: Tag = Tag {
   element: 0x000A,
   name: "StudyStatusID",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Study Status ID",
 };
 
@@ -15784,7 +15784,7 @@ pub const StudyPriorityID: Tag = Tag {
   element: 0x000C,
   name: "StudyPriorityID",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Study Priority ID",
 };
 
@@ -15793,7 +15793,7 @@ pub const StudyIDIssuer: Tag = Tag {
   element: 0x0012,
   name: "StudyIDIssuer",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Study ID Issuer",
 };
 
@@ -15802,7 +15802,7 @@ pub const StudyVerifiedDate: Tag = Tag {
   element: 0x0032,
   name: "StudyVerifiedDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Study Verified Date",
 };
 
@@ -15811,7 +15811,7 @@ pub const StudyVerifiedTime: Tag = Tag {
   element: 0x0033,
   name: "StudyVerifiedTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Study Verified Time",
 };
 
@@ -15820,7 +15820,7 @@ pub const StudyReadDate: Tag = Tag {
   element: 0x0034,
   name: "StudyReadDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Study Read Date",
 };
 
@@ -15829,7 +15829,7 @@ pub const StudyReadTime: Tag = Tag {
   element: 0x0035,
   name: "StudyReadTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Study Read Time",
 };
 
@@ -15838,7 +15838,7 @@ pub const ScheduledStudyStartDate: Tag = Tag {
   element: 0x1000,
   name: "ScheduledStudyStartDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Study Start Date",
 };
 
@@ -15847,7 +15847,7 @@ pub const ScheduledStudyStartTime: Tag = Tag {
   element: 0x1001,
   name: "ScheduledStudyStartTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Study Start Time",
 };
 
@@ -15856,7 +15856,7 @@ pub const ScheduledStudyStopDate: Tag = Tag {
   element: 0x1010,
   name: "ScheduledStudyStopDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Study Stop Date",
 };
 
@@ -15865,7 +15865,7 @@ pub const ScheduledStudyStopTime: Tag = Tag {
   element: 0x1011,
   name: "ScheduledStudyStopTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Study Stop Time",
 };
 
@@ -15874,7 +15874,7 @@ pub const ScheduledStudyLocation: Tag = Tag {
   element: 0x1020,
   name: "ScheduledStudyLocation",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Study Location",
 };
 
@@ -15892,7 +15892,7 @@ pub const ReasonForStudy: Tag = Tag {
   element: 0x1030,
   name: "ReasonForStudy",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Reason for Study",
 };
 
@@ -15901,7 +15901,7 @@ pub const RequestingPhysicianIdentificationSequence: Tag = Tag {
   element: 0x1031,
   name: "RequestingPhysicianIdentificationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Requesting Physician Identification Sequence",
 };
 
@@ -15910,7 +15910,7 @@ pub const RequestingPhysician: Tag = Tag {
   element: 0x1032,
   name: "RequestingPhysician",
   vr: "PN",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Requesting Physician",
 };
 
@@ -15919,7 +15919,7 @@ pub const RequestingService: Tag = Tag {
   element: 0x1033,
   name: "RequestingService",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Requesting Service",
 };
 
@@ -15928,7 +15928,7 @@ pub const RequestingServiceCodeSequence: Tag = Tag {
   element: 0x1034,
   name: "RequestingServiceCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Requesting Service Code Sequence",
 };
 
@@ -15937,7 +15937,7 @@ pub const StudyArrivalDate: Tag = Tag {
   element: 0x1040,
   name: "StudyArrivalDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Study Arrival Date",
 };
 
@@ -15946,7 +15946,7 @@ pub const StudyArrivalTime: Tag = Tag {
   element: 0x1041,
   name: "StudyArrivalTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Study Arrival Time",
 };
 
@@ -15955,7 +15955,7 @@ pub const StudyCompletionDate: Tag = Tag {
   element: 0x1050,
   name: "StudyCompletionDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Study Completion Date",
 };
 
@@ -15964,7 +15964,7 @@ pub const StudyCompletionTime: Tag = Tag {
   element: 0x1051,
   name: "StudyCompletionTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Study Completion Time",
 };
 
@@ -15973,7 +15973,7 @@ pub const StudyComponentStatusID: Tag = Tag {
   element: 0x1055,
   name: "StudyComponentStatusID",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Study Component Status ID",
 };
 
@@ -15982,7 +15982,7 @@ pub const RequestedProcedureDescription: Tag = Tag {
   element: 0x1060,
   name: "RequestedProcedureDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Requested Procedure Description",
 };
 
@@ -15991,7 +15991,7 @@ pub const RequestedProcedureCodeSequence: Tag = Tag {
   element: 0x1064,
   name: "RequestedProcedureCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Requested Procedure Code Sequence",
 };
 
@@ -16000,7 +16000,7 @@ pub const RequestedContrastAgent: Tag = Tag {
   element: 0x1070,
   name: "RequestedContrastAgent",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Requested Contrast Agent",
 };
 
@@ -16009,7 +16009,7 @@ pub const StudyComments: Tag = Tag {
   element: 0x4000,
   name: "StudyComments",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Study Comments",
 };
 
@@ -16018,7 +16018,7 @@ pub const ReferencedPatientAliasSequence: Tag = Tag {
   element: 0x0004,
   name: "ReferencedPatientAliasSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Patient Alias Sequence",
 };
 
@@ -16027,7 +16027,7 @@ pub const VisitStatusID: Tag = Tag {
   element: 0x0008,
   name: "VisitStatusID",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Visit Status ID",
 };
 
@@ -16036,7 +16036,7 @@ pub const AdmissionID: Tag = Tag {
   element: 0x0010,
   name: "AdmissionID",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Admission ID",
 };
 
@@ -16045,7 +16045,7 @@ pub const IssuerOfAdmissionID: Tag = Tag {
   element: 0x0011,
   name: "IssuerOfAdmissionID",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Issuer of Admission ID",
 };
 
@@ -16054,7 +16054,7 @@ pub const IssuerOfAdmissionIDSequence: Tag = Tag {
   element: 0x0014,
   name: "IssuerOfAdmissionIDSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Issuer of Admission ID Sequence",
 };
 
@@ -16063,7 +16063,7 @@ pub const RouteOfAdmissions: Tag = Tag {
   element: 0x0016,
   name: "RouteOfAdmissions",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Route of Admissions",
 };
 
@@ -16072,7 +16072,7 @@ pub const ScheduledAdmissionDate: Tag = Tag {
   element: 0x001A,
   name: "ScheduledAdmissionDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Admission Date",
 };
 
@@ -16081,7 +16081,7 @@ pub const ScheduledAdmissionTime: Tag = Tag {
   element: 0x001B,
   name: "ScheduledAdmissionTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Admission Time",
 };
 
@@ -16090,7 +16090,7 @@ pub const ScheduledDischargeDate: Tag = Tag {
   element: 0x001C,
   name: "ScheduledDischargeDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Discharge Date",
 };
 
@@ -16099,7 +16099,7 @@ pub const ScheduledDischargeTime: Tag = Tag {
   element: 0x001D,
   name: "ScheduledDischargeTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Discharge Time",
 };
 
@@ -16108,7 +16108,7 @@ pub const ScheduledPatientInstitutionResidence: Tag = Tag {
   element: 0x001E,
   name: "ScheduledPatientInstitutionResidence",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Patient Institution Residence",
 };
 
@@ -16117,7 +16117,7 @@ pub const AdmittingDate: Tag = Tag {
   element: 0x0020,
   name: "AdmittingDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Admitting Date",
 };
 
@@ -16126,7 +16126,7 @@ pub const AdmittingTime: Tag = Tag {
   element: 0x0021,
   name: "AdmittingTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Admitting Time",
 };
 
@@ -16135,7 +16135,7 @@ pub const DischargeDate: Tag = Tag {
   element: 0x0030,
   name: "DischargeDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Discharge Date",
 };
 
@@ -16144,7 +16144,7 @@ pub const DischargeTime: Tag = Tag {
   element: 0x0032,
   name: "DischargeTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Discharge Time",
 };
 
@@ -16153,7 +16153,7 @@ pub const DischargeDiagnosisDescription: Tag = Tag {
   element: 0x0040,
   name: "DischargeDiagnosisDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Discharge Diagnosis Description",
 };
 
@@ -16162,7 +16162,7 @@ pub const DischargeDiagnosisCodeSequence: Tag = Tag {
   element: 0x0044,
   name: "DischargeDiagnosisCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Discharge Diagnosis Code Sequence",
 };
 
@@ -16171,7 +16171,7 @@ pub const SpecialNeeds: Tag = Tag {
   element: 0x0050,
   name: "SpecialNeeds",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Special Needs",
 };
 
@@ -16180,7 +16180,7 @@ pub const ServiceEpisodeID: Tag = Tag {
   element: 0x0060,
   name: "ServiceEpisodeID",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Service Episode ID",
 };
 
@@ -16189,7 +16189,7 @@ pub const IssuerOfServiceEpisodeID: Tag = Tag {
   element: 0x0061,
   name: "IssuerOfServiceEpisodeID",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Issuer of Service Episode ID",
 };
 
@@ -16198,7 +16198,7 @@ pub const ServiceEpisodeDescription: Tag = Tag {
   element: 0x0062,
   name: "ServiceEpisodeDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Service Episode Description",
 };
 
@@ -16207,7 +16207,7 @@ pub const IssuerOfServiceEpisodeIDSequence: Tag = Tag {
   element: 0x0064,
   name: "IssuerOfServiceEpisodeIDSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Issuer of Service Episode ID Sequence",
 };
 
@@ -16216,7 +16216,7 @@ pub const PertinentDocumentsSequence: Tag = Tag {
   element: 0x0100,
   name: "PertinentDocumentsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pertinent Documents Sequence",
 };
 
@@ -16225,7 +16225,7 @@ pub const CurrentPatientLocation: Tag = Tag {
   element: 0x0300,
   name: "CurrentPatientLocation",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Current Patient Location",
 };
 
@@ -16234,7 +16234,7 @@ pub const PatientInstitutionResidence: Tag = Tag {
   element: 0x0400,
   name: "PatientInstitutionResidence",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient's Institution Residence",
 };
 
@@ -16243,7 +16243,7 @@ pub const PatientState: Tag = Tag {
   element: 0x0500,
   name: "PatientState",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient State",
 };
 
@@ -16252,7 +16252,7 @@ pub const PatientClinicalTrialParticipationSequence: Tag = Tag {
   element: 0x0502,
   name: "PatientClinicalTrialParticipationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Clinical Trial Participation Sequence",
 };
 
@@ -16261,7 +16261,7 @@ pub const VisitComments: Tag = Tag {
   element: 0x4000,
   name: "VisitComments",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Visit Comments",
 };
 
@@ -16270,7 +16270,7 @@ pub const WaveformOriginality: Tag = Tag {
   element: 0x0004,
   name: "WaveformOriginality",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Waveform Originality",
 };
 
@@ -16279,7 +16279,7 @@ pub const NumberOfWaveformChannels: Tag = Tag {
   element: 0x0005,
   name: "NumberOfWaveformChannels",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Waveform Channels",
 };
 
@@ -16288,7 +16288,7 @@ pub const NumberOfWaveformSamples: Tag = Tag {
   element: 0x0010,
   name: "NumberOfWaveformSamples",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Waveform Samples",
 };
 
@@ -16297,7 +16297,7 @@ pub const SamplingFrequency: Tag = Tag {
   element: 0x001A,
   name: "SamplingFrequency",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Sampling Frequency",
 };
 
@@ -16306,7 +16306,7 @@ pub const MultiplexGroupLabel: Tag = Tag {
   element: 0x0020,
   name: "MultiplexGroupLabel",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Multiplex Group Label",
 };
 
@@ -16315,7 +16315,7 @@ pub const ChannelDefinitionSequence: Tag = Tag {
   element: 0x0200,
   name: "ChannelDefinitionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Definition Sequence",
 };
 
@@ -16324,7 +16324,7 @@ pub const WaveformChannelNumber: Tag = Tag {
   element: 0x0202,
   name: "WaveformChannelNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Waveform Channel Number",
 };
 
@@ -16333,7 +16333,7 @@ pub const ChannelLabel: Tag = Tag {
   element: 0x0203,
   name: "ChannelLabel",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Label",
 };
 
@@ -16351,7 +16351,7 @@ pub const ChannelSourceSequence: Tag = Tag {
   element: 0x0208,
   name: "ChannelSourceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Source Sequence",
 };
 
@@ -16360,7 +16360,7 @@ pub const ChannelSourceModifiersSequence: Tag = Tag {
   element: 0x0209,
   name: "ChannelSourceModifiersSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Source Modifiers Sequence",
 };
 
@@ -16369,7 +16369,7 @@ pub const SourceWaveformSequence: Tag = Tag {
   element: 0x020A,
   name: "SourceWaveformSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Waveform Sequence",
 };
 
@@ -16378,7 +16378,7 @@ pub const ChannelDerivationDescription: Tag = Tag {
   element: 0x020C,
   name: "ChannelDerivationDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Derivation Description",
 };
 
@@ -16387,7 +16387,7 @@ pub const ChannelSensitivity: Tag = Tag {
   element: 0x0210,
   name: "ChannelSensitivity",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Sensitivity",
 };
 
@@ -16396,7 +16396,7 @@ pub const ChannelSensitivityUnitsSequence: Tag = Tag {
   element: 0x0211,
   name: "ChannelSensitivityUnitsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Sensitivity Units Sequence",
 };
 
@@ -16405,7 +16405,7 @@ pub const ChannelSensitivityCorrectionFactor: Tag = Tag {
   element: 0x0212,
   name: "ChannelSensitivityCorrectionFactor",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Sensitivity Correction Factor",
 };
 
@@ -16414,7 +16414,7 @@ pub const ChannelBaseline: Tag = Tag {
   element: 0x0213,
   name: "ChannelBaseline",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Baseline",
 };
 
@@ -16423,7 +16423,7 @@ pub const ChannelTimeSkew: Tag = Tag {
   element: 0x0214,
   name: "ChannelTimeSkew",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Time Skew",
 };
 
@@ -16432,7 +16432,7 @@ pub const ChannelSampleSkew: Tag = Tag {
   element: 0x0215,
   name: "ChannelSampleSkew",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Sample Skew",
 };
 
@@ -16441,7 +16441,7 @@ pub const ChannelOffset: Tag = Tag {
   element: 0x0218,
   name: "ChannelOffset",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Offset",
 };
 
@@ -16450,7 +16450,7 @@ pub const WaveformBitsStored: Tag = Tag {
   element: 0x021A,
   name: "WaveformBitsStored",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Waveform Bits Stored",
 };
 
@@ -16459,7 +16459,7 @@ pub const FilterLowFrequency: Tag = Tag {
   element: 0x0220,
   name: "FilterLowFrequency",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Filter Low Frequency",
 };
 
@@ -16468,7 +16468,7 @@ pub const FilterHighFrequency: Tag = Tag {
   element: 0x0221,
   name: "FilterHighFrequency",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Filter High Frequency",
 };
 
@@ -16477,7 +16477,7 @@ pub const NotchFilterFrequency: Tag = Tag {
   element: 0x0222,
   name: "NotchFilterFrequency",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Notch Filter Frequency",
 };
 
@@ -16486,7 +16486,7 @@ pub const NotchFilterBandwidth: Tag = Tag {
   element: 0x0223,
   name: "NotchFilterBandwidth",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Notch Filter Bandwidth",
 };
 
@@ -16495,7 +16495,7 @@ pub const WaveformDataDisplayScale: Tag = Tag {
   element: 0x0230,
   name: "WaveformDataDisplayScale",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Waveform Data Display Scale",
 };
 
@@ -16504,7 +16504,7 @@ pub const WaveformDisplayBackgroundCIELabValue: Tag = Tag {
   element: 0x0231,
   name: "WaveformDisplayBackgroundCIELabValue",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Waveform Display Background CIELab Value",
 };
 
@@ -16513,7 +16513,7 @@ pub const WaveformPresentationGroupSequence: Tag = Tag {
   element: 0x0240,
   name: "WaveformPresentationGroupSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Waveform Presentation Group Sequence",
 };
 
@@ -16522,7 +16522,7 @@ pub const PresentationGroupNumber: Tag = Tag {
   element: 0x0241,
   name: "PresentationGroupNumber",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Presentation Group Number",
 };
 
@@ -16531,7 +16531,7 @@ pub const ChannelDisplaySequence: Tag = Tag {
   element: 0x0242,
   name: "ChannelDisplaySequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Display Sequence",
 };
 
@@ -16540,7 +16540,7 @@ pub const ChannelRecommendedDisplayCIELabValue: Tag = Tag {
   element: 0x0244,
   name: "ChannelRecommendedDisplayCIELabValue",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Channel Recommended Display CIELab Value",
 };
 
@@ -16549,7 +16549,7 @@ pub const ChannelPosition: Tag = Tag {
   element: 0x0245,
   name: "ChannelPosition",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Position",
 };
 
@@ -16558,7 +16558,7 @@ pub const DisplayShadingFlag: Tag = Tag {
   element: 0x0246,
   name: "DisplayShadingFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Display Shading Flag",
 };
 
@@ -16567,7 +16567,7 @@ pub const FractionalChannelDisplayScale: Tag = Tag {
   element: 0x0247,
   name: "FractionalChannelDisplayScale",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fractional Channel Display Scale",
 };
 
@@ -16576,7 +16576,7 @@ pub const AbsoluteChannelDisplayScale: Tag = Tag {
   element: 0x0248,
   name: "AbsoluteChannelDisplayScale",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Absolute Channel Display Scale",
 };
 
@@ -16585,7 +16585,7 @@ pub const MultiplexedAudioChannelsDescriptionCodeSequence: Tag = Tag {
   element: 0x0300,
   name: "MultiplexedAudioChannelsDescriptionCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Multiplexed Audio Channels Description Code Sequence",
 };
 
@@ -16594,7 +16594,7 @@ pub const ChannelIdentificationCode: Tag = Tag {
   element: 0x0301,
   name: "ChannelIdentificationCode",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Identification Code",
 };
 
@@ -16603,7 +16603,7 @@ pub const ChannelMode: Tag = Tag {
   element: 0x0302,
   name: "ChannelMode",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Mode",
 };
 
@@ -16621,7 +16621,7 @@ pub const ScheduledProcedureStepStartDate: Tag = Tag {
   element: 0x0002,
   name: "ScheduledProcedureStepStartDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Procedure Step Start Date",
 };
 
@@ -16630,7 +16630,7 @@ pub const ScheduledProcedureStepStartTime: Tag = Tag {
   element: 0x0003,
   name: "ScheduledProcedureStepStartTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Procedure Step Start Time",
 };
 
@@ -16639,7 +16639,7 @@ pub const ScheduledProcedureStepEndDate: Tag = Tag {
   element: 0x0004,
   name: "ScheduledProcedureStepEndDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Procedure Step End Date",
 };
 
@@ -16648,7 +16648,7 @@ pub const ScheduledProcedureStepEndTime: Tag = Tag {
   element: 0x0005,
   name: "ScheduledProcedureStepEndTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Procedure Step End Time",
 };
 
@@ -16657,7 +16657,7 @@ pub const ScheduledPerformingPhysicianName: Tag = Tag {
   element: 0x0006,
   name: "ScheduledPerformingPhysicianName",
   vr: "PN",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Performing Physician's Name",
 };
 
@@ -16666,7 +16666,7 @@ pub const ScheduledProcedureStepDescription: Tag = Tag {
   element: 0x0007,
   name: "ScheduledProcedureStepDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Procedure Step Description",
 };
 
@@ -16675,7 +16675,7 @@ pub const ScheduledProtocolCodeSequence: Tag = Tag {
   element: 0x0008,
   name: "ScheduledProtocolCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Protocol Code Sequence",
 };
 
@@ -16684,7 +16684,7 @@ pub const ScheduledProcedureStepID: Tag = Tag {
   element: 0x0009,
   name: "ScheduledProcedureStepID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Procedure Step ID",
 };
 
@@ -16693,7 +16693,7 @@ pub const StageCodeSequence: Tag = Tag {
   element: 0x000A,
   name: "StageCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Stage Code Sequence",
 };
 
@@ -16702,7 +16702,7 @@ pub const ScheduledPerformingPhysicianIdentificationSequence: Tag = Tag {
   element: 0x000B,
   name: "ScheduledPerformingPhysicianIdentificationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Performing Physician Identification Sequence",
 };
 
@@ -16720,7 +16720,7 @@ pub const ScheduledProcedureStepLocation: Tag = Tag {
   element: 0x0011,
   name: "ScheduledProcedureStepLocation",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Procedure Step Location",
 };
 
@@ -16729,7 +16729,7 @@ pub const PreMedication: Tag = Tag {
   element: 0x0012,
   name: "PreMedication",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pre-Medication",
 };
 
@@ -16738,7 +16738,7 @@ pub const ScheduledProcedureStepStatus: Tag = Tag {
   element: 0x0020,
   name: "ScheduledProcedureStepStatus",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Procedure Step Status",
 };
 
@@ -16747,7 +16747,7 @@ pub const OrderPlacerIdentifierSequence: Tag = Tag {
   element: 0x0026,
   name: "OrderPlacerIdentifierSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Order Placer Identifier Sequence",
 };
 
@@ -16756,7 +16756,7 @@ pub const OrderFillerIdentifierSequence: Tag = Tag {
   element: 0x0027,
   name: "OrderFillerIdentifierSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Order Filler Identifier Sequence",
 };
 
@@ -16765,7 +16765,7 @@ pub const LocalNamespaceEntityID: Tag = Tag {
   element: 0x0031,
   name: "LocalNamespaceEntityID",
   vr: "UT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Local Namespace Entity ID",
 };
 
@@ -16774,7 +16774,7 @@ pub const UniversalEntityID: Tag = Tag {
   element: 0x0032,
   name: "UniversalEntityID",
   vr: "UT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Universal Entity ID",
 };
 
@@ -16783,7 +16783,7 @@ pub const UniversalEntityIDType: Tag = Tag {
   element: 0x0033,
   name: "UniversalEntityIDType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Universal Entity ID Type",
 };
 
@@ -16792,7 +16792,7 @@ pub const IdentifierTypeCode: Tag = Tag {
   element: 0x0035,
   name: "IdentifierTypeCode",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Identifier Type Code",
 };
 
@@ -16801,7 +16801,7 @@ pub const AssigningFacilitySequence: Tag = Tag {
   element: 0x0036,
   name: "AssigningFacilitySequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Assigning Facility Sequence",
 };
 
@@ -16810,7 +16810,7 @@ pub const AssigningJurisdictionCodeSequence: Tag = Tag {
   element: 0x0039,
   name: "AssigningJurisdictionCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Assigning Jurisdiction Code Sequence",
 };
 
@@ -16819,7 +16819,7 @@ pub const AssigningAgencyOrDepartmentCodeSequence: Tag = Tag {
   element: 0x003A,
   name: "AssigningAgencyOrDepartmentCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Assigning Agency or Department Code Sequence",
 };
 
@@ -16828,7 +16828,7 @@ pub const ScheduledProcedureStepSequence: Tag = Tag {
   element: 0x0100,
   name: "ScheduledProcedureStepSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Procedure Step Sequence",
 };
 
@@ -16837,7 +16837,7 @@ pub const ReferencedNonImageCompositeSOPInstanceSequence: Tag = Tag {
   element: 0x0220,
   name: "ReferencedNonImageCompositeSOPInstanceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Non-Image Composite SOP Instance Sequence",
 };
 
@@ -16846,7 +16846,7 @@ pub const PerformedStationAETitle: Tag = Tag {
   element: 0x0241,
   name: "PerformedStationAETitle",
   vr: "AE",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Performed Station AE Title",
 };
 
@@ -16855,7 +16855,7 @@ pub const PerformedStationName: Tag = Tag {
   element: 0x0242,
   name: "PerformedStationName",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Performed Station Name",
 };
 
@@ -16864,7 +16864,7 @@ pub const PerformedLocation: Tag = Tag {
   element: 0x0243,
   name: "PerformedLocation",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Performed Location",
 };
 
@@ -16873,7 +16873,7 @@ pub const PerformedProcedureStepStartDate: Tag = Tag {
   element: 0x0244,
   name: "PerformedProcedureStepStartDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Performed Procedure Step Start Date",
 };
 
@@ -16882,7 +16882,7 @@ pub const PerformedProcedureStepStartTime: Tag = Tag {
   element: 0x0245,
   name: "PerformedProcedureStepStartTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Performed Procedure Step Start Time",
 };
 
@@ -16891,7 +16891,7 @@ pub const PerformedProcedureStepEndDate: Tag = Tag {
   element: 0x0250,
   name: "PerformedProcedureStepEndDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Performed Procedure Step End Date",
 };
 
@@ -16900,7 +16900,7 @@ pub const PerformedProcedureStepEndTime: Tag = Tag {
   element: 0x0251,
   name: "PerformedProcedureStepEndTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Performed Procedure Step End Time",
 };
 
@@ -16909,7 +16909,7 @@ pub const PerformedProcedureStepStatus: Tag = Tag {
   element: 0x0252,
   name: "PerformedProcedureStepStatus",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Performed Procedure Step Status",
 };
 
@@ -16918,7 +16918,7 @@ pub const PerformedProcedureStepID: Tag = Tag {
   element: 0x0253,
   name: "PerformedProcedureStepID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Performed Procedure Step ID",
 };
 
@@ -16927,7 +16927,7 @@ pub const PerformedProcedureStepDescription: Tag = Tag {
   element: 0x0254,
   name: "PerformedProcedureStepDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Performed Procedure Step Description",
 };
 
@@ -16936,7 +16936,7 @@ pub const PerformedProcedureTypeDescription: Tag = Tag {
   element: 0x0255,
   name: "PerformedProcedureTypeDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Performed Procedure Type Description",
 };
 
@@ -16945,7 +16945,7 @@ pub const PerformedProtocolCodeSequence: Tag = Tag {
   element: 0x0260,
   name: "PerformedProtocolCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Performed Protocol Code Sequence",
 };
 
@@ -16954,7 +16954,7 @@ pub const PerformedProtocolType: Tag = Tag {
   element: 0x0261,
   name: "PerformedProtocolType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Performed Protocol Type",
 };
 
@@ -16963,7 +16963,7 @@ pub const ScheduledStepAttributesSequence: Tag = Tag {
   element: 0x0270,
   name: "ScheduledStepAttributesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Step Attributes Sequence",
 };
 
@@ -16972,7 +16972,7 @@ pub const RequestAttributesSequence: Tag = Tag {
   element: 0x0275,
   name: "RequestAttributesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Request Attributes Sequence",
 };
 
@@ -16981,7 +16981,7 @@ pub const CommentsOnThePerformedProcedureStep: Tag = Tag {
   element: 0x0280,
   name: "CommentsOnThePerformedProcedureStep",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Comments on the Performed Procedure Step",
 };
 
@@ -16990,7 +16990,7 @@ pub const PerformedProcedureStepDiscontinuationReasonCodeSequence: Tag = Tag {
   element: 0x0281,
   name: "PerformedProcedureStepDiscontinuationReasonCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Performed Procedure Step Discontinuation Reason Code Sequence",
 };
 
@@ -16999,7 +16999,7 @@ pub const QuantitySequence: Tag = Tag {
   element: 0x0293,
   name: "QuantitySequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Quantity Sequence",
 };
 
@@ -17008,7 +17008,7 @@ pub const Quantity: Tag = Tag {
   element: 0x0294,
   name: "Quantity",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Quantity",
 };
 
@@ -17017,7 +17017,7 @@ pub const MeasuringUnitsSequence: Tag = Tag {
   element: 0x0295,
   name: "MeasuringUnitsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Measuring Units Sequence",
 };
 
@@ -17026,7 +17026,7 @@ pub const BillingItemSequence: Tag = Tag {
   element: 0x0296,
   name: "BillingItemSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Billing Item Sequence",
 };
 
@@ -17035,7 +17035,7 @@ pub const TotalTimeOfFluoroscopy: Tag = Tag {
   element: 0x0300,
   name: "TotalTimeOfFluoroscopy",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Total Time of Fluoroscopy",
 };
 
@@ -17044,7 +17044,7 @@ pub const TotalNumberOfExposures: Tag = Tag {
   element: 0x0301,
   name: "TotalNumberOfExposures",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Total Number of Exposures",
 };
 
@@ -17053,7 +17053,7 @@ pub const EntranceDose: Tag = Tag {
   element: 0x0302,
   name: "EntranceDose",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Entrance Dose",
 };
 
@@ -17071,7 +17071,7 @@ pub const DistanceSourceToEntrance: Tag = Tag {
   element: 0x0306,
   name: "DistanceSourceToEntrance",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Distance Source to Entrance",
 };
 
@@ -17080,7 +17080,7 @@ pub const DistanceSourceToSupport: Tag = Tag {
   element: 0x0307,
   name: "DistanceSourceToSupport",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Distance Source to Support",
 };
 
@@ -17089,7 +17089,7 @@ pub const ExposureDoseSequence: Tag = Tag {
   element: 0x030E,
   name: "ExposureDoseSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Exposure Dose Sequence",
 };
 
@@ -17098,7 +17098,7 @@ pub const CommentsOnRadiationDose: Tag = Tag {
   element: 0x0310,
   name: "CommentsOnRadiationDose",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Comments on Radiation Dose",
 };
 
@@ -17107,7 +17107,7 @@ pub const XRayOutput: Tag = Tag {
   element: 0x0312,
   name: "XRayOutput",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "X-Ray Output",
 };
 
@@ -17116,7 +17116,7 @@ pub const HalfValueLayer: Tag = Tag {
   element: 0x0314,
   name: "HalfValueLayer",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Half Value Layer",
 };
 
@@ -17125,7 +17125,7 @@ pub const OrganDose: Tag = Tag {
   element: 0x0316,
   name: "OrganDose",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Organ Dose",
 };
 
@@ -17134,7 +17134,7 @@ pub const OrganExposed: Tag = Tag {
   element: 0x0318,
   name: "OrganExposed",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Organ Exposed",
 };
 
@@ -17143,7 +17143,7 @@ pub const BillingProcedureStepSequence: Tag = Tag {
   element: 0x0320,
   name: "BillingProcedureStepSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Billing Procedure Step Sequence",
 };
 
@@ -17152,7 +17152,7 @@ pub const FilmConsumptionSequence: Tag = Tag {
   element: 0x0321,
   name: "FilmConsumptionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Film Consumption Sequence",
 };
 
@@ -17161,7 +17161,7 @@ pub const BillingSuppliesAndDevicesSequence: Tag = Tag {
   element: 0x0324,
   name: "BillingSuppliesAndDevicesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Billing Supplies and Devices Sequence",
 };
 
@@ -17170,7 +17170,7 @@ pub const ReferencedProcedureStepSequence: Tag = Tag {
   element: 0x0330,
   name: "ReferencedProcedureStepSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Procedure Step Sequence",
 };
 
@@ -17179,7 +17179,7 @@ pub const PerformedSeriesSequence: Tag = Tag {
   element: 0x0340,
   name: "PerformedSeriesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Performed Series Sequence",
 };
 
@@ -17188,7 +17188,7 @@ pub const CommentsOnTheScheduledProcedureStep: Tag = Tag {
   element: 0x0400,
   name: "CommentsOnTheScheduledProcedureStep",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Comments on the Scheduled Procedure Step",
 };
 
@@ -17197,7 +17197,7 @@ pub const ProtocolContextSequence: Tag = Tag {
   element: 0x0440,
   name: "ProtocolContextSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Protocol Context Sequence",
 };
 
@@ -17206,7 +17206,7 @@ pub const ContentItemModifierSequence: Tag = Tag {
   element: 0x0441,
   name: "ContentItemModifierSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Content Item Modifier Sequence",
 };
 
@@ -17215,7 +17215,7 @@ pub const ScheduledSpecimenSequence: Tag = Tag {
   element: 0x0500,
   name: "ScheduledSpecimenSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Specimen Sequence",
 };
 
@@ -17224,7 +17224,7 @@ pub const SpecimenAccessionNumber: Tag = Tag {
   element: 0x050A,
   name: "SpecimenAccessionNumber",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Specimen Accession Number",
 };
 
@@ -17233,7 +17233,7 @@ pub const ContainerIdentifier: Tag = Tag {
   element: 0x0512,
   name: "ContainerIdentifier",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Container Identifier",
 };
 
@@ -17242,7 +17242,7 @@ pub const IssuerOfTheContainerIdentifierSequence: Tag = Tag {
   element: 0x0513,
   name: "IssuerOfTheContainerIdentifierSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Issuer of the Container Identifier Sequence",
 };
 
@@ -17251,7 +17251,7 @@ pub const AlternateContainerIdentifierSequence: Tag = Tag {
   element: 0x0515,
   name: "AlternateContainerIdentifierSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Alternate Container Identifier Sequence",
 };
 
@@ -17260,7 +17260,7 @@ pub const ContainerTypeCodeSequence: Tag = Tag {
   element: 0x0518,
   name: "ContainerTypeCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Container Type Code Sequence",
 };
 
@@ -17269,7 +17269,7 @@ pub const ContainerDescription: Tag = Tag {
   element: 0x051A,
   name: "ContainerDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Container Description",
 };
 
@@ -17278,7 +17278,7 @@ pub const ContainerComponentSequence: Tag = Tag {
   element: 0x0520,
   name: "ContainerComponentSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Container Component Sequence",
 };
 
@@ -17287,7 +17287,7 @@ pub const SpecimenSequence: Tag = Tag {
   element: 0x0550,
   name: "SpecimenSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Specimen Sequence",
 };
 
@@ -17296,7 +17296,7 @@ pub const SpecimenIdentifier: Tag = Tag {
   element: 0x0551,
   name: "SpecimenIdentifier",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Specimen Identifier",
 };
 
@@ -17305,7 +17305,7 @@ pub const SpecimenDescriptionSequenceTrial: Tag = Tag {
   element: 0x0552,
   name: "SpecimenDescriptionSequenceTrial",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Specimen Description Sequence (Trial)",
 };
 
@@ -17314,7 +17314,7 @@ pub const SpecimenDescriptionTrial: Tag = Tag {
   element: 0x0553,
   name: "SpecimenDescriptionTrial",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Specimen Description (Trial)",
 };
 
@@ -17323,7 +17323,7 @@ pub const SpecimenUID: Tag = Tag {
   element: 0x0554,
   name: "SpecimenUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Specimen UID",
 };
 
@@ -17332,7 +17332,7 @@ pub const AcquisitionContextSequence: Tag = Tag {
   element: 0x0555,
   name: "AcquisitionContextSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Acquisition Context Sequence",
 };
 
@@ -17341,7 +17341,7 @@ pub const AcquisitionContextDescription: Tag = Tag {
   element: 0x0556,
   name: "AcquisitionContextDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Acquisition Context Description",
 };
 
@@ -17350,7 +17350,7 @@ pub const SpecimenTypeCodeSequence: Tag = Tag {
   element: 0x059A,
   name: "SpecimenTypeCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Specimen Type Code Sequence",
 };
 
@@ -17359,7 +17359,7 @@ pub const SpecimenDescriptionSequence: Tag = Tag {
   element: 0x0560,
   name: "SpecimenDescriptionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Specimen Description Sequence",
 };
 
@@ -17368,7 +17368,7 @@ pub const IssuerOfTheSpecimenIdentifierSequence: Tag = Tag {
   element: 0x0562,
   name: "IssuerOfTheSpecimenIdentifierSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Issuer of the Specimen Identifier Sequence",
 };
 
@@ -17377,7 +17377,7 @@ pub const SpecimenShortDescription: Tag = Tag {
   element: 0x0600,
   name: "SpecimenShortDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Specimen Short Description",
 };
 
@@ -17386,7 +17386,7 @@ pub const SpecimenDetailedDescription: Tag = Tag {
   element: 0x0602,
   name: "SpecimenDetailedDescription",
   vr: "UT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Specimen Detailed Description",
 };
 
@@ -17395,7 +17395,7 @@ pub const SpecimenPreparationSequence: Tag = Tag {
   element: 0x0610,
   name: "SpecimenPreparationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Specimen Preparation Sequence",
 };
 
@@ -17404,7 +17404,7 @@ pub const SpecimenPreparationStepContentItemSequence: Tag = Tag {
   element: 0x0612,
   name: "SpecimenPreparationStepContentItemSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Specimen Preparation Step Content Item Sequence",
 };
 
@@ -17413,7 +17413,7 @@ pub const SpecimenLocalizationContentItemSequence: Tag = Tag {
   element: 0x0620,
   name: "SpecimenLocalizationContentItemSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Specimen Localization Content Item Sequence",
 };
 
@@ -17422,7 +17422,7 @@ pub const SlideIdentifier: Tag = Tag {
   element: 0x06FA,
   name: "SlideIdentifier",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Slide Identifier",
 };
 
@@ -17431,7 +17431,7 @@ pub const ImageCenterPointCoordinatesSequence: Tag = Tag {
   element: 0x071A,
   name: "ImageCenterPointCoordinatesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Center Point Coordinates Sequence",
 };
 
@@ -17440,7 +17440,7 @@ pub const XOffsetInSlideCoordinateSystem: Tag = Tag {
   element: 0x072A,
   name: "XOffsetInSlideCoordinateSystem",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "X Offset in Slide Coordinate System",
 };
 
@@ -17449,7 +17449,7 @@ pub const YOffsetInSlideCoordinateSystem: Tag = Tag {
   element: 0x073A,
   name: "YOffsetInSlideCoordinateSystem",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Y Offset in Slide Coordinate System",
 };
 
@@ -17458,7 +17458,7 @@ pub const ZOffsetInSlideCoordinateSystem: Tag = Tag {
   element: 0x074A,
   name: "ZOffsetInSlideCoordinateSystem",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Z Offset in Slide Coordinate System",
 };
 
@@ -17467,7 +17467,7 @@ pub const PixelSpacingSequence: Tag = Tag {
   element: 0x08D8,
   name: "PixelSpacingSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pixel Spacing Sequence",
 };
 
@@ -17476,7 +17476,7 @@ pub const CoordinateSystemAxisCodeSequence: Tag = Tag {
   element: 0x08DA,
   name: "CoordinateSystemAxisCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Coordinate System Axis Code Sequence",
 };
 
@@ -17485,7 +17485,7 @@ pub const MeasurementUnitsCodeSequence: Tag = Tag {
   element: 0x08EA,
   name: "MeasurementUnitsCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Measurement Units Code Sequence",
 };
 
@@ -17494,7 +17494,7 @@ pub const VitalStainCodeSequenceTrial: Tag = Tag {
   element: 0x09F8,
   name: "VitalStainCodeSequenceTrial",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Vital Stain Code Sequence (Trial)",
 };
 
@@ -17503,7 +17503,7 @@ pub const RequestedProcedureID: Tag = Tag {
   element: 0x1001,
   name: "RequestedProcedureID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Requested Procedure ID",
 };
 
@@ -17512,7 +17512,7 @@ pub const ReasonForTheRequestedProcedure: Tag = Tag {
   element: 0x1002,
   name: "ReasonForTheRequestedProcedure",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Reason for the Requested Procedure",
 };
 
@@ -17521,7 +17521,7 @@ pub const RequestedProcedurePriority: Tag = Tag {
   element: 0x1003,
   name: "RequestedProcedurePriority",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Requested Procedure Priority",
 };
 
@@ -17530,7 +17530,7 @@ pub const PatientTransportArrangements: Tag = Tag {
   element: 0x1004,
   name: "PatientTransportArrangements",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Transport Arrangements",
 };
 
@@ -17539,7 +17539,7 @@ pub const RequestedProcedureLocation: Tag = Tag {
   element: 0x1005,
   name: "RequestedProcedureLocation",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Requested Procedure Location",
 };
 
@@ -17548,7 +17548,7 @@ pub const PlacerOrderNumberProcedure: Tag = Tag {
   element: 0x1006,
   name: "PlacerOrderNumberProcedure",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Placer Order Number / Procedure",
 };
 
@@ -17557,7 +17557,7 @@ pub const FillerOrderNumberProcedure: Tag = Tag {
   element: 0x1007,
   name: "FillerOrderNumberProcedure",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Filler Order Number / Procedure",
 };
 
@@ -17566,7 +17566,7 @@ pub const ConfidentialityCode: Tag = Tag {
   element: 0x1008,
   name: "ConfidentialityCode",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Confidentiality Code",
 };
 
@@ -17575,7 +17575,7 @@ pub const ReportingPriority: Tag = Tag {
   element: 0x1009,
   name: "ReportingPriority",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Reporting Priority",
 };
 
@@ -17584,7 +17584,7 @@ pub const ReasonForRequestedProcedureCodeSequence: Tag = Tag {
   element: 0x100A,
   name: "ReasonForRequestedProcedureCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Reason for Requested Procedure Code Sequence",
 };
 
@@ -17602,7 +17602,7 @@ pub const IntendedRecipientsOfResultsIdentificationSequence: Tag = Tag {
   element: 0x1011,
   name: "IntendedRecipientsOfResultsIdentificationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Intended Recipients of Results Identification Sequence",
 };
 
@@ -17611,7 +17611,7 @@ pub const ReasonForPerformedProcedureCodeSequence: Tag = Tag {
   element: 0x1012,
   name: "ReasonForPerformedProcedureCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Reason For Performed Procedure Code Sequence",
 };
 
@@ -17620,7 +17620,7 @@ pub const RequestedProcedureDescriptionTrial: Tag = Tag {
   element: 0x1060,
   name: "RequestedProcedureDescriptionTrial",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Requested Procedure Description (Trial)",
 };
 
@@ -17629,7 +17629,7 @@ pub const PersonIdentificationCodeSequence: Tag = Tag {
   element: 0x1101,
   name: "PersonIdentificationCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Person Identification Code Sequence",
 };
 
@@ -17638,7 +17638,7 @@ pub const PersonAddress: Tag = Tag {
   element: 0x1102,
   name: "PersonAddress",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Person's Address",
 };
 
@@ -17656,7 +17656,7 @@ pub const RequestedProcedureComments: Tag = Tag {
   element: 0x1400,
   name: "RequestedProcedureComments",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Requested Procedure Comments",
 };
 
@@ -17665,7 +17665,7 @@ pub const ReasonForTheImagingServiceRequest: Tag = Tag {
   element: 0x2001,
   name: "ReasonForTheImagingServiceRequest",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Reason for the Imaging Service Request",
 };
 
@@ -17674,7 +17674,7 @@ pub const IssueDateOfImagingServiceRequest: Tag = Tag {
   element: 0x2004,
   name: "IssueDateOfImagingServiceRequest",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Issue Date of Imaging Service Request",
 };
 
@@ -17683,7 +17683,7 @@ pub const IssueTimeOfImagingServiceRequest: Tag = Tag {
   element: 0x2005,
   name: "IssueTimeOfImagingServiceRequest",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Issue Time of Imaging Service Request",
 };
 
@@ -17692,7 +17692,7 @@ pub const PlacerOrderNumberImagingServiceRequestRetired: Tag = Tag {
   element: 0x2006,
   name: "PlacerOrderNumberImagingServiceRequestRetired",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Placer Order Number / Imaging Service Request (Retired)",
 };
 
@@ -17701,7 +17701,7 @@ pub const FillerOrderNumberImagingServiceRequestRetired: Tag = Tag {
   element: 0x2007,
   name: "FillerOrderNumberImagingServiceRequestRetired",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Filler Order Number / Imaging Service Request (Retired)",
 };
 
@@ -17710,7 +17710,7 @@ pub const OrderEnteredBy: Tag = Tag {
   element: 0x2008,
   name: "OrderEnteredBy",
   vr: "PN",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Order Entered By",
 };
 
@@ -17719,7 +17719,7 @@ pub const OrderEntererLocation: Tag = Tag {
   element: 0x2009,
   name: "OrderEntererLocation",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Order Enterer's Location",
 };
 
@@ -17728,7 +17728,7 @@ pub const OrderCallbackPhoneNumber: Tag = Tag {
   element: 0x2010,
   name: "OrderCallbackPhoneNumber",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Order Callback Phone Number",
 };
 
@@ -17737,7 +17737,7 @@ pub const PlacerOrderNumberImagingServiceRequest: Tag = Tag {
   element: 0x2016,
   name: "PlacerOrderNumberImagingServiceRequest",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Placer Order Number / Imaging Service Request",
 };
 
@@ -17746,7 +17746,7 @@ pub const FillerOrderNumberImagingServiceRequest: Tag = Tag {
   element: 0x2017,
   name: "FillerOrderNumberImagingServiceRequest",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Filler Order Number / Imaging Service Request",
 };
 
@@ -17755,7 +17755,7 @@ pub const ImagingServiceRequestComments: Tag = Tag {
   element: 0x2400,
   name: "ImagingServiceRequestComments",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Imaging Service Request Comments",
 };
 
@@ -17764,7 +17764,7 @@ pub const ConfidentialityConstraintOnPatientDataDescription: Tag = Tag {
   element: 0x3001,
   name: "ConfidentialityConstraintOnPatientDataDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Confidentiality Constraint on Patient Data Description",
 };
 
@@ -17773,7 +17773,7 @@ pub const GeneralPurposeScheduledProcedureStepStatus: Tag = Tag {
   element: 0x4001,
   name: "GeneralPurposeScheduledProcedureStepStatus",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "General Purpose Scheduled Procedure Step Status",
 };
 
@@ -17782,7 +17782,7 @@ pub const GeneralPurposePerformedProcedureStepStatus: Tag = Tag {
   element: 0x4002,
   name: "GeneralPurposePerformedProcedureStepStatus",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "General Purpose Performed Procedure Step Status",
 };
 
@@ -17791,7 +17791,7 @@ pub const GeneralPurposeScheduledProcedureStepPriority: Tag = Tag {
   element: 0x4003,
   name: "GeneralPurposeScheduledProcedureStepPriority",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "General Purpose Scheduled Procedure Step Priority",
 };
 
@@ -17800,7 +17800,7 @@ pub const ScheduledProcessingApplicationsCodeSequence: Tag = Tag {
   element: 0x4004,
   name: "ScheduledProcessingApplicationsCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Processing Applications Code Sequence",
 };
 
@@ -17809,7 +17809,7 @@ pub const ScheduledProcedureStepStartDateTime: Tag = Tag {
   element: 0x4005,
   name: "ScheduledProcedureStepStartDateTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Procedure Step Start DateTime",
 };
 
@@ -17818,7 +17818,7 @@ pub const MultipleCopiesFlag: Tag = Tag {
   element: 0x4006,
   name: "MultipleCopiesFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Multiple Copies Flag",
 };
 
@@ -17827,7 +17827,7 @@ pub const PerformedProcessingApplicationsCodeSequence: Tag = Tag {
   element: 0x4007,
   name: "PerformedProcessingApplicationsCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Performed Processing Applications Code Sequence",
 };
 
@@ -17836,7 +17836,7 @@ pub const HumanPerformerCodeSequence: Tag = Tag {
   element: 0x4009,
   name: "HumanPerformerCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Human Performer Code Sequence",
 };
 
@@ -17845,7 +17845,7 @@ pub const ScheduledProcedureStepModificationDateTime: Tag = Tag {
   element: 0x4010,
   name: "ScheduledProcedureStepModificationDateTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Procedure Step Modification DateTime",
 };
 
@@ -17854,7 +17854,7 @@ pub const ExpectedCompletionDateTime: Tag = Tag {
   element: 0x4011,
   name: "ExpectedCompletionDateTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Expected Completion DateTime",
 };
 
@@ -17863,7 +17863,7 @@ pub const ResultingGeneralPurposePerformedProcedureStepsSequence: Tag = Tag {
   element: 0x4015,
   name: "ResultingGeneralPurposePerformedProcedureStepsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Resulting General Purpose Performed Procedure Steps Sequence",
 };
 
@@ -17872,7 +17872,7 @@ pub const ReferencedGeneralPurposeScheduledProcedureStepSequence: Tag = Tag {
   element: 0x4016,
   name: "ReferencedGeneralPurposeScheduledProcedureStepSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced General Purpose Scheduled Procedure Step Sequence",
 };
 
@@ -17881,7 +17881,7 @@ pub const ScheduledWorkitemCodeSequence: Tag = Tag {
   element: 0x4018,
   name: "ScheduledWorkitemCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Workitem Code Sequence",
 };
 
@@ -17890,7 +17890,7 @@ pub const PerformedWorkitemCodeSequence: Tag = Tag {
   element: 0x4019,
   name: "PerformedWorkitemCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Performed Workitem Code Sequence",
 };
 
@@ -17899,7 +17899,7 @@ pub const InputAvailabilityFlag: Tag = Tag {
   element: 0x4020,
   name: "InputAvailabilityFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Input Availability Flag",
 };
 
@@ -17908,7 +17908,7 @@ pub const InputInformationSequence: Tag = Tag {
   element: 0x4021,
   name: "InputInformationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Input Information Sequence",
 };
 
@@ -17917,7 +17917,7 @@ pub const RelevantInformationSequence: Tag = Tag {
   element: 0x4022,
   name: "RelevantInformationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Relevant Information Sequence",
 };
 
@@ -17926,7 +17926,7 @@ pub const ReferencedGeneralPurposeScheduledProcedureStepTransactionUID: Tag = Ta
   element: 0x4023,
   name: "ReferencedGeneralPurposeScheduledProcedureStepTransactionUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced General Purpose Scheduled Procedure Step Transaction UID",
 };
 
@@ -17935,7 +17935,7 @@ pub const ScheduledStationNameCodeSequence: Tag = Tag {
   element: 0x4025,
   name: "ScheduledStationNameCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Station Name Code Sequence",
 };
 
@@ -17944,7 +17944,7 @@ pub const ScheduledStationClassCodeSequence: Tag = Tag {
   element: 0x4026,
   name: "ScheduledStationClassCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Station Class Code Sequence",
 };
 
@@ -17953,7 +17953,7 @@ pub const ScheduledStationGeographicLocationCodeSequence: Tag = Tag {
   element: 0x4027,
   name: "ScheduledStationGeographicLocationCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Station Geographic Location Code Sequence",
 };
 
@@ -17962,7 +17962,7 @@ pub const PerformedStationNameCodeSequence: Tag = Tag {
   element: 0x4028,
   name: "PerformedStationNameCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Performed Station Name Code Sequence",
 };
 
@@ -17971,7 +17971,7 @@ pub const PerformedStationClassCodeSequence: Tag = Tag {
   element: 0x4029,
   name: "PerformedStationClassCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Performed Station Class Code Sequence",
 };
 
@@ -17980,7 +17980,7 @@ pub const PerformedStationGeographicLocationCodeSequence: Tag = Tag {
   element: 0x4030,
   name: "PerformedStationGeographicLocationCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Performed Station Geographic Location Code Sequence",
 };
 
@@ -17989,7 +17989,7 @@ pub const RequestedSubsequentWorkitemCodeSequence: Tag = Tag {
   element: 0x4031,
   name: "RequestedSubsequentWorkitemCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Requested Subsequent Workitem Code Sequence",
 };
 
@@ -17998,7 +17998,7 @@ pub const NonDICOMOutputCodeSequence: Tag = Tag {
   element: 0x4032,
   name: "NonDICOMOutputCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Non-DICOM Output Code Sequence",
 };
 
@@ -18007,7 +18007,7 @@ pub const OutputInformationSequence: Tag = Tag {
   element: 0x4033,
   name: "OutputInformationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Output Information Sequence",
 };
 
@@ -18016,7 +18016,7 @@ pub const ScheduledHumanPerformersSequence: Tag = Tag {
   element: 0x4034,
   name: "ScheduledHumanPerformersSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Human Performers Sequence",
 };
 
@@ -18025,7 +18025,7 @@ pub const ActualHumanPerformersSequence: Tag = Tag {
   element: 0x4035,
   name: "ActualHumanPerformersSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Actual Human Performers Sequence",
 };
 
@@ -18034,7 +18034,7 @@ pub const HumanPerformerOrganization: Tag = Tag {
   element: 0x4036,
   name: "HumanPerformerOrganization",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Human Performer's Organization",
 };
 
@@ -18043,7 +18043,7 @@ pub const HumanPerformerName: Tag = Tag {
   element: 0x4037,
   name: "HumanPerformerName",
   vr: "PN",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Human Performer's Name",
 };
 
@@ -18052,7 +18052,7 @@ pub const RawDataHandling: Tag = Tag {
   element: 0x4040,
   name: "RawDataHandling",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Raw Data Handling",
 };
 
@@ -18061,7 +18061,7 @@ pub const InputReadinessState: Tag = Tag {
   element: 0x4041,
   name: "InputReadinessState",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Input Readiness State",
 };
 
@@ -18070,7 +18070,7 @@ pub const PerformedProcedureStepStartDateTime: Tag = Tag {
   element: 0x4050,
   name: "PerformedProcedureStepStartDateTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Performed Procedure Step Start DateTime",
 };
 
@@ -18079,7 +18079,7 @@ pub const PerformedProcedureStepEndDateTime: Tag = Tag {
   element: 0x4051,
   name: "PerformedProcedureStepEndDateTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Performed Procedure Step End DateTime",
 };
 
@@ -18088,7 +18088,7 @@ pub const ProcedureStepCancellationDateTime: Tag = Tag {
   element: 0x4052,
   name: "ProcedureStepCancellationDateTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Procedure Step Cancellation DateTime",
 };
 
@@ -18097,7 +18097,7 @@ pub const EntranceDoseInmGy: Tag = Tag {
   element: 0x8302,
   name: "EntranceDoseInmGy",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Entrance Dose in mGy",
 };
 
@@ -18106,7 +18106,7 @@ pub const ReferencedImageRealWorldValueMappingSequence: Tag = Tag {
   element: 0x9094,
   name: "ReferencedImageRealWorldValueMappingSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Image Real World Value Mapping Sequence",
 };
 
@@ -18115,7 +18115,7 @@ pub const RealWorldValueMappingSequence: Tag = Tag {
   element: 0x9096,
   name: "RealWorldValueMappingSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Real World Value Mapping Sequence",
 };
 
@@ -18124,7 +18124,7 @@ pub const PixelValueMappingCodeSequence: Tag = Tag {
   element: 0x9098,
   name: "PixelValueMappingCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pixel Value Mapping Code Sequence",
 };
 
@@ -18133,7 +18133,7 @@ pub const LUTLabel: Tag = Tag {
   element: 0x9210,
   name: "LUTLabel",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "LUT Label",
 };
 
@@ -18142,7 +18142,7 @@ pub const RealWorldValueLastValueMapped: Tag = Tag {
   element: 0x9211,
   name: "RealWorldValueLastValueMapped",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Real World Value Last Value Mapped",
 };
 
@@ -18160,7 +18160,7 @@ pub const RealWorldValueFirstValueMapped: Tag = Tag {
   element: 0x9216,
   name: "RealWorldValueFirstValueMapped",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Real World Value First Value Mapped",
 };
 
@@ -18169,7 +18169,7 @@ pub const RealWorldValueIntercept: Tag = Tag {
   element: 0x9224,
   name: "RealWorldValueIntercept",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Real World Value Intercept",
 };
 
@@ -18178,7 +18178,7 @@ pub const RealWorldValueSlope: Tag = Tag {
   element: 0x9225,
   name: "RealWorldValueSlope",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Real World Value Slope",
 };
 
@@ -18187,7 +18187,7 @@ pub const FindingsFlagTrial: Tag = Tag {
   element: 0xA007,
   name: "FindingsFlagTrial",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Findings Flag (Trial)",
 };
 
@@ -18196,7 +18196,7 @@ pub const RelationshipType: Tag = Tag {
   element: 0xA010,
   name: "RelationshipType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Relationship Type",
 };
 
@@ -18205,7 +18205,7 @@ pub const FindingsSequenceTrial: Tag = Tag {
   element: 0xA020,
   name: "FindingsSequenceTrial",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Findings Sequence (Trial)",
 };
 
@@ -18214,7 +18214,7 @@ pub const FindingsGroupUIDTrial: Tag = Tag {
   element: 0xA021,
   name: "FindingsGroupUIDTrial",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Findings Group UID (Trial)",
 };
 
@@ -18223,7 +18223,7 @@ pub const ReferencedFindingsGroupUIDTrial: Tag = Tag {
   element: 0xA022,
   name: "ReferencedFindingsGroupUIDTrial",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Findings Group UID (Trial)",
 };
 
@@ -18232,7 +18232,7 @@ pub const FindingsGroupRecordingDateTrial: Tag = Tag {
   element: 0xA023,
   name: "FindingsGroupRecordingDateTrial",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Findings Group Recording Date (Trial)",
 };
 
@@ -18241,7 +18241,7 @@ pub const FindingsGroupRecordingTimeTrial: Tag = Tag {
   element: 0xA024,
   name: "FindingsGroupRecordingTimeTrial",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Findings Group Recording Time (Trial)",
 };
 
@@ -18250,7 +18250,7 @@ pub const FindingsSourceCategoryCodeSequenceTrial: Tag = Tag {
   element: 0xA026,
   name: "FindingsSourceCategoryCodeSequenceTrial",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Findings Source Category Code Sequence (Trial)",
 };
 
@@ -18259,7 +18259,7 @@ pub const VerifyingOrganization: Tag = Tag {
   element: 0xA027,
   name: "VerifyingOrganization",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Verifying Organization",
 };
 
@@ -18268,7 +18268,7 @@ pub const DocumentingOrganizationIdentifierCodeSequenceTrial: Tag = Tag {
   element: 0xA028,
   name: "DocumentingOrganizationIdentifierCodeSequenceTrial",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Documenting Organization Identifier Code Sequence (Trial)",
 };
 
@@ -18277,7 +18277,7 @@ pub const VerificationDateTime: Tag = Tag {
   element: 0xA030,
   name: "VerificationDateTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Verification DateTime",
 };
 
@@ -18286,7 +18286,7 @@ pub const ObservationDateTime: Tag = Tag {
   element: 0xA032,
   name: "ObservationDateTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Observation DateTime",
 };
 
@@ -18295,7 +18295,7 @@ pub const ValueType: Tag = Tag {
   element: 0xA040,
   name: "ValueType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Value Type",
 };
 
@@ -18304,7 +18304,7 @@ pub const ConceptNameCodeSequence: Tag = Tag {
   element: 0xA043,
   name: "ConceptNameCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Concept Name Code Sequence",
 };
 
@@ -18313,7 +18313,7 @@ pub const MeasurementPrecisionDescriptionTrial: Tag = Tag {
   element: 0xA047,
   name: "MeasurementPrecisionDescriptionTrial",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Measurement Precision Description (Trial)",
 };
 
@@ -18322,7 +18322,7 @@ pub const ContinuityOfContent: Tag = Tag {
   element: 0xA050,
   name: "ContinuityOfContent",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Continuity Of Content",
 };
 
@@ -18340,7 +18340,7 @@ pub const SequencingIndicatorTrial: Tag = Tag {
   element: 0xA060,
   name: "SequencingIndicatorTrial",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Sequencing Indicator (Trial)",
 };
 
@@ -18349,7 +18349,7 @@ pub const DocumentIdentifierCodeSequenceTrial: Tag = Tag {
   element: 0xA066,
   name: "DocumentIdentifierCodeSequenceTrial",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Document Identifier Code Sequence (Trial)",
 };
 
@@ -18358,7 +18358,7 @@ pub const DocumentAuthorTrial: Tag = Tag {
   element: 0xA067,
   name: "DocumentAuthorTrial",
   vr: "PN",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Document Author (Trial)",
 };
 
@@ -18367,7 +18367,7 @@ pub const DocumentAuthorIdentifierCodeSequenceTrial: Tag = Tag {
   element: 0xA068,
   name: "DocumentAuthorIdentifierCodeSequenceTrial",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Document Author Identifier Code Sequence (Trial)",
 };
 
@@ -18376,7 +18376,7 @@ pub const IdentifierCodeSequenceTrial: Tag = Tag {
   element: 0xA070,
   name: "IdentifierCodeSequenceTrial",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Identifier Code Sequence (Trial)",
 };
 
@@ -18385,7 +18385,7 @@ pub const VerifyingObserverSequence: Tag = Tag {
   element: 0xA073,
   name: "VerifyingObserverSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Verifying Observer Sequence",
 };
 
@@ -18394,7 +18394,7 @@ pub const ObjectBinaryIdentifierTrial: Tag = Tag {
   element: 0xA074,
   name: "ObjectBinaryIdentifierTrial",
   vr: "OB",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Object Binary Identifier (Trial)",
 };
 
@@ -18403,7 +18403,7 @@ pub const VerifyingObserverName: Tag = Tag {
   element: 0xA075,
   name: "VerifyingObserverName",
   vr: "PN",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Verifying Observer Name",
 };
 
@@ -18412,7 +18412,7 @@ pub const DocumentingObserverIdentifierCodeSequenceTrial: Tag = Tag {
   element: 0xA076,
   name: "DocumentingObserverIdentifierCodeSequenceTrial",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Documenting Observer Identifier Code Sequence (Trial)",
 };
 
@@ -18421,7 +18421,7 @@ pub const AuthorObserverSequence: Tag = Tag {
   element: 0xA078,
   name: "AuthorObserverSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Author Observer Sequence",
 };
 
@@ -18430,7 +18430,7 @@ pub const ParticipantSequence: Tag = Tag {
   element: 0xA07A,
   name: "ParticipantSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Participant Sequence",
 };
 
@@ -18439,7 +18439,7 @@ pub const CustodialOrganizationSequence: Tag = Tag {
   element: 0xA07C,
   name: "CustodialOrganizationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Custodial Organization Sequence",
 };
 
@@ -18448,7 +18448,7 @@ pub const ParticipationType: Tag = Tag {
   element: 0xA080,
   name: "ParticipationType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Participation Type",
 };
 
@@ -18457,7 +18457,7 @@ pub const ParticipationDateTime: Tag = Tag {
   element: 0xA082,
   name: "ParticipationDateTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Participation DateTime",
 };
 
@@ -18466,7 +18466,7 @@ pub const ObserverType: Tag = Tag {
   element: 0xA084,
   name: "ObserverType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Observer Type",
 };
 
@@ -18475,7 +18475,7 @@ pub const ProcedureIdentifierCodeSequenceTrial: Tag = Tag {
   element: 0xA085,
   name: "ProcedureIdentifierCodeSequenceTrial",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Procedure Identifier Code Sequence (Trial)",
 };
 
@@ -18484,7 +18484,7 @@ pub const VerifyingObserverIdentificationCodeSequence: Tag = Tag {
   element: 0xA088,
   name: "VerifyingObserverIdentificationCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Verifying Observer Identification Code Sequence",
 };
 
@@ -18493,7 +18493,7 @@ pub const ObjectDirectoryBinaryIdentifierTrial: Tag = Tag {
   element: 0xA089,
   name: "ObjectDirectoryBinaryIdentifierTrial",
   vr: "OB",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Object Directory Binary Identifier (Trial)",
 };
 
@@ -18502,7 +18502,7 @@ pub const EquivalentCDADocumentSequence: Tag = Tag {
   element: 0xA090,
   name: "EquivalentCDADocumentSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Equivalent CDA Document Sequence",
 };
 
@@ -18520,7 +18520,7 @@ pub const DateOfDocumentOrVerbalTransactionTrial: Tag = Tag {
   element: 0xA110,
   name: "DateOfDocumentOrVerbalTransactionTrial",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Date of Document or Verbal Transaction (Trial)",
 };
 
@@ -18529,7 +18529,7 @@ pub const TimeOfDocumentCreationOrVerbalTransactionTrial: Tag = Tag {
   element: 0xA112,
   name: "TimeOfDocumentCreationOrVerbalTransactionTrial",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Time of Document Creation or Verbal Transaction (Trial)",
 };
 
@@ -18538,7 +18538,7 @@ pub const DateTime: Tag = Tag {
   element: 0xA120,
   name: "DateTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "DateTime",
 };
 
@@ -18547,7 +18547,7 @@ pub const Date: Tag = Tag {
   element: 0xA121,
   name: "Date",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Date",
 };
 
@@ -18556,7 +18556,7 @@ pub const Time: Tag = Tag {
   element: 0xA122,
   name: "Time",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Time",
 };
 
@@ -18565,7 +18565,7 @@ pub const PersonName: Tag = Tag {
   element: 0xA123,
   name: "PersonName",
   vr: "PN",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Person Name",
 };
 
@@ -18574,7 +18574,7 @@ pub const UID: Tag = Tag {
   element: 0xA124,
   name: "UID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "UID",
 };
 
@@ -18583,7 +18583,7 @@ pub const ReportStatusIDTrial: Tag = Tag {
   element: 0xA125,
   name: "ReportStatusIDTrial",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Report Status ID (Trial)",
 };
 
@@ -18592,7 +18592,7 @@ pub const TemporalRangeType: Tag = Tag {
   element: 0xA130,
   name: "TemporalRangeType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Temporal Range Type",
 };
 
@@ -18637,7 +18637,7 @@ pub const TextValue: Tag = Tag {
   element: 0xA160,
   name: "TextValue",
   vr: "UT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Text Value",
 };
 
@@ -18673,7 +18673,7 @@ pub const ObservationCategoryCodeSequenceTrial: Tag = Tag {
   element: 0xA167,
   name: "ObservationCategoryCodeSequenceTrial",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Observation Category Code Sequence (Trial)",
 };
 
@@ -18682,7 +18682,7 @@ pub const ConceptCodeSequence: Tag = Tag {
   element: 0xA168,
   name: "ConceptCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Concept Code Sequence",
 };
 
@@ -18691,7 +18691,7 @@ pub const BibliographicCitationTrial: Tag = Tag {
   element: 0xA16A,
   name: "BibliographicCitationTrial",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Bibliographic Citation (Trial)",
 };
 
@@ -18700,7 +18700,7 @@ pub const PurposeOfReferenceCodeSequence: Tag = Tag {
   element: 0xA170,
   name: "PurposeOfReferenceCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Purpose of Reference Code Sequence",
 };
 
@@ -18709,7 +18709,7 @@ pub const ObservationUID: Tag = Tag {
   element: 0xA171,
   name: "ObservationUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Observation UID",
 };
 
@@ -18718,7 +18718,7 @@ pub const ReferencedObservationUIDTrial: Tag = Tag {
   element: 0xA172,
   name: "ReferencedObservationUIDTrial",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Observation UID (Trial)",
 };
 
@@ -18727,7 +18727,7 @@ pub const ReferencedObservationClassTrial: Tag = Tag {
   element: 0xA173,
   name: "ReferencedObservationClassTrial",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Observation Class (Trial)",
 };
 
@@ -18736,7 +18736,7 @@ pub const ReferencedObjectObservationClassTrial: Tag = Tag {
   element: 0xA174,
   name: "ReferencedObjectObservationClassTrial",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Object Observation Class (Trial)",
 };
 
@@ -18745,7 +18745,7 @@ pub const AnnotationGroupNumber: Tag = Tag {
   element: 0xA180,
   name: "AnnotationGroupNumber",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Annotation Group Number",
 };
 
@@ -18754,7 +18754,7 @@ pub const ObservationDateTrial: Tag = Tag {
   element: 0xA192,
   name: "ObservationDateTrial",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Observation Date (Trial)",
 };
 
@@ -18763,7 +18763,7 @@ pub const ObservationTimeTrial: Tag = Tag {
   element: 0xA193,
   name: "ObservationTimeTrial",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Observation Time (Trial)",
 };
 
@@ -18772,7 +18772,7 @@ pub const MeasurementAutomationTrial: Tag = Tag {
   element: 0xA194,
   name: "MeasurementAutomationTrial",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Measurement Automation (Trial)",
 };
 
@@ -18781,7 +18781,7 @@ pub const ModifierCodeSequence: Tag = Tag {
   element: 0xA195,
   name: "ModifierCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Modifier Code Sequence",
 };
 
@@ -18790,7 +18790,7 @@ pub const IdentificationDescriptionTrial: Tag = Tag {
   element: 0xA224,
   name: "IdentificationDescriptionTrial",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Identification Description (Trial)",
 };
 
@@ -18799,7 +18799,7 @@ pub const CoordinatesSetGeometricTypeTrial: Tag = Tag {
   element: 0xA290,
   name: "CoordinatesSetGeometricTypeTrial",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Coordinates Set Geometric Type (Trial)",
 };
 
@@ -18808,7 +18808,7 @@ pub const AlgorithmCodeSequenceTrial: Tag = Tag {
   element: 0xA296,
   name: "AlgorithmCodeSequenceTrial",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Algorithm Code Sequence (Trial)",
 };
 
@@ -18817,7 +18817,7 @@ pub const AlgorithmDescriptionTrial: Tag = Tag {
   element: 0xA297,
   name: "AlgorithmDescriptionTrial",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Algorithm Description (Trial)",
 };
 
@@ -18835,7 +18835,7 @@ pub const MeasuredValueSequence: Tag = Tag {
   element: 0xA300,
   name: "MeasuredValueSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Measured Value Sequence",
 };
 
@@ -18844,7 +18844,7 @@ pub const NumericValueQualifierCodeSequence: Tag = Tag {
   element: 0xA301,
   name: "NumericValueQualifierCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Numeric Value Qualifier Code Sequence",
 };
 
@@ -18853,7 +18853,7 @@ pub const CurrentObserverTrial: Tag = Tag {
   element: 0xA307,
   name: "CurrentObserverTrial",
   vr: "PN",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Current Observer (Trial)",
 };
 
@@ -18871,7 +18871,7 @@ pub const ReferencedAccessionSequenceTrial: Tag = Tag {
   element: 0xA313,
   name: "ReferencedAccessionSequenceTrial",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Accession Sequence (Trial)",
 };
 
@@ -18880,7 +18880,7 @@ pub const ReportStatusCommentTrial: Tag = Tag {
   element: 0xA33A,
   name: "ReportStatusCommentTrial",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Report Status Comment (Trial)",
 };
 
@@ -18889,7 +18889,7 @@ pub const ProcedureContextSequenceTrial: Tag = Tag {
   element: 0xA340,
   name: "ProcedureContextSequenceTrial",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Procedure Context Sequence (Trial)",
 };
 
@@ -18898,7 +18898,7 @@ pub const VerbalSourceTrial: Tag = Tag {
   element: 0xA352,
   name: "VerbalSourceTrial",
   vr: "PN",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Verbal Source (Trial)",
 };
 
@@ -18907,7 +18907,7 @@ pub const AddressTrial: Tag = Tag {
   element: 0xA353,
   name: "AddressTrial",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Address (Trial)",
 };
 
@@ -18916,7 +18916,7 @@ pub const TelephoneNumberTrial: Tag = Tag {
   element: 0xA354,
   name: "TelephoneNumberTrial",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Telephone Number (Trial)",
 };
 
@@ -18925,7 +18925,7 @@ pub const VerbalSourceIdentifierCodeSequenceTrial: Tag = Tag {
   element: 0xA358,
   name: "VerbalSourceIdentifierCodeSequenceTrial",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Verbal Source Identifier Code Sequence (Trial)",
 };
 
@@ -18934,7 +18934,7 @@ pub const PredecessorDocumentsSequence: Tag = Tag {
   element: 0xA360,
   name: "PredecessorDocumentsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Predecessor Documents Sequence",
 };
 
@@ -18943,7 +18943,7 @@ pub const ReferencedRequestSequence: Tag = Tag {
   element: 0xA370,
   name: "ReferencedRequestSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Request Sequence",
 };
 
@@ -18952,7 +18952,7 @@ pub const PerformedProcedureCodeSequence: Tag = Tag {
   element: 0xA372,
   name: "PerformedProcedureCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Performed Procedure Code Sequence",
 };
 
@@ -18961,7 +18961,7 @@ pub const CurrentRequestedProcedureEvidenceSequence: Tag = Tag {
   element: 0xA375,
   name: "CurrentRequestedProcedureEvidenceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Current Requested Procedure Evidence Sequence",
 };
 
@@ -18970,7 +18970,7 @@ pub const ReportDetailSequenceTrial: Tag = Tag {
   element: 0xA380,
   name: "ReportDetailSequenceTrial",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Report Detail Sequence (Trial)",
 };
 
@@ -18979,7 +18979,7 @@ pub const PertinentOtherEvidenceSequence: Tag = Tag {
   element: 0xA385,
   name: "PertinentOtherEvidenceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pertinent Other Evidence Sequence",
 };
 
@@ -18988,7 +18988,7 @@ pub const HL7StructuredDocumentReferenceSequence: Tag = Tag {
   element: 0xA390,
   name: "HL7StructuredDocumentReferenceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "HL7 Structured Document Reference Sequence",
 };
 
@@ -18997,7 +18997,7 @@ pub const ObservationSubjectUIDTrial: Tag = Tag {
   element: 0xA402,
   name: "ObservationSubjectUIDTrial",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Observation Subject UID (Trial)",
 };
 
@@ -19006,7 +19006,7 @@ pub const ObservationSubjectClassTrial: Tag = Tag {
   element: 0xA403,
   name: "ObservationSubjectClassTrial",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Observation Subject Class (Trial)",
 };
 
@@ -19015,7 +19015,7 @@ pub const ObservationSubjectTypeCodeSequenceTrial: Tag = Tag {
   element: 0xA404,
   name: "ObservationSubjectTypeCodeSequenceTrial",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Observation Subject Type Code Sequence (Trial)",
 };
 
@@ -19024,7 +19024,7 @@ pub const CompletionFlag: Tag = Tag {
   element: 0xA491,
   name: "CompletionFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Completion Flag",
 };
 
@@ -19033,7 +19033,7 @@ pub const CompletionFlagDescription: Tag = Tag {
   element: 0xA492,
   name: "CompletionFlagDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Completion Flag Description",
 };
 
@@ -19042,7 +19042,7 @@ pub const VerificationFlag: Tag = Tag {
   element: 0xA493,
   name: "VerificationFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Verification Flag",
 };
 
@@ -19051,7 +19051,7 @@ pub const ArchiveRequested: Tag = Tag {
   element: 0xA494,
   name: "ArchiveRequested",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Archive Requested",
 };
 
@@ -19060,7 +19060,7 @@ pub const PreliminaryFlag: Tag = Tag {
   element: 0xA496,
   name: "PreliminaryFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Preliminary Flag",
 };
 
@@ -19069,7 +19069,7 @@ pub const ContentTemplateSequence: Tag = Tag {
   element: 0xA504,
   name: "ContentTemplateSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Content Template Sequence",
 };
 
@@ -19078,7 +19078,7 @@ pub const IdenticalDocumentsSequence: Tag = Tag {
   element: 0xA525,
   name: "IdenticalDocumentsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Identical Documents Sequence",
 };
 
@@ -19087,7 +19087,7 @@ pub const ObservationSubjectContextFlagTrial: Tag = Tag {
   element: 0xA600,
   name: "ObservationSubjectContextFlagTrial",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Observation Subject Context Flag (Trial)",
 };
 
@@ -19096,7 +19096,7 @@ pub const ObserverContextFlagTrial: Tag = Tag {
   element: 0xA601,
   name: "ObserverContextFlagTrial",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Observer Context Flag (Trial)",
 };
 
@@ -19105,7 +19105,7 @@ pub const ProcedureContextFlagTrial: Tag = Tag {
   element: 0xA603,
   name: "ProcedureContextFlagTrial",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Procedure Context Flag (Trial)",
 };
 
@@ -19114,7 +19114,7 @@ pub const ContentSequence: Tag = Tag {
   element: 0xA730,
   name: "ContentSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Content Sequence",
 };
 
@@ -19123,7 +19123,7 @@ pub const RelationshipSequenceTrial: Tag = Tag {
   element: 0xA731,
   name: "RelationshipSequenceTrial",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Relationship Sequence (Trial)",
 };
 
@@ -19132,7 +19132,7 @@ pub const RelationshipTypeCodeSequenceTrial: Tag = Tag {
   element: 0xA732,
   name: "RelationshipTypeCodeSequenceTrial",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Relationship Type Code Sequence (Trial)",
 };
 
@@ -19141,7 +19141,7 @@ pub const LanguageCodeSequenceTrial: Tag = Tag {
   element: 0xA744,
   name: "LanguageCodeSequenceTrial",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Language Code Sequence (Trial)",
 };
 
@@ -19150,7 +19150,7 @@ pub const UniformResourceLocatorTrial: Tag = Tag {
   element: 0xA992,
   name: "UniformResourceLocatorTrial",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Uniform Resource Locator (Trial)",
 };
 
@@ -19159,7 +19159,7 @@ pub const WaveformAnnotationSequence: Tag = Tag {
   element: 0xB020,
   name: "WaveformAnnotationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Waveform Annotation Sequence",
 };
 
@@ -19168,7 +19168,7 @@ pub const TemplateIdentifier: Tag = Tag {
   element: 0xDB00,
   name: "TemplateIdentifier",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Template Identifier",
 };
 
@@ -19177,7 +19177,7 @@ pub const TemplateVersion: Tag = Tag {
   element: 0xDB06,
   name: "TemplateVersion",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Template Version",
 };
 
@@ -19186,7 +19186,7 @@ pub const TemplateLocalVersion: Tag = Tag {
   element: 0xDB07,
   name: "TemplateLocalVersion",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Template Local Version",
 };
 
@@ -19195,7 +19195,7 @@ pub const TemplateExtensionFlag: Tag = Tag {
   element: 0xDB0B,
   name: "TemplateExtensionFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Template Extension Flag",
 };
 
@@ -19204,7 +19204,7 @@ pub const TemplateExtensionOrganizationUID: Tag = Tag {
   element: 0xDB0C,
   name: "TemplateExtensionOrganizationUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Template Extension Organization UID",
 };
 
@@ -19213,7 +19213,7 @@ pub const TemplateExtensionCreatorUID: Tag = Tag {
   element: 0xDB0D,
   name: "TemplateExtensionCreatorUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Template Extension Creator UID",
 };
 
@@ -19231,7 +19231,7 @@ pub const HL7InstanceIdentifier: Tag = Tag {
   element: 0xE001,
   name: "HL7InstanceIdentifier",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "HL7 Instance Identifier",
 };
 
@@ -19240,7 +19240,7 @@ pub const HL7DocumentEffectiveTime: Tag = Tag {
   element: 0xE004,
   name: "HL7DocumentEffectiveTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "HL7 Document Effective Time",
 };
 
@@ -19249,7 +19249,7 @@ pub const HL7DocumentTypeCodeSequence: Tag = Tag {
   element: 0xE006,
   name: "HL7DocumentTypeCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "HL7 Document Type Code Sequence",
 };
 
@@ -19258,7 +19258,7 @@ pub const DocumentClassCodeSequence: Tag = Tag {
   element: 0xE008,
   name: "DocumentClassCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Document Class Code Sequence",
 };
 
@@ -19267,7 +19267,7 @@ pub const RetrieveURI: Tag = Tag {
   element: 0xE010,
   name: "RetrieveURI",
   vr: "UT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Retrieve URI",
 };
 
@@ -19276,7 +19276,7 @@ pub const RetrieveLocationUID: Tag = Tag {
   element: 0xE011,
   name: "RetrieveLocationUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Retrieve Location UID",
 };
 
@@ -19285,7 +19285,7 @@ pub const TypeOfInstances: Tag = Tag {
   element: 0xE020,
   name: "TypeOfInstances",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Type of Instances",
 };
 
@@ -19294,7 +19294,7 @@ pub const DICOMRetrievalSequence: Tag = Tag {
   element: 0xE021,
   name: "DICOMRetrievalSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "DICOM Retrieval Sequence",
 };
 
@@ -19303,7 +19303,7 @@ pub const DICOMMediaRetrievalSequence: Tag = Tag {
   element: 0xE022,
   name: "DICOMMediaRetrievalSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "DICOM Media Retrieval Sequence",
 };
 
@@ -19312,7 +19312,7 @@ pub const WADORetrievalSequence: Tag = Tag {
   element: 0xE023,
   name: "WADORetrievalSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "WADO Retrieval Sequence",
 };
 
@@ -19321,7 +19321,7 @@ pub const XDSRetrievalSequence: Tag = Tag {
   element: 0xE024,
   name: "XDSRetrievalSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "XDS Retrieval Sequence",
 };
 
@@ -19330,7 +19330,7 @@ pub const RepositoryUniqueID: Tag = Tag {
   element: 0xE030,
   name: "RepositoryUniqueID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Repository Unique ID",
 };
 
@@ -19339,7 +19339,7 @@ pub const HomeCommunityID: Tag = Tag {
   element: 0xE031,
   name: "HomeCommunityID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Home Community ID",
 };
 
@@ -19348,7 +19348,7 @@ pub const DocumentTitle: Tag = Tag {
   element: 0x0010,
   name: "DocumentTitle",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Document Title",
 };
 
@@ -19357,7 +19357,7 @@ pub const EncapsulatedDocument: Tag = Tag {
   element: 0x0011,
   name: "EncapsulatedDocument",
   vr: "OB",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Encapsulated Document",
 };
 
@@ -19366,7 +19366,7 @@ pub const MIMETypeOfEncapsulatedDocument: Tag = Tag {
   element: 0x0012,
   name: "MIMETypeOfEncapsulatedDocument",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "MIME Type of Encapsulated Document",
 };
 
@@ -19375,7 +19375,7 @@ pub const SourceInstanceSequence: Tag = Tag {
   element: 0x0013,
   name: "SourceInstanceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Instance Sequence",
 };
 
@@ -19393,7 +19393,7 @@ pub const ProductPackageIdentifier: Tag = Tag {
   element: 0x0001,
   name: "ProductPackageIdentifier",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Product Package Identifier",
 };
 
@@ -19402,7 +19402,7 @@ pub const SubstanceAdministrationApproval: Tag = Tag {
   element: 0x0002,
   name: "SubstanceAdministrationApproval",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Substance Administration Approval",
 };
 
@@ -19411,7 +19411,7 @@ pub const ApprovalStatusFurtherDescription: Tag = Tag {
   element: 0x0003,
   name: "ApprovalStatusFurtherDescription",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Approval Status Further Description",
 };
 
@@ -19420,7 +19420,7 @@ pub const ApprovalStatusDateTime: Tag = Tag {
   element: 0x0004,
   name: "ApprovalStatusDateTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Approval Status DateTime",
 };
 
@@ -19429,7 +19429,7 @@ pub const ProductTypeCodeSequence: Tag = Tag {
   element: 0x0007,
   name: "ProductTypeCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Product Type Code Sequence",
 };
 
@@ -19447,7 +19447,7 @@ pub const ProductDescription: Tag = Tag {
   element: 0x0009,
   name: "ProductDescription",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Product Description",
 };
 
@@ -19456,7 +19456,7 @@ pub const ProductLotIdentifier: Tag = Tag {
   element: 0x000A,
   name: "ProductLotIdentifier",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Product Lot Identifier",
 };
 
@@ -19465,7 +19465,7 @@ pub const ProductExpirationDateTime: Tag = Tag {
   element: 0x000B,
   name: "ProductExpirationDateTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Product Expiration DateTime",
 };
 
@@ -19474,7 +19474,7 @@ pub const SubstanceAdministrationDateTime: Tag = Tag {
   element: 0x0010,
   name: "SubstanceAdministrationDateTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Substance Administration DateTime",
 };
 
@@ -19483,7 +19483,7 @@ pub const SubstanceAdministrationNotes: Tag = Tag {
   element: 0x0011,
   name: "SubstanceAdministrationNotes",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Substance Administration Notes",
 };
 
@@ -19492,7 +19492,7 @@ pub const SubstanceAdministrationDeviceID: Tag = Tag {
   element: 0x0012,
   name: "SubstanceAdministrationDeviceID",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Substance Administration Device ID",
 };
 
@@ -19501,7 +19501,7 @@ pub const ProductParameterSequence: Tag = Tag {
   element: 0x0013,
   name: "ProductParameterSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Product Parameter Sequence",
 };
 
@@ -19510,7 +19510,7 @@ pub const SubstanceAdministrationParameterSequence: Tag = Tag {
   element: 0x0019,
   name: "SubstanceAdministrationParameterSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Substance Administration Parameter Sequence",
 };
 
@@ -19519,7 +19519,7 @@ pub const LensDescription: Tag = Tag {
   element: 0x0012,
   name: "LensDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Lens Description",
 };
 
@@ -19528,7 +19528,7 @@ pub const RightLensSequence: Tag = Tag {
   element: 0x0014,
   name: "RightLensSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Right Lens Sequence",
 };
 
@@ -19537,7 +19537,7 @@ pub const LeftLensSequence: Tag = Tag {
   element: 0x0015,
   name: "LeftLensSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Left Lens Sequence",
 };
 
@@ -19546,7 +19546,7 @@ pub const UnspecifiedLateralityLensSequence: Tag = Tag {
   element: 0x0016,
   name: "UnspecifiedLateralityLensSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Unspecified Laterality Lens Sequence",
 };
 
@@ -19555,7 +19555,7 @@ pub const CylinderSequence: Tag = Tag {
   element: 0x0018,
   name: "CylinderSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Cylinder Sequence",
 };
 
@@ -19564,7 +19564,7 @@ pub const PrismSequence: Tag = Tag {
   element: 0x0028,
   name: "PrismSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Prism Sequence",
 };
 
@@ -19573,7 +19573,7 @@ pub const HorizontalPrismPower: Tag = Tag {
   element: 0x0030,
   name: "HorizontalPrismPower",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Horizontal Prism Power",
 };
 
@@ -19582,7 +19582,7 @@ pub const HorizontalPrismBase: Tag = Tag {
   element: 0x0032,
   name: "HorizontalPrismBase",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Horizontal Prism Base",
 };
 
@@ -19591,7 +19591,7 @@ pub const VerticalPrismPower: Tag = Tag {
   element: 0x0034,
   name: "VerticalPrismPower",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Vertical Prism Power",
 };
 
@@ -19600,7 +19600,7 @@ pub const VerticalPrismBase: Tag = Tag {
   element: 0x0036,
   name: "VerticalPrismBase",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Vertical Prism Base",
 };
 
@@ -19609,7 +19609,7 @@ pub const LensSegmentType: Tag = Tag {
   element: 0x0038,
   name: "LensSegmentType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Lens Segment Type",
 };
 
@@ -19618,7 +19618,7 @@ pub const OpticalTransmittance: Tag = Tag {
   element: 0x0040,
   name: "OpticalTransmittance",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Optical Transmittance",
 };
 
@@ -19627,7 +19627,7 @@ pub const ChannelWidth: Tag = Tag {
   element: 0x0042,
   name: "ChannelWidth",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Width",
 };
 
@@ -19636,7 +19636,7 @@ pub const PupilSize: Tag = Tag {
   element: 0x0044,
   name: "PupilSize",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pupil Size",
 };
 
@@ -19645,7 +19645,7 @@ pub const CornealSize: Tag = Tag {
   element: 0x0046,
   name: "CornealSize",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Corneal Size",
 };
 
@@ -19654,7 +19654,7 @@ pub const AutorefractionRightEyeSequence: Tag = Tag {
   element: 0x0050,
   name: "AutorefractionRightEyeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Autorefraction Right Eye Sequence",
 };
 
@@ -19663,7 +19663,7 @@ pub const AutorefractionLeftEyeSequence: Tag = Tag {
   element: 0x0052,
   name: "AutorefractionLeftEyeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Autorefraction Left Eye Sequence",
 };
 
@@ -19672,7 +19672,7 @@ pub const DistancePupillaryDistance: Tag = Tag {
   element: 0x0060,
   name: "DistancePupillaryDistance",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Distance Pupillary Distance",
 };
 
@@ -19681,7 +19681,7 @@ pub const NearPupillaryDistance: Tag = Tag {
   element: 0x0062,
   name: "NearPupillaryDistance",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Near Pupillary Distance",
 };
 
@@ -19690,7 +19690,7 @@ pub const IntermediatePupillaryDistance: Tag = Tag {
   element: 0x0063,
   name: "IntermediatePupillaryDistance",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Intermediate Pupillary Distance",
 };
 
@@ -19699,7 +19699,7 @@ pub const OtherPupillaryDistance: Tag = Tag {
   element: 0x0064,
   name: "OtherPupillaryDistance",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Other Pupillary Distance",
 };
 
@@ -19708,7 +19708,7 @@ pub const KeratometryRightEyeSequence: Tag = Tag {
   element: 0x0070,
   name: "KeratometryRightEyeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Keratometry Right Eye Sequence",
 };
 
@@ -19717,7 +19717,7 @@ pub const KeratometryLeftEyeSequence: Tag = Tag {
   element: 0x0071,
   name: "KeratometryLeftEyeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Keratometry Left Eye Sequence",
 };
 
@@ -19726,7 +19726,7 @@ pub const SteepKeratometricAxisSequence: Tag = Tag {
   element: 0x0074,
   name: "SteepKeratometricAxisSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Steep Keratometric Axis Sequence",
 };
 
@@ -19735,7 +19735,7 @@ pub const RadiusOfCurvature: Tag = Tag {
   element: 0x0075,
   name: "RadiusOfCurvature",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Radius of Curvature",
 };
 
@@ -19744,7 +19744,7 @@ pub const KeratometricPower: Tag = Tag {
   element: 0x0076,
   name: "KeratometricPower",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Keratometric Power",
 };
 
@@ -19753,7 +19753,7 @@ pub const KeratometricAxis: Tag = Tag {
   element: 0x0077,
   name: "KeratometricAxis",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Keratometric Axis",
 };
 
@@ -19762,7 +19762,7 @@ pub const FlatKeratometricAxisSequence: Tag = Tag {
   element: 0x0080,
   name: "FlatKeratometricAxisSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Flat Keratometric Axis Sequence",
 };
 
@@ -19771,7 +19771,7 @@ pub const BackgroundColor: Tag = Tag {
   element: 0x0092,
   name: "BackgroundColor",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Background Color",
 };
 
@@ -19780,7 +19780,7 @@ pub const Optotype: Tag = Tag {
   element: 0x0094,
   name: "Optotype",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Optotype",
 };
 
@@ -19789,7 +19789,7 @@ pub const OptotypePresentation: Tag = Tag {
   element: 0x0095,
   name: "OptotypePresentation",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Optotype Presentation",
 };
 
@@ -19798,7 +19798,7 @@ pub const SubjectiveRefractionRightEyeSequence: Tag = Tag {
   element: 0x0097,
   name: "SubjectiveRefractionRightEyeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Subjective Refraction Right Eye Sequence",
 };
 
@@ -19807,7 +19807,7 @@ pub const SubjectiveRefractionLeftEyeSequence: Tag = Tag {
   element: 0x0098,
   name: "SubjectiveRefractionLeftEyeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Subjective Refraction Left Eye Sequence",
 };
 
@@ -19816,7 +19816,7 @@ pub const AddNearSequence: Tag = Tag {
   element: 0x0100,
   name: "AddNearSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Add Near Sequence",
 };
 
@@ -19825,7 +19825,7 @@ pub const AddIntermediateSequence: Tag = Tag {
   element: 0x0101,
   name: "AddIntermediateSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Add Intermediate Sequence",
 };
 
@@ -19834,7 +19834,7 @@ pub const AddOtherSequence: Tag = Tag {
   element: 0x0102,
   name: "AddOtherSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Add Other Sequence",
 };
 
@@ -19843,7 +19843,7 @@ pub const AddPower: Tag = Tag {
   element: 0x0104,
   name: "AddPower",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Add Power",
 };
 
@@ -19852,7 +19852,7 @@ pub const ViewingDistance: Tag = Tag {
   element: 0x0106,
   name: "ViewingDistance",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Viewing Distance",
 };
 
@@ -19861,7 +19861,7 @@ pub const VisualAcuityTypeCodeSequence: Tag = Tag {
   element: 0x0121,
   name: "VisualAcuityTypeCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Visual Acuity Type Code Sequence",
 };
 
@@ -19870,7 +19870,7 @@ pub const VisualAcuityRightEyeSequence: Tag = Tag {
   element: 0x0122,
   name: "VisualAcuityRightEyeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Visual Acuity Right Eye Sequence",
 };
 
@@ -19879,7 +19879,7 @@ pub const VisualAcuityLeftEyeSequence: Tag = Tag {
   element: 0x0123,
   name: "VisualAcuityLeftEyeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Visual Acuity Left Eye Sequence",
 };
 
@@ -19888,7 +19888,7 @@ pub const VisualAcuityBothEyesOpenSequence: Tag = Tag {
   element: 0x0124,
   name: "VisualAcuityBothEyesOpenSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Visual Acuity Both Eyes Open Sequence",
 };
 
@@ -19897,7 +19897,7 @@ pub const ViewingDistanceType: Tag = Tag {
   element: 0x0125,
   name: "ViewingDistanceType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Viewing Distance Type",
 };
 
@@ -19906,7 +19906,7 @@ pub const VisualAcuityModifiers: Tag = Tag {
   element: 0x0135,
   name: "VisualAcuityModifiers",
   vr: "SS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Visual Acuity Modifiers",
 };
 
@@ -19915,7 +19915,7 @@ pub const DecimalVisualAcuity: Tag = Tag {
   element: 0x0137,
   name: "DecimalVisualAcuity",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Decimal Visual Acuity",
 };
 
@@ -19924,7 +19924,7 @@ pub const OptotypeDetailedDefinition: Tag = Tag {
   element: 0x0139,
   name: "OptotypeDetailedDefinition",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Optotype Detailed Definition",
 };
 
@@ -19933,7 +19933,7 @@ pub const ReferencedRefractiveMeasurementsSequence: Tag = Tag {
   element: 0x0145,
   name: "ReferencedRefractiveMeasurementsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Refractive Measurements Sequence",
 };
 
@@ -19942,7 +19942,7 @@ pub const SpherePower: Tag = Tag {
   element: 0x0146,
   name: "SpherePower",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Sphere Power",
 };
 
@@ -19951,7 +19951,7 @@ pub const CylinderPower: Tag = Tag {
   element: 0x0147,
   name: "CylinderPower",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Cylinder Power",
 };
 
@@ -19960,7 +19960,7 @@ pub const CornealTopographySurface: Tag = Tag {
   element: 0x0201,
   name: "CornealTopographySurface",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Corneal Topography Surface",
 };
 
@@ -19969,7 +19969,7 @@ pub const CornealVertexLocation: Tag = Tag {
   element: 0x0202,
   name: "CornealVertexLocation",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Corneal Vertex Location",
 };
 
@@ -19978,7 +19978,7 @@ pub const PupilCentroidXCoordinate: Tag = Tag {
   element: 0x0203,
   name: "PupilCentroidXCoordinate",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pupil Centroid X-Coordinate",
 };
 
@@ -19987,7 +19987,7 @@ pub const PupilCentroidYCoordinate: Tag = Tag {
   element: 0x0204,
   name: "PupilCentroidYCoordinate",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pupil Centroid Y-Coordinate",
 };
 
@@ -19996,7 +19996,7 @@ pub const EquivalentPupilRadius: Tag = Tag {
   element: 0x0205,
   name: "EquivalentPupilRadius",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Equivalent Pupil Radius",
 };
 
@@ -20005,7 +20005,7 @@ pub const CornealTopographyMapTypeCodeSequence: Tag = Tag {
   element: 0x0207,
   name: "CornealTopographyMapTypeCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Corneal Topography Map Type Code Sequence",
 };
 
@@ -20023,7 +20023,7 @@ pub const CornealTopographyMappingNormalsSequence: Tag = Tag {
   element: 0x0210,
   name: "CornealTopographyMappingNormalsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Corneal Topography Mapping Normals Sequence",
 };
 
@@ -20032,7 +20032,7 @@ pub const MaximumCornealCurvatureSequence: Tag = Tag {
   element: 0x0211,
   name: "MaximumCornealCurvatureSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Maximum Corneal Curvature Sequence",
 };
 
@@ -20041,7 +20041,7 @@ pub const MaximumCornealCurvature: Tag = Tag {
   element: 0x0212,
   name: "MaximumCornealCurvature",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Maximum Corneal Curvature",
 };
 
@@ -20050,7 +20050,7 @@ pub const MaximumCornealCurvatureLocation: Tag = Tag {
   element: 0x0213,
   name: "MaximumCornealCurvatureLocation",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Maximum Corneal Curvature Location",
 };
 
@@ -20059,7 +20059,7 @@ pub const MinimumKeratometricSequence: Tag = Tag {
   element: 0x0215,
   name: "MinimumKeratometricSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Minimum Keratometric Sequence",
 };
 
@@ -20068,7 +20068,7 @@ pub const SimulatedKeratometricCylinderSequence: Tag = Tag {
   element: 0x0218,
   name: "SimulatedKeratometricCylinderSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Simulated Keratometric Cylinder Sequence",
 };
 
@@ -20077,7 +20077,7 @@ pub const AverageCornealPower: Tag = Tag {
   element: 0x0220,
   name: "AverageCornealPower",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Average Corneal Power",
 };
 
@@ -20086,7 +20086,7 @@ pub const CornealISValue: Tag = Tag {
   element: 0x0224,
   name: "CornealISValue",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Corneal I-S Value",
 };
 
@@ -20095,7 +20095,7 @@ pub const AnalyzedArea: Tag = Tag {
   element: 0x0227,
   name: "AnalyzedArea",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Analyzed Area",
 };
 
@@ -20104,7 +20104,7 @@ pub const SurfaceRegularityIndex: Tag = Tag {
   element: 0x0230,
   name: "SurfaceRegularityIndex",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Surface Regularity Index",
 };
 
@@ -20113,7 +20113,7 @@ pub const SurfaceAsymmetryIndex: Tag = Tag {
   element: 0x0232,
   name: "SurfaceAsymmetryIndex",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Surface Asymmetry Index",
 };
 
@@ -20122,7 +20122,7 @@ pub const CornealEccentricityIndex: Tag = Tag {
   element: 0x0234,
   name: "CornealEccentricityIndex",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Corneal Eccentricity Index",
 };
 
@@ -20131,7 +20131,7 @@ pub const KeratoconusPredictionIndex: Tag = Tag {
   element: 0x0236,
   name: "KeratoconusPredictionIndex",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Keratoconus Prediction Index",
 };
 
@@ -20140,7 +20140,7 @@ pub const DecimalPotentialVisualAcuity: Tag = Tag {
   element: 0x0238,
   name: "DecimalPotentialVisualAcuity",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Decimal Potential Visual Acuity",
 };
 
@@ -20149,7 +20149,7 @@ pub const CornealTopographyMapQualityEvaluation: Tag = Tag {
   element: 0x0242,
   name: "CornealTopographyMapQualityEvaluation",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Corneal Topography Map Quality Evaluation",
 };
 
@@ -20158,7 +20158,7 @@ pub const SourceImageCornealProcessedDataSequence: Tag = Tag {
   element: 0x0244,
   name: "SourceImageCornealProcessedDataSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Image Corneal Processed Data Sequence",
 };
 
@@ -20167,7 +20167,7 @@ pub const CornealPointLocation: Tag = Tag {
   element: 0x0247,
   name: "CornealPointLocation",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Corneal Point Location",
 };
 
@@ -20176,7 +20176,7 @@ pub const CornealPointEstimated: Tag = Tag {
   element: 0x0248,
   name: "CornealPointEstimated",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Corneal Point Estimated",
 };
 
@@ -20185,7 +20185,7 @@ pub const AxialPower: Tag = Tag {
   element: 0x0249,
   name: "AxialPower",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Axial Power",
 };
 
@@ -20194,7 +20194,7 @@ pub const TangentialPower: Tag = Tag {
   element: 0x0250,
   name: "TangentialPower",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Tangential Power",
 };
 
@@ -20203,7 +20203,7 @@ pub const RefractivePower: Tag = Tag {
   element: 0x0251,
   name: "RefractivePower",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Refractive Power",
 };
 
@@ -20212,7 +20212,7 @@ pub const RelativeElevation: Tag = Tag {
   element: 0x0252,
   name: "RelativeElevation",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Relative Elevation",
 };
 
@@ -20221,7 +20221,7 @@ pub const CornealWavefront: Tag = Tag {
   element: 0x0253,
   name: "CornealWavefront",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Corneal Wavefront",
 };
 
@@ -20230,7 +20230,7 @@ pub const ImagedVolumeWidth: Tag = Tag {
   element: 0x0001,
   name: "ImagedVolumeWidth",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Imaged Volume Width",
 };
 
@@ -20239,7 +20239,7 @@ pub const ImagedVolumeHeight: Tag = Tag {
   element: 0x0002,
   name: "ImagedVolumeHeight",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Imaged Volume Height",
 };
 
@@ -20248,7 +20248,7 @@ pub const ImagedVolumeDepth: Tag = Tag {
   element: 0x0003,
   name: "ImagedVolumeDepth",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Imaged Volume Depth",
 };
 
@@ -20257,7 +20257,7 @@ pub const TotalPixelMatrixColumns: Tag = Tag {
   element: 0x0006,
   name: "TotalPixelMatrixColumns",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Total Pixel Matrix Columns",
 };
 
@@ -20266,7 +20266,7 @@ pub const TotalPixelMatrixRows: Tag = Tag {
   element: 0x0007,
   name: "TotalPixelMatrixRows",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Total Pixel Matrix Rows",
 };
 
@@ -20275,7 +20275,7 @@ pub const TotalPixelMatrixOriginSequence: Tag = Tag {
   element: 0x0008,
   name: "TotalPixelMatrixOriginSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Total Pixel Matrix Origin Sequence",
 };
 
@@ -20284,7 +20284,7 @@ pub const SpecimenLabelInImage: Tag = Tag {
   element: 0x0010,
   name: "SpecimenLabelInImage",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Specimen Label in Image",
 };
 
@@ -20293,7 +20293,7 @@ pub const FocusMethod: Tag = Tag {
   element: 0x0011,
   name: "FocusMethod",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Focus Method",
 };
 
@@ -20302,7 +20302,7 @@ pub const ExtendedDepthOfField: Tag = Tag {
   element: 0x0012,
   name: "ExtendedDepthOfField",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Extended Depth of Field",
 };
 
@@ -20311,7 +20311,7 @@ pub const NumberOfFocalPlanes: Tag = Tag {
   element: 0x0013,
   name: "NumberOfFocalPlanes",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Focal Planes",
 };
 
@@ -20320,7 +20320,7 @@ pub const DistanceBetweenFocalPlanes: Tag = Tag {
   element: 0x0014,
   name: "DistanceBetweenFocalPlanes",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Distance Between Focal Planes",
 };
 
@@ -20329,7 +20329,7 @@ pub const RecommendedAbsentPixelCIELabValue: Tag = Tag {
   element: 0x0015,
   name: "RecommendedAbsentPixelCIELabValue",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Recommended Absent Pixel CIELab Value",
 };
 
@@ -20338,7 +20338,7 @@ pub const IlluminatorTypeCodeSequence: Tag = Tag {
   element: 0x0100,
   name: "IlluminatorTypeCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Illuminator Type Code Sequence",
 };
 
@@ -20347,7 +20347,7 @@ pub const ImageOrientationSlide: Tag = Tag {
   element: 0x0102,
   name: "ImageOrientationSlide",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 6, end: 6 },
   description: "Image Orientation (Slide)",
 };
 
@@ -20356,7 +20356,7 @@ pub const OpticalPathSequence: Tag = Tag {
   element: 0x0105,
   name: "OpticalPathSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Optical Path Sequence",
 };
 
@@ -20365,7 +20365,7 @@ pub const OpticalPathIdentifier: Tag = Tag {
   element: 0x0106,
   name: "OpticalPathIdentifier",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Optical Path Identifier",
 };
 
@@ -20374,7 +20374,7 @@ pub const OpticalPathDescription: Tag = Tag {
   element: 0x0107,
   name: "OpticalPathDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Optical Path Description",
 };
 
@@ -20383,7 +20383,7 @@ pub const IlluminationColorCodeSequence: Tag = Tag {
   element: 0x0108,
   name: "IlluminationColorCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Illumination Color Code Sequence",
 };
 
@@ -20392,7 +20392,7 @@ pub const SpecimenReferenceSequence: Tag = Tag {
   element: 0x0110,
   name: "SpecimenReferenceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Specimen Reference Sequence",
 };
 
@@ -20401,7 +20401,7 @@ pub const CondenserLensPower: Tag = Tag {
   element: 0x0111,
   name: "CondenserLensPower",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Condenser Lens Power",
 };
 
@@ -20410,7 +20410,7 @@ pub const ObjectiveLensPower: Tag = Tag {
   element: 0x0112,
   name: "ObjectiveLensPower",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Objective Lens Power",
 };
 
@@ -20419,7 +20419,7 @@ pub const ObjectiveLensNumericalAperture: Tag = Tag {
   element: 0x0113,
   name: "ObjectiveLensNumericalAperture",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Objective Lens Numerical Aperture",
 };
 
@@ -20428,7 +20428,7 @@ pub const PaletteColorLookupTableSequence: Tag = Tag {
   element: 0x0120,
   name: "PaletteColorLookupTableSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Palette Color Lookup Table Sequence",
 };
 
@@ -20437,7 +20437,7 @@ pub const ReferencedImageNavigationSequence: Tag = Tag {
   element: 0x0200,
   name: "ReferencedImageNavigationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Image Navigation Sequence",
 };
 
@@ -20446,7 +20446,7 @@ pub const TopLeftHandCornerOfLocalizerArea: Tag = Tag {
   element: 0x0201,
   name: "TopLeftHandCornerOfLocalizerArea",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Top Left Hand Corner of Localizer Area",
 };
 
@@ -20455,7 +20455,7 @@ pub const BottomRightHandCornerOfLocalizerArea: Tag = Tag {
   element: 0x0202,
   name: "BottomRightHandCornerOfLocalizerArea",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Bottom Right Hand Corner of Localizer Area",
 };
 
@@ -20464,7 +20464,7 @@ pub const OpticalPathIdentificationSequence: Tag = Tag {
   element: 0x0207,
   name: "OpticalPathIdentificationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Optical Path Identification Sequence",
 };
 
@@ -20473,7 +20473,7 @@ pub const PlanePositionSlideSequence: Tag = Tag {
   element: 0x021A,
   name: "PlanePositionSlideSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Plane Position (Slide) Sequence",
 };
 
@@ -20482,7 +20482,7 @@ pub const ColumnPositionInTotalImagePixelMatrix: Tag = Tag {
   element: 0x021E,
   name: "ColumnPositionInTotalImagePixelMatrix",
   vr: "SL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Column Position In Total Image Pixel Matrix",
 };
 
@@ -20491,7 +20491,7 @@ pub const RowPositionInTotalImagePixelMatrix: Tag = Tag {
   element: 0x021F,
   name: "RowPositionInTotalImagePixelMatrix",
   vr: "SL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Row Position In Total Image Pixel Matrix",
 };
 
@@ -20500,7 +20500,7 @@ pub const PixelOriginInterpretation: Tag = Tag {
   element: 0x0301,
   name: "PixelOriginInterpretation",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pixel Origin Interpretation",
 };
 
@@ -20509,7 +20509,7 @@ pub const CalibrationImage: Tag = Tag {
   element: 0x0004,
   name: "CalibrationImage",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Calibration Image",
 };
 
@@ -20518,7 +20518,7 @@ pub const DeviceSequence: Tag = Tag {
   element: 0x0010,
   name: "DeviceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Device Sequence",
 };
 
@@ -20527,7 +20527,7 @@ pub const ContainerComponentTypeCodeSequence: Tag = Tag {
   element: 0x0012,
   name: "ContainerComponentTypeCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Container Component Type Code Sequence",
 };
 
@@ -20536,7 +20536,7 @@ pub const ContainerComponentThickness: Tag = Tag {
   element: 0x0013,
   name: "ContainerComponentThickness",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Container Component Thickness",
 };
 
@@ -20545,7 +20545,7 @@ pub const DeviceLength: Tag = Tag {
   element: 0x0014,
   name: "DeviceLength",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Device Length",
 };
 
@@ -20554,7 +20554,7 @@ pub const ContainerComponentWidth: Tag = Tag {
   element: 0x0015,
   name: "ContainerComponentWidth",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Container Component Width",
 };
 
@@ -20563,7 +20563,7 @@ pub const DeviceDiameter: Tag = Tag {
   element: 0x0016,
   name: "DeviceDiameter",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Device Diameter",
 };
 
@@ -20572,7 +20572,7 @@ pub const DeviceDiameterUnits: Tag = Tag {
   element: 0x0017,
   name: "DeviceDiameterUnits",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Device Diameter Units",
 };
 
@@ -20581,7 +20581,7 @@ pub const DeviceVolume: Tag = Tag {
   element: 0x0018,
   name: "DeviceVolume",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Device Volume",
 };
 
@@ -20590,7 +20590,7 @@ pub const InterMarkerDistance: Tag = Tag {
   element: 0x0019,
   name: "InterMarkerDistance",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Inter-Marker Distance",
 };
 
@@ -20599,7 +20599,7 @@ pub const ContainerComponentMaterial: Tag = Tag {
   element: 0x001A,
   name: "ContainerComponentMaterial",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Container Component Material",
 };
 
@@ -20608,7 +20608,7 @@ pub const ContainerComponentID: Tag = Tag {
   element: 0x001B,
   name: "ContainerComponentID",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Container Component ID",
 };
 
@@ -20617,7 +20617,7 @@ pub const ContainerComponentLength: Tag = Tag {
   element: 0x001C,
   name: "ContainerComponentLength",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Container Component Length",
 };
 
@@ -20626,7 +20626,7 @@ pub const ContainerComponentDiameter: Tag = Tag {
   element: 0x001D,
   name: "ContainerComponentDiameter",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Container Component Diameter",
 };
 
@@ -20635,7 +20635,7 @@ pub const ContainerComponentDescription: Tag = Tag {
   element: 0x001E,
   name: "ContainerComponentDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Container Component Description",
 };
 
@@ -20644,7 +20644,7 @@ pub const DeviceDescription: Tag = Tag {
   element: 0x0020,
   name: "DeviceDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Device Description",
 };
 
@@ -20653,7 +20653,7 @@ pub const ContrastBolusIngredientPercentByVolume: Tag = Tag {
   element: 0x0001,
   name: "ContrastBolusIngredientPercentByVolume",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contrast/Bolus Ingredient Percent by Volume",
 };
 
@@ -20662,7 +20662,7 @@ pub const OCTFocalDistance: Tag = Tag {
   element: 0x0002,
   name: "OCTFocalDistance",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "OCT Focal Distance",
 };
 
@@ -20671,7 +20671,7 @@ pub const BeamSpotSize: Tag = Tag {
   element: 0x0003,
   name: "BeamSpotSize",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Beam Spot Size",
 };
 
@@ -20680,7 +20680,7 @@ pub const EffectiveRefractiveIndex: Tag = Tag {
   element: 0x0004,
   name: "EffectiveRefractiveIndex",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Effective Refractive Index",
 };
 
@@ -20689,7 +20689,7 @@ pub const OCTAcquisitionDomain: Tag = Tag {
   element: 0x0006,
   name: "OCTAcquisitionDomain",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "OCT Acquisition Domain",
 };
 
@@ -20698,7 +20698,7 @@ pub const OCTOpticalCenterWavelength: Tag = Tag {
   element: 0x0007,
   name: "OCTOpticalCenterWavelength",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "OCT Optical Center Wavelength",
 };
 
@@ -20707,7 +20707,7 @@ pub const AxialResolution: Tag = Tag {
   element: 0x0008,
   name: "AxialResolution",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Axial Resolution",
 };
 
@@ -20716,7 +20716,7 @@ pub const RangingDepth: Tag = Tag {
   element: 0x0009,
   name: "RangingDepth",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ranging Depth",
 };
 
@@ -20725,7 +20725,7 @@ pub const ALineRate: Tag = Tag {
   element: 0x0011,
   name: "ALineRate",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "A-line Rate",
 };
 
@@ -20734,7 +20734,7 @@ pub const ALinesPerFrame: Tag = Tag {
   element: 0x0012,
   name: "ALinesPerFrame",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "A-lines Per Frame",
 };
 
@@ -20743,7 +20743,7 @@ pub const CatheterRotationalRate: Tag = Tag {
   element: 0x0013,
   name: "CatheterRotationalRate",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Catheter Rotational Rate",
 };
 
@@ -20752,7 +20752,7 @@ pub const ALinePixelSpacing: Tag = Tag {
   element: 0x0014,
   name: "ALinePixelSpacing",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "A-line Pixel Spacing",
 };
 
@@ -20761,7 +20761,7 @@ pub const ModeOfPercutaneousAccessSequence: Tag = Tag {
   element: 0x0016,
   name: "ModeOfPercutaneousAccessSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Mode of Percutaneous Access Sequence",
 };
 
@@ -20770,7 +20770,7 @@ pub const IntravascularOCTFrameTypeSequence: Tag = Tag {
   element: 0x0025,
   name: "IntravascularOCTFrameTypeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Intravascular OCT Frame Type Sequence",
 };
 
@@ -20779,7 +20779,7 @@ pub const OCTZOffsetApplied: Tag = Tag {
   element: 0x0026,
   name: "OCTZOffsetApplied",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "OCT Z Offset Applied",
 };
 
@@ -20788,7 +20788,7 @@ pub const IntravascularFrameContentSequence: Tag = Tag {
   element: 0x0027,
   name: "IntravascularFrameContentSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Intravascular Frame Content Sequence",
 };
 
@@ -20797,7 +20797,7 @@ pub const IntravascularLongitudinalDistance: Tag = Tag {
   element: 0x0028,
   name: "IntravascularLongitudinalDistance",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Intravascular Longitudinal Distance",
 };
 
@@ -20806,7 +20806,7 @@ pub const IntravascularOCTFrameContentSequence: Tag = Tag {
   element: 0x0029,
   name: "IntravascularOCTFrameContentSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Intravascular OCT Frame Content Sequence",
 };
 
@@ -20815,7 +20815,7 @@ pub const OCTZOffsetCorrection: Tag = Tag {
   element: 0x0030,
   name: "OCTZOffsetCorrection",
   vr: "SS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "OCT Z Offset Correction",
 };
 
@@ -20824,7 +20824,7 @@ pub const CatheterDirectionOfRotation: Tag = Tag {
   element: 0x0031,
   name: "CatheterDirectionOfRotation",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Catheter Direction of Rotation",
 };
 
@@ -20833,7 +20833,7 @@ pub const SeamLineLocation: Tag = Tag {
   element: 0x0033,
   name: "SeamLineLocation",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Seam Line Location",
 };
 
@@ -20842,7 +20842,7 @@ pub const FirstALineLocation: Tag = Tag {
   element: 0x0034,
   name: "FirstALineLocation",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "First A-line Location",
 };
 
@@ -20851,7 +20851,7 @@ pub const SeamLineIndex: Tag = Tag {
   element: 0x0036,
   name: "SeamLineIndex",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Seam Line Index",
 };
 
@@ -20860,7 +20860,7 @@ pub const NumberOfPaddedALines: Tag = Tag {
   element: 0x0038,
   name: "NumberOfPaddedALines",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Padded A-lines",
 };
 
@@ -20869,7 +20869,7 @@ pub const InterpolationType: Tag = Tag {
   element: 0x0039,
   name: "InterpolationType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Interpolation Type",
 };
 
@@ -20878,7 +20878,7 @@ pub const RefractiveIndexApplied: Tag = Tag {
   element: 0x003A,
   name: "RefractiveIndexApplied",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Refractive Index Applied",
 };
 
@@ -20896,7 +20896,7 @@ pub const NumberOfEnergyWindows: Tag = Tag {
   element: 0x0011,
   name: "NumberOfEnergyWindows",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Energy Windows",
 };
 
@@ -20905,7 +20905,7 @@ pub const EnergyWindowInformationSequence: Tag = Tag {
   element: 0x0012,
   name: "EnergyWindowInformationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Energy Window Information Sequence",
 };
 
@@ -20914,7 +20914,7 @@ pub const EnergyWindowRangeSequence: Tag = Tag {
   element: 0x0013,
   name: "EnergyWindowRangeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Energy Window Range Sequence",
 };
 
@@ -20923,7 +20923,7 @@ pub const EnergyWindowLowerLimit: Tag = Tag {
   element: 0x0014,
   name: "EnergyWindowLowerLimit",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Energy Window Lower Limit",
 };
 
@@ -20932,7 +20932,7 @@ pub const EnergyWindowUpperLimit: Tag = Tag {
   element: 0x0015,
   name: "EnergyWindowUpperLimit",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Energy Window Upper Limit",
 };
 
@@ -20941,7 +20941,7 @@ pub const RadiopharmaceuticalInformationSequence: Tag = Tag {
   element: 0x0016,
   name: "RadiopharmaceuticalInformationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Radiopharmaceutical Information Sequence",
 };
 
@@ -20950,7 +20950,7 @@ pub const ResidualSyringeCounts: Tag = Tag {
   element: 0x0017,
   name: "ResidualSyringeCounts",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Residual Syringe Counts",
 };
 
@@ -20959,7 +20959,7 @@ pub const EnergyWindowName: Tag = Tag {
   element: 0x0018,
   name: "EnergyWindowName",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Energy Window Name",
 };
 
@@ -20977,7 +20977,7 @@ pub const NumberOfDetectors: Tag = Tag {
   element: 0x0021,
   name: "NumberOfDetectors",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Detectors",
 };
 
@@ -20986,7 +20986,7 @@ pub const DetectorInformationSequence: Tag = Tag {
   element: 0x0022,
   name: "DetectorInformationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Detector Information Sequence",
 };
 
@@ -21004,7 +21004,7 @@ pub const NumberOfPhases: Tag = Tag {
   element: 0x0031,
   name: "NumberOfPhases",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Phases",
 };
 
@@ -21013,7 +21013,7 @@ pub const PhaseInformationSequence: Tag = Tag {
   element: 0x0032,
   name: "PhaseInformationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Phase Information Sequence",
 };
 
@@ -21022,7 +21022,7 @@ pub const NumberOfFramesInPhase: Tag = Tag {
   element: 0x0033,
   name: "NumberOfFramesInPhase",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Frames in Phase",
 };
 
@@ -21031,7 +21031,7 @@ pub const PhaseDelay: Tag = Tag {
   element: 0x0036,
   name: "PhaseDelay",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Phase Delay",
 };
 
@@ -21040,7 +21040,7 @@ pub const PauseBetweenFrames: Tag = Tag {
   element: 0x0038,
   name: "PauseBetweenFrames",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pause Between Frames",
 };
 
@@ -21049,7 +21049,7 @@ pub const PhaseDescription: Tag = Tag {
   element: 0x0039,
   name: "PhaseDescription",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Phase Description",
 };
 
@@ -21067,7 +21067,7 @@ pub const NumberOfRotations: Tag = Tag {
   element: 0x0051,
   name: "NumberOfRotations",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Rotations",
 };
 
@@ -21076,7 +21076,7 @@ pub const RotationInformationSequence: Tag = Tag {
   element: 0x0052,
   name: "RotationInformationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Rotation Information Sequence",
 };
 
@@ -21085,7 +21085,7 @@ pub const NumberOfFramesInRotation: Tag = Tag {
   element: 0x0053,
   name: "NumberOfFramesInRotation",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Frames in Rotation",
 };
 
@@ -21103,7 +21103,7 @@ pub const NumberOfRRIntervals: Tag = Tag {
   element: 0x0061,
   name: "NumberOfRRIntervals",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of R-R Intervals",
 };
 
@@ -21112,7 +21112,7 @@ pub const GatedInformationSequence: Tag = Tag {
   element: 0x0062,
   name: "GatedInformationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Gated Information Sequence",
 };
 
@@ -21121,7 +21121,7 @@ pub const DataInformationSequence: Tag = Tag {
   element: 0x0063,
   name: "DataInformationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Data Information Sequence",
 };
 
@@ -21139,7 +21139,7 @@ pub const NumberOfTimeSlots: Tag = Tag {
   element: 0x0071,
   name: "NumberOfTimeSlots",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Time Slots",
 };
 
@@ -21148,7 +21148,7 @@ pub const TimeSlotInformationSequence: Tag = Tag {
   element: 0x0072,
   name: "TimeSlotInformationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Time Slot Information Sequence",
 };
 
@@ -21157,7 +21157,7 @@ pub const TimeSlotTime: Tag = Tag {
   element: 0x0073,
   name: "TimeSlotTime",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Time Slot Time",
 };
 
@@ -21175,7 +21175,7 @@ pub const NumberOfSlices: Tag = Tag {
   element: 0x0081,
   name: "NumberOfSlices",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Slices",
 };
 
@@ -21202,7 +21202,7 @@ pub const NumberOfTimeSlices: Tag = Tag {
   element: 0x0101,
   name: "NumberOfTimeSlices",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Time Slices",
 };
 
@@ -21211,7 +21211,7 @@ pub const StartAngle: Tag = Tag {
   element: 0x0200,
   name: "StartAngle",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Start Angle",
 };
 
@@ -21220,7 +21220,7 @@ pub const TypeOfDetectorMotion: Tag = Tag {
   element: 0x0202,
   name: "TypeOfDetectorMotion",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Type of Detector Motion",
 };
 
@@ -21238,7 +21238,7 @@ pub const NumberOfTriggersInPhase: Tag = Tag {
   element: 0x0211,
   name: "NumberOfTriggersInPhase",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Triggers in Phase",
 };
 
@@ -21247,7 +21247,7 @@ pub const ViewCodeSequence: Tag = Tag {
   element: 0x0220,
   name: "ViewCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "View Code Sequence",
 };
 
@@ -21256,7 +21256,7 @@ pub const ViewModifierCodeSequence: Tag = Tag {
   element: 0x0222,
   name: "ViewModifierCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "View Modifier Code Sequence",
 };
 
@@ -21265,7 +21265,7 @@ pub const RadionuclideCodeSequence: Tag = Tag {
   element: 0x0300,
   name: "RadionuclideCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Radionuclide Code Sequence",
 };
 
@@ -21274,7 +21274,7 @@ pub const AdministrationRouteCodeSequence: Tag = Tag {
   element: 0x0302,
   name: "AdministrationRouteCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Administration Route Code Sequence",
 };
 
@@ -21283,7 +21283,7 @@ pub const RadiopharmaceuticalCodeSequence: Tag = Tag {
   element: 0x0304,
   name: "RadiopharmaceuticalCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Radiopharmaceutical Code Sequence",
 };
 
@@ -21292,7 +21292,7 @@ pub const CalibrationDataSequence: Tag = Tag {
   element: 0x0306,
   name: "CalibrationDataSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Calibration Data Sequence",
 };
 
@@ -21301,7 +21301,7 @@ pub const EnergyWindowNumber: Tag = Tag {
   element: 0x0308,
   name: "EnergyWindowNumber",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Energy Window Number",
 };
 
@@ -21310,7 +21310,7 @@ pub const ImageID: Tag = Tag {
   element: 0x0400,
   name: "ImageID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image ID",
 };
 
@@ -21319,7 +21319,7 @@ pub const PatientOrientationCodeSequence: Tag = Tag {
   element: 0x0410,
   name: "PatientOrientationCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Orientation Code Sequence",
 };
 
@@ -21328,7 +21328,7 @@ pub const PatientOrientationModifierCodeSequence: Tag = Tag {
   element: 0x0412,
   name: "PatientOrientationModifierCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Orientation Modifier Code Sequence",
 };
 
@@ -21337,7 +21337,7 @@ pub const PatientGantryRelationshipCodeSequence: Tag = Tag {
   element: 0x0414,
   name: "PatientGantryRelationshipCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Gantry Relationship Code Sequence",
 };
 
@@ -21346,7 +21346,7 @@ pub const SliceProgressionDirection: Tag = Tag {
   element: 0x0500,
   name: "SliceProgressionDirection",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Slice Progression Direction",
 };
 
@@ -21355,7 +21355,7 @@ pub const ScanProgressionDirection: Tag = Tag {
   element: 0x0501,
   name: "ScanProgressionDirection",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scan Progression Direction",
 };
 
@@ -21364,7 +21364,7 @@ pub const SeriesType: Tag = Tag {
   element: 0x1000,
   name: "SeriesType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Series Type",
 };
 
@@ -21373,7 +21373,7 @@ pub const Units: Tag = Tag {
   element: 0x1001,
   name: "Units",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Units",
 };
 
@@ -21382,7 +21382,7 @@ pub const CountsSource: Tag = Tag {
   element: 0x1002,
   name: "CountsSource",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Counts Source",
 };
 
@@ -21391,7 +21391,7 @@ pub const ReprojectionMethod: Tag = Tag {
   element: 0x1004,
   name: "ReprojectionMethod",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Reprojection Method",
 };
 
@@ -21400,7 +21400,7 @@ pub const SUVType: Tag = Tag {
   element: 0x1006,
   name: "SUVType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "SUV Type",
 };
 
@@ -21409,7 +21409,7 @@ pub const RandomsCorrectionMethod: Tag = Tag {
   element: 0x1100,
   name: "RandomsCorrectionMethod",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Randoms Correction Method",
 };
 
@@ -21418,7 +21418,7 @@ pub const AttenuationCorrectionMethod: Tag = Tag {
   element: 0x1101,
   name: "AttenuationCorrectionMethod",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Attenuation Correction Method",
 };
 
@@ -21427,7 +21427,7 @@ pub const DecayCorrection: Tag = Tag {
   element: 0x1102,
   name: "DecayCorrection",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Decay Correction",
 };
 
@@ -21436,7 +21436,7 @@ pub const ReconstructionMethod: Tag = Tag {
   element: 0x1103,
   name: "ReconstructionMethod",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Reconstruction Method",
 };
 
@@ -21445,7 +21445,7 @@ pub const DetectorLinesOfResponseUsed: Tag = Tag {
   element: 0x1104,
   name: "DetectorLinesOfResponseUsed",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Detector Lines of Response Used",
 };
 
@@ -21454,7 +21454,7 @@ pub const ScatterCorrectionMethod: Tag = Tag {
   element: 0x1105,
   name: "ScatterCorrectionMethod",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scatter Correction Method",
 };
 
@@ -21463,7 +21463,7 @@ pub const AxialAcceptance: Tag = Tag {
   element: 0x1200,
   name: "AxialAcceptance",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Axial Acceptance",
 };
 
@@ -21472,7 +21472,7 @@ pub const AxialMash: Tag = Tag {
   element: 0x1201,
   name: "AxialMash",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Axial Mash",
 };
 
@@ -21481,7 +21481,7 @@ pub const TransverseMash: Tag = Tag {
   element: 0x1202,
   name: "TransverseMash",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Transverse Mash",
 };
 
@@ -21490,7 +21490,7 @@ pub const DetectorElementSize: Tag = Tag {
   element: 0x1203,
   name: "DetectorElementSize",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Detector Element Size",
 };
 
@@ -21499,7 +21499,7 @@ pub const CoincidenceWindowWidth: Tag = Tag {
   element: 0x1210,
   name: "CoincidenceWindowWidth",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Coincidence Window Width",
 };
 
@@ -21517,7 +21517,7 @@ pub const FrameReferenceTime: Tag = Tag {
   element: 0x1300,
   name: "FrameReferenceTime",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Frame Reference Time",
 };
 
@@ -21526,7 +21526,7 @@ pub const PrimaryPromptsCountsAccumulated: Tag = Tag {
   element: 0x1310,
   name: "PrimaryPromptsCountsAccumulated",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Primary (Prompts) Counts Accumulated",
 };
 
@@ -21544,7 +21544,7 @@ pub const SliceSensitivityFactor: Tag = Tag {
   element: 0x1320,
   name: "SliceSensitivityFactor",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Slice Sensitivity Factor",
 };
 
@@ -21553,7 +21553,7 @@ pub const DecayFactor: Tag = Tag {
   element: 0x1321,
   name: "DecayFactor",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Decay Factor",
 };
 
@@ -21562,7 +21562,7 @@ pub const DoseCalibrationFactor: Tag = Tag {
   element: 0x1322,
   name: "DoseCalibrationFactor",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Dose Calibration Factor",
 };
 
@@ -21571,7 +21571,7 @@ pub const ScatterFractionFactor: Tag = Tag {
   element: 0x1323,
   name: "ScatterFractionFactor",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scatter Fraction Factor",
 };
 
@@ -21580,7 +21580,7 @@ pub const DeadTimeFactor: Tag = Tag {
   element: 0x1324,
   name: "DeadTimeFactor",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Dead Time Factor",
 };
 
@@ -21589,7 +21589,7 @@ pub const ImageIndex: Tag = Tag {
   element: 0x1330,
   name: "ImageIndex",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Index",
 };
 
@@ -21607,7 +21607,7 @@ pub const DeadTimeCorrectionFlag: Tag = Tag {
   element: 0x1401,
   name: "DeadTimeCorrectionFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Dead Time Correction Flag",
 };
 
@@ -21616,7 +21616,7 @@ pub const HistogramSequence: Tag = Tag {
   element: 0x3000,
   name: "HistogramSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Histogram Sequence",
 };
 
@@ -21625,7 +21625,7 @@ pub const HistogramNumberOfBins: Tag = Tag {
   element: 0x3002,
   name: "HistogramNumberOfBins",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Histogram Number of Bins",
 };
 
@@ -21634,7 +21634,7 @@ pub const HistogramFirstBinValue: Tag = Tag {
   element: 0x3004,
   name: "HistogramFirstBinValue",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Histogram First Bin Value",
 };
 
@@ -21643,7 +21643,7 @@ pub const HistogramLastBinValue: Tag = Tag {
   element: 0x3006,
   name: "HistogramLastBinValue",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Histogram Last Bin Value",
 };
 
@@ -21652,7 +21652,7 @@ pub const HistogramBinWidth: Tag = Tag {
   element: 0x3008,
   name: "HistogramBinWidth",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Histogram Bin Width",
 };
 
@@ -21661,7 +21661,7 @@ pub const HistogramExplanation: Tag = Tag {
   element: 0x3010,
   name: "HistogramExplanation",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Histogram Explanation",
 };
 
@@ -21679,7 +21679,7 @@ pub const SegmentationType: Tag = Tag {
   element: 0x0001,
   name: "SegmentationType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Segmentation Type",
 };
 
@@ -21688,7 +21688,7 @@ pub const SegmentSequence: Tag = Tag {
   element: 0x0002,
   name: "SegmentSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Segment Sequence",
 };
 
@@ -21697,7 +21697,7 @@ pub const SegmentedPropertyCategoryCodeSequence: Tag = Tag {
   element: 0x0003,
   name: "SegmentedPropertyCategoryCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Segmented Property Category Code Sequence",
 };
 
@@ -21706,7 +21706,7 @@ pub const SegmentNumber: Tag = Tag {
   element: 0x0004,
   name: "SegmentNumber",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Segment Number",
 };
 
@@ -21715,7 +21715,7 @@ pub const SegmentLabel: Tag = Tag {
   element: 0x0005,
   name: "SegmentLabel",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Segment Label",
 };
 
@@ -21724,7 +21724,7 @@ pub const SegmentDescription: Tag = Tag {
   element: 0x0006,
   name: "SegmentDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Segment Description",
 };
 
@@ -21733,7 +21733,7 @@ pub const SegmentAlgorithmType: Tag = Tag {
   element: 0x0008,
   name: "SegmentAlgorithmType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Segment Algorithm Type",
 };
 
@@ -21742,7 +21742,7 @@ pub const SegmentAlgorithmName: Tag = Tag {
   element: 0x0009,
   name: "SegmentAlgorithmName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Segment Algorithm Name",
 };
 
@@ -21751,7 +21751,7 @@ pub const SegmentIdentificationSequence: Tag = Tag {
   element: 0x000A,
   name: "SegmentIdentificationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Segment Identification Sequence",
 };
 
@@ -21769,7 +21769,7 @@ pub const RecommendedDisplayGrayscaleValue: Tag = Tag {
   element: 0x000C,
   name: "RecommendedDisplayGrayscaleValue",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Recommended Display Grayscale Value",
 };
 
@@ -21778,7 +21778,7 @@ pub const RecommendedDisplayCIELabValue: Tag = Tag {
   element: 0x000D,
   name: "RecommendedDisplayCIELabValue",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Recommended Display CIELab Value",
 };
 
@@ -21787,7 +21787,7 @@ pub const MaximumFractionalValue: Tag = Tag {
   element: 0x000E,
   name: "MaximumFractionalValue",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Maximum Fractional Value",
 };
 
@@ -21796,7 +21796,7 @@ pub const SegmentedPropertyTypeCodeSequence: Tag = Tag {
   element: 0x000F,
   name: "SegmentedPropertyTypeCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Segmented Property Type Code Sequence",
 };
 
@@ -21805,7 +21805,7 @@ pub const SegmentationFractionalType: Tag = Tag {
   element: 0x0010,
   name: "SegmentationFractionalType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Segmentation Fractional Type",
 };
 
@@ -21814,7 +21814,7 @@ pub const SegmentedPropertyTypeModifierCodeSequence: Tag = Tag {
   element: 0x0011,
   name: "SegmentedPropertyTypeModifierCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Segmented Property Type Modifier Code Sequence",
 };
 
@@ -21823,7 +21823,7 @@ pub const UsedSegmentsSequence: Tag = Tag {
   element: 0x0012,
   name: "UsedSegmentsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Used Segments Sequence",
 };
 
@@ -21832,7 +21832,7 @@ pub const DeformableRegistrationSequence: Tag = Tag {
   element: 0x0002,
   name: "DeformableRegistrationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Deformable Registration Sequence",
 };
 
@@ -21841,7 +21841,7 @@ pub const SourceFrameOfReferenceUID: Tag = Tag {
   element: 0x0003,
   name: "SourceFrameOfReferenceUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Frame of Reference UID",
 };
 
@@ -21850,7 +21850,7 @@ pub const DeformableRegistrationGridSequence: Tag = Tag {
   element: 0x0005,
   name: "DeformableRegistrationGridSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Deformable Registration Grid Sequence",
 };
 
@@ -21859,7 +21859,7 @@ pub const GridDimensions: Tag = Tag {
   element: 0x0007,
   name: "GridDimensions",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Grid Dimensions",
 };
 
@@ -21868,7 +21868,7 @@ pub const GridResolution: Tag = Tag {
   element: 0x0008,
   name: "GridResolution",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Grid Resolution",
 };
 
@@ -21877,7 +21877,7 @@ pub const VectorGridData: Tag = Tag {
   element: 0x0009,
   name: "VectorGridData",
   vr: "OF",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Vector Grid Data",
 };
 
@@ -21886,7 +21886,7 @@ pub const PreDeformationMatrixRegistrationSequence: Tag = Tag {
   element: 0x000F,
   name: "PreDeformationMatrixRegistrationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pre Deformation Matrix Registration Sequence",
 };
 
@@ -21895,7 +21895,7 @@ pub const PostDeformationMatrixRegistrationSequence: Tag = Tag {
   element: 0x0010,
   name: "PostDeformationMatrixRegistrationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Post Deformation Matrix Registration Sequence",
 };
 
@@ -21904,7 +21904,7 @@ pub const NumberOfSurfaces: Tag = Tag {
   element: 0x0001,
   name: "NumberOfSurfaces",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Surfaces",
 };
 
@@ -21913,7 +21913,7 @@ pub const SurfaceSequence: Tag = Tag {
   element: 0x0002,
   name: "SurfaceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Surface Sequence",
 };
 
@@ -21922,7 +21922,7 @@ pub const SurfaceNumber: Tag = Tag {
   element: 0x0003,
   name: "SurfaceNumber",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Surface Number",
 };
 
@@ -21931,7 +21931,7 @@ pub const SurfaceComments: Tag = Tag {
   element: 0x0004,
   name: "SurfaceComments",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Surface Comments",
 };
 
@@ -21940,7 +21940,7 @@ pub const SurfaceProcessing: Tag = Tag {
   element: 0x0009,
   name: "SurfaceProcessing",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Surface Processing",
 };
 
@@ -21949,7 +21949,7 @@ pub const SurfaceProcessingRatio: Tag = Tag {
   element: 0x000A,
   name: "SurfaceProcessingRatio",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Surface Processing Ratio",
 };
 
@@ -21958,7 +21958,7 @@ pub const SurfaceProcessingDescription: Tag = Tag {
   element: 0x000B,
   name: "SurfaceProcessingDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Surface Processing Description",
 };
 
@@ -21967,7 +21967,7 @@ pub const RecommendedPresentationOpacity: Tag = Tag {
   element: 0x000C,
   name: "RecommendedPresentationOpacity",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Recommended Presentation Opacity",
 };
 
@@ -21976,7 +21976,7 @@ pub const RecommendedPresentationType: Tag = Tag {
   element: 0x000D,
   name: "RecommendedPresentationType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Recommended Presentation Type",
 };
 
@@ -21985,7 +21985,7 @@ pub const FiniteVolume: Tag = Tag {
   element: 0x000E,
   name: "FiniteVolume",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Finite Volume",
 };
 
@@ -21994,7 +21994,7 @@ pub const Manifold: Tag = Tag {
   element: 0x0010,
   name: "Manifold",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Manifold",
 };
 
@@ -22003,7 +22003,7 @@ pub const SurfacePointsSequence: Tag = Tag {
   element: 0x0011,
   name: "SurfacePointsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Surface Points Sequence",
 };
 
@@ -22012,7 +22012,7 @@ pub const SurfacePointsNormalsSequence: Tag = Tag {
   element: 0x0012,
   name: "SurfacePointsNormalsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Surface Points Normals Sequence",
 };
 
@@ -22021,7 +22021,7 @@ pub const SurfaceMeshPrimitivesSequence: Tag = Tag {
   element: 0x0013,
   name: "SurfaceMeshPrimitivesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Surface Mesh Primitives Sequence",
 };
 
@@ -22030,7 +22030,7 @@ pub const NumberOfSurfacePoints: Tag = Tag {
   element: 0x0015,
   name: "NumberOfSurfacePoints",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Surface Points",
 };
 
@@ -22039,7 +22039,7 @@ pub const PointCoordinatesData: Tag = Tag {
   element: 0x0016,
   name: "PointCoordinatesData",
   vr: "OF",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Point Coordinates Data",
 };
 
@@ -22048,7 +22048,7 @@ pub const PointPositionAccuracy: Tag = Tag {
   element: 0x0017,
   name: "PointPositionAccuracy",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Point Position Accuracy",
 };
 
@@ -22057,7 +22057,7 @@ pub const MeanPointDistance: Tag = Tag {
   element: 0x0018,
   name: "MeanPointDistance",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Mean Point Distance",
 };
 
@@ -22066,7 +22066,7 @@ pub const MaximumPointDistance: Tag = Tag {
   element: 0x0019,
   name: "MaximumPointDistance",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Maximum Point Distance",
 };
 
@@ -22075,7 +22075,7 @@ pub const PointsBoundingBoxCoordinates: Tag = Tag {
   element: 0x001A,
   name: "PointsBoundingBoxCoordinates",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 6, end: 6 },
   description: "Points Bounding Box Coordinates",
 };
 
@@ -22084,7 +22084,7 @@ pub const AxisOfRotation: Tag = Tag {
   element: 0x001B,
   name: "AxisOfRotation",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Axis of Rotation",
 };
 
@@ -22093,7 +22093,7 @@ pub const CenterOfRotation: Tag = Tag {
   element: 0x001C,
   name: "CenterOfRotation",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Center of Rotation",
 };
 
@@ -22102,7 +22102,7 @@ pub const NumberOfVectors: Tag = Tag {
   element: 0x001E,
   name: "NumberOfVectors",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Vectors",
 };
 
@@ -22111,7 +22111,7 @@ pub const VectorDimensionality: Tag = Tag {
   element: 0x001F,
   name: "VectorDimensionality",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Vector Dimensionality",
 };
 
@@ -22129,7 +22129,7 @@ pub const VectorCoordinateData: Tag = Tag {
   element: 0x0021,
   name: "VectorCoordinateData",
   vr: "OF",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Vector Coordinate Data",
 };
 
@@ -22138,7 +22138,7 @@ pub const TrianglePointIndexList: Tag = Tag {
   element: 0x0023,
   name: "TrianglePointIndexList",
   vr: "OW",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Triangle Point Index List",
 };
 
@@ -22147,7 +22147,7 @@ pub const EdgePointIndexList: Tag = Tag {
   element: 0x0024,
   name: "EdgePointIndexList",
   vr: "OW",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Edge Point Index List",
 };
 
@@ -22156,7 +22156,7 @@ pub const VertexPointIndexList: Tag = Tag {
   element: 0x0025,
   name: "VertexPointIndexList",
   vr: "OW",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Vertex Point Index List",
 };
 
@@ -22165,7 +22165,7 @@ pub const TriangleStripSequence: Tag = Tag {
   element: 0x0026,
   name: "TriangleStripSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Triangle Strip Sequence",
 };
 
@@ -22174,7 +22174,7 @@ pub const TriangleFanSequence: Tag = Tag {
   element: 0x0027,
   name: "TriangleFanSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Triangle Fan Sequence",
 };
 
@@ -22183,7 +22183,7 @@ pub const LineSequence: Tag = Tag {
   element: 0x0028,
   name: "LineSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Line Sequence",
 };
 
@@ -22192,7 +22192,7 @@ pub const PrimitivePointIndexList: Tag = Tag {
   element: 0x0029,
   name: "PrimitivePointIndexList",
   vr: "OW",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Primitive Point Index List",
 };
 
@@ -22201,7 +22201,7 @@ pub const SurfaceCount: Tag = Tag {
   element: 0x002A,
   name: "SurfaceCount",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Surface Count",
 };
 
@@ -22210,7 +22210,7 @@ pub const ReferencedSurfaceSequence: Tag = Tag {
   element: 0x002B,
   name: "ReferencedSurfaceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Surface Sequence",
 };
 
@@ -22219,7 +22219,7 @@ pub const ReferencedSurfaceNumber: Tag = Tag {
   element: 0x002C,
   name: "ReferencedSurfaceNumber",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Surface Number",
 };
 
@@ -22228,7 +22228,7 @@ pub const SegmentSurfaceGenerationAlgorithmIdentificationSequence: Tag = Tag {
   element: 0x002D,
   name: "SegmentSurfaceGenerationAlgorithmIdentificationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Segment Surface Generation Algorithm Identification Sequence",
 };
 
@@ -22237,7 +22237,7 @@ pub const SegmentSurfaceSourceInstanceSequence: Tag = Tag {
   element: 0x002E,
   name: "SegmentSurfaceSourceInstanceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Segment Surface Source Instance Sequence",
 };
 
@@ -22246,7 +22246,7 @@ pub const AlgorithmFamilyCodeSequence: Tag = Tag {
   element: 0x002F,
   name: "AlgorithmFamilyCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Algorithm Family Code Sequence",
 };
 
@@ -22255,7 +22255,7 @@ pub const AlgorithmNameCodeSequence: Tag = Tag {
   element: 0x0030,
   name: "AlgorithmNameCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Algorithm Name Code Sequence",
 };
 
@@ -22264,7 +22264,7 @@ pub const AlgorithmVersion: Tag = Tag {
   element: 0x0031,
   name: "AlgorithmVersion",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Algorithm Version",
 };
 
@@ -22273,7 +22273,7 @@ pub const AlgorithmParameters: Tag = Tag {
   element: 0x0032,
   name: "AlgorithmParameters",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Algorithm Parameters",
 };
 
@@ -22282,7 +22282,7 @@ pub const FacetSequence: Tag = Tag {
   element: 0x0034,
   name: "FacetSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Facet Sequence",
 };
 
@@ -22291,7 +22291,7 @@ pub const SurfaceProcessingAlgorithmIdentificationSequence: Tag = Tag {
   element: 0x0035,
   name: "SurfaceProcessingAlgorithmIdentificationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Surface Processing Algorithm Identification Sequence",
 };
 
@@ -22300,7 +22300,7 @@ pub const AlgorithmName: Tag = Tag {
   element: 0x0036,
   name: "AlgorithmName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Algorithm Name",
 };
 
@@ -22309,7 +22309,7 @@ pub const RecommendedPointRadius: Tag = Tag {
   element: 0x0037,
   name: "RecommendedPointRadius",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Recommended Point Radius",
 };
 
@@ -22318,7 +22318,7 @@ pub const RecommendedLineThickness: Tag = Tag {
   element: 0x0038,
   name: "RecommendedLineThickness",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Recommended Line Thickness",
 };
 
@@ -22327,7 +22327,7 @@ pub const ImplantSize: Tag = Tag {
   element: 0x6210,
   name: "ImplantSize",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Implant Size",
 };
 
@@ -22336,7 +22336,7 @@ pub const ImplantTemplateVersion: Tag = Tag {
   element: 0x6221,
   name: "ImplantTemplateVersion",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Implant Template Version",
 };
 
@@ -22345,7 +22345,7 @@ pub const ReplacedImplantTemplateSequence: Tag = Tag {
   element: 0x6222,
   name: "ReplacedImplantTemplateSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Replaced Implant Template Sequence",
 };
 
@@ -22354,7 +22354,7 @@ pub const ImplantType: Tag = Tag {
   element: 0x6223,
   name: "ImplantType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Implant Type",
 };
 
@@ -22363,7 +22363,7 @@ pub const DerivationImplantTemplateSequence: Tag = Tag {
   element: 0x6224,
   name: "DerivationImplantTemplateSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Derivation Implant Template Sequence",
 };
 
@@ -22372,7 +22372,7 @@ pub const OriginalImplantTemplateSequence: Tag = Tag {
   element: 0x6225,
   name: "OriginalImplantTemplateSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Original Implant Template Sequence",
 };
 
@@ -22381,7 +22381,7 @@ pub const EffectiveDateTime: Tag = Tag {
   element: 0x6226,
   name: "EffectiveDateTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Effective DateTime",
 };
 
@@ -22390,7 +22390,7 @@ pub const ImplantTargetAnatomySequence: Tag = Tag {
   element: 0x6230,
   name: "ImplantTargetAnatomySequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Implant Target Anatomy Sequence",
 };
 
@@ -22399,7 +22399,7 @@ pub const InformationFromManufacturerSequence: Tag = Tag {
   element: 0x6260,
   name: "InformationFromManufacturerSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Information From Manufacturer Sequence",
 };
 
@@ -22408,7 +22408,7 @@ pub const NotificationFromManufacturerSequence: Tag = Tag {
   element: 0x6265,
   name: "NotificationFromManufacturerSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Notification From Manufacturer Sequence",
 };
 
@@ -22417,7 +22417,7 @@ pub const InformationIssueDateTime: Tag = Tag {
   element: 0x6270,
   name: "InformationIssueDateTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Information Issue DateTime",
 };
 
@@ -22426,7 +22426,7 @@ pub const InformationSummary: Tag = Tag {
   element: 0x6280,
   name: "InformationSummary",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Information Summary",
 };
 
@@ -22435,7 +22435,7 @@ pub const ImplantRegulatoryDisapprovalCodeSequence: Tag = Tag {
   element: 0x62A0,
   name: "ImplantRegulatoryDisapprovalCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Implant Regulatory Disapproval Code Sequence",
 };
 
@@ -22444,7 +22444,7 @@ pub const OverallTemplateSpatialTolerance: Tag = Tag {
   element: 0x62A5,
   name: "OverallTemplateSpatialTolerance",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Overall Template Spatial Tolerance",
 };
 
@@ -22453,7 +22453,7 @@ pub const HPGLDocumentSequence: Tag = Tag {
   element: 0x62C0,
   name: "HPGLDocumentSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "HPGL Document Sequence",
 };
 
@@ -22462,7 +22462,7 @@ pub const HPGLDocumentID: Tag = Tag {
   element: 0x62D0,
   name: "HPGLDocumentID",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "HPGL Document ID",
 };
 
@@ -22471,7 +22471,7 @@ pub const HPGLDocumentLabel: Tag = Tag {
   element: 0x62D5,
   name: "HPGLDocumentLabel",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "HPGL Document Label",
 };
 
@@ -22480,7 +22480,7 @@ pub const ViewOrientationCodeSequence: Tag = Tag {
   element: 0x62E0,
   name: "ViewOrientationCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "View Orientation Code Sequence",
 };
 
@@ -22489,7 +22489,7 @@ pub const ViewOrientationModifier: Tag = Tag {
   element: 0x62F0,
   name: "ViewOrientationModifier",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 9, end: 9 },
   description: "View Orientation Modifier",
 };
 
@@ -22498,7 +22498,7 @@ pub const HPGLDocumentScaling: Tag = Tag {
   element: 0x62F2,
   name: "HPGLDocumentScaling",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "HPGL Document Scaling",
 };
 
@@ -22507,7 +22507,7 @@ pub const HPGLDocument: Tag = Tag {
   element: 0x6300,
   name: "HPGLDocument",
   vr: "OB",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "HPGL Document",
 };
 
@@ -22516,7 +22516,7 @@ pub const HPGLContourPenNumber: Tag = Tag {
   element: 0x6310,
   name: "HPGLContourPenNumber",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "HPGL Contour Pen Number",
 };
 
@@ -22525,7 +22525,7 @@ pub const HPGLPenSequence: Tag = Tag {
   element: 0x6320,
   name: "HPGLPenSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "HPGL Pen Sequence",
 };
 
@@ -22534,7 +22534,7 @@ pub const HPGLPenNumber: Tag = Tag {
   element: 0x6330,
   name: "HPGLPenNumber",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "HPGL Pen Number",
 };
 
@@ -22543,7 +22543,7 @@ pub const HPGLPenLabel: Tag = Tag {
   element: 0x6340,
   name: "HPGLPenLabel",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "HPGL Pen Label",
 };
 
@@ -22552,7 +22552,7 @@ pub const HPGLPenDescription: Tag = Tag {
   element: 0x6345,
   name: "HPGLPenDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "HPGL Pen Description",
 };
 
@@ -22561,7 +22561,7 @@ pub const RecommendedRotationPoint: Tag = Tag {
   element: 0x6346,
   name: "RecommendedRotationPoint",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Recommended Rotation Point",
 };
 
@@ -22570,7 +22570,7 @@ pub const BoundingRectangle: Tag = Tag {
   element: 0x6347,
   name: "BoundingRectangle",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 4, end: 4 },
   description: "Bounding Rectangle",
 };
 
@@ -22588,7 +22588,7 @@ pub const SurfaceModelDescriptionSequence: Tag = Tag {
   element: 0x6360,
   name: "SurfaceModelDescriptionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Surface Model Description Sequence",
 };
 
@@ -22597,7 +22597,7 @@ pub const SurfaceModelLabel: Tag = Tag {
   element: 0x6380,
   name: "SurfaceModelLabel",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Surface Model Label",
 };
 
@@ -22606,7 +22606,7 @@ pub const SurfaceModelScalingFactor: Tag = Tag {
   element: 0x6390,
   name: "SurfaceModelScalingFactor",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Surface Model Scaling Factor",
 };
 
@@ -22615,7 +22615,7 @@ pub const MaterialsCodeSequence: Tag = Tag {
   element: 0x63A0,
   name: "MaterialsCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Materials Code Sequence",
 };
 
@@ -22624,7 +22624,7 @@ pub const CoatingMaterialsCodeSequence: Tag = Tag {
   element: 0x63A4,
   name: "CoatingMaterialsCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Coating Materials Code Sequence",
 };
 
@@ -22633,7 +22633,7 @@ pub const ImplantTypeCodeSequence: Tag = Tag {
   element: 0x63A8,
   name: "ImplantTypeCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Implant Type Code Sequence",
 };
 
@@ -22642,7 +22642,7 @@ pub const FixationMethodCodeSequence: Tag = Tag {
   element: 0x63AC,
   name: "FixationMethodCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fixation Method Code Sequence",
 };
 
@@ -22651,7 +22651,7 @@ pub const MatingFeatureSetsSequence: Tag = Tag {
   element: 0x63B0,
   name: "MatingFeatureSetsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Mating Feature Sets Sequence",
 };
 
@@ -22660,7 +22660,7 @@ pub const MatingFeatureSetID: Tag = Tag {
   element: 0x63C0,
   name: "MatingFeatureSetID",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Mating Feature Set ID",
 };
 
@@ -22669,7 +22669,7 @@ pub const MatingFeatureSetLabel: Tag = Tag {
   element: 0x63D0,
   name: "MatingFeatureSetLabel",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Mating Feature Set Label",
 };
 
@@ -22678,7 +22678,7 @@ pub const MatingFeatureSequence: Tag = Tag {
   element: 0x63E0,
   name: "MatingFeatureSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Mating Feature Sequence",
 };
 
@@ -22687,7 +22687,7 @@ pub const MatingFeatureID: Tag = Tag {
   element: 0x63F0,
   name: "MatingFeatureID",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Mating Feature ID",
 };
 
@@ -22696,7 +22696,7 @@ pub const MatingFeatureDegreeOfFreedomSequence: Tag = Tag {
   element: 0x6400,
   name: "MatingFeatureDegreeOfFreedomSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Mating Feature Degree of Freedom Sequence",
 };
 
@@ -22705,7 +22705,7 @@ pub const DegreeOfFreedomID: Tag = Tag {
   element: 0x6410,
   name: "DegreeOfFreedomID",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Degree of Freedom ID",
 };
 
@@ -22714,7 +22714,7 @@ pub const DegreeOfFreedomType: Tag = Tag {
   element: 0x6420,
   name: "DegreeOfFreedomType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Degree of Freedom Type",
 };
 
@@ -22723,7 +22723,7 @@ pub const TwoDMatingFeatureCoordinatesSequence: Tag = Tag {
   element: 0x6430,
   name: "TwoDMatingFeatureCoordinatesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "2D Mating Feature Coordinates Sequence",
 };
 
@@ -22732,7 +22732,7 @@ pub const ReferencedHPGLDocumentID: Tag = Tag {
   element: 0x6440,
   name: "ReferencedHPGLDocumentID",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced HPGL Document ID",
 };
 
@@ -22741,7 +22741,7 @@ pub const TwoDMatingPoint: Tag = Tag {
   element: 0x6450,
   name: "TwoDMatingPoint",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "2D Mating Point",
 };
 
@@ -22750,7 +22750,7 @@ pub const TwoDMatingAxes: Tag = Tag {
   element: 0x6460,
   name: "TwoDMatingAxes",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 4, end: 4 },
   description: "2D Mating Axes",
 };
 
@@ -22759,7 +22759,7 @@ pub const TwoDDegreeOfFreedomSequence: Tag = Tag {
   element: 0x6470,
   name: "TwoDDegreeOfFreedomSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "2D Degree of Freedom Sequence",
 };
 
@@ -22768,7 +22768,7 @@ pub const ThreeDDegreeOfFreedomAxis: Tag = Tag {
   element: 0x6490,
   name: "ThreeDDegreeOfFreedomAxis",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "3D Degree of Freedom Axis",
 };
 
@@ -22777,7 +22777,7 @@ pub const RangeOfFreedom: Tag = Tag {
   element: 0x64A0,
   name: "RangeOfFreedom",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Range of Freedom",
 };
 
@@ -22786,7 +22786,7 @@ pub const ThreeDMatingPoint: Tag = Tag {
   element: 0x64C0,
   name: "ThreeDMatingPoint",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "3D Mating Point",
 };
 
@@ -22795,7 +22795,7 @@ pub const ThreeDMatingAxes: Tag = Tag {
   element: 0x64D0,
   name: "ThreeDMatingAxes",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 9, end: 9 },
   description: "3D Mating Axes",
 };
 
@@ -22804,7 +22804,7 @@ pub const TwoDDegreeOfFreedomAxis: Tag = Tag {
   element: 0x64F0,
   name: "TwoDDegreeOfFreedomAxis",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "2D Degree of Freedom Axis",
 };
 
@@ -22813,7 +22813,7 @@ pub const PlanningLandmarkPointSequence: Tag = Tag {
   element: 0x6500,
   name: "PlanningLandmarkPointSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Planning Landmark Point Sequence",
 };
 
@@ -22822,7 +22822,7 @@ pub const PlanningLandmarkLineSequence: Tag = Tag {
   element: 0x6510,
   name: "PlanningLandmarkLineSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Planning Landmark Line Sequence",
 };
 
@@ -22831,7 +22831,7 @@ pub const PlanningLandmarkPlaneSequence: Tag = Tag {
   element: 0x6520,
   name: "PlanningLandmarkPlaneSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Planning Landmark Plane Sequence",
 };
 
@@ -22840,7 +22840,7 @@ pub const PlanningLandmarkID: Tag = Tag {
   element: 0x6530,
   name: "PlanningLandmarkID",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Planning Landmark ID",
 };
 
@@ -22849,7 +22849,7 @@ pub const PlanningLandmarkDescription: Tag = Tag {
   element: 0x6540,
   name: "PlanningLandmarkDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Planning Landmark Description",
 };
 
@@ -22858,7 +22858,7 @@ pub const PlanningLandmarkIdentificationCodeSequence: Tag = Tag {
   element: 0x6545,
   name: "PlanningLandmarkIdentificationCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Planning Landmark Identification Code Sequence",
 };
 
@@ -22867,7 +22867,7 @@ pub const TwoDPointCoordinatesSequence: Tag = Tag {
   element: 0x6550,
   name: "TwoDPointCoordinatesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "2D Point Coordinates Sequence",
 };
 
@@ -22876,7 +22876,7 @@ pub const TwoDPointCoordinates: Tag = Tag {
   element: 0x6560,
   name: "TwoDPointCoordinates",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "2D Point Coordinates",
 };
 
@@ -22885,7 +22885,7 @@ pub const ThreeDPointCoordinates: Tag = Tag {
   element: 0x6590,
   name: "ThreeDPointCoordinates",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "3D Point Coordinates",
 };
 
@@ -22894,7 +22894,7 @@ pub const TwoDLineCoordinatesSequence: Tag = Tag {
   element: 0x65A0,
   name: "TwoDLineCoordinatesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "2D Line Coordinates Sequence",
 };
 
@@ -22903,7 +22903,7 @@ pub const TwoDLineCoordinates: Tag = Tag {
   element: 0x65B0,
   name: "TwoDLineCoordinates",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 4, end: 4 },
   description: "2D Line Coordinates",
 };
 
@@ -22912,7 +22912,7 @@ pub const ThreeDLineCoordinates: Tag = Tag {
   element: 0x65D0,
   name: "ThreeDLineCoordinates",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 6, end: 6 },
   description: "3D Line Coordinates",
 };
 
@@ -22921,7 +22921,7 @@ pub const TwoDPlaneCoordinatesSequence: Tag = Tag {
   element: 0x65E0,
   name: "TwoDPlaneCoordinatesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "2D Plane Coordinates Sequence",
 };
 
@@ -22930,7 +22930,7 @@ pub const TwoDPlaneIntersection: Tag = Tag {
   element: 0x65F0,
   name: "TwoDPlaneIntersection",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 4, end: 4 },
   description: "2D Plane Intersection",
 };
 
@@ -22939,7 +22939,7 @@ pub const ThreeDPlaneOrigin: Tag = Tag {
   element: 0x6610,
   name: "ThreeDPlaneOrigin",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "3D Plane Origin",
 };
 
@@ -22948,7 +22948,7 @@ pub const ThreeDPlaneNormal: Tag = Tag {
   element: 0x6620,
   name: "ThreeDPlaneNormal",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "3D Plane Normal",
 };
 
@@ -22957,7 +22957,7 @@ pub const GraphicAnnotationSequence: Tag = Tag {
   element: 0x0001,
   name: "GraphicAnnotationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Graphic Annotation Sequence",
 };
 
@@ -22966,7 +22966,7 @@ pub const GraphicLayer: Tag = Tag {
   element: 0x0002,
   name: "GraphicLayer",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Graphic Layer",
 };
 
@@ -22975,7 +22975,7 @@ pub const BoundingBoxAnnotationUnits: Tag = Tag {
   element: 0x0003,
   name: "BoundingBoxAnnotationUnits",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Bounding Box Annotation Units",
 };
 
@@ -22984,7 +22984,7 @@ pub const AnchorPointAnnotationUnits: Tag = Tag {
   element: 0x0004,
   name: "AnchorPointAnnotationUnits",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Anchor Point Annotation Units",
 };
 
@@ -22993,7 +22993,7 @@ pub const GraphicAnnotationUnits: Tag = Tag {
   element: 0x0005,
   name: "GraphicAnnotationUnits",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Graphic Annotation Units",
 };
 
@@ -23002,7 +23002,7 @@ pub const UnformattedTextValue: Tag = Tag {
   element: 0x0006,
   name: "UnformattedTextValue",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Unformatted Text Value",
 };
 
@@ -23011,7 +23011,7 @@ pub const TextObjectSequence: Tag = Tag {
   element: 0x0008,
   name: "TextObjectSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Text Object Sequence",
 };
 
@@ -23020,7 +23020,7 @@ pub const GraphicObjectSequence: Tag = Tag {
   element: 0x0009,
   name: "GraphicObjectSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Graphic Object Sequence",
 };
 
@@ -23029,7 +23029,7 @@ pub const BoundingBoxTopLeftHandCorner: Tag = Tag {
   element: 0x0010,
   name: "BoundingBoxTopLeftHandCorner",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Bounding Box Top Left Hand Corner",
 };
 
@@ -23038,7 +23038,7 @@ pub const BoundingBoxBottomRightHandCorner: Tag = Tag {
   element: 0x0011,
   name: "BoundingBoxBottomRightHandCorner",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Bounding Box Bottom Right Hand Corner",
 };
 
@@ -23047,7 +23047,7 @@ pub const BoundingBoxTextHorizontalJustification: Tag = Tag {
   element: 0x0012,
   name: "BoundingBoxTextHorizontalJustification",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Bounding Box Text Horizontal Justification",
 };
 
@@ -23056,7 +23056,7 @@ pub const AnchorPoint: Tag = Tag {
   element: 0x0014,
   name: "AnchorPoint",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Anchor Point",
 };
 
@@ -23065,7 +23065,7 @@ pub const AnchorPointVisibility: Tag = Tag {
   element: 0x0015,
   name: "AnchorPointVisibility",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Anchor Point Visibility",
 };
 
@@ -23074,7 +23074,7 @@ pub const GraphicDimensions: Tag = Tag {
   element: 0x0020,
   name: "GraphicDimensions",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Graphic Dimensions",
 };
 
@@ -23083,7 +23083,7 @@ pub const NumberOfGraphicPoints: Tag = Tag {
   element: 0x0021,
   name: "NumberOfGraphicPoints",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Graphic Points",
 };
 
@@ -23101,7 +23101,7 @@ pub const GraphicType: Tag = Tag {
   element: 0x0023,
   name: "GraphicType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Graphic Type",
 };
 
@@ -23110,7 +23110,7 @@ pub const GraphicFilled: Tag = Tag {
   element: 0x0024,
   name: "GraphicFilled",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Graphic Filled",
 };
 
@@ -23119,7 +23119,7 @@ pub const ImageRotationRetired: Tag = Tag {
   element: 0x0040,
   name: "ImageRotationRetired",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Rotation (Retired)",
 };
 
@@ -23128,7 +23128,7 @@ pub const ImageHorizontalFlip: Tag = Tag {
   element: 0x0041,
   name: "ImageHorizontalFlip",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Horizontal Flip",
 };
 
@@ -23137,7 +23137,7 @@ pub const ImageRotation: Tag = Tag {
   element: 0x0042,
   name: "ImageRotation",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Rotation",
 };
 
@@ -23146,7 +23146,7 @@ pub const DisplayedAreaTopLeftHandCornerTrial: Tag = Tag {
   element: 0x0050,
   name: "DisplayedAreaTopLeftHandCornerTrial",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Displayed Area Top Left Hand Corner (Trial)",
 };
 
@@ -23155,7 +23155,7 @@ pub const DisplayedAreaBottomRightHandCornerTrial: Tag = Tag {
   element: 0x0051,
   name: "DisplayedAreaBottomRightHandCornerTrial",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Displayed Area Bottom Right Hand Corner (Trial)",
 };
 
@@ -23164,7 +23164,7 @@ pub const DisplayedAreaTopLeftHandCorner: Tag = Tag {
   element: 0x0052,
   name: "DisplayedAreaTopLeftHandCorner",
   vr: "SL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Displayed Area Top Left Hand Corner",
 };
 
@@ -23173,7 +23173,7 @@ pub const DisplayedAreaBottomRightHandCorner: Tag = Tag {
   element: 0x0053,
   name: "DisplayedAreaBottomRightHandCorner",
   vr: "SL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Displayed Area Bottom Right Hand Corner",
 };
 
@@ -23182,7 +23182,7 @@ pub const DisplayedAreaSelectionSequence: Tag = Tag {
   element: 0x005A,
   name: "DisplayedAreaSelectionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Displayed Area Selection Sequence",
 };
 
@@ -23191,7 +23191,7 @@ pub const GraphicLayerSequence: Tag = Tag {
   element: 0x0060,
   name: "GraphicLayerSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Graphic Layer Sequence",
 };
 
@@ -23200,7 +23200,7 @@ pub const GraphicLayerOrder: Tag = Tag {
   element: 0x0062,
   name: "GraphicLayerOrder",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Graphic Layer Order",
 };
 
@@ -23209,7 +23209,7 @@ pub const GraphicLayerRecommendedDisplayGrayscaleValue: Tag = Tag {
   element: 0x0066,
   name: "GraphicLayerRecommendedDisplayGrayscaleValue",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Graphic Layer Recommended Display Grayscale Value",
 };
 
@@ -23218,7 +23218,7 @@ pub const GraphicLayerRecommendedDisplayRGBValue: Tag = Tag {
   element: 0x0067,
   name: "GraphicLayerRecommendedDisplayRGBValue",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Graphic Layer Recommended Display RGB Value",
 };
 
@@ -23227,7 +23227,7 @@ pub const GraphicLayerDescription: Tag = Tag {
   element: 0x0068,
   name: "GraphicLayerDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Graphic Layer Description",
 };
 
@@ -23236,7 +23236,7 @@ pub const ContentLabel: Tag = Tag {
   element: 0x0080,
   name: "ContentLabel",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Content Label",
 };
 
@@ -23245,7 +23245,7 @@ pub const ContentDescription: Tag = Tag {
   element: 0x0081,
   name: "ContentDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Content Description",
 };
 
@@ -23254,7 +23254,7 @@ pub const PresentationCreationDate: Tag = Tag {
   element: 0x0082,
   name: "PresentationCreationDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Presentation Creation Date",
 };
 
@@ -23263,7 +23263,7 @@ pub const PresentationCreationTime: Tag = Tag {
   element: 0x0083,
   name: "PresentationCreationTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Presentation Creation Time",
 };
 
@@ -23272,7 +23272,7 @@ pub const ContentCreatorName: Tag = Tag {
   element: 0x0084,
   name: "ContentCreatorName",
   vr: "PN",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Content Creator's Name",
 };
 
@@ -23281,7 +23281,7 @@ pub const ContentCreatorIdentificationCodeSequence: Tag = Tag {
   element: 0x0086,
   name: "ContentCreatorIdentificationCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Content Creator's Identification Code Sequence",
 };
 
@@ -23290,7 +23290,7 @@ pub const AlternateContentDescriptionSequence: Tag = Tag {
   element: 0x0087,
   name: "AlternateContentDescriptionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Alternate Content Description Sequence",
 };
 
@@ -23299,7 +23299,7 @@ pub const PresentationSizeMode: Tag = Tag {
   element: 0x0100,
   name: "PresentationSizeMode",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Presentation Size Mode",
 };
 
@@ -23308,7 +23308,7 @@ pub const PresentationPixelSpacing: Tag = Tag {
   element: 0x0101,
   name: "PresentationPixelSpacing",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Presentation Pixel Spacing",
 };
 
@@ -23317,7 +23317,7 @@ pub const PresentationPixelAspectRatio: Tag = Tag {
   element: 0x0102,
   name: "PresentationPixelAspectRatio",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Presentation Pixel Aspect Ratio",
 };
 
@@ -23326,7 +23326,7 @@ pub const PresentationPixelMagnificationRatio: Tag = Tag {
   element: 0x0103,
   name: "PresentationPixelMagnificationRatio",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Presentation Pixel Magnification Ratio",
 };
 
@@ -23335,7 +23335,7 @@ pub const GraphicGroupLabel: Tag = Tag {
   element: 0x0207,
   name: "GraphicGroupLabel",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Graphic Group Label",
 };
 
@@ -23344,7 +23344,7 @@ pub const GraphicGroupDescription: Tag = Tag {
   element: 0x0208,
   name: "GraphicGroupDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Graphic Group Description",
 };
 
@@ -23353,7 +23353,7 @@ pub const CompoundGraphicSequence: Tag = Tag {
   element: 0x0209,
   name: "CompoundGraphicSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Compound Graphic Sequence",
 };
 
@@ -23362,7 +23362,7 @@ pub const CompoundGraphicInstanceID: Tag = Tag {
   element: 0x0226,
   name: "CompoundGraphicInstanceID",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Compound Graphic Instance ID",
 };
 
@@ -23371,7 +23371,7 @@ pub const FontName: Tag = Tag {
   element: 0x0227,
   name: "FontName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Font Name",
 };
 
@@ -23380,7 +23380,7 @@ pub const FontNameType: Tag = Tag {
   element: 0x0228,
   name: "FontNameType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Font Name Type",
 };
 
@@ -23389,7 +23389,7 @@ pub const CSSFontName: Tag = Tag {
   element: 0x0229,
   name: "CSSFontName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "CSS Font Name",
 };
 
@@ -23398,7 +23398,7 @@ pub const RotationAngle: Tag = Tag {
   element: 0x0230,
   name: "RotationAngle",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Rotation Angle",
 };
 
@@ -23407,7 +23407,7 @@ pub const TextStyleSequence: Tag = Tag {
   element: 0x0231,
   name: "TextStyleSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Text Style Sequence",
 };
 
@@ -23416,7 +23416,7 @@ pub const LineStyleSequence: Tag = Tag {
   element: 0x0232,
   name: "LineStyleSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Line Style Sequence",
 };
 
@@ -23425,7 +23425,7 @@ pub const FillStyleSequence: Tag = Tag {
   element: 0x0233,
   name: "FillStyleSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fill Style Sequence",
 };
 
@@ -23434,7 +23434,7 @@ pub const GraphicGroupSequence: Tag = Tag {
   element: 0x0234,
   name: "GraphicGroupSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Graphic Group Sequence",
 };
 
@@ -23443,7 +23443,7 @@ pub const TextColorCIELabValue: Tag = Tag {
   element: 0x0241,
   name: "TextColorCIELabValue",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Text Color CIELab Value",
 };
 
@@ -23452,7 +23452,7 @@ pub const HorizontalAlignment: Tag = Tag {
   element: 0x0242,
   name: "HorizontalAlignment",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Horizontal Alignment",
 };
 
@@ -23461,7 +23461,7 @@ pub const VerticalAlignment: Tag = Tag {
   element: 0x0243,
   name: "VerticalAlignment",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Vertical Alignment",
 };
 
@@ -23470,7 +23470,7 @@ pub const ShadowStyle: Tag = Tag {
   element: 0x0244,
   name: "ShadowStyle",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Shadow Style",
 };
 
@@ -23479,7 +23479,7 @@ pub const ShadowOffsetX: Tag = Tag {
   element: 0x0245,
   name: "ShadowOffsetX",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Shadow Offset X",
 };
 
@@ -23488,7 +23488,7 @@ pub const ShadowOffsetY: Tag = Tag {
   element: 0x0246,
   name: "ShadowOffsetY",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Shadow Offset Y",
 };
 
@@ -23497,7 +23497,7 @@ pub const ShadowColorCIELabValue: Tag = Tag {
   element: 0x0247,
   name: "ShadowColorCIELabValue",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Shadow Color CIELab Value",
 };
 
@@ -23506,7 +23506,7 @@ pub const Underlined: Tag = Tag {
   element: 0x0248,
   name: "Underlined",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Underlined",
 };
 
@@ -23515,7 +23515,7 @@ pub const Bold: Tag = Tag {
   element: 0x0249,
   name: "Bold",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Bold",
 };
 
@@ -23524,7 +23524,7 @@ pub const Italic: Tag = Tag {
   element: 0x0250,
   name: "Italic",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Italic",
 };
 
@@ -23533,7 +23533,7 @@ pub const PatternOnColorCIELabValue: Tag = Tag {
   element: 0x0251,
   name: "PatternOnColorCIELabValue",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Pattern On Color CIELab Value",
 };
 
@@ -23542,7 +23542,7 @@ pub const PatternOffColorCIELabValue: Tag = Tag {
   element: 0x0252,
   name: "PatternOffColorCIELabValue",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Pattern Off Color CIELab Value",
 };
 
@@ -23551,7 +23551,7 @@ pub const LineThickness: Tag = Tag {
   element: 0x0253,
   name: "LineThickness",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Line Thickness",
 };
 
@@ -23560,7 +23560,7 @@ pub const LineDashingStyle: Tag = Tag {
   element: 0x0254,
   name: "LineDashingStyle",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Line Dashing Style",
 };
 
@@ -23569,7 +23569,7 @@ pub const LinePattern: Tag = Tag {
   element: 0x0255,
   name: "LinePattern",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Line Pattern",
 };
 
@@ -23578,7 +23578,7 @@ pub const FillPattern: Tag = Tag {
   element: 0x0256,
   name: "FillPattern",
   vr: "OB",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fill Pattern",
 };
 
@@ -23587,7 +23587,7 @@ pub const FillMode: Tag = Tag {
   element: 0x0257,
   name: "FillMode",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fill Mode",
 };
 
@@ -23596,7 +23596,7 @@ pub const ShadowOpacity: Tag = Tag {
   element: 0x0258,
   name: "ShadowOpacity",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Shadow Opacity",
 };
 
@@ -23605,7 +23605,7 @@ pub const GapLength: Tag = Tag {
   element: 0x0261,
   name: "GapLength",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Gap Length",
 };
 
@@ -23614,7 +23614,7 @@ pub const DiameterOfVisibility: Tag = Tag {
   element: 0x0262,
   name: "DiameterOfVisibility",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Diameter of Visibility",
 };
 
@@ -23623,7 +23623,7 @@ pub const RotationPoint: Tag = Tag {
   element: 0x0273,
   name: "RotationPoint",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Rotation Point",
 };
 
@@ -23632,7 +23632,7 @@ pub const TickAlignment: Tag = Tag {
   element: 0x0274,
   name: "TickAlignment",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Tick Alignment",
 };
 
@@ -23641,7 +23641,7 @@ pub const ShowTickLabel: Tag = Tag {
   element: 0x0278,
   name: "ShowTickLabel",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Show Tick Label",
 };
 
@@ -23650,7 +23650,7 @@ pub const TickLabelAlignment: Tag = Tag {
   element: 0x0279,
   name: "TickLabelAlignment",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Tick Label Alignment",
 };
 
@@ -23659,7 +23659,7 @@ pub const CompoundGraphicUnits: Tag = Tag {
   element: 0x0282,
   name: "CompoundGraphicUnits",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Compound Graphic Units",
 };
 
@@ -23668,7 +23668,7 @@ pub const PatternOnOpacity: Tag = Tag {
   element: 0x0284,
   name: "PatternOnOpacity",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pattern On Opacity",
 };
 
@@ -23677,7 +23677,7 @@ pub const PatternOffOpacity: Tag = Tag {
   element: 0x0285,
   name: "PatternOffOpacity",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pattern Off Opacity",
 };
 
@@ -23686,7 +23686,7 @@ pub const MajorTicksSequence: Tag = Tag {
   element: 0x0287,
   name: "MajorTicksSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Major Ticks Sequence",
 };
 
@@ -23695,7 +23695,7 @@ pub const TickPosition: Tag = Tag {
   element: 0x0288,
   name: "TickPosition",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Tick Position",
 };
 
@@ -23704,7 +23704,7 @@ pub const TickLabel: Tag = Tag {
   element: 0x0289,
   name: "TickLabel",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Tick Label",
 };
 
@@ -23713,7 +23713,7 @@ pub const CompoundGraphicType: Tag = Tag {
   element: 0x0294,
   name: "CompoundGraphicType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Compound Graphic Type",
 };
 
@@ -23722,7 +23722,7 @@ pub const GraphicGroupID: Tag = Tag {
   element: 0x0295,
   name: "GraphicGroupID",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Graphic Group ID",
 };
 
@@ -23731,7 +23731,7 @@ pub const ShapeType: Tag = Tag {
   element: 0x0306,
   name: "ShapeType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Shape Type",
 };
 
@@ -23740,7 +23740,7 @@ pub const RegistrationSequence: Tag = Tag {
   element: 0x0308,
   name: "RegistrationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Registration Sequence",
 };
 
@@ -23749,7 +23749,7 @@ pub const MatrixRegistrationSequence: Tag = Tag {
   element: 0x0309,
   name: "MatrixRegistrationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Matrix Registration Sequence",
 };
 
@@ -23758,7 +23758,7 @@ pub const MatrixSequence: Tag = Tag {
   element: 0x030A,
   name: "MatrixSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Matrix Sequence",
 };
 
@@ -23767,7 +23767,7 @@ pub const FrameOfReferenceTransformationMatrixType: Tag = Tag {
   element: 0x030C,
   name: "FrameOfReferenceTransformationMatrixType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Frame of Reference Transformation Matrix Type",
 };
 
@@ -23776,7 +23776,7 @@ pub const RegistrationTypeCodeSequence: Tag = Tag {
   element: 0x030D,
   name: "RegistrationTypeCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Registration Type Code Sequence",
 };
 
@@ -23785,7 +23785,7 @@ pub const FiducialDescription: Tag = Tag {
   element: 0x030F,
   name: "FiducialDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fiducial Description",
 };
 
@@ -23794,7 +23794,7 @@ pub const FiducialIdentifier: Tag = Tag {
   element: 0x0310,
   name: "FiducialIdentifier",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fiducial Identifier",
 };
 
@@ -23803,7 +23803,7 @@ pub const FiducialIdentifierCodeSequence: Tag = Tag {
   element: 0x0311,
   name: "FiducialIdentifierCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fiducial Identifier Code Sequence",
 };
 
@@ -23812,7 +23812,7 @@ pub const ContourUncertaintyRadius: Tag = Tag {
   element: 0x0312,
   name: "ContourUncertaintyRadius",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contour Uncertainty Radius",
 };
 
@@ -23821,7 +23821,7 @@ pub const UsedFiducialsSequence: Tag = Tag {
   element: 0x0314,
   name: "UsedFiducialsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Used Fiducials Sequence",
 };
 
@@ -23830,7 +23830,7 @@ pub const GraphicCoordinatesDataSequence: Tag = Tag {
   element: 0x0318,
   name: "GraphicCoordinatesDataSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Graphic Coordinates Data Sequence",
 };
 
@@ -23839,7 +23839,7 @@ pub const FiducialUID: Tag = Tag {
   element: 0x031A,
   name: "FiducialUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fiducial UID",
 };
 
@@ -23848,7 +23848,7 @@ pub const FiducialSetSequence: Tag = Tag {
   element: 0x031C,
   name: "FiducialSetSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fiducial Set Sequence",
 };
 
@@ -23857,7 +23857,7 @@ pub const FiducialSequence: Tag = Tag {
   element: 0x031E,
   name: "FiducialSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fiducial Sequence",
 };
 
@@ -23866,7 +23866,7 @@ pub const GraphicLayerRecommendedDisplayCIELabValue: Tag = Tag {
   element: 0x0401,
   name: "GraphicLayerRecommendedDisplayCIELabValue",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Graphic Layer Recommended Display CIELab Value",
 };
 
@@ -23875,7 +23875,7 @@ pub const BlendingSequence: Tag = Tag {
   element: 0x0402,
   name: "BlendingSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Blending Sequence",
 };
 
@@ -23884,7 +23884,7 @@ pub const RelativeOpacity: Tag = Tag {
   element: 0x0403,
   name: "RelativeOpacity",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Relative Opacity",
 };
 
@@ -23893,7 +23893,7 @@ pub const ReferencedSpatialRegistrationSequence: Tag = Tag {
   element: 0x0404,
   name: "ReferencedSpatialRegistrationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Spatial Registration Sequence",
 };
 
@@ -23902,7 +23902,7 @@ pub const BlendingPosition: Tag = Tag {
   element: 0x0405,
   name: "BlendingPosition",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Blending Position",
 };
 
@@ -23911,7 +23911,7 @@ pub const HangingProtocolName: Tag = Tag {
   element: 0x0002,
   name: "HangingProtocolName",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Hanging Protocol Name",
 };
 
@@ -23920,7 +23920,7 @@ pub const HangingProtocolDescription: Tag = Tag {
   element: 0x0004,
   name: "HangingProtocolDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Hanging Protocol Description",
 };
 
@@ -23929,7 +23929,7 @@ pub const HangingProtocolLevel: Tag = Tag {
   element: 0x0006,
   name: "HangingProtocolLevel",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Hanging Protocol Level",
 };
 
@@ -23938,7 +23938,7 @@ pub const HangingProtocolCreator: Tag = Tag {
   element: 0x0008,
   name: "HangingProtocolCreator",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Hanging Protocol Creator",
 };
 
@@ -23947,7 +23947,7 @@ pub const HangingProtocolCreationDateTime: Tag = Tag {
   element: 0x000A,
   name: "HangingProtocolCreationDateTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Hanging Protocol Creation DateTime",
 };
 
@@ -23956,7 +23956,7 @@ pub const HangingProtocolDefinitionSequence: Tag = Tag {
   element: 0x000C,
   name: "HangingProtocolDefinitionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Hanging Protocol Definition Sequence",
 };
 
@@ -23965,7 +23965,7 @@ pub const HangingProtocolUserIdentificationCodeSequence: Tag = Tag {
   element: 0x000E,
   name: "HangingProtocolUserIdentificationCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Hanging Protocol User Identification Code Sequence",
 };
 
@@ -23974,7 +23974,7 @@ pub const HangingProtocolUserGroupName: Tag = Tag {
   element: 0x0010,
   name: "HangingProtocolUserGroupName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Hanging Protocol User Group Name",
 };
 
@@ -23983,7 +23983,7 @@ pub const SourceHangingProtocolSequence: Tag = Tag {
   element: 0x0012,
   name: "SourceHangingProtocolSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Hanging Protocol Sequence",
 };
 
@@ -23992,7 +23992,7 @@ pub const NumberOfPriorsReferenced: Tag = Tag {
   element: 0x0014,
   name: "NumberOfPriorsReferenced",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Priors Referenced",
 };
 
@@ -24001,7 +24001,7 @@ pub const ImageSetsSequence: Tag = Tag {
   element: 0x0020,
   name: "ImageSetsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Sets Sequence",
 };
 
@@ -24010,7 +24010,7 @@ pub const ImageSetSelectorSequence: Tag = Tag {
   element: 0x0022,
   name: "ImageSetSelectorSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Set Selector Sequence",
 };
 
@@ -24019,7 +24019,7 @@ pub const ImageSetSelectorUsageFlag: Tag = Tag {
   element: 0x0024,
   name: "ImageSetSelectorUsageFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Set Selector Usage Flag",
 };
 
@@ -24028,7 +24028,7 @@ pub const SelectorAttribute: Tag = Tag {
   element: 0x0026,
   name: "SelectorAttribute",
   vr: "AT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Selector Attribute",
 };
 
@@ -24037,7 +24037,7 @@ pub const SelectorValueNumber: Tag = Tag {
   element: 0x0028,
   name: "SelectorValueNumber",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Selector Value Number",
 };
 
@@ -24046,7 +24046,7 @@ pub const TimeBasedImageSetsSequence: Tag = Tag {
   element: 0x0030,
   name: "TimeBasedImageSetsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Time Based Image Sets Sequence",
 };
 
@@ -24055,7 +24055,7 @@ pub const ImageSetNumber: Tag = Tag {
   element: 0x0032,
   name: "ImageSetNumber",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Set Number",
 };
 
@@ -24064,7 +24064,7 @@ pub const ImageSetSelectorCategory: Tag = Tag {
   element: 0x0034,
   name: "ImageSetSelectorCategory",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Set Selector Category",
 };
 
@@ -24073,7 +24073,7 @@ pub const RelativeTime: Tag = Tag {
   element: 0x0038,
   name: "RelativeTime",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Relative Time",
 };
 
@@ -24082,7 +24082,7 @@ pub const RelativeTimeUnits: Tag = Tag {
   element: 0x003A,
   name: "RelativeTimeUnits",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Relative Time Units",
 };
 
@@ -24091,7 +24091,7 @@ pub const AbstractPriorValue: Tag = Tag {
   element: 0x003C,
   name: "AbstractPriorValue",
   vr: "SS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Abstract Prior Value",
 };
 
@@ -24100,7 +24100,7 @@ pub const AbstractPriorCodeSequence: Tag = Tag {
   element: 0x003E,
   name: "AbstractPriorCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Abstract Prior Code Sequence",
 };
 
@@ -24109,7 +24109,7 @@ pub const ImageSetLabel: Tag = Tag {
   element: 0x0040,
   name: "ImageSetLabel",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Set Label",
 };
 
@@ -24118,7 +24118,7 @@ pub const SelectorAttributeVR: Tag = Tag {
   element: 0x0050,
   name: "SelectorAttributeVR",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Selector Attribute VR",
 };
 
@@ -24145,7 +24145,7 @@ pub const SelectorAttributePrivateCreator: Tag = Tag {
   element: 0x0056,
   name: "SelectorAttributePrivateCreator",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Selector Attribute Private Creator",
 };
 
@@ -24190,7 +24190,7 @@ pub const SelectorLTValue: Tag = Tag {
   element: 0x0068,
   name: "SelectorLTValue",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Selector LT Value",
 };
 
@@ -24217,7 +24217,7 @@ pub const SelectorSTValue: Tag = Tag {
   element: 0x006E,
   name: "SelectorSTValue",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Selector ST Value",
 };
 
@@ -24226,7 +24226,7 @@ pub const SelectorUTValue: Tag = Tag {
   element: 0x0070,
   name: "SelectorUTValue",
   vr: "UT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Selector UT Value",
 };
 
@@ -24298,7 +24298,7 @@ pub const SelectorCodeSequenceValue: Tag = Tag {
   element: 0x0080,
   name: "SelectorCodeSequenceValue",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Selector Code Sequence Value",
 };
 
@@ -24307,7 +24307,7 @@ pub const NumberOfScreens: Tag = Tag {
   element: 0x0100,
   name: "NumberOfScreens",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Screens",
 };
 
@@ -24316,7 +24316,7 @@ pub const NominalScreenDefinitionSequence: Tag = Tag {
   element: 0x0102,
   name: "NominalScreenDefinitionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Nominal Screen Definition Sequence",
 };
 
@@ -24325,7 +24325,7 @@ pub const NumberOfVerticalPixels: Tag = Tag {
   element: 0x0104,
   name: "NumberOfVerticalPixels",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Vertical Pixels",
 };
 
@@ -24334,7 +24334,7 @@ pub const NumberOfHorizontalPixels: Tag = Tag {
   element: 0x0106,
   name: "NumberOfHorizontalPixels",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Horizontal Pixels",
 };
 
@@ -24343,7 +24343,7 @@ pub const DisplayEnvironmentSpatialPosition: Tag = Tag {
   element: 0x0108,
   name: "DisplayEnvironmentSpatialPosition",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 4, end: 4 },
   description: "Display Environment Spatial Position",
 };
 
@@ -24352,7 +24352,7 @@ pub const ScreenMinimumGrayscaleBitDepth: Tag = Tag {
   element: 0x010A,
   name: "ScreenMinimumGrayscaleBitDepth",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Screen Minimum Grayscale Bit Depth",
 };
 
@@ -24361,7 +24361,7 @@ pub const ScreenMinimumColorBitDepth: Tag = Tag {
   element: 0x010C,
   name: "ScreenMinimumColorBitDepth",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Screen Minimum Color Bit Depth",
 };
 
@@ -24370,7 +24370,7 @@ pub const ApplicationMaximumRepaintTime: Tag = Tag {
   element: 0x010E,
   name: "ApplicationMaximumRepaintTime",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Application Maximum Repaint Time",
 };
 
@@ -24379,7 +24379,7 @@ pub const DisplaySetsSequence: Tag = Tag {
   element: 0x0200,
   name: "DisplaySetsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Display Sets Sequence",
 };
 
@@ -24388,7 +24388,7 @@ pub const DisplaySetNumber: Tag = Tag {
   element: 0x0202,
   name: "DisplaySetNumber",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Display Set Number",
 };
 
@@ -24397,7 +24397,7 @@ pub const DisplaySetLabel: Tag = Tag {
   element: 0x0203,
   name: "DisplaySetLabel",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Display Set Label",
 };
 
@@ -24406,7 +24406,7 @@ pub const DisplaySetPresentationGroup: Tag = Tag {
   element: 0x0204,
   name: "DisplaySetPresentationGroup",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Display Set Presentation Group",
 };
 
@@ -24415,7 +24415,7 @@ pub const DisplaySetPresentationGroupDescription: Tag = Tag {
   element: 0x0206,
   name: "DisplaySetPresentationGroupDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Display Set Presentation Group Description",
 };
 
@@ -24424,7 +24424,7 @@ pub const PartialDataDisplayHandling: Tag = Tag {
   element: 0x0208,
   name: "PartialDataDisplayHandling",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Partial Data Display Handling",
 };
 
@@ -24433,7 +24433,7 @@ pub const SynchronizedScrollingSequence: Tag = Tag {
   element: 0x0210,
   name: "SynchronizedScrollingSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Synchronized Scrolling Sequence",
 };
 
@@ -24451,7 +24451,7 @@ pub const NavigationIndicatorSequence: Tag = Tag {
   element: 0x0214,
   name: "NavigationIndicatorSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Navigation Indicator Sequence",
 };
 
@@ -24460,7 +24460,7 @@ pub const NavigationDisplaySet: Tag = Tag {
   element: 0x0216,
   name: "NavigationDisplaySet",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Navigation Display Set",
 };
 
@@ -24478,7 +24478,7 @@ pub const ImageBoxesSequence: Tag = Tag {
   element: 0x0300,
   name: "ImageBoxesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Boxes Sequence",
 };
 
@@ -24487,7 +24487,7 @@ pub const ImageBoxNumber: Tag = Tag {
   element: 0x0302,
   name: "ImageBoxNumber",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Box Number",
 };
 
@@ -24496,7 +24496,7 @@ pub const ImageBoxLayoutType: Tag = Tag {
   element: 0x0304,
   name: "ImageBoxLayoutType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Box Layout Type",
 };
 
@@ -24505,7 +24505,7 @@ pub const ImageBoxTileHorizontalDimension: Tag = Tag {
   element: 0x0306,
   name: "ImageBoxTileHorizontalDimension",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Box Tile Horizontal Dimension",
 };
 
@@ -24514,7 +24514,7 @@ pub const ImageBoxTileVerticalDimension: Tag = Tag {
   element: 0x0308,
   name: "ImageBoxTileVerticalDimension",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Box Tile Vertical Dimension",
 };
 
@@ -24523,7 +24523,7 @@ pub const ImageBoxScrollDirection: Tag = Tag {
   element: 0x0310,
   name: "ImageBoxScrollDirection",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Box Scroll Direction",
 };
 
@@ -24532,7 +24532,7 @@ pub const ImageBoxSmallScrollType: Tag = Tag {
   element: 0x0312,
   name: "ImageBoxSmallScrollType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Box Small Scroll Type",
 };
 
@@ -24541,7 +24541,7 @@ pub const ImageBoxSmallScrollAmount: Tag = Tag {
   element: 0x0314,
   name: "ImageBoxSmallScrollAmount",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Box Small Scroll Amount",
 };
 
@@ -24550,7 +24550,7 @@ pub const ImageBoxLargeScrollType: Tag = Tag {
   element: 0x0316,
   name: "ImageBoxLargeScrollType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Box Large Scroll Type",
 };
 
@@ -24559,7 +24559,7 @@ pub const ImageBoxLargeScrollAmount: Tag = Tag {
   element: 0x0318,
   name: "ImageBoxLargeScrollAmount",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Box Large Scroll Amount",
 };
 
@@ -24568,7 +24568,7 @@ pub const ImageBoxOverlapPriority: Tag = Tag {
   element: 0x0320,
   name: "ImageBoxOverlapPriority",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Box Overlap Priority",
 };
 
@@ -24577,7 +24577,7 @@ pub const CineRelativeToRealTime: Tag = Tag {
   element: 0x0330,
   name: "CineRelativeToRealTime",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Cine Relative to Real-Time",
 };
 
@@ -24586,7 +24586,7 @@ pub const FilterOperationsSequence: Tag = Tag {
   element: 0x0400,
   name: "FilterOperationsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Filter Operations Sequence",
 };
 
@@ -24595,7 +24595,7 @@ pub const FilterByCategory: Tag = Tag {
   element: 0x0402,
   name: "FilterByCategory",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Filter-by Category",
 };
 
@@ -24604,7 +24604,7 @@ pub const FilterByAttributePresence: Tag = Tag {
   element: 0x0404,
   name: "FilterByAttributePresence",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Filter-by Attribute Presence",
 };
 
@@ -24613,7 +24613,7 @@ pub const FilterByOperator: Tag = Tag {
   element: 0x0406,
   name: "FilterByOperator",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Filter-by Operator",
 };
 
@@ -24622,7 +24622,7 @@ pub const StructuredDisplayBackgroundCIELabValue: Tag = Tag {
   element: 0x0420,
   name: "StructuredDisplayBackgroundCIELabValue",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Structured Display Background CIELab Value",
 };
 
@@ -24631,7 +24631,7 @@ pub const EmptyImageBoxCIELabValue: Tag = Tag {
   element: 0x0421,
   name: "EmptyImageBoxCIELabValue",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Empty Image Box CIELab Value",
 };
 
@@ -24640,7 +24640,7 @@ pub const StructuredDisplayImageBoxSequence: Tag = Tag {
   element: 0x0422,
   name: "StructuredDisplayImageBoxSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Structured Display Image Box Sequence",
 };
 
@@ -24649,7 +24649,7 @@ pub const StructuredDisplayTextBoxSequence: Tag = Tag {
   element: 0x0424,
   name: "StructuredDisplayTextBoxSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Structured Display Text Box Sequence",
 };
 
@@ -24658,7 +24658,7 @@ pub const ReferencedFirstFrameSequence: Tag = Tag {
   element: 0x0427,
   name: "ReferencedFirstFrameSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced First Frame Sequence",
 };
 
@@ -24667,7 +24667,7 @@ pub const ImageBoxSynchronizationSequence: Tag = Tag {
   element: 0x0430,
   name: "ImageBoxSynchronizationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Box Synchronization Sequence",
 };
 
@@ -24685,7 +24685,7 @@ pub const TypeOfSynchronization: Tag = Tag {
   element: 0x0434,
   name: "TypeOfSynchronization",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Type of Synchronization",
 };
 
@@ -24694,7 +24694,7 @@ pub const BlendingOperationType: Tag = Tag {
   element: 0x0500,
   name: "BlendingOperationType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Blending Operation Type",
 };
 
@@ -24703,7 +24703,7 @@ pub const ReformattingOperationType: Tag = Tag {
   element: 0x0510,
   name: "ReformattingOperationType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Reformatting Operation Type",
 };
 
@@ -24712,7 +24712,7 @@ pub const ReformattingThickness: Tag = Tag {
   element: 0x0512,
   name: "ReformattingThickness",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Reformatting Thickness",
 };
 
@@ -24721,7 +24721,7 @@ pub const ReformattingInterval: Tag = Tag {
   element: 0x0514,
   name: "ReformattingInterval",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Reformatting Interval",
 };
 
@@ -24730,7 +24730,7 @@ pub const ReformattingOperationInitialViewDirection: Tag = Tag {
   element: 0x0516,
   name: "ReformattingOperationInitialViewDirection",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Reformatting Operation Initial View Direction",
 };
 
@@ -24748,7 +24748,7 @@ pub const SortingOperationsSequence: Tag = Tag {
   element: 0x0600,
   name: "SortingOperationsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Sorting Operations Sequence",
 };
 
@@ -24757,7 +24757,7 @@ pub const SortByCategory: Tag = Tag {
   element: 0x0602,
   name: "SortByCategory",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Sort-by Category",
 };
 
@@ -24766,7 +24766,7 @@ pub const SortingDirection: Tag = Tag {
   element: 0x0604,
   name: "SortingDirection",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Sorting Direction",
 };
 
@@ -24775,7 +24775,7 @@ pub const DisplaySetPatientOrientation: Tag = Tag {
   element: 0x0700,
   name: "DisplaySetPatientOrientation",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Display Set Patient Orientation",
 };
 
@@ -24784,7 +24784,7 @@ pub const VOIType: Tag = Tag {
   element: 0x0702,
   name: "VOIType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "VOI Type",
 };
 
@@ -24793,7 +24793,7 @@ pub const PseudoColorType: Tag = Tag {
   element: 0x0704,
   name: "PseudoColorType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pseudo-Color Type",
 };
 
@@ -24802,7 +24802,7 @@ pub const PseudoColorPaletteInstanceReferenceSequence: Tag = Tag {
   element: 0x0705,
   name: "PseudoColorPaletteInstanceReferenceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pseudo-Color Palette Instance Reference Sequence",
 };
 
@@ -24811,7 +24811,7 @@ pub const ShowGrayscaleInverted: Tag = Tag {
   element: 0x0706,
   name: "ShowGrayscaleInverted",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Show Grayscale Inverted",
 };
 
@@ -24820,7 +24820,7 @@ pub const ShowImageTrueSizeFlag: Tag = Tag {
   element: 0x0710,
   name: "ShowImageTrueSizeFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Show Image True Size Flag",
 };
 
@@ -24829,7 +24829,7 @@ pub const ShowGraphicAnnotationFlag: Tag = Tag {
   element: 0x0712,
   name: "ShowGraphicAnnotationFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Show Graphic Annotation Flag",
 };
 
@@ -24838,7 +24838,7 @@ pub const ShowPatientDemographicsFlag: Tag = Tag {
   element: 0x0714,
   name: "ShowPatientDemographicsFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Show Patient Demographics Flag",
 };
 
@@ -24847,7 +24847,7 @@ pub const ShowAcquisitionTechniquesFlag: Tag = Tag {
   element: 0x0716,
   name: "ShowAcquisitionTechniquesFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Show Acquisition Techniques Flag",
 };
 
@@ -24856,7 +24856,7 @@ pub const DisplaySetHorizontalJustification: Tag = Tag {
   element: 0x0717,
   name: "DisplaySetHorizontalJustification",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Display Set Horizontal Justification",
 };
 
@@ -24865,7 +24865,7 @@ pub const DisplaySetVerticalJustification: Tag = Tag {
   element: 0x0718,
   name: "DisplaySetVerticalJustification",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Display Set Vertical Justification",
 };
 
@@ -24874,7 +24874,7 @@ pub const ContinuationStartMeterset: Tag = Tag {
   element: 0x0120,
   name: "ContinuationStartMeterset",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Continuation Start Meterset",
 };
 
@@ -24883,7 +24883,7 @@ pub const ContinuationEndMeterset: Tag = Tag {
   element: 0x0121,
   name: "ContinuationEndMeterset",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Continuation End Meterset",
 };
 
@@ -24892,7 +24892,7 @@ pub const ProcedureStepState: Tag = Tag {
   element: 0x1000,
   name: "ProcedureStepState",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Procedure Step State",
 };
 
@@ -24901,7 +24901,7 @@ pub const ProcedureStepProgressInformationSequence: Tag = Tag {
   element: 0x1002,
   name: "ProcedureStepProgressInformationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Procedure Step Progress Information Sequence",
 };
 
@@ -24910,7 +24910,7 @@ pub const ProcedureStepProgress: Tag = Tag {
   element: 0x1004,
   name: "ProcedureStepProgress",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Procedure Step Progress",
 };
 
@@ -24919,7 +24919,7 @@ pub const ProcedureStepProgressDescription: Tag = Tag {
   element: 0x1006,
   name: "ProcedureStepProgressDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Procedure Step Progress Description",
 };
 
@@ -24928,7 +24928,7 @@ pub const ProcedureStepCommunicationsURISequence: Tag = Tag {
   element: 0x1008,
   name: "ProcedureStepCommunicationsURISequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Procedure Step Communications URI Sequence",
 };
 
@@ -24937,7 +24937,7 @@ pub const ContactURI: Tag = Tag {
   element: 0x100a,
   name: "ContactURI",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contact URI",
 };
 
@@ -24946,7 +24946,7 @@ pub const ContactDisplayName: Tag = Tag {
   element: 0x100c,
   name: "ContactDisplayName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contact Display Name",
 };
 
@@ -24955,7 +24955,7 @@ pub const ProcedureStepDiscontinuationReasonCodeSequence: Tag = Tag {
   element: 0x100e,
   name: "ProcedureStepDiscontinuationReasonCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Procedure Step Discontinuation Reason Code Sequence",
 };
 
@@ -24964,7 +24964,7 @@ pub const BeamTaskSequence: Tag = Tag {
   element: 0x1020,
   name: "BeamTaskSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Beam Task Sequence",
 };
 
@@ -24973,7 +24973,7 @@ pub const BeamTaskType: Tag = Tag {
   element: 0x1022,
   name: "BeamTaskType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Beam Task Type",
 };
 
@@ -24982,7 +24982,7 @@ pub const BeamOrderIndexTrial: Tag = Tag {
   element: 0x1024,
   name: "BeamOrderIndexTrial",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Beam Order Index (Trial)",
 };
 
@@ -24991,7 +24991,7 @@ pub const AutosequenceFlag: Tag = Tag {
   element: 0x1025,
   name: "AutosequenceFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Autosequence Flag",
 };
 
@@ -25000,7 +25000,7 @@ pub const TableTopVerticalAdjustedPosition: Tag = Tag {
   element: 0x1026,
   name: "TableTopVerticalAdjustedPosition",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Top Vertical Adjusted Position",
 };
 
@@ -25009,7 +25009,7 @@ pub const TableTopLongitudinalAdjustedPosition: Tag = Tag {
   element: 0x1027,
   name: "TableTopLongitudinalAdjustedPosition",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Top Longitudinal Adjusted Position",
 };
 
@@ -25018,7 +25018,7 @@ pub const TableTopLateralAdjustedPosition: Tag = Tag {
   element: 0x1028,
   name: "TableTopLateralAdjustedPosition",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Top Lateral Adjusted Position",
 };
 
@@ -25027,7 +25027,7 @@ pub const PatientSupportAdjustedAngle: Tag = Tag {
   element: 0x102A,
   name: "PatientSupportAdjustedAngle",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Support Adjusted Angle",
 };
 
@@ -25036,7 +25036,7 @@ pub const TableTopEccentricAdjustedAngle: Tag = Tag {
   element: 0x102B,
   name: "TableTopEccentricAdjustedAngle",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Top Eccentric Adjusted Angle",
 };
 
@@ -25045,7 +25045,7 @@ pub const TableTopPitchAdjustedAngle: Tag = Tag {
   element: 0x102C,
   name: "TableTopPitchAdjustedAngle",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Top Pitch Adjusted Angle",
 };
 
@@ -25054,7 +25054,7 @@ pub const TableTopRollAdjustedAngle: Tag = Tag {
   element: 0x102D,
   name: "TableTopRollAdjustedAngle",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Top Roll Adjusted Angle",
 };
 
@@ -25063,7 +25063,7 @@ pub const DeliveryVerificationImageSequence: Tag = Tag {
   element: 0x1030,
   name: "DeliveryVerificationImageSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Delivery Verification Image Sequence",
 };
 
@@ -25072,7 +25072,7 @@ pub const VerificationImageTiming: Tag = Tag {
   element: 0x1032,
   name: "VerificationImageTiming",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Verification Image Timing",
 };
 
@@ -25081,7 +25081,7 @@ pub const DoubleExposureFlag: Tag = Tag {
   element: 0x1034,
   name: "DoubleExposureFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Double Exposure Flag",
 };
 
@@ -25090,7 +25090,7 @@ pub const DoubleExposureOrdering: Tag = Tag {
   element: 0x1036,
   name: "DoubleExposureOrdering",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Double Exposure Ordering",
 };
 
@@ -25099,7 +25099,7 @@ pub const DoubleExposureMetersetTrial: Tag = Tag {
   element: 0x1038,
   name: "DoubleExposureMetersetTrial",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Double Exposure Meterset (Trial)",
 };
 
@@ -25108,7 +25108,7 @@ pub const DoubleExposureFieldDeltaTrial: Tag = Tag {
   element: 0x103A,
   name: "DoubleExposureFieldDeltaTrial",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 4, end: 4 },
   description: "Double Exposure Field Delta (Trial)",
 };
 
@@ -25117,7 +25117,7 @@ pub const RelatedReferenceRTImageSequence: Tag = Tag {
   element: 0x1040,
   name: "RelatedReferenceRTImageSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Related Reference RT Image Sequence",
 };
 
@@ -25126,7 +25126,7 @@ pub const GeneralMachineVerificationSequence: Tag = Tag {
   element: 0x1042,
   name: "GeneralMachineVerificationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "General Machine Verification Sequence",
 };
 
@@ -25135,7 +25135,7 @@ pub const ConventionalMachineVerificationSequence: Tag = Tag {
   element: 0x1044,
   name: "ConventionalMachineVerificationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Conventional Machine Verification Sequence",
 };
 
@@ -25144,7 +25144,7 @@ pub const IonMachineVerificationSequence: Tag = Tag {
   element: 0x1046,
   name: "IonMachineVerificationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ion Machine Verification Sequence",
 };
 
@@ -25153,7 +25153,7 @@ pub const FailedAttributesSequence: Tag = Tag {
   element: 0x1048,
   name: "FailedAttributesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Failed Attributes Sequence",
 };
 
@@ -25162,7 +25162,7 @@ pub const OverriddenAttributesSequence: Tag = Tag {
   element: 0x104A,
   name: "OverriddenAttributesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Overridden Attributes Sequence",
 };
 
@@ -25171,7 +25171,7 @@ pub const ConventionalControlPointVerificationSequence: Tag = Tag {
   element: 0x104C,
   name: "ConventionalControlPointVerificationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Conventional Control Point Verification Sequence",
 };
 
@@ -25180,7 +25180,7 @@ pub const IonControlPointVerificationSequence: Tag = Tag {
   element: 0x104E,
   name: "IonControlPointVerificationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ion Control Point Verification Sequence",
 };
 
@@ -25189,7 +25189,7 @@ pub const AttributeOccurrenceSequence: Tag = Tag {
   element: 0x1050,
   name: "AttributeOccurrenceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Attribute Occurrence Sequence",
 };
 
@@ -25198,7 +25198,7 @@ pub const AttributeOccurrencePointer: Tag = Tag {
   element: 0x1052,
   name: "AttributeOccurrencePointer",
   vr: "AT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Attribute Occurrence Pointer",
 };
 
@@ -25207,7 +25207,7 @@ pub const AttributeItemSelector: Tag = Tag {
   element: 0x1054,
   name: "AttributeItemSelector",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Attribute Item Selector",
 };
 
@@ -25216,7 +25216,7 @@ pub const AttributeOccurrencePrivateCreator: Tag = Tag {
   element: 0x1056,
   name: "AttributeOccurrencePrivateCreator",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Attribute Occurrence Private Creator",
 };
 
@@ -25234,7 +25234,7 @@ pub const ScheduledProcedureStepPriority: Tag = Tag {
   element: 0x1200,
   name: "ScheduledProcedureStepPriority",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Procedure Step Priority",
 };
 
@@ -25243,7 +25243,7 @@ pub const WorklistLabel: Tag = Tag {
   element: 0x1202,
   name: "WorklistLabel",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Worklist Label",
 };
 
@@ -25252,7 +25252,7 @@ pub const ProcedureStepLabel: Tag = Tag {
   element: 0x1204,
   name: "ProcedureStepLabel",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Procedure Step Label",
 };
 
@@ -25261,7 +25261,7 @@ pub const ScheduledProcessingParametersSequence: Tag = Tag {
   element: 0x1210,
   name: "ScheduledProcessingParametersSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scheduled Processing Parameters Sequence",
 };
 
@@ -25270,7 +25270,7 @@ pub const PerformedProcessingParametersSequence: Tag = Tag {
   element: 0x1212,
   name: "PerformedProcessingParametersSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Performed Processing Parameters Sequence",
 };
 
@@ -25279,7 +25279,7 @@ pub const UnifiedProcedureStepPerformedProcedureSequence: Tag = Tag {
   element: 0x1216,
   name: "UnifiedProcedureStepPerformedProcedureSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Unified Procedure Step Performed Procedure Sequence",
 };
 
@@ -25288,7 +25288,7 @@ pub const RelatedProcedureStepSequence: Tag = Tag {
   element: 0x1220,
   name: "RelatedProcedureStepSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Related Procedure Step Sequence",
 };
 
@@ -25297,7 +25297,7 @@ pub const ProcedureStepRelationshipType: Tag = Tag {
   element: 0x1222,
   name: "ProcedureStepRelationshipType",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Procedure Step Relationship Type",
 };
 
@@ -25306,7 +25306,7 @@ pub const ReplacedProcedureStepSequence: Tag = Tag {
   element: 0x1224,
   name: "ReplacedProcedureStepSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Replaced Procedure Step Sequence",
 };
 
@@ -25315,7 +25315,7 @@ pub const DeletionLock: Tag = Tag {
   element: 0x1230,
   name: "DeletionLock",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Deletion Lock",
 };
 
@@ -25324,7 +25324,7 @@ pub const ReceivingAE: Tag = Tag {
   element: 0x1234,
   name: "ReceivingAE",
   vr: "AE",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Receiving AE",
 };
 
@@ -25333,7 +25333,7 @@ pub const RequestingAE: Tag = Tag {
   element: 0x1236,
   name: "RequestingAE",
   vr: "AE",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Requesting AE",
 };
 
@@ -25342,7 +25342,7 @@ pub const ReasonForCancellation: Tag = Tag {
   element: 0x1238,
   name: "ReasonForCancellation",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Reason for Cancellation",
 };
 
@@ -25351,7 +25351,7 @@ pub const SCPStatus: Tag = Tag {
   element: 0x1242,
   name: "SCPStatus",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "SCP Status",
 };
 
@@ -25360,7 +25360,7 @@ pub const SubscriptionListStatus: Tag = Tag {
   element: 0x1244,
   name: "SubscriptionListStatus",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Subscription List Status",
 };
 
@@ -25369,7 +25369,7 @@ pub const UnifiedProcedureStepListStatus: Tag = Tag {
   element: 0x1246,
   name: "UnifiedProcedureStepListStatus",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Unified Procedure Step List Status",
 };
 
@@ -25378,7 +25378,7 @@ pub const BeamOrderIndex: Tag = Tag {
   element: 0x1324,
   name: "BeamOrderIndex",
   vr: "UL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Beam Order Index",
 };
 
@@ -25387,7 +25387,7 @@ pub const DoubleExposureMeterset: Tag = Tag {
   element: 0x1338,
   name: "DoubleExposureMeterset",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Double Exposure Meterset",
 };
 
@@ -25396,7 +25396,7 @@ pub const DoubleExposureFieldDelta: Tag = Tag {
   element: 0x133A,
   name: "DoubleExposureFieldDelta",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 4, end: 4 },
   description: "Double Exposure Field Delta",
 };
 
@@ -25405,7 +25405,7 @@ pub const ImplantAssemblyTemplateName: Tag = Tag {
   element: 0x0001,
   name: "ImplantAssemblyTemplateName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Implant Assembly Template Name",
 };
 
@@ -25414,7 +25414,7 @@ pub const ImplantAssemblyTemplateIssuer: Tag = Tag {
   element: 0x0003,
   name: "ImplantAssemblyTemplateIssuer",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Implant Assembly Template Issuer",
 };
 
@@ -25423,7 +25423,7 @@ pub const ImplantAssemblyTemplateVersion: Tag = Tag {
   element: 0x0006,
   name: "ImplantAssemblyTemplateVersion",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Implant Assembly Template Version",
 };
 
@@ -25432,7 +25432,7 @@ pub const ReplacedImplantAssemblyTemplateSequence: Tag = Tag {
   element: 0x0008,
   name: "ReplacedImplantAssemblyTemplateSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Replaced Implant Assembly Template Sequence",
 };
 
@@ -25441,7 +25441,7 @@ pub const ImplantAssemblyTemplateType: Tag = Tag {
   element: 0x000A,
   name: "ImplantAssemblyTemplateType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Implant Assembly Template Type",
 };
 
@@ -25450,7 +25450,7 @@ pub const OriginalImplantAssemblyTemplateSequence: Tag = Tag {
   element: 0x000C,
   name: "OriginalImplantAssemblyTemplateSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Original Implant Assembly Template Sequence",
 };
 
@@ -25459,7 +25459,7 @@ pub const DerivationImplantAssemblyTemplateSequence: Tag = Tag {
   element: 0x000E,
   name: "DerivationImplantAssemblyTemplateSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Derivation Implant Assembly Template Sequence",
 };
 
@@ -25468,7 +25468,7 @@ pub const ImplantAssemblyTemplateTargetAnatomySequence: Tag = Tag {
   element: 0x0010,
   name: "ImplantAssemblyTemplateTargetAnatomySequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Implant Assembly Template Target Anatomy Sequence",
 };
 
@@ -25477,7 +25477,7 @@ pub const ProcedureTypeCodeSequence: Tag = Tag {
   element: 0x0020,
   name: "ProcedureTypeCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Procedure Type Code Sequence",
 };
 
@@ -25486,7 +25486,7 @@ pub const SurgicalTechnique: Tag = Tag {
   element: 0x0030,
   name: "SurgicalTechnique",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Surgical Technique",
 };
 
@@ -25495,7 +25495,7 @@ pub const ComponentTypesSequence: Tag = Tag {
   element: 0x0032,
   name: "ComponentTypesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Component Types Sequence",
 };
 
@@ -25504,7 +25504,7 @@ pub const ComponentTypeCodeSequence: Tag = Tag {
   element: 0x0034,
   name: "ComponentTypeCodeSequence",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Component Type Code Sequence",
 };
 
@@ -25513,7 +25513,7 @@ pub const ExclusiveComponentType: Tag = Tag {
   element: 0x0036,
   name: "ExclusiveComponentType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Exclusive Component Type",
 };
 
@@ -25522,7 +25522,7 @@ pub const MandatoryComponentType: Tag = Tag {
   element: 0x0038,
   name: "MandatoryComponentType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Mandatory Component Type",
 };
 
@@ -25531,7 +25531,7 @@ pub const ComponentSequence: Tag = Tag {
   element: 0x0040,
   name: "ComponentSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Component Sequence",
 };
 
@@ -25540,7 +25540,7 @@ pub const ComponentID: Tag = Tag {
   element: 0x0055,
   name: "ComponentID",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Component ID",
 };
 
@@ -25549,7 +25549,7 @@ pub const ComponentAssemblySequence: Tag = Tag {
   element: 0x0060,
   name: "ComponentAssemblySequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Component Assembly Sequence",
 };
 
@@ -25558,7 +25558,7 @@ pub const Component1ReferencedID: Tag = Tag {
   element: 0x0070,
   name: "Component1ReferencedID",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Component 1 Referenced ID",
 };
 
@@ -25567,7 +25567,7 @@ pub const Component1ReferencedMatingFeatureSetID: Tag = Tag {
   element: 0x0080,
   name: "Component1ReferencedMatingFeatureSetID",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Component 1 Referenced Mating Feature Set ID",
 };
 
@@ -25576,7 +25576,7 @@ pub const Component1ReferencedMatingFeatureID: Tag = Tag {
   element: 0x0090,
   name: "Component1ReferencedMatingFeatureID",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Component 1 Referenced Mating Feature ID",
 };
 
@@ -25585,7 +25585,7 @@ pub const Component2ReferencedID: Tag = Tag {
   element: 0x00A0,
   name: "Component2ReferencedID",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Component 2 Referenced ID",
 };
 
@@ -25594,7 +25594,7 @@ pub const Component2ReferencedMatingFeatureSetID: Tag = Tag {
   element: 0x00B0,
   name: "Component2ReferencedMatingFeatureSetID",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Component 2 Referenced Mating Feature Set ID",
 };
 
@@ -25603,7 +25603,7 @@ pub const Component2ReferencedMatingFeatureID: Tag = Tag {
   element: 0x00C0,
   name: "Component2ReferencedMatingFeatureID",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Component 2 Referenced Mating Feature ID",
 };
 
@@ -25612,7 +25612,7 @@ pub const ImplantTemplateGroupName: Tag = Tag {
   element: 0x0001,
   name: "ImplantTemplateGroupName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Implant Template Group Name",
 };
 
@@ -25621,7 +25621,7 @@ pub const ImplantTemplateGroupDescription: Tag = Tag {
   element: 0x0010,
   name: "ImplantTemplateGroupDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Implant Template Group Description",
 };
 
@@ -25630,7 +25630,7 @@ pub const ImplantTemplateGroupIssuer: Tag = Tag {
   element: 0x0020,
   name: "ImplantTemplateGroupIssuer",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Implant Template Group Issuer",
 };
 
@@ -25639,7 +25639,7 @@ pub const ImplantTemplateGroupVersion: Tag = Tag {
   element: 0x0024,
   name: "ImplantTemplateGroupVersion",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Implant Template Group Version",
 };
 
@@ -25648,7 +25648,7 @@ pub const ReplacedImplantTemplateGroupSequence: Tag = Tag {
   element: 0x0026,
   name: "ReplacedImplantTemplateGroupSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Replaced Implant Template Group Sequence",
 };
 
@@ -25657,7 +25657,7 @@ pub const ImplantTemplateGroupTargetAnatomySequence: Tag = Tag {
   element: 0x0028,
   name: "ImplantTemplateGroupTargetAnatomySequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Implant Template Group Target Anatomy Sequence",
 };
 
@@ -25666,7 +25666,7 @@ pub const ImplantTemplateGroupMembersSequence: Tag = Tag {
   element: 0x002A,
   name: "ImplantTemplateGroupMembersSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Implant Template Group Members Sequence",
 };
 
@@ -25675,7 +25675,7 @@ pub const ImplantTemplateGroupMemberID: Tag = Tag {
   element: 0x002E,
   name: "ImplantTemplateGroupMemberID",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Implant Template Group Member ID",
 };
 
@@ -25684,7 +25684,7 @@ pub const ThreeDImplantTemplateGroupMemberMatchingPoint: Tag = Tag {
   element: 0x0050,
   name: "ThreeDImplantTemplateGroupMemberMatchingPoint",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "3D Implant Template Group Member Matching Point",
 };
 
@@ -25693,7 +25693,7 @@ pub const ThreeDImplantTemplateGroupMemberMatchingAxes: Tag = Tag {
   element: 0x0060,
   name: "ThreeDImplantTemplateGroupMemberMatchingAxes",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 9, end: 9 },
   description: "3D Implant Template Group Member Matching Axes",
 };
 
@@ -25702,7 +25702,7 @@ pub const ImplantTemplateGroupMemberMatching2DCoordinatesSequence: Tag = Tag {
   element: 0x0070,
   name: "ImplantTemplateGroupMemberMatching2DCoordinatesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Implant Template Group Member Matching 2D Coordinates Sequence",
 };
 
@@ -25711,7 +25711,7 @@ pub const TwoDImplantTemplateGroupMemberMatchingPoint: Tag = Tag {
   element: 0x0090,
   name: "TwoDImplantTemplateGroupMemberMatchingPoint",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "2D Implant Template Group Member Matching Point",
 };
 
@@ -25720,7 +25720,7 @@ pub const TwoDImplantTemplateGroupMemberMatchingAxes: Tag = Tag {
   element: 0x00A0,
   name: "TwoDImplantTemplateGroupMemberMatchingAxes",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 4, end: 4 },
   description: "2D Implant Template Group Member Matching Axes",
 };
 
@@ -25729,7 +25729,7 @@ pub const ImplantTemplateGroupVariationDimensionSequence: Tag = Tag {
   element: 0x00B0,
   name: "ImplantTemplateGroupVariationDimensionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Implant Template Group Variation Dimension Sequence",
 };
 
@@ -25738,7 +25738,7 @@ pub const ImplantTemplateGroupVariationDimensionName: Tag = Tag {
   element: 0x00B2,
   name: "ImplantTemplateGroupVariationDimensionName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Implant Template Group Variation Dimension Name",
 };
 
@@ -25747,7 +25747,7 @@ pub const ImplantTemplateGroupVariationDimensionRankSequence: Tag = Tag {
   element: 0x00B4,
   name: "ImplantTemplateGroupVariationDimensionRankSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Implant Template Group Variation Dimension Rank Sequence",
 };
 
@@ -25756,7 +25756,7 @@ pub const ReferencedImplantTemplateGroupMemberID: Tag = Tag {
   element: 0x00B6,
   name: "ReferencedImplantTemplateGroupMemberID",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Implant Template Group Member ID",
 };
 
@@ -25765,7 +25765,7 @@ pub const ImplantTemplateGroupVariationDimensionRank: Tag = Tag {
   element: 0x00B8,
   name: "ImplantTemplateGroupVariationDimensionRank",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Implant Template Group Variation Dimension Rank",
 };
 
@@ -25774,7 +25774,7 @@ pub const SurfaceScanAcquisitionTypeCodeSequence: Tag = Tag {
   element: 0x0001,
   name: "SurfaceScanAcquisitionTypeCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Surface Scan Acquisition Type Code Sequence",
 };
 
@@ -25783,7 +25783,7 @@ pub const SurfaceScanModeCodeSequence: Tag = Tag {
   element: 0x0002,
   name: "SurfaceScanModeCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Surface Scan Mode Code Sequence",
 };
 
@@ -25792,7 +25792,7 @@ pub const RegistrationMethodCodeSequence: Tag = Tag {
   element: 0x0003,
   name: "RegistrationMethodCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Registration Method Code Sequence",
 };
 
@@ -25801,7 +25801,7 @@ pub const ShotDurationTime: Tag = Tag {
   element: 0x0004,
   name: "ShotDurationTime",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Shot Duration Time",
 };
 
@@ -25810,7 +25810,7 @@ pub const ShotOffsetTime: Tag = Tag {
   element: 0x0005,
   name: "ShotOffsetTime",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Shot Offset Time",
 };
 
@@ -25837,7 +25837,7 @@ pub const UVMappingSequence: Tag = Tag {
   element: 0x0008,
   name: "UVMappingSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "UV Mapping Sequence",
 };
 
@@ -25846,7 +25846,7 @@ pub const TextureLabel: Tag = Tag {
   element: 0x0009,
   name: "TextureLabel",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Texture Label",
 };
 
@@ -25873,7 +25873,7 @@ pub const ReferencedTextureSequence: Tag = Tag {
   element: 0x0012,
   name: "ReferencedTextureSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Texture Sequence",
 };
 
@@ -25882,7 +25882,7 @@ pub const ReferencedSurfaceDataSequence: Tag = Tag {
   element: 0x0013,
   name: "ReferencedSurfaceDataSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Surface Data Sequence",
 };
 
@@ -25891,7 +25891,7 @@ pub const StorageMediaFileSetID: Tag = Tag {
   element: 0x0130,
   name: "StorageMediaFileSetID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Storage Media File-set ID",
 };
 
@@ -25900,7 +25900,7 @@ pub const StorageMediaFileSetUID: Tag = Tag {
   element: 0x0140,
   name: "StorageMediaFileSetUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Storage Media File-set UID",
 };
 
@@ -25909,7 +25909,7 @@ pub const IconImageSequence: Tag = Tag {
   element: 0x0200,
   name: "IconImageSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Icon Image Sequence",
 };
 
@@ -25918,7 +25918,7 @@ pub const TopicTitle: Tag = Tag {
   element: 0x0904,
   name: "TopicTitle",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Topic Title",
 };
 
@@ -25927,7 +25927,7 @@ pub const TopicSubject: Tag = Tag {
   element: 0x0906,
   name: "TopicSubject",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Topic Subject",
 };
 
@@ -25936,7 +25936,7 @@ pub const TopicAuthor: Tag = Tag {
   element: 0x0910,
   name: "TopicAuthor",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Topic Author",
 };
 
@@ -25954,7 +25954,7 @@ pub const SOPInstanceStatus: Tag = Tag {
   element: 0x0410,
   name: "SOPInstanceStatus",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "SOP Instance Status",
 };
 
@@ -25963,7 +25963,7 @@ pub const SOPAuthorizationDateTime: Tag = Tag {
   element: 0x0420,
   name: "SOPAuthorizationDateTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "SOP Authorization DateTime",
 };
 
@@ -25972,7 +25972,7 @@ pub const SOPAuthorizationComment: Tag = Tag {
   element: 0x0424,
   name: "SOPAuthorizationComment",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "SOP Authorization Comment",
 };
 
@@ -25981,7 +25981,7 @@ pub const AuthorizationEquipmentCertificationNumber: Tag = Tag {
   element: 0x0426,
   name: "AuthorizationEquipmentCertificationNumber",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Authorization Equipment Certification Number",
 };
 
@@ -25990,7 +25990,7 @@ pub const MACIDNumber: Tag = Tag {
   element: 0x0005,
   name: "MACIDNumber",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "MAC ID Number",
 };
 
@@ -25999,7 +25999,7 @@ pub const MACCalculationTransferSyntaxUID: Tag = Tag {
   element: 0x0010,
   name: "MACCalculationTransferSyntaxUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "MAC Calculation Transfer Syntax UID",
 };
 
@@ -26008,7 +26008,7 @@ pub const MACAlgorithm: Tag = Tag {
   element: 0x0015,
   name: "MACAlgorithm",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "MAC Algorithm",
 };
 
@@ -26026,7 +26026,7 @@ pub const DigitalSignatureUID: Tag = Tag {
   element: 0x0100,
   name: "DigitalSignatureUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Digital Signature UID",
 };
 
@@ -26035,7 +26035,7 @@ pub const DigitalSignatureDateTime: Tag = Tag {
   element: 0x0105,
   name: "DigitalSignatureDateTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Digital Signature DateTime",
 };
 
@@ -26044,7 +26044,7 @@ pub const CertificateType: Tag = Tag {
   element: 0x0110,
   name: "CertificateType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Certificate Type",
 };
 
@@ -26053,7 +26053,7 @@ pub const CertificateOfSigner: Tag = Tag {
   element: 0x0115,
   name: "CertificateOfSigner",
   vr: "OB",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Certificate of Signer",
 };
 
@@ -26062,7 +26062,7 @@ pub const Signature: Tag = Tag {
   element: 0x0120,
   name: "Signature",
   vr: "OB",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Signature",
 };
 
@@ -26071,7 +26071,7 @@ pub const CertifiedTimestampType: Tag = Tag {
   element: 0x0305,
   name: "CertifiedTimestampType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Certified Timestamp Type",
 };
 
@@ -26080,7 +26080,7 @@ pub const CertifiedTimestamp: Tag = Tag {
   element: 0x0310,
   name: "CertifiedTimestamp",
   vr: "OB",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Certified Timestamp",
 };
 
@@ -26089,7 +26089,7 @@ pub const DigitalSignaturePurposeCodeSequence: Tag = Tag {
   element: 0x0401,
   name: "DigitalSignaturePurposeCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Digital Signature Purpose Code Sequence",
 };
 
@@ -26098,7 +26098,7 @@ pub const ReferencedDigitalSignatureSequence: Tag = Tag {
   element: 0x0402,
   name: "ReferencedDigitalSignatureSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Digital Signature Sequence",
 };
 
@@ -26107,7 +26107,7 @@ pub const ReferencedSOPInstanceMACSequence: Tag = Tag {
   element: 0x0403,
   name: "ReferencedSOPInstanceMACSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced SOP Instance MAC Sequence",
 };
 
@@ -26116,7 +26116,7 @@ pub const MAC: Tag = Tag {
   element: 0x0404,
   name: "MAC",
   vr: "OB",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "MAC",
 };
 
@@ -26125,7 +26125,7 @@ pub const EncryptedAttributesSequence: Tag = Tag {
   element: 0x0500,
   name: "EncryptedAttributesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Encrypted Attributes Sequence",
 };
 
@@ -26134,7 +26134,7 @@ pub const EncryptedContentTransferSyntaxUID: Tag = Tag {
   element: 0x0510,
   name: "EncryptedContentTransferSyntaxUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Encrypted Content Transfer Syntax UID",
 };
 
@@ -26143,7 +26143,7 @@ pub const EncryptedContent: Tag = Tag {
   element: 0x0520,
   name: "EncryptedContent",
   vr: "OB",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Encrypted Content",
 };
 
@@ -26152,7 +26152,7 @@ pub const ModifiedAttributesSequence: Tag = Tag {
   element: 0x0550,
   name: "ModifiedAttributesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Modified Attributes Sequence",
 };
 
@@ -26161,7 +26161,7 @@ pub const OriginalAttributesSequence: Tag = Tag {
   element: 0x0561,
   name: "OriginalAttributesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Original Attributes Sequence",
 };
 
@@ -26170,7 +26170,7 @@ pub const AttributeModificationDateTime: Tag = Tag {
   element: 0x0562,
   name: "AttributeModificationDateTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Attribute Modification DateTime",
 };
 
@@ -26179,7 +26179,7 @@ pub const ModifyingSystem: Tag = Tag {
   element: 0x0563,
   name: "ModifyingSystem",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Modifying System",
 };
 
@@ -26188,7 +26188,7 @@ pub const SourceOfPreviousValues: Tag = Tag {
   element: 0x0564,
   name: "SourceOfPreviousValues",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source of Previous Values",
 };
 
@@ -26197,7 +26197,7 @@ pub const ReasonForTheAttributeModification: Tag = Tag {
   element: 0x0565,
   name: "ReasonForTheAttributeModification",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Reason for the Attribute Modification",
 };
 
@@ -26206,7 +26206,7 @@ pub const NumberOfCopies: Tag = Tag {
   element: 0x0010,
   name: "NumberOfCopies",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Copies",
 };
 
@@ -26215,7 +26215,7 @@ pub const PrinterConfigurationSequence: Tag = Tag {
   element: 0x001E,
   name: "PrinterConfigurationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Printer Configuration Sequence",
 };
 
@@ -26224,7 +26224,7 @@ pub const PrintPriority: Tag = Tag {
   element: 0x0020,
   name: "PrintPriority",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Print Priority",
 };
 
@@ -26233,7 +26233,7 @@ pub const MediumType: Tag = Tag {
   element: 0x0030,
   name: "MediumType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Medium Type",
 };
 
@@ -26242,7 +26242,7 @@ pub const FilmDestination: Tag = Tag {
   element: 0x0040,
   name: "FilmDestination",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Film Destination",
 };
 
@@ -26251,7 +26251,7 @@ pub const FilmSessionLabel: Tag = Tag {
   element: 0x0050,
   name: "FilmSessionLabel",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Film Session Label",
 };
 
@@ -26260,7 +26260,7 @@ pub const MemoryAllocation: Tag = Tag {
   element: 0x0060,
   name: "MemoryAllocation",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Memory Allocation",
 };
 
@@ -26269,7 +26269,7 @@ pub const MaximumMemoryAllocation: Tag = Tag {
   element: 0x0061,
   name: "MaximumMemoryAllocation",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Maximum Memory Allocation",
 };
 
@@ -26278,7 +26278,7 @@ pub const ColorImagePrintingFlag: Tag = Tag {
   element: 0x0062,
   name: "ColorImagePrintingFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Color Image Printing Flag",
 };
 
@@ -26287,7 +26287,7 @@ pub const CollationFlag: Tag = Tag {
   element: 0x0063,
   name: "CollationFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Collation Flag",
 };
 
@@ -26296,7 +26296,7 @@ pub const AnnotationFlag: Tag = Tag {
   element: 0x0065,
   name: "AnnotationFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Annotation Flag",
 };
 
@@ -26305,7 +26305,7 @@ pub const ImageOverlayFlag: Tag = Tag {
   element: 0x0067,
   name: "ImageOverlayFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Overlay Flag",
 };
 
@@ -26314,7 +26314,7 @@ pub const PresentationLUTFlag: Tag = Tag {
   element: 0x0069,
   name: "PresentationLUTFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Presentation LUT Flag",
 };
 
@@ -26323,7 +26323,7 @@ pub const ImageBoxPresentationLUTFlag: Tag = Tag {
   element: 0x006A,
   name: "ImageBoxPresentationLUTFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Box Presentation LUT Flag",
 };
 
@@ -26332,7 +26332,7 @@ pub const MemoryBitDepth: Tag = Tag {
   element: 0x00A0,
   name: "MemoryBitDepth",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Memory Bit Depth",
 };
 
@@ -26341,7 +26341,7 @@ pub const PrintingBitDepth: Tag = Tag {
   element: 0x00A1,
   name: "PrintingBitDepth",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Printing Bit Depth",
 };
 
@@ -26350,7 +26350,7 @@ pub const MediaInstalledSequence: Tag = Tag {
   element: 0x00A2,
   name: "MediaInstalledSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Media Installed Sequence",
 };
 
@@ -26359,7 +26359,7 @@ pub const OtherMediaAvailableSequence: Tag = Tag {
   element: 0x00A4,
   name: "OtherMediaAvailableSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Other Media Available Sequence",
 };
 
@@ -26368,7 +26368,7 @@ pub const SupportedImageDisplayFormatsSequence: Tag = Tag {
   element: 0x00A8,
   name: "SupportedImageDisplayFormatsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Supported Image Display Formats Sequence",
 };
 
@@ -26377,7 +26377,7 @@ pub const ReferencedFilmBoxSequence: Tag = Tag {
   element: 0x0500,
   name: "ReferencedFilmBoxSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Film Box Sequence",
 };
 
@@ -26386,7 +26386,7 @@ pub const ReferencedStoredPrintSequence: Tag = Tag {
   element: 0x0510,
   name: "ReferencedStoredPrintSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Stored Print Sequence",
 };
 
@@ -26395,7 +26395,7 @@ pub const ImageDisplayFormat: Tag = Tag {
   element: 0x0010,
   name: "ImageDisplayFormat",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Display Format",
 };
 
@@ -26404,7 +26404,7 @@ pub const AnnotationDisplayFormatID: Tag = Tag {
   element: 0x0030,
   name: "AnnotationDisplayFormatID",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Annotation Display Format ID",
 };
 
@@ -26413,7 +26413,7 @@ pub const FilmOrientation: Tag = Tag {
   element: 0x0040,
   name: "FilmOrientation",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Film Orientation",
 };
 
@@ -26422,7 +26422,7 @@ pub const FilmSizeID: Tag = Tag {
   element: 0x0050,
   name: "FilmSizeID",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Film Size ID",
 };
 
@@ -26431,7 +26431,7 @@ pub const PrinterResolutionID: Tag = Tag {
   element: 0x0052,
   name: "PrinterResolutionID",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Printer Resolution ID",
 };
 
@@ -26440,7 +26440,7 @@ pub const DefaultPrinterResolutionID: Tag = Tag {
   element: 0x0054,
   name: "DefaultPrinterResolutionID",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Default Printer Resolution ID",
 };
 
@@ -26449,7 +26449,7 @@ pub const MagnificationType: Tag = Tag {
   element: 0x0060,
   name: "MagnificationType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Magnification Type",
 };
 
@@ -26458,7 +26458,7 @@ pub const SmoothingType: Tag = Tag {
   element: 0x0080,
   name: "SmoothingType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Smoothing Type",
 };
 
@@ -26467,7 +26467,7 @@ pub const DefaultMagnificationType: Tag = Tag {
   element: 0x00A6,
   name: "DefaultMagnificationType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Default Magnification Type",
 };
 
@@ -26485,7 +26485,7 @@ pub const DefaultSmoothingType: Tag = Tag {
   element: 0x00A8,
   name: "DefaultSmoothingType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Default Smoothing Type",
 };
 
@@ -26503,7 +26503,7 @@ pub const BorderDensity: Tag = Tag {
   element: 0x0100,
   name: "BorderDensity",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Border Density",
 };
 
@@ -26512,7 +26512,7 @@ pub const EmptyImageDensity: Tag = Tag {
   element: 0x0110,
   name: "EmptyImageDensity",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Empty Image Density",
 };
 
@@ -26521,7 +26521,7 @@ pub const MinDensity: Tag = Tag {
   element: 0x0120,
   name: "MinDensity",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Min Density",
 };
 
@@ -26530,7 +26530,7 @@ pub const MaxDensity: Tag = Tag {
   element: 0x0130,
   name: "MaxDensity",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Max Density",
 };
 
@@ -26539,7 +26539,7 @@ pub const Trim: Tag = Tag {
   element: 0x0140,
   name: "Trim",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Trim",
 };
 
@@ -26548,7 +26548,7 @@ pub const ConfigurationInformation: Tag = Tag {
   element: 0x0150,
   name: "ConfigurationInformation",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Configuration Information",
 };
 
@@ -26557,7 +26557,7 @@ pub const ConfigurationInformationDescription: Tag = Tag {
   element: 0x0152,
   name: "ConfigurationInformationDescription",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Configuration Information Description",
 };
 
@@ -26566,7 +26566,7 @@ pub const MaximumCollatedFilms: Tag = Tag {
   element: 0x0154,
   name: "MaximumCollatedFilms",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Maximum Collated Films",
 };
 
@@ -26575,7 +26575,7 @@ pub const Illumination: Tag = Tag {
   element: 0x015E,
   name: "Illumination",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Illumination",
 };
 
@@ -26584,7 +26584,7 @@ pub const ReflectedAmbientLight: Tag = Tag {
   element: 0x0160,
   name: "ReflectedAmbientLight",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Reflected Ambient Light",
 };
 
@@ -26593,7 +26593,7 @@ pub const PrinterPixelSpacing: Tag = Tag {
   element: 0x0376,
   name: "PrinterPixelSpacing",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Printer Pixel Spacing",
 };
 
@@ -26602,7 +26602,7 @@ pub const ReferencedFilmSessionSequence: Tag = Tag {
   element: 0x0500,
   name: "ReferencedFilmSessionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Film Session Sequence",
 };
 
@@ -26611,7 +26611,7 @@ pub const ReferencedImageBoxSequence: Tag = Tag {
   element: 0x0510,
   name: "ReferencedImageBoxSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Image Box Sequence",
 };
 
@@ -26620,7 +26620,7 @@ pub const ReferencedBasicAnnotationBoxSequence: Tag = Tag {
   element: 0x0520,
   name: "ReferencedBasicAnnotationBoxSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Basic Annotation Box Sequence",
 };
 
@@ -26629,7 +26629,7 @@ pub const ImageBoxPosition: Tag = Tag {
   element: 0x0010,
   name: "ImageBoxPosition",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Box Position",
 };
 
@@ -26638,7 +26638,7 @@ pub const Polarity: Tag = Tag {
   element: 0x0020,
   name: "Polarity",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Polarity",
 };
 
@@ -26647,7 +26647,7 @@ pub const RequestedImageSize: Tag = Tag {
   element: 0x0030,
   name: "RequestedImageSize",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Requested Image Size",
 };
 
@@ -26656,7 +26656,7 @@ pub const RequestedDecimateCropBehavior: Tag = Tag {
   element: 0x0040,
   name: "RequestedDecimateCropBehavior",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Requested Decimate/Crop Behavior",
 };
 
@@ -26665,7 +26665,7 @@ pub const RequestedResolutionID: Tag = Tag {
   element: 0x0050,
   name: "RequestedResolutionID",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Requested Resolution ID",
 };
 
@@ -26674,7 +26674,7 @@ pub const RequestedImageSizeFlag: Tag = Tag {
   element: 0x00A0,
   name: "RequestedImageSizeFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Requested Image Size Flag",
 };
 
@@ -26683,7 +26683,7 @@ pub const DecimateCropResult: Tag = Tag {
   element: 0x00A2,
   name: "DecimateCropResult",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Decimate/Crop Result",
 };
 
@@ -26692,7 +26692,7 @@ pub const BasicGrayscaleImageSequence: Tag = Tag {
   element: 0x0110,
   name: "BasicGrayscaleImageSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Basic Grayscale Image Sequence",
 };
 
@@ -26701,7 +26701,7 @@ pub const BasicColorImageSequence: Tag = Tag {
   element: 0x0111,
   name: "BasicColorImageSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Basic Color Image Sequence",
 };
 
@@ -26710,7 +26710,7 @@ pub const ReferencedImageOverlayBoxSequence: Tag = Tag {
   element: 0x0130,
   name: "ReferencedImageOverlayBoxSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Image Overlay Box Sequence",
 };
 
@@ -26719,7 +26719,7 @@ pub const ReferencedVOILUTBoxSequence: Tag = Tag {
   element: 0x0140,
   name: "ReferencedVOILUTBoxSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced VOI LUT Box Sequence",
 };
 
@@ -26728,7 +26728,7 @@ pub const AnnotationPosition: Tag = Tag {
   element: 0x0010,
   name: "AnnotationPosition",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Annotation Position",
 };
 
@@ -26737,7 +26737,7 @@ pub const TextString: Tag = Tag {
   element: 0x0020,
   name: "TextString",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Text String",
 };
 
@@ -26746,7 +26746,7 @@ pub const ReferencedOverlayPlaneSequence: Tag = Tag {
   element: 0x0010,
   name: "ReferencedOverlayPlaneSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Overlay Plane Sequence",
 };
 
@@ -26764,7 +26764,7 @@ pub const OverlayPixelDataSequence: Tag = Tag {
   element: 0x0020,
   name: "OverlayPixelDataSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Overlay Pixel Data Sequence",
 };
 
@@ -26773,7 +26773,7 @@ pub const OverlayMagnificationType: Tag = Tag {
   element: 0x0060,
   name: "OverlayMagnificationType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Overlay Magnification Type",
 };
 
@@ -26782,7 +26782,7 @@ pub const OverlaySmoothingType: Tag = Tag {
   element: 0x0070,
   name: "OverlaySmoothingType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Overlay Smoothing Type",
 };
 
@@ -26791,7 +26791,7 @@ pub const OverlayOrImageMagnification: Tag = Tag {
   element: 0x0072,
   name: "OverlayOrImageMagnification",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Overlay or Image Magnification",
 };
 
@@ -26800,7 +26800,7 @@ pub const MagnifyToNumberOfColumns: Tag = Tag {
   element: 0x0074,
   name: "MagnifyToNumberOfColumns",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Magnify to Number of Columns",
 };
 
@@ -26809,7 +26809,7 @@ pub const OverlayForegroundDensity: Tag = Tag {
   element: 0x0080,
   name: "OverlayForegroundDensity",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Overlay Foreground Density",
 };
 
@@ -26818,7 +26818,7 @@ pub const OverlayBackgroundDensity: Tag = Tag {
   element: 0x0082,
   name: "OverlayBackgroundDensity",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Overlay Background Density",
 };
 
@@ -26827,7 +26827,7 @@ pub const OverlayMode: Tag = Tag {
   element: 0x0090,
   name: "OverlayMode",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Overlay Mode",
 };
 
@@ -26836,7 +26836,7 @@ pub const ThresholdDensity: Tag = Tag {
   element: 0x0100,
   name: "ThresholdDensity",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Threshold Density",
 };
 
@@ -26845,7 +26845,7 @@ pub const ReferencedImageBoxSequenceRetired: Tag = Tag {
   element: 0x0500,
   name: "ReferencedImageBoxSequenceRetired",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Image Box Sequence (Retired)",
 };
 
@@ -26854,7 +26854,7 @@ pub const PresentationLUTSequence: Tag = Tag {
   element: 0x0010,
   name: "PresentationLUTSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Presentation LUT Sequence",
 };
 
@@ -26863,7 +26863,7 @@ pub const PresentationLUTShape: Tag = Tag {
   element: 0x0020,
   name: "PresentationLUTShape",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Presentation LUT Shape",
 };
 
@@ -26872,7 +26872,7 @@ pub const ReferencedPresentationLUTSequence: Tag = Tag {
   element: 0x0500,
   name: "ReferencedPresentationLUTSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Presentation LUT Sequence",
 };
 
@@ -26881,7 +26881,7 @@ pub const PrintJobID: Tag = Tag {
   element: 0x0010,
   name: "PrintJobID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Print Job ID",
 };
 
@@ -26890,7 +26890,7 @@ pub const ExecutionStatus: Tag = Tag {
   element: 0x0020,
   name: "ExecutionStatus",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Execution Status",
 };
 
@@ -26899,7 +26899,7 @@ pub const ExecutionStatusInfo: Tag = Tag {
   element: 0x0030,
   name: "ExecutionStatusInfo",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Execution Status Info",
 };
 
@@ -26908,7 +26908,7 @@ pub const CreationDate: Tag = Tag {
   element: 0x0040,
   name: "CreationDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Creation Date",
 };
 
@@ -26917,7 +26917,7 @@ pub const CreationTime: Tag = Tag {
   element: 0x0050,
   name: "CreationTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Creation Time",
 };
 
@@ -26926,7 +26926,7 @@ pub const Originator: Tag = Tag {
   element: 0x0070,
   name: "Originator",
   vr: "AE",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Originator",
 };
 
@@ -26935,7 +26935,7 @@ pub const DestinationAE: Tag = Tag {
   element: 0x0140,
   name: "DestinationAE",
   vr: "AE",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Destination AE",
 };
 
@@ -26944,7 +26944,7 @@ pub const OwnerID: Tag = Tag {
   element: 0x0160,
   name: "OwnerID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Owner ID",
 };
 
@@ -26953,7 +26953,7 @@ pub const NumberOfFilms: Tag = Tag {
   element: 0x0170,
   name: "NumberOfFilms",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Films",
 };
 
@@ -26962,7 +26962,7 @@ pub const ReferencedPrintJobSequencePullStoredPrint: Tag = Tag {
   element: 0x0500,
   name: "ReferencedPrintJobSequencePullStoredPrint",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Print Job Sequence (Pull Stored Print)",
 };
 
@@ -26971,7 +26971,7 @@ pub const PrinterStatus: Tag = Tag {
   element: 0x0010,
   name: "PrinterStatus",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Printer Status",
 };
 
@@ -26980,7 +26980,7 @@ pub const PrinterStatusInfo: Tag = Tag {
   element: 0x0020,
   name: "PrinterStatusInfo",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Printer Status Info",
 };
 
@@ -26989,7 +26989,7 @@ pub const PrinterName: Tag = Tag {
   element: 0x0030,
   name: "PrinterName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Printer Name",
 };
 
@@ -26998,7 +26998,7 @@ pub const PrintQueueID: Tag = Tag {
   element: 0x0099,
   name: "PrintQueueID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Print Queue ID",
 };
 
@@ -27007,7 +27007,7 @@ pub const QueueStatus: Tag = Tag {
   element: 0x0010,
   name: "QueueStatus",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Queue Status",
 };
 
@@ -27016,7 +27016,7 @@ pub const PrintJobDescriptionSequence: Tag = Tag {
   element: 0x0050,
   name: "PrintJobDescriptionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Print Job Description Sequence",
 };
 
@@ -27025,7 +27025,7 @@ pub const ReferencedPrintJobSequence: Tag = Tag {
   element: 0x0070,
   name: "ReferencedPrintJobSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Print Job Sequence",
 };
 
@@ -27034,7 +27034,7 @@ pub const PrintManagementCapabilitiesSequence: Tag = Tag {
   element: 0x0010,
   name: "PrintManagementCapabilitiesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Print Management Capabilities Sequence",
 };
 
@@ -27043,7 +27043,7 @@ pub const PrinterCharacteristicsSequence: Tag = Tag {
   element: 0x0015,
   name: "PrinterCharacteristicsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Printer Characteristics Sequence",
 };
 
@@ -27052,7 +27052,7 @@ pub const FilmBoxContentSequence: Tag = Tag {
   element: 0x0030,
   name: "FilmBoxContentSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Film Box Content Sequence",
 };
 
@@ -27061,7 +27061,7 @@ pub const ImageBoxContentSequence: Tag = Tag {
   element: 0x0040,
   name: "ImageBoxContentSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Box Content Sequence",
 };
 
@@ -27070,7 +27070,7 @@ pub const AnnotationContentSequence: Tag = Tag {
   element: 0x0050,
   name: "AnnotationContentSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Annotation Content Sequence",
 };
 
@@ -27079,7 +27079,7 @@ pub const ImageOverlayBoxContentSequence: Tag = Tag {
   element: 0x0060,
   name: "ImageOverlayBoxContentSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Overlay Box Content Sequence",
 };
 
@@ -27088,7 +27088,7 @@ pub const PresentationLUTContentSequence: Tag = Tag {
   element: 0x0080,
   name: "PresentationLUTContentSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Presentation LUT Content Sequence",
 };
 
@@ -27097,7 +27097,7 @@ pub const ProposedStudySequence: Tag = Tag {
   element: 0x00A0,
   name: "ProposedStudySequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Proposed Study Sequence",
 };
 
@@ -27106,7 +27106,7 @@ pub const OriginalImageSequence: Tag = Tag {
   element: 0x00C0,
   name: "OriginalImageSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Original Image Sequence",
 };
 
@@ -27115,7 +27115,7 @@ pub const LabelUsingInformationExtractedFromInstances: Tag = Tag {
   element: 0x0001,
   name: "LabelUsingInformationExtractedFromInstances",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Label Using Information Extracted From Instances",
 };
 
@@ -27124,7 +27124,7 @@ pub const LabelText: Tag = Tag {
   element: 0x0002,
   name: "LabelText",
   vr: "UT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Label Text",
 };
 
@@ -27133,7 +27133,7 @@ pub const LabelStyleSelection: Tag = Tag {
   element: 0x0003,
   name: "LabelStyleSelection",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Label Style Selection",
 };
 
@@ -27142,7 +27142,7 @@ pub const MediaDisposition: Tag = Tag {
   element: 0x0004,
   name: "MediaDisposition",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Media Disposition",
 };
 
@@ -27151,7 +27151,7 @@ pub const BarcodeValue: Tag = Tag {
   element: 0x0005,
   name: "BarcodeValue",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Barcode Value",
 };
 
@@ -27160,7 +27160,7 @@ pub const BarcodeSymbology: Tag = Tag {
   element: 0x0006,
   name: "BarcodeSymbology",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Barcode Symbology",
 };
 
@@ -27169,7 +27169,7 @@ pub const AllowMediaSplitting: Tag = Tag {
   element: 0x0007,
   name: "AllowMediaSplitting",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Allow Media Splitting",
 };
 
@@ -27178,7 +27178,7 @@ pub const IncludeNonDICOMObjects: Tag = Tag {
   element: 0x0008,
   name: "IncludeNonDICOMObjects",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Include Non-DICOM Objects",
 };
 
@@ -27187,7 +27187,7 @@ pub const IncludeDisplayApplication: Tag = Tag {
   element: 0x0009,
   name: "IncludeDisplayApplication",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Include Display Application",
 };
 
@@ -27196,7 +27196,7 @@ pub const PreserveCompositeInstancesAfterMediaCreation: Tag = Tag {
   element: 0x000A,
   name: "PreserveCompositeInstancesAfterMediaCreation",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Preserve Composite Instances After Media Creation",
 };
 
@@ -27205,7 +27205,7 @@ pub const TotalNumberOfPiecesOfMediaCreated: Tag = Tag {
   element: 0x000B,
   name: "TotalNumberOfPiecesOfMediaCreated",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Total Number of Pieces of Media Created",
 };
 
@@ -27214,7 +27214,7 @@ pub const RequestedMediaApplicationProfile: Tag = Tag {
   element: 0x000C,
   name: "RequestedMediaApplicationProfile",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Requested Media Application Profile",
 };
 
@@ -27223,7 +27223,7 @@ pub const ReferencedStorageMediaSequence: Tag = Tag {
   element: 0x000D,
   name: "ReferencedStorageMediaSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Storage Media Sequence",
 };
 
@@ -27241,7 +27241,7 @@ pub const AllowLossyCompression: Tag = Tag {
   element: 0x000F,
   name: "AllowLossyCompression",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Allow Lossy Compression",
 };
 
@@ -27250,7 +27250,7 @@ pub const RequestPriority: Tag = Tag {
   element: 0x0020,
   name: "RequestPriority",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Request Priority",
 };
 
@@ -27259,7 +27259,7 @@ pub const RTImageLabel: Tag = Tag {
   element: 0x0002,
   name: "RTImageLabel",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "RT Image Label",
 };
 
@@ -27268,7 +27268,7 @@ pub const RTImageName: Tag = Tag {
   element: 0x0003,
   name: "RTImageName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "RT Image Name",
 };
 
@@ -27277,7 +27277,7 @@ pub const RTImageDescription: Tag = Tag {
   element: 0x0004,
   name: "RTImageDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "RT Image Description",
 };
 
@@ -27286,7 +27286,7 @@ pub const ReportedValuesOrigin: Tag = Tag {
   element: 0x000A,
   name: "ReportedValuesOrigin",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Reported Values Origin",
 };
 
@@ -27295,7 +27295,7 @@ pub const RTImagePlane: Tag = Tag {
   element: 0x000C,
   name: "RTImagePlane",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "RT Image Plane",
 };
 
@@ -27304,7 +27304,7 @@ pub const XRayImageReceptorTranslation: Tag = Tag {
   element: 0x000D,
   name: "XRayImageReceptorTranslation",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "X-Ray Image Receptor Translation",
 };
 
@@ -27313,7 +27313,7 @@ pub const XRayImageReceptorAngle: Tag = Tag {
   element: 0x000E,
   name: "XRayImageReceptorAngle",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "X-Ray Image Receptor Angle",
 };
 
@@ -27322,7 +27322,7 @@ pub const RTImageOrientation: Tag = Tag {
   element: 0x0010,
   name: "RTImageOrientation",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 6, end: 6 },
   description: "RT Image Orientation",
 };
 
@@ -27331,7 +27331,7 @@ pub const ImagePlanePixelSpacing: Tag = Tag {
   element: 0x0011,
   name: "ImagePlanePixelSpacing",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Image Plane Pixel Spacing",
 };
 
@@ -27340,7 +27340,7 @@ pub const RTImagePosition: Tag = Tag {
   element: 0x0012,
   name: "RTImagePosition",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "RT Image Position",
 };
 
@@ -27349,7 +27349,7 @@ pub const RadiationMachineName: Tag = Tag {
   element: 0x0020,
   name: "RadiationMachineName",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Radiation Machine Name",
 };
 
@@ -27358,7 +27358,7 @@ pub const RadiationMachineSAD: Tag = Tag {
   element: 0x0022,
   name: "RadiationMachineSAD",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Radiation Machine SAD",
 };
 
@@ -27367,7 +27367,7 @@ pub const RadiationMachineSSD: Tag = Tag {
   element: 0x0024,
   name: "RadiationMachineSSD",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Radiation Machine SSD",
 };
 
@@ -27376,7 +27376,7 @@ pub const RTImageSID: Tag = Tag {
   element: 0x0026,
   name: "RTImageSID",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "RT Image SID",
 };
 
@@ -27385,7 +27385,7 @@ pub const SourceToReferenceObjectDistance: Tag = Tag {
   element: 0x0028,
   name: "SourceToReferenceObjectDistance",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source to Reference Object Distance",
 };
 
@@ -27394,7 +27394,7 @@ pub const FractionNumber: Tag = Tag {
   element: 0x0029,
   name: "FractionNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fraction Number",
 };
 
@@ -27403,7 +27403,7 @@ pub const ExposureSequence: Tag = Tag {
   element: 0x0030,
   name: "ExposureSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Exposure Sequence",
 };
 
@@ -27412,7 +27412,7 @@ pub const MetersetExposure: Tag = Tag {
   element: 0x0032,
   name: "MetersetExposure",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Meterset Exposure",
 };
 
@@ -27421,7 +27421,7 @@ pub const DiaphragmPosition: Tag = Tag {
   element: 0x0034,
   name: "DiaphragmPosition",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 4, end: 4 },
   description: "Diaphragm Position",
 };
 
@@ -27430,7 +27430,7 @@ pub const FluenceMapSequence: Tag = Tag {
   element: 0x0040,
   name: "FluenceMapSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fluence Map Sequence",
 };
 
@@ -27439,7 +27439,7 @@ pub const FluenceDataSource: Tag = Tag {
   element: 0x0041,
   name: "FluenceDataSource",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fluence Data Source",
 };
 
@@ -27448,7 +27448,7 @@ pub const FluenceDataScale: Tag = Tag {
   element: 0x0042,
   name: "FluenceDataScale",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fluence Data Scale",
 };
 
@@ -27457,7 +27457,7 @@ pub const PrimaryFluenceModeSequence: Tag = Tag {
   element: 0x0050,
   name: "PrimaryFluenceModeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Primary Fluence Mode Sequence",
 };
 
@@ -27466,7 +27466,7 @@ pub const FluenceMode: Tag = Tag {
   element: 0x0051,
   name: "FluenceMode",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fluence Mode",
 };
 
@@ -27475,7 +27475,7 @@ pub const FluenceModeID: Tag = Tag {
   element: 0x0052,
   name: "FluenceModeID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fluence Mode ID",
 };
 
@@ -27484,7 +27484,7 @@ pub const DVHType: Tag = Tag {
   element: 0x0001,
   name: "DVHType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "DVH Type",
 };
 
@@ -27493,7 +27493,7 @@ pub const DoseUnits: Tag = Tag {
   element: 0x0002,
   name: "DoseUnits",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Dose Units",
 };
 
@@ -27502,7 +27502,7 @@ pub const DoseType: Tag = Tag {
   element: 0x0004,
   name: "DoseType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Dose Type",
 };
 
@@ -27511,7 +27511,7 @@ pub const SpatialTransformOfDose: Tag = Tag {
   element: 0x0005,
   name: "SpatialTransformOfDose",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Spatial Transform of Dose",
 };
 
@@ -27520,7 +27520,7 @@ pub const DoseComment: Tag = Tag {
   element: 0x0006,
   name: "DoseComment",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Dose Comment",
 };
 
@@ -27529,7 +27529,7 @@ pub const NormalizationPoint: Tag = Tag {
   element: 0x0008,
   name: "NormalizationPoint",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Normalization Point",
 };
 
@@ -27538,7 +27538,7 @@ pub const DoseSummationType: Tag = Tag {
   element: 0x000A,
   name: "DoseSummationType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Dose Summation Type",
 };
 
@@ -27556,7 +27556,7 @@ pub const DoseGridScaling: Tag = Tag {
   element: 0x000E,
   name: "DoseGridScaling",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Dose Grid Scaling",
 };
 
@@ -27565,7 +27565,7 @@ pub const RTDoseROISequence: Tag = Tag {
   element: 0x0010,
   name: "RTDoseROISequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "RT Dose ROI Sequence",
 };
 
@@ -27574,7 +27574,7 @@ pub const DoseValue: Tag = Tag {
   element: 0x0012,
   name: "DoseValue",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Dose Value",
 };
 
@@ -27592,7 +27592,7 @@ pub const DVHNormalizationPoint: Tag = Tag {
   element: 0x0040,
   name: "DVHNormalizationPoint",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "DVH Normalization Point",
 };
 
@@ -27601,7 +27601,7 @@ pub const DVHNormalizationDoseValue: Tag = Tag {
   element: 0x0042,
   name: "DVHNormalizationDoseValue",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "DVH Normalization Dose Value",
 };
 
@@ -27610,7 +27610,7 @@ pub const DVHSequence: Tag = Tag {
   element: 0x0050,
   name: "DVHSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "DVH Sequence",
 };
 
@@ -27619,7 +27619,7 @@ pub const DVHDoseScaling: Tag = Tag {
   element: 0x0052,
   name: "DVHDoseScaling",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "DVH Dose Scaling",
 };
 
@@ -27628,7 +27628,7 @@ pub const DVHVolumeUnits: Tag = Tag {
   element: 0x0054,
   name: "DVHVolumeUnits",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "DVH Volume Units",
 };
 
@@ -27637,7 +27637,7 @@ pub const DVHNumberOfBins: Tag = Tag {
   element: 0x0056,
   name: "DVHNumberOfBins",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "DVH Number of Bins",
 };
 
@@ -27655,7 +27655,7 @@ pub const DVHReferencedROISequence: Tag = Tag {
   element: 0x0060,
   name: "DVHReferencedROISequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "DVH Referenced ROI Sequence",
 };
 
@@ -27664,7 +27664,7 @@ pub const DVHROIContributionType: Tag = Tag {
   element: 0x0062,
   name: "DVHROIContributionType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "DVH ROI Contribution Type",
 };
 
@@ -27673,7 +27673,7 @@ pub const DVHMinimumDose: Tag = Tag {
   element: 0x0070,
   name: "DVHMinimumDose",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "DVH Minimum Dose",
 };
 
@@ -27682,7 +27682,7 @@ pub const DVHMaximumDose: Tag = Tag {
   element: 0x0072,
   name: "DVHMaximumDose",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "DVH Maximum Dose",
 };
 
@@ -27691,7 +27691,7 @@ pub const DVHMeanDose: Tag = Tag {
   element: 0x0074,
   name: "DVHMeanDose",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "DVH Mean Dose",
 };
 
@@ -27700,7 +27700,7 @@ pub const StructureSetLabel: Tag = Tag {
   element: 0x0002,
   name: "StructureSetLabel",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Structure Set Label",
 };
 
@@ -27709,7 +27709,7 @@ pub const StructureSetName: Tag = Tag {
   element: 0x0004,
   name: "StructureSetName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Structure Set Name",
 };
 
@@ -27718,7 +27718,7 @@ pub const StructureSetDescription: Tag = Tag {
   element: 0x0006,
   name: "StructureSetDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Structure Set Description",
 };
 
@@ -27727,7 +27727,7 @@ pub const StructureSetDate: Tag = Tag {
   element: 0x0008,
   name: "StructureSetDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Structure Set Date",
 };
 
@@ -27736,7 +27736,7 @@ pub const StructureSetTime: Tag = Tag {
   element: 0x0009,
   name: "StructureSetTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Structure Set Time",
 };
 
@@ -27745,7 +27745,7 @@ pub const ReferencedFrameOfReferenceSequence: Tag = Tag {
   element: 0x0010,
   name: "ReferencedFrameOfReferenceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Frame of Reference Sequence",
 };
 
@@ -27754,7 +27754,7 @@ pub const RTReferencedStudySequence: Tag = Tag {
   element: 0x0012,
   name: "RTReferencedStudySequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "RT Referenced Study Sequence",
 };
 
@@ -27763,7 +27763,7 @@ pub const RTReferencedSeriesSequence: Tag = Tag {
   element: 0x0014,
   name: "RTReferencedSeriesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "RT Referenced Series Sequence",
 };
 
@@ -27772,7 +27772,7 @@ pub const ContourImageSequence: Tag = Tag {
   element: 0x0016,
   name: "ContourImageSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contour Image Sequence",
 };
 
@@ -27781,7 +27781,7 @@ pub const PredecessorStructureSetSequence: Tag = Tag {
   element: 0x0018,
   name: "PredecessorStructureSetSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Predecessor Structure Set Sequence",
 };
 
@@ -27790,7 +27790,7 @@ pub const StructureSetROISequence: Tag = Tag {
   element: 0x0020,
   name: "StructureSetROISequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Structure Set ROI Sequence",
 };
 
@@ -27799,7 +27799,7 @@ pub const ROINumber: Tag = Tag {
   element: 0x0022,
   name: "ROINumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ROI Number",
 };
 
@@ -27808,7 +27808,7 @@ pub const ReferencedFrameOfReferenceUID: Tag = Tag {
   element: 0x0024,
   name: "ReferencedFrameOfReferenceUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Frame of Reference UID",
 };
 
@@ -27817,7 +27817,7 @@ pub const ROIName: Tag = Tag {
   element: 0x0026,
   name: "ROIName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ROI Name",
 };
 
@@ -27826,7 +27826,7 @@ pub const ROIDescription: Tag = Tag {
   element: 0x0028,
   name: "ROIDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ROI Description",
 };
 
@@ -27835,7 +27835,7 @@ pub const ROIDisplayColor: Tag = Tag {
   element: 0x002A,
   name: "ROIDisplayColor",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "ROI Display Color",
 };
 
@@ -27844,7 +27844,7 @@ pub const ROIVolume: Tag = Tag {
   element: 0x002C,
   name: "ROIVolume",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ROI Volume",
 };
 
@@ -27853,7 +27853,7 @@ pub const RTRelatedROISequence: Tag = Tag {
   element: 0x0030,
   name: "RTRelatedROISequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "RT Related ROI Sequence",
 };
 
@@ -27862,7 +27862,7 @@ pub const RTROIRelationship: Tag = Tag {
   element: 0x0033,
   name: "RTROIRelationship",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "RT ROI Relationship",
 };
 
@@ -27871,7 +27871,7 @@ pub const ROIGenerationAlgorithm: Tag = Tag {
   element: 0x0036,
   name: "ROIGenerationAlgorithm",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ROI Generation Algorithm",
 };
 
@@ -27880,7 +27880,7 @@ pub const ROIGenerationDescription: Tag = Tag {
   element: 0x0038,
   name: "ROIGenerationDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ROI Generation Description",
 };
 
@@ -27889,7 +27889,7 @@ pub const ROIContourSequence: Tag = Tag {
   element: 0x0039,
   name: "ROIContourSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ROI Contour Sequence",
 };
 
@@ -27898,7 +27898,7 @@ pub const ContourSequence: Tag = Tag {
   element: 0x0040,
   name: "ContourSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contour Sequence",
 };
 
@@ -27907,7 +27907,7 @@ pub const ContourGeometricType: Tag = Tag {
   element: 0x0042,
   name: "ContourGeometricType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contour Geometric Type",
 };
 
@@ -27916,7 +27916,7 @@ pub const ContourSlabThickness: Tag = Tag {
   element: 0x0044,
   name: "ContourSlabThickness",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contour Slab Thickness",
 };
 
@@ -27925,7 +27925,7 @@ pub const ContourOffsetVector: Tag = Tag {
   element: 0x0045,
   name: "ContourOffsetVector",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Contour Offset Vector",
 };
 
@@ -27934,7 +27934,7 @@ pub const NumberOfContourPoints: Tag = Tag {
   element: 0x0046,
   name: "NumberOfContourPoints",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Contour Points",
 };
 
@@ -27943,7 +27943,7 @@ pub const ContourNumber: Tag = Tag {
   element: 0x0048,
   name: "ContourNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Contour Number",
 };
 
@@ -27970,7 +27970,7 @@ pub const RTROIObservationsSequence: Tag = Tag {
   element: 0x0080,
   name: "RTROIObservationsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "RT ROI Observations Sequence",
 };
 
@@ -27979,7 +27979,7 @@ pub const ObservationNumber: Tag = Tag {
   element: 0x0082,
   name: "ObservationNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Observation Number",
 };
 
@@ -27988,7 +27988,7 @@ pub const ReferencedROINumber: Tag = Tag {
   element: 0x0084,
   name: "ReferencedROINumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced ROI Number",
 };
 
@@ -27997,7 +27997,7 @@ pub const ROIObservationLabel: Tag = Tag {
   element: 0x0085,
   name: "ROIObservationLabel",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ROI Observation Label",
 };
 
@@ -28006,7 +28006,7 @@ pub const RTROIIdentificationCodeSequence: Tag = Tag {
   element: 0x0086,
   name: "RTROIIdentificationCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "RT ROI Identification Code Sequence",
 };
 
@@ -28015,7 +28015,7 @@ pub const ROIObservationDescription: Tag = Tag {
   element: 0x0088,
   name: "ROIObservationDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ROI Observation Description",
 };
 
@@ -28024,7 +28024,7 @@ pub const RelatedRTROIObservationsSequence: Tag = Tag {
   element: 0x00A0,
   name: "RelatedRTROIObservationsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Related RT ROI Observations Sequence",
 };
 
@@ -28033,7 +28033,7 @@ pub const RTROIInterpretedType: Tag = Tag {
   element: 0x00A4,
   name: "RTROIInterpretedType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "RT ROI Interpreted Type",
 };
 
@@ -28042,7 +28042,7 @@ pub const ROIInterpreter: Tag = Tag {
   element: 0x00A6,
   name: "ROIInterpreter",
   vr: "PN",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ROI Interpreter",
 };
 
@@ -28051,7 +28051,7 @@ pub const ROIPhysicalPropertiesSequence: Tag = Tag {
   element: 0x00B0,
   name: "ROIPhysicalPropertiesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ROI Physical Properties Sequence",
 };
 
@@ -28060,7 +28060,7 @@ pub const ROIPhysicalProperty: Tag = Tag {
   element: 0x00B2,
   name: "ROIPhysicalProperty",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ROI Physical Property",
 };
 
@@ -28069,7 +28069,7 @@ pub const ROIPhysicalPropertyValue: Tag = Tag {
   element: 0x00B4,
   name: "ROIPhysicalPropertyValue",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ROI Physical Property Value",
 };
 
@@ -28078,7 +28078,7 @@ pub const ROIElementalCompositionSequence: Tag = Tag {
   element: 0x00B6,
   name: "ROIElementalCompositionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ROI Elemental Composition Sequence",
 };
 
@@ -28087,7 +28087,7 @@ pub const ROIElementalCompositionAtomicNumber: Tag = Tag {
   element: 0x00B7,
   name: "ROIElementalCompositionAtomicNumber",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ROI Elemental Composition Atomic Number",
 };
 
@@ -28096,7 +28096,7 @@ pub const ROIElementalCompositionAtomicMassFraction: Tag = Tag {
   element: 0x00B8,
   name: "ROIElementalCompositionAtomicMassFraction",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ROI Elemental Composition Atomic Mass Fraction",
 };
 
@@ -28105,7 +28105,7 @@ pub const AdditionalRTROIIdentificationCodeSequence: Tag = Tag {
   element: 0x00B9,
   name: "AdditionalRTROIIdentificationCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Additional RT ROI Identification Code Sequence",
 };
 
@@ -28114,7 +28114,7 @@ pub const FrameOfReferenceRelationshipSequence: Tag = Tag {
   element: 0x00C0,
   name: "FrameOfReferenceRelationshipSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Frame of Reference Relationship Sequence",
 };
 
@@ -28123,7 +28123,7 @@ pub const RelatedFrameOfReferenceUID: Tag = Tag {
   element: 0x00C2,
   name: "RelatedFrameOfReferenceUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Related Frame of Reference UID",
 };
 
@@ -28132,7 +28132,7 @@ pub const FrameOfReferenceTransformationType: Tag = Tag {
   element: 0x00C4,
   name: "FrameOfReferenceTransformationType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Frame of Reference Transformation Type",
 };
 
@@ -28141,7 +28141,7 @@ pub const FrameOfReferenceTransformationMatrix: Tag = Tag {
   element: 0x00C6,
   name: "FrameOfReferenceTransformationMatrix",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 16, end: 16 },
   description: "Frame of Reference Transformation Matrix",
 };
 
@@ -28150,7 +28150,7 @@ pub const FrameOfReferenceTransformationComment: Tag = Tag {
   element: 0x00C8,
   name: "FrameOfReferenceTransformationComment",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Frame of Reference Transformation Comment",
 };
 
@@ -28159,7 +28159,7 @@ pub const MeasuredDoseReferenceSequence: Tag = Tag {
   element: 0x0010,
   name: "MeasuredDoseReferenceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Measured Dose Reference Sequence",
 };
 
@@ -28168,7 +28168,7 @@ pub const MeasuredDoseDescription: Tag = Tag {
   element: 0x0012,
   name: "MeasuredDoseDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Measured Dose Description",
 };
 
@@ -28177,7 +28177,7 @@ pub const MeasuredDoseType: Tag = Tag {
   element: 0x0014,
   name: "MeasuredDoseType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Measured Dose Type",
 };
 
@@ -28186,7 +28186,7 @@ pub const MeasuredDoseValue: Tag = Tag {
   element: 0x0016,
   name: "MeasuredDoseValue",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Measured Dose Value",
 };
 
@@ -28195,7 +28195,7 @@ pub const TreatmentSessionBeamSequence: Tag = Tag {
   element: 0x0020,
   name: "TreatmentSessionBeamSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Treatment Session Beam Sequence",
 };
 
@@ -28204,7 +28204,7 @@ pub const TreatmentSessionIonBeamSequence: Tag = Tag {
   element: 0x0021,
   name: "TreatmentSessionIonBeamSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Treatment Session Ion Beam Sequence",
 };
 
@@ -28213,7 +28213,7 @@ pub const CurrentFractionNumber: Tag = Tag {
   element: 0x0022,
   name: "CurrentFractionNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Current Fraction Number",
 };
 
@@ -28222,7 +28222,7 @@ pub const TreatmentControlPointDate: Tag = Tag {
   element: 0x0024,
   name: "TreatmentControlPointDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Treatment Control Point Date",
 };
 
@@ -28231,7 +28231,7 @@ pub const TreatmentControlPointTime: Tag = Tag {
   element: 0x0025,
   name: "TreatmentControlPointTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Treatment Control Point Time",
 };
 
@@ -28240,7 +28240,7 @@ pub const TreatmentTerminationStatus: Tag = Tag {
   element: 0x002A,
   name: "TreatmentTerminationStatus",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Treatment Termination Status",
 };
 
@@ -28249,7 +28249,7 @@ pub const TreatmentTerminationCode: Tag = Tag {
   element: 0x002B,
   name: "TreatmentTerminationCode",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Treatment Termination Code",
 };
 
@@ -28258,7 +28258,7 @@ pub const TreatmentVerificationStatus: Tag = Tag {
   element: 0x002C,
   name: "TreatmentVerificationStatus",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Treatment Verification Status",
 };
 
@@ -28267,7 +28267,7 @@ pub const ReferencedTreatmentRecordSequence: Tag = Tag {
   element: 0x0030,
   name: "ReferencedTreatmentRecordSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Treatment Record Sequence",
 };
 
@@ -28276,7 +28276,7 @@ pub const SpecifiedPrimaryMeterset: Tag = Tag {
   element: 0x0032,
   name: "SpecifiedPrimaryMeterset",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Specified Primary Meterset",
 };
 
@@ -28285,7 +28285,7 @@ pub const SpecifiedSecondaryMeterset: Tag = Tag {
   element: 0x0033,
   name: "SpecifiedSecondaryMeterset",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Specified Secondary Meterset",
 };
 
@@ -28294,7 +28294,7 @@ pub const DeliveredPrimaryMeterset: Tag = Tag {
   element: 0x0036,
   name: "DeliveredPrimaryMeterset",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Delivered Primary Meterset",
 };
 
@@ -28303,7 +28303,7 @@ pub const DeliveredSecondaryMeterset: Tag = Tag {
   element: 0x0037,
   name: "DeliveredSecondaryMeterset",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Delivered Secondary Meterset",
 };
 
@@ -28312,7 +28312,7 @@ pub const SpecifiedTreatmentTime: Tag = Tag {
   element: 0x003A,
   name: "SpecifiedTreatmentTime",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Specified Treatment Time",
 };
 
@@ -28321,7 +28321,7 @@ pub const DeliveredTreatmentTime: Tag = Tag {
   element: 0x003B,
   name: "DeliveredTreatmentTime",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Delivered Treatment Time",
 };
 
@@ -28330,7 +28330,7 @@ pub const ControlPointDeliverySequence: Tag = Tag {
   element: 0x0040,
   name: "ControlPointDeliverySequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Control Point Delivery Sequence",
 };
 
@@ -28339,7 +28339,7 @@ pub const IonControlPointDeliverySequence: Tag = Tag {
   element: 0x0041,
   name: "IonControlPointDeliverySequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ion Control Point Delivery Sequence",
 };
 
@@ -28348,7 +28348,7 @@ pub const SpecifiedMeterset: Tag = Tag {
   element: 0x0042,
   name: "SpecifiedMeterset",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Specified Meterset",
 };
 
@@ -28357,7 +28357,7 @@ pub const DeliveredMeterset: Tag = Tag {
   element: 0x0044,
   name: "DeliveredMeterset",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Delivered Meterset",
 };
 
@@ -28366,7 +28366,7 @@ pub const MetersetRateSet: Tag = Tag {
   element: 0x0045,
   name: "MetersetRateSet",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Meterset Rate Set",
 };
 
@@ -28375,7 +28375,7 @@ pub const MetersetRateDelivered: Tag = Tag {
   element: 0x0046,
   name: "MetersetRateDelivered",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Meterset Rate Delivered",
 };
 
@@ -28393,7 +28393,7 @@ pub const DoseRateDelivered: Tag = Tag {
   element: 0x0048,
   name: "DoseRateDelivered",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Dose Rate Delivered",
 };
 
@@ -28402,7 +28402,7 @@ pub const TreatmentSummaryCalculatedDoseReferenceSequence: Tag = Tag {
   element: 0x0050,
   name: "TreatmentSummaryCalculatedDoseReferenceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Treatment Summary Calculated Dose Reference Sequence",
 };
 
@@ -28411,7 +28411,7 @@ pub const CumulativeDoseToDoseReference: Tag = Tag {
   element: 0x0052,
   name: "CumulativeDoseToDoseReference",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Cumulative Dose to Dose Reference",
 };
 
@@ -28420,7 +28420,7 @@ pub const FirstTreatmentDate: Tag = Tag {
   element: 0x0054,
   name: "FirstTreatmentDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "First Treatment Date",
 };
 
@@ -28429,7 +28429,7 @@ pub const MostRecentTreatmentDate: Tag = Tag {
   element: 0x0056,
   name: "MostRecentTreatmentDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Most Recent Treatment Date",
 };
 
@@ -28438,7 +28438,7 @@ pub const NumberOfFractionsDelivered: Tag = Tag {
   element: 0x005A,
   name: "NumberOfFractionsDelivered",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Fractions Delivered",
 };
 
@@ -28447,7 +28447,7 @@ pub const OverrideSequence: Tag = Tag {
   element: 0x0060,
   name: "OverrideSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Override Sequence",
 };
 
@@ -28456,7 +28456,7 @@ pub const ParameterSequencePointer: Tag = Tag {
   element: 0x0061,
   name: "ParameterSequencePointer",
   vr: "AT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Parameter Sequence Pointer",
 };
 
@@ -28465,7 +28465,7 @@ pub const OverrideParameterPointer: Tag = Tag {
   element: 0x0062,
   name: "OverrideParameterPointer",
   vr: "AT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Override Parameter Pointer",
 };
 
@@ -28474,7 +28474,7 @@ pub const ParameterItemIndex: Tag = Tag {
   element: 0x0063,
   name: "ParameterItemIndex",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Parameter Item Index",
 };
 
@@ -28483,7 +28483,7 @@ pub const MeasuredDoseReferenceNumber: Tag = Tag {
   element: 0x0064,
   name: "MeasuredDoseReferenceNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Measured Dose Reference Number",
 };
 
@@ -28492,7 +28492,7 @@ pub const ParameterPointer: Tag = Tag {
   element: 0x0065,
   name: "ParameterPointer",
   vr: "AT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Parameter Pointer",
 };
 
@@ -28501,7 +28501,7 @@ pub const OverrideReason: Tag = Tag {
   element: 0x0066,
   name: "OverrideReason",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Override Reason",
 };
 
@@ -28510,7 +28510,7 @@ pub const CorrectedParameterSequence: Tag = Tag {
   element: 0x0068,
   name: "CorrectedParameterSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Corrected Parameter Sequence",
 };
 
@@ -28519,7 +28519,7 @@ pub const CorrectionValue: Tag = Tag {
   element: 0x006A,
   name: "CorrectionValue",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Correction Value",
 };
 
@@ -28528,7 +28528,7 @@ pub const CalculatedDoseReferenceSequence: Tag = Tag {
   element: 0x0070,
   name: "CalculatedDoseReferenceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Calculated Dose Reference Sequence",
 };
 
@@ -28537,7 +28537,7 @@ pub const CalculatedDoseReferenceNumber: Tag = Tag {
   element: 0x0072,
   name: "CalculatedDoseReferenceNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Calculated Dose Reference Number",
 };
 
@@ -28546,7 +28546,7 @@ pub const CalculatedDoseReferenceDescription: Tag = Tag {
   element: 0x0074,
   name: "CalculatedDoseReferenceDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Calculated Dose Reference Description",
 };
 
@@ -28555,7 +28555,7 @@ pub const CalculatedDoseReferenceDoseValue: Tag = Tag {
   element: 0x0076,
   name: "CalculatedDoseReferenceDoseValue",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Calculated Dose Reference Dose Value",
 };
 
@@ -28564,7 +28564,7 @@ pub const StartMeterset: Tag = Tag {
   element: 0x0078,
   name: "StartMeterset",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Start Meterset",
 };
 
@@ -28573,7 +28573,7 @@ pub const EndMeterset: Tag = Tag {
   element: 0x007A,
   name: "EndMeterset",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "End Meterset",
 };
 
@@ -28582,7 +28582,7 @@ pub const ReferencedMeasuredDoseReferenceSequence: Tag = Tag {
   element: 0x0080,
   name: "ReferencedMeasuredDoseReferenceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Measured Dose Reference Sequence",
 };
 
@@ -28591,7 +28591,7 @@ pub const ReferencedMeasuredDoseReferenceNumber: Tag = Tag {
   element: 0x0082,
   name: "ReferencedMeasuredDoseReferenceNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Measured Dose Reference Number",
 };
 
@@ -28600,7 +28600,7 @@ pub const ReferencedCalculatedDoseReferenceSequence: Tag = Tag {
   element: 0x0090,
   name: "ReferencedCalculatedDoseReferenceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Calculated Dose Reference Sequence",
 };
 
@@ -28609,7 +28609,7 @@ pub const ReferencedCalculatedDoseReferenceNumber: Tag = Tag {
   element: 0x0092,
   name: "ReferencedCalculatedDoseReferenceNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Calculated Dose Reference Number",
 };
 
@@ -28618,7 +28618,7 @@ pub const BeamLimitingDeviceLeafPairsSequence: Tag = Tag {
   element: 0x00A0,
   name: "BeamLimitingDeviceLeafPairsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Beam Limiting Device Leaf Pairs Sequence",
 };
 
@@ -28627,7 +28627,7 @@ pub const RecordedWedgeSequence: Tag = Tag {
   element: 0x00B0,
   name: "RecordedWedgeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Recorded Wedge Sequence",
 };
 
@@ -28636,7 +28636,7 @@ pub const RecordedCompensatorSequence: Tag = Tag {
   element: 0x00C0,
   name: "RecordedCompensatorSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Recorded Compensator Sequence",
 };
 
@@ -28645,7 +28645,7 @@ pub const RecordedBlockSequence: Tag = Tag {
   element: 0x00D0,
   name: "RecordedBlockSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Recorded Block Sequence",
 };
 
@@ -28654,7 +28654,7 @@ pub const TreatmentSummaryMeasuredDoseReferenceSequence: Tag = Tag {
   element: 0x00E0,
   name: "TreatmentSummaryMeasuredDoseReferenceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Treatment Summary Measured Dose Reference Sequence",
 };
 
@@ -28663,7 +28663,7 @@ pub const RecordedSnoutSequence: Tag = Tag {
   element: 0x00F0,
   name: "RecordedSnoutSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Recorded Snout Sequence",
 };
 
@@ -28672,7 +28672,7 @@ pub const RecordedRangeShifterSequence: Tag = Tag {
   element: 0x00F2,
   name: "RecordedRangeShifterSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Recorded Range Shifter Sequence",
 };
 
@@ -28681,7 +28681,7 @@ pub const RecordedLateralSpreadingDeviceSequence: Tag = Tag {
   element: 0x00F4,
   name: "RecordedLateralSpreadingDeviceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Recorded Lateral Spreading Device Sequence",
 };
 
@@ -28690,7 +28690,7 @@ pub const RecordedRangeModulatorSequence: Tag = Tag {
   element: 0x00F6,
   name: "RecordedRangeModulatorSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Recorded Range Modulator Sequence",
 };
 
@@ -28699,7 +28699,7 @@ pub const RecordedSourceSequence: Tag = Tag {
   element: 0x0100,
   name: "RecordedSourceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Recorded Source Sequence",
 };
 
@@ -28708,7 +28708,7 @@ pub const SourceSerialNumber: Tag = Tag {
   element: 0x0105,
   name: "SourceSerialNumber",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Serial Number",
 };
 
@@ -28717,7 +28717,7 @@ pub const TreatmentSessionApplicationSetupSequence: Tag = Tag {
   element: 0x0110,
   name: "TreatmentSessionApplicationSetupSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Treatment Session Application Setup Sequence",
 };
 
@@ -28726,7 +28726,7 @@ pub const ApplicationSetupCheck: Tag = Tag {
   element: 0x0116,
   name: "ApplicationSetupCheck",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Application Setup Check",
 };
 
@@ -28735,7 +28735,7 @@ pub const RecordedBrachyAccessoryDeviceSequence: Tag = Tag {
   element: 0x0120,
   name: "RecordedBrachyAccessoryDeviceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Recorded Brachy Accessory Device Sequence",
 };
 
@@ -28744,7 +28744,7 @@ pub const ReferencedBrachyAccessoryDeviceNumber: Tag = Tag {
   element: 0x0122,
   name: "ReferencedBrachyAccessoryDeviceNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Brachy Accessory Device Number",
 };
 
@@ -28753,7 +28753,7 @@ pub const RecordedChannelSequence: Tag = Tag {
   element: 0x0130,
   name: "RecordedChannelSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Recorded Channel Sequence",
 };
 
@@ -28762,7 +28762,7 @@ pub const SpecifiedChannelTotalTime: Tag = Tag {
   element: 0x0132,
   name: "SpecifiedChannelTotalTime",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Specified Channel Total Time",
 };
 
@@ -28771,7 +28771,7 @@ pub const DeliveredChannelTotalTime: Tag = Tag {
   element: 0x0134,
   name: "DeliveredChannelTotalTime",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Delivered Channel Total Time",
 };
 
@@ -28780,7 +28780,7 @@ pub const SpecifiedNumberOfPulses: Tag = Tag {
   element: 0x0136,
   name: "SpecifiedNumberOfPulses",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Specified Number of Pulses",
 };
 
@@ -28789,7 +28789,7 @@ pub const DeliveredNumberOfPulses: Tag = Tag {
   element: 0x0138,
   name: "DeliveredNumberOfPulses",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Delivered Number of Pulses",
 };
 
@@ -28798,7 +28798,7 @@ pub const SpecifiedPulseRepetitionInterval: Tag = Tag {
   element: 0x013A,
   name: "SpecifiedPulseRepetitionInterval",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Specified Pulse Repetition Interval",
 };
 
@@ -28807,7 +28807,7 @@ pub const DeliveredPulseRepetitionInterval: Tag = Tag {
   element: 0x013C,
   name: "DeliveredPulseRepetitionInterval",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Delivered Pulse Repetition Interval",
 };
 
@@ -28816,7 +28816,7 @@ pub const RecordedSourceApplicatorSequence: Tag = Tag {
   element: 0x0140,
   name: "RecordedSourceApplicatorSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Recorded Source Applicator Sequence",
 };
 
@@ -28825,7 +28825,7 @@ pub const ReferencedSourceApplicatorNumber: Tag = Tag {
   element: 0x0142,
   name: "ReferencedSourceApplicatorNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Source Applicator Number",
 };
 
@@ -28834,7 +28834,7 @@ pub const RecordedChannelShieldSequence: Tag = Tag {
   element: 0x0150,
   name: "RecordedChannelShieldSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Recorded Channel Shield Sequence",
 };
 
@@ -28843,7 +28843,7 @@ pub const ReferencedChannelShieldNumber: Tag = Tag {
   element: 0x0152,
   name: "ReferencedChannelShieldNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Channel Shield Number",
 };
 
@@ -28852,7 +28852,7 @@ pub const BrachyControlPointDeliveredSequence: Tag = Tag {
   element: 0x0160,
   name: "BrachyControlPointDeliveredSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Brachy Control Point Delivered Sequence",
 };
 
@@ -28861,7 +28861,7 @@ pub const SafePositionExitDate: Tag = Tag {
   element: 0x0162,
   name: "SafePositionExitDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Safe Position Exit Date",
 };
 
@@ -28870,7 +28870,7 @@ pub const SafePositionExitTime: Tag = Tag {
   element: 0x0164,
   name: "SafePositionExitTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Safe Position Exit Time",
 };
 
@@ -28879,7 +28879,7 @@ pub const SafePositionReturnDate: Tag = Tag {
   element: 0x0166,
   name: "SafePositionReturnDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Safe Position Return Date",
 };
 
@@ -28888,7 +28888,7 @@ pub const SafePositionReturnTime: Tag = Tag {
   element: 0x0168,
   name: "SafePositionReturnTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Safe Position Return Time",
 };
 
@@ -28897,7 +28897,7 @@ pub const PulseSpecificBrachyControlPointDeliveredSequence: Tag = Tag {
   element: 0x0171,
   name: "PulseSpecificBrachyControlPointDeliveredSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pulse Specific Brachy Control Point Delivered Sequence",
 };
 
@@ -28906,7 +28906,7 @@ pub const PulseNumber: Tag = Tag {
   element: 0x0172,
   name: "PulseNumber",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pulse Number",
 };
 
@@ -28915,7 +28915,7 @@ pub const BrachyPulseControlPointDeliveredSequence: Tag = Tag {
   element: 0x0173,
   name: "BrachyPulseControlPointDeliveredSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Brachy Pulse Control Point Delivered Sequence",
 };
 
@@ -28924,7 +28924,7 @@ pub const CurrentTreatmentStatus: Tag = Tag {
   element: 0x0200,
   name: "CurrentTreatmentStatus",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Current Treatment Status",
 };
 
@@ -28933,7 +28933,7 @@ pub const TreatmentStatusComment: Tag = Tag {
   element: 0x0202,
   name: "TreatmentStatusComment",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Treatment Status Comment",
 };
 
@@ -28942,7 +28942,7 @@ pub const FractionGroupSummarySequence: Tag = Tag {
   element: 0x0220,
   name: "FractionGroupSummarySequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fraction Group Summary Sequence",
 };
 
@@ -28951,7 +28951,7 @@ pub const ReferencedFractionNumber: Tag = Tag {
   element: 0x0223,
   name: "ReferencedFractionNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Fraction Number",
 };
 
@@ -28960,7 +28960,7 @@ pub const FractionGroupType: Tag = Tag {
   element: 0x0224,
   name: "FractionGroupType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fraction Group Type",
 };
 
@@ -28969,7 +28969,7 @@ pub const BeamStopperPosition: Tag = Tag {
   element: 0x0230,
   name: "BeamStopperPosition",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Beam Stopper Position",
 };
 
@@ -28978,7 +28978,7 @@ pub const FractionStatusSummarySequence: Tag = Tag {
   element: 0x0240,
   name: "FractionStatusSummarySequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fraction Status Summary Sequence",
 };
 
@@ -28987,7 +28987,7 @@ pub const TreatmentDate: Tag = Tag {
   element: 0x0250,
   name: "TreatmentDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Treatment Date",
 };
 
@@ -28996,7 +28996,7 @@ pub const TreatmentTime: Tag = Tag {
   element: 0x0251,
   name: "TreatmentTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Treatment Time",
 };
 
@@ -29005,7 +29005,7 @@ pub const RTPlanLabel: Tag = Tag {
   element: 0x0002,
   name: "RTPlanLabel",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "RT Plan Label",
 };
 
@@ -29014,7 +29014,7 @@ pub const RTPlanName: Tag = Tag {
   element: 0x0003,
   name: "RTPlanName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "RT Plan Name",
 };
 
@@ -29023,7 +29023,7 @@ pub const RTPlanDescription: Tag = Tag {
   element: 0x0004,
   name: "RTPlanDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "RT Plan Description",
 };
 
@@ -29032,7 +29032,7 @@ pub const RTPlanDate: Tag = Tag {
   element: 0x0006,
   name: "RTPlanDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "RT Plan Date",
 };
 
@@ -29041,7 +29041,7 @@ pub const RTPlanTime: Tag = Tag {
   element: 0x0007,
   name: "RTPlanTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "RT Plan Time",
 };
 
@@ -29059,7 +29059,7 @@ pub const PlanIntent: Tag = Tag {
   element: 0x000A,
   name: "PlanIntent",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Plan Intent",
 };
 
@@ -29077,7 +29077,7 @@ pub const RTPlanGeometry: Tag = Tag {
   element: 0x000C,
   name: "RTPlanGeometry",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "RT Plan Geometry",
 };
 
@@ -29086,7 +29086,7 @@ pub const PrescriptionDescription: Tag = Tag {
   element: 0x000E,
   name: "PrescriptionDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Prescription Description",
 };
 
@@ -29095,7 +29095,7 @@ pub const DoseReferenceSequence: Tag = Tag {
   element: 0x0010,
   name: "DoseReferenceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Dose Reference Sequence",
 };
 
@@ -29104,7 +29104,7 @@ pub const DoseReferenceNumber: Tag = Tag {
   element: 0x0012,
   name: "DoseReferenceNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Dose Reference Number",
 };
 
@@ -29113,7 +29113,7 @@ pub const DoseReferenceUID: Tag = Tag {
   element: 0x0013,
   name: "DoseReferenceUID",
   vr: "UI",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Dose Reference UID",
 };
 
@@ -29122,7 +29122,7 @@ pub const DoseReferenceStructureType: Tag = Tag {
   element: 0x0014,
   name: "DoseReferenceStructureType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Dose Reference Structure Type",
 };
 
@@ -29131,7 +29131,7 @@ pub const NominalBeamEnergyUnit: Tag = Tag {
   element: 0x0015,
   name: "NominalBeamEnergyUnit",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Nominal Beam Energy Unit",
 };
 
@@ -29140,7 +29140,7 @@ pub const DoseReferenceDescription: Tag = Tag {
   element: 0x0016,
   name: "DoseReferenceDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Dose Reference Description",
 };
 
@@ -29149,7 +29149,7 @@ pub const DoseReferencePointCoordinates: Tag = Tag {
   element: 0x0018,
   name: "DoseReferencePointCoordinates",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Dose Reference Point Coordinates",
 };
 
@@ -29158,7 +29158,7 @@ pub const NominalPriorDose: Tag = Tag {
   element: 0x001A,
   name: "NominalPriorDose",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Nominal Prior Dose",
 };
 
@@ -29167,7 +29167,7 @@ pub const DoseReferenceType: Tag = Tag {
   element: 0x0020,
   name: "DoseReferenceType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Dose Reference Type",
 };
 
@@ -29176,7 +29176,7 @@ pub const ConstraintWeight: Tag = Tag {
   element: 0x0021,
   name: "ConstraintWeight",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Constraint Weight",
 };
 
@@ -29185,7 +29185,7 @@ pub const DeliveryWarningDose: Tag = Tag {
   element: 0x0022,
   name: "DeliveryWarningDose",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Delivery Warning Dose",
 };
 
@@ -29194,7 +29194,7 @@ pub const DeliveryMaximumDose: Tag = Tag {
   element: 0x0023,
   name: "DeliveryMaximumDose",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Delivery Maximum Dose",
 };
 
@@ -29203,7 +29203,7 @@ pub const TargetMinimumDose: Tag = Tag {
   element: 0x0025,
   name: "TargetMinimumDose",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Target Minimum Dose",
 };
 
@@ -29212,7 +29212,7 @@ pub const TargetPrescriptionDose: Tag = Tag {
   element: 0x0026,
   name: "TargetPrescriptionDose",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Target Prescription Dose",
 };
 
@@ -29221,7 +29221,7 @@ pub const TargetMaximumDose: Tag = Tag {
   element: 0x0027,
   name: "TargetMaximumDose",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Target Maximum Dose",
 };
 
@@ -29230,7 +29230,7 @@ pub const TargetUnderdoseVolumeFraction: Tag = Tag {
   element: 0x0028,
   name: "TargetUnderdoseVolumeFraction",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Target Underdose Volume Fraction",
 };
 
@@ -29239,7 +29239,7 @@ pub const OrganAtRiskFullVolumeDose: Tag = Tag {
   element: 0x002A,
   name: "OrganAtRiskFullVolumeDose",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Organ at Risk Full-volume Dose",
 };
 
@@ -29248,7 +29248,7 @@ pub const OrganAtRiskLimitDose: Tag = Tag {
   element: 0x002B,
   name: "OrganAtRiskLimitDose",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Organ at Risk Limit Dose",
 };
 
@@ -29257,7 +29257,7 @@ pub const OrganAtRiskMaximumDose: Tag = Tag {
   element: 0x002C,
   name: "OrganAtRiskMaximumDose",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Organ at Risk Maximum Dose",
 };
 
@@ -29266,7 +29266,7 @@ pub const OrganAtRiskOverdoseVolumeFraction: Tag = Tag {
   element: 0x002D,
   name: "OrganAtRiskOverdoseVolumeFraction",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Organ at Risk Overdose Volume Fraction",
 };
 
@@ -29275,7 +29275,7 @@ pub const ToleranceTableSequence: Tag = Tag {
   element: 0x0040,
   name: "ToleranceTableSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Tolerance Table Sequence",
 };
 
@@ -29284,7 +29284,7 @@ pub const ToleranceTableNumber: Tag = Tag {
   element: 0x0042,
   name: "ToleranceTableNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Tolerance Table Number",
 };
 
@@ -29293,7 +29293,7 @@ pub const ToleranceTableLabel: Tag = Tag {
   element: 0x0043,
   name: "ToleranceTableLabel",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Tolerance Table Label",
 };
 
@@ -29302,7 +29302,7 @@ pub const GantryAngleTolerance: Tag = Tag {
   element: 0x0044,
   name: "GantryAngleTolerance",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Gantry Angle Tolerance",
 };
 
@@ -29311,7 +29311,7 @@ pub const BeamLimitingDeviceAngleTolerance: Tag = Tag {
   element: 0x0046,
   name: "BeamLimitingDeviceAngleTolerance",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Beam Limiting Device Angle Tolerance",
 };
 
@@ -29320,7 +29320,7 @@ pub const BeamLimitingDeviceToleranceSequence: Tag = Tag {
   element: 0x0048,
   name: "BeamLimitingDeviceToleranceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Beam Limiting Device Tolerance Sequence",
 };
 
@@ -29329,7 +29329,7 @@ pub const BeamLimitingDevicePositionTolerance: Tag = Tag {
   element: 0x004A,
   name: "BeamLimitingDevicePositionTolerance",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Beam Limiting Device Position Tolerance",
 };
 
@@ -29338,7 +29338,7 @@ pub const SnoutPositionTolerance: Tag = Tag {
   element: 0x004B,
   name: "SnoutPositionTolerance",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Snout Position Tolerance",
 };
 
@@ -29347,7 +29347,7 @@ pub const PatientSupportAngleTolerance: Tag = Tag {
   element: 0x004C,
   name: "PatientSupportAngleTolerance",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Support Angle Tolerance",
 };
 
@@ -29356,7 +29356,7 @@ pub const TableTopEccentricAngleTolerance: Tag = Tag {
   element: 0x004E,
   name: "TableTopEccentricAngleTolerance",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Top Eccentric Angle Tolerance",
 };
 
@@ -29365,7 +29365,7 @@ pub const TableTopPitchAngleTolerance: Tag = Tag {
   element: 0x004F,
   name: "TableTopPitchAngleTolerance",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Top Pitch Angle Tolerance",
 };
 
@@ -29374,7 +29374,7 @@ pub const TableTopRollAngleTolerance: Tag = Tag {
   element: 0x0050,
   name: "TableTopRollAngleTolerance",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Top Roll Angle Tolerance",
 };
 
@@ -29383,7 +29383,7 @@ pub const TableTopVerticalPositionTolerance: Tag = Tag {
   element: 0x0051,
   name: "TableTopVerticalPositionTolerance",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Top Vertical Position Tolerance",
 };
 
@@ -29392,7 +29392,7 @@ pub const TableTopLongitudinalPositionTolerance: Tag = Tag {
   element: 0x0052,
   name: "TableTopLongitudinalPositionTolerance",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Top Longitudinal Position Tolerance",
 };
 
@@ -29401,7 +29401,7 @@ pub const TableTopLateralPositionTolerance: Tag = Tag {
   element: 0x0053,
   name: "TableTopLateralPositionTolerance",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Top Lateral Position Tolerance",
 };
 
@@ -29410,7 +29410,7 @@ pub const RTPlanRelationship: Tag = Tag {
   element: 0x0055,
   name: "RTPlanRelationship",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "RT Plan Relationship",
 };
 
@@ -29419,7 +29419,7 @@ pub const FractionGroupSequence: Tag = Tag {
   element: 0x0070,
   name: "FractionGroupSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fraction Group Sequence",
 };
 
@@ -29428,7 +29428,7 @@ pub const FractionGroupNumber: Tag = Tag {
   element: 0x0071,
   name: "FractionGroupNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fraction Group Number",
 };
 
@@ -29437,7 +29437,7 @@ pub const FractionGroupDescription: Tag = Tag {
   element: 0x0072,
   name: "FractionGroupDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fraction Group Description",
 };
 
@@ -29446,7 +29446,7 @@ pub const NumberOfFractionsPlanned: Tag = Tag {
   element: 0x0078,
   name: "NumberOfFractionsPlanned",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Fractions Planned",
 };
 
@@ -29455,7 +29455,7 @@ pub const NumberOfFractionPatternDigitsPerDay: Tag = Tag {
   element: 0x0079,
   name: "NumberOfFractionPatternDigitsPerDay",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Fraction Pattern Digits Per Day",
 };
 
@@ -29464,7 +29464,7 @@ pub const RepeatFractionCycleLength: Tag = Tag {
   element: 0x007A,
   name: "RepeatFractionCycleLength",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Repeat Fraction Cycle Length",
 };
 
@@ -29473,7 +29473,7 @@ pub const FractionPattern: Tag = Tag {
   element: 0x007B,
   name: "FractionPattern",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fraction Pattern",
 };
 
@@ -29482,7 +29482,7 @@ pub const NumberOfBeams: Tag = Tag {
   element: 0x0080,
   name: "NumberOfBeams",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Beams",
 };
 
@@ -29491,7 +29491,7 @@ pub const BeamDoseSpecificationPoint: Tag = Tag {
   element: 0x0082,
   name: "BeamDoseSpecificationPoint",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Beam Dose Specification Point",
 };
 
@@ -29500,7 +29500,7 @@ pub const BeamDose: Tag = Tag {
   element: 0x0084,
   name: "BeamDose",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Beam Dose",
 };
 
@@ -29509,7 +29509,7 @@ pub const BeamMeterset: Tag = Tag {
   element: 0x0086,
   name: "BeamMeterset",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Beam Meterset",
 };
 
@@ -29518,7 +29518,7 @@ pub const BeamDosePointDepth: Tag = Tag {
   element: 0x0088,
   name: "BeamDosePointDepth",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Beam Dose Point Depth",
 };
 
@@ -29527,7 +29527,7 @@ pub const BeamDosePointEquivalentDepth: Tag = Tag {
   element: 0x0089,
   name: "BeamDosePointEquivalentDepth",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Beam Dose Point Equivalent Depth",
 };
 
@@ -29536,7 +29536,7 @@ pub const BeamDosePointSSD: Tag = Tag {
   element: 0x008A,
   name: "BeamDosePointSSD",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Beam Dose Point SSD",
 };
 
@@ -29545,7 +29545,7 @@ pub const BeamDoseMeaning: Tag = Tag {
   element: 0x008B,
   name: "BeamDoseMeaning",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Beam Dose Meaning",
 };
 
@@ -29554,7 +29554,7 @@ pub const BeamDoseVerificationControlPointSequence: Tag = Tag {
   element: 0x008C,
   name: "BeamDoseVerificationControlPointSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Beam Dose Verification Control Point Sequence",
 };
 
@@ -29563,7 +29563,7 @@ pub const AverageBeamDosePointDepth: Tag = Tag {
   element: 0x008D,
   name: "AverageBeamDosePointDepth",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Average Beam Dose Point Depth",
 };
 
@@ -29572,7 +29572,7 @@ pub const AverageBeamDosePointEquivalentDepth: Tag = Tag {
   element: 0x008E,
   name: "AverageBeamDosePointEquivalentDepth",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Average Beam Dose Point Equivalent Depth",
 };
 
@@ -29581,7 +29581,7 @@ pub const AverageBeamDosePointSSD: Tag = Tag {
   element: 0x008F,
   name: "AverageBeamDosePointSSD",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Average Beam Dose Point SSD",
 };
 
@@ -29590,7 +29590,7 @@ pub const NumberOfBrachyApplicationSetups: Tag = Tag {
   element: 0x00A0,
   name: "NumberOfBrachyApplicationSetups",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Brachy Application Setups",
 };
 
@@ -29599,7 +29599,7 @@ pub const BrachyApplicationSetupDoseSpecificationPoint: Tag = Tag {
   element: 0x00A2,
   name: "BrachyApplicationSetupDoseSpecificationPoint",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Brachy Application Setup Dose Specification Point",
 };
 
@@ -29608,7 +29608,7 @@ pub const BrachyApplicationSetupDose: Tag = Tag {
   element: 0x00A4,
   name: "BrachyApplicationSetupDose",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Brachy Application Setup Dose",
 };
 
@@ -29617,7 +29617,7 @@ pub const BeamSequence: Tag = Tag {
   element: 0x00B0,
   name: "BeamSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Beam Sequence",
 };
 
@@ -29626,7 +29626,7 @@ pub const TreatmentMachineName: Tag = Tag {
   element: 0x00B2,
   name: "TreatmentMachineName",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Treatment Machine Name",
 };
 
@@ -29635,7 +29635,7 @@ pub const PrimaryDosimeterUnit: Tag = Tag {
   element: 0x00B3,
   name: "PrimaryDosimeterUnit",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Primary Dosimeter Unit",
 };
 
@@ -29644,7 +29644,7 @@ pub const SourceAxisDistance: Tag = Tag {
   element: 0x00B4,
   name: "SourceAxisDistance",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source-Axis Distance",
 };
 
@@ -29653,7 +29653,7 @@ pub const BeamLimitingDeviceSequence: Tag = Tag {
   element: 0x00B6,
   name: "BeamLimitingDeviceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Beam Limiting Device Sequence",
 };
 
@@ -29662,7 +29662,7 @@ pub const RTBeamLimitingDeviceType: Tag = Tag {
   element: 0x00B8,
   name: "RTBeamLimitingDeviceType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "RT Beam Limiting Device Type",
 };
 
@@ -29671,7 +29671,7 @@ pub const SourceToBeamLimitingDeviceDistance: Tag = Tag {
   element: 0x00BA,
   name: "SourceToBeamLimitingDeviceDistance",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source to Beam Limiting Device Distance",
 };
 
@@ -29680,7 +29680,7 @@ pub const IsocenterToBeamLimitingDeviceDistance: Tag = Tag {
   element: 0x00BB,
   name: "IsocenterToBeamLimitingDeviceDistance",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Isocenter to Beam Limiting Device Distance",
 };
 
@@ -29689,7 +29689,7 @@ pub const NumberOfLeafJawPairs: Tag = Tag {
   element: 0x00BC,
   name: "NumberOfLeafJawPairs",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Leaf/Jaw Pairs",
 };
 
@@ -29707,7 +29707,7 @@ pub const BeamNumber: Tag = Tag {
   element: 0x00C0,
   name: "BeamNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Beam Number",
 };
 
@@ -29716,7 +29716,7 @@ pub const BeamName: Tag = Tag {
   element: 0x00C2,
   name: "BeamName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Beam Name",
 };
 
@@ -29725,7 +29725,7 @@ pub const BeamDescription: Tag = Tag {
   element: 0x00C3,
   name: "BeamDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Beam Description",
 };
 
@@ -29734,7 +29734,7 @@ pub const BeamType: Tag = Tag {
   element: 0x00C4,
   name: "BeamType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Beam Type",
 };
 
@@ -29743,7 +29743,7 @@ pub const BeamDeliveryDurationLimit: Tag = Tag {
   element: 0x00C5,
   name: "BeamDeliveryDurationLimit",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Beam Delivery Duration Limit",
 };
 
@@ -29752,7 +29752,7 @@ pub const RadiationType: Tag = Tag {
   element: 0x00C6,
   name: "RadiationType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Radiation Type",
 };
 
@@ -29761,7 +29761,7 @@ pub const HighDoseTechniqueType: Tag = Tag {
   element: 0x00C7,
   name: "HighDoseTechniqueType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "High-Dose Technique Type",
 };
 
@@ -29770,7 +29770,7 @@ pub const ReferenceImageNumber: Tag = Tag {
   element: 0x00C8,
   name: "ReferenceImageNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Reference Image Number",
 };
 
@@ -29779,7 +29779,7 @@ pub const PlannedVerificationImageSequence: Tag = Tag {
   element: 0x00CA,
   name: "PlannedVerificationImageSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Planned Verification Image Sequence",
 };
 
@@ -29797,7 +29797,7 @@ pub const TreatmentDeliveryType: Tag = Tag {
   element: 0x00CE,
   name: "TreatmentDeliveryType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Treatment Delivery Type",
 };
 
@@ -29806,7 +29806,7 @@ pub const NumberOfWedges: Tag = Tag {
   element: 0x00D0,
   name: "NumberOfWedges",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Wedges",
 };
 
@@ -29815,7 +29815,7 @@ pub const WedgeSequence: Tag = Tag {
   element: 0x00D1,
   name: "WedgeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Wedge Sequence",
 };
 
@@ -29824,7 +29824,7 @@ pub const WedgeNumber: Tag = Tag {
   element: 0x00D2,
   name: "WedgeNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Wedge Number",
 };
 
@@ -29833,7 +29833,7 @@ pub const WedgeType: Tag = Tag {
   element: 0x00D3,
   name: "WedgeType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Wedge Type",
 };
 
@@ -29842,7 +29842,7 @@ pub const WedgeID: Tag = Tag {
   element: 0x00D4,
   name: "WedgeID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Wedge ID",
 };
 
@@ -29851,7 +29851,7 @@ pub const WedgeAngle: Tag = Tag {
   element: 0x00D5,
   name: "WedgeAngle",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Wedge Angle",
 };
 
@@ -29860,7 +29860,7 @@ pub const WedgeFactor: Tag = Tag {
   element: 0x00D6,
   name: "WedgeFactor",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Wedge Factor",
 };
 
@@ -29869,7 +29869,7 @@ pub const TotalWedgeTrayWaterEquivalentThickness: Tag = Tag {
   element: 0x00D7,
   name: "TotalWedgeTrayWaterEquivalentThickness",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Total Wedge Tray Water-Equivalent Thickness",
 };
 
@@ -29878,7 +29878,7 @@ pub const WedgeOrientation: Tag = Tag {
   element: 0x00D8,
   name: "WedgeOrientation",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Wedge Orientation",
 };
 
@@ -29887,7 +29887,7 @@ pub const IsocenterToWedgeTrayDistance: Tag = Tag {
   element: 0x00D9,
   name: "IsocenterToWedgeTrayDistance",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Isocenter to Wedge Tray Distance",
 };
 
@@ -29896,7 +29896,7 @@ pub const SourceToWedgeTrayDistance: Tag = Tag {
   element: 0x00DA,
   name: "SourceToWedgeTrayDistance",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source to Wedge Tray Distance",
 };
 
@@ -29905,7 +29905,7 @@ pub const WedgeThinEdgePosition: Tag = Tag {
   element: 0x00DB,
   name: "WedgeThinEdgePosition",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Wedge Thin Edge Position",
 };
 
@@ -29914,7 +29914,7 @@ pub const BolusID: Tag = Tag {
   element: 0x00DC,
   name: "BolusID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Bolus ID",
 };
 
@@ -29923,7 +29923,7 @@ pub const BolusDescription: Tag = Tag {
   element: 0x00DD,
   name: "BolusDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Bolus Description",
 };
 
@@ -29932,7 +29932,7 @@ pub const NumberOfCompensators: Tag = Tag {
   element: 0x00E0,
   name: "NumberOfCompensators",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Compensators",
 };
 
@@ -29941,7 +29941,7 @@ pub const MaterialID: Tag = Tag {
   element: 0x00E1,
   name: "MaterialID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Material ID",
 };
 
@@ -29950,7 +29950,7 @@ pub const TotalCompensatorTrayFactor: Tag = Tag {
   element: 0x00E2,
   name: "TotalCompensatorTrayFactor",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Total Compensator Tray Factor",
 };
 
@@ -29959,7 +29959,7 @@ pub const CompensatorSequence: Tag = Tag {
   element: 0x00E3,
   name: "CompensatorSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Compensator Sequence",
 };
 
@@ -29968,7 +29968,7 @@ pub const CompensatorNumber: Tag = Tag {
   element: 0x00E4,
   name: "CompensatorNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Compensator Number",
 };
 
@@ -29977,7 +29977,7 @@ pub const CompensatorID: Tag = Tag {
   element: 0x00E5,
   name: "CompensatorID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Compensator ID",
 };
 
@@ -29986,7 +29986,7 @@ pub const SourceToCompensatorTrayDistance: Tag = Tag {
   element: 0x00E6,
   name: "SourceToCompensatorTrayDistance",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source to Compensator Tray Distance",
 };
 
@@ -29995,7 +29995,7 @@ pub const CompensatorRows: Tag = Tag {
   element: 0x00E7,
   name: "CompensatorRows",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Compensator Rows",
 };
 
@@ -30004,7 +30004,7 @@ pub const CompensatorColumns: Tag = Tag {
   element: 0x00E8,
   name: "CompensatorColumns",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Compensator Columns",
 };
 
@@ -30013,7 +30013,7 @@ pub const CompensatorPixelSpacing: Tag = Tag {
   element: 0x00E9,
   name: "CompensatorPixelSpacing",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Compensator Pixel Spacing",
 };
 
@@ -30022,7 +30022,7 @@ pub const CompensatorPosition: Tag = Tag {
   element: 0x00EA,
   name: "CompensatorPosition",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Compensator Position",
 };
 
@@ -30049,7 +30049,7 @@ pub const NumberOfBoli: Tag = Tag {
   element: 0x00ED,
   name: "NumberOfBoli",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Boli",
 };
 
@@ -30058,7 +30058,7 @@ pub const CompensatorType: Tag = Tag {
   element: 0x00EE,
   name: "CompensatorType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Compensator Type",
 };
 
@@ -30067,7 +30067,7 @@ pub const CompensatorTrayID: Tag = Tag {
   element: 0x00EF,
   name: "CompensatorTrayID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Compensator Tray ID",
 };
 
@@ -30076,7 +30076,7 @@ pub const NumberOfBlocks: Tag = Tag {
   element: 0x00F0,
   name: "NumberOfBlocks",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Blocks",
 };
 
@@ -30085,7 +30085,7 @@ pub const TotalBlockTrayFactor: Tag = Tag {
   element: 0x00F2,
   name: "TotalBlockTrayFactor",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Total Block Tray Factor",
 };
 
@@ -30094,7 +30094,7 @@ pub const TotalBlockTrayWaterEquivalentThickness: Tag = Tag {
   element: 0x00F3,
   name: "TotalBlockTrayWaterEquivalentThickness",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Total Block Tray Water-Equivalent Thickness",
 };
 
@@ -30103,7 +30103,7 @@ pub const BlockSequence: Tag = Tag {
   element: 0x00F4,
   name: "BlockSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Block Sequence",
 };
 
@@ -30112,7 +30112,7 @@ pub const BlockTrayID: Tag = Tag {
   element: 0x00F5,
   name: "BlockTrayID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Block Tray ID",
 };
 
@@ -30121,7 +30121,7 @@ pub const SourceToBlockTrayDistance: Tag = Tag {
   element: 0x00F6,
   name: "SourceToBlockTrayDistance",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source to Block Tray Distance",
 };
 
@@ -30130,7 +30130,7 @@ pub const IsocenterToBlockTrayDistance: Tag = Tag {
   element: 0x00F7,
   name: "IsocenterToBlockTrayDistance",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Isocenter to Block Tray Distance",
 };
 
@@ -30139,7 +30139,7 @@ pub const BlockType: Tag = Tag {
   element: 0x00F8,
   name: "BlockType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Block Type",
 };
 
@@ -30148,7 +30148,7 @@ pub const AccessoryCode: Tag = Tag {
   element: 0x00F9,
   name: "AccessoryCode",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Accessory Code",
 };
 
@@ -30157,7 +30157,7 @@ pub const BlockDivergence: Tag = Tag {
   element: 0x00FA,
   name: "BlockDivergence",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Block Divergence",
 };
 
@@ -30166,7 +30166,7 @@ pub const BlockMountingPosition: Tag = Tag {
   element: 0x00FB,
   name: "BlockMountingPosition",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Block Mounting Position",
 };
 
@@ -30175,7 +30175,7 @@ pub const BlockNumber: Tag = Tag {
   element: 0x00FC,
   name: "BlockNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Block Number",
 };
 
@@ -30184,7 +30184,7 @@ pub const BlockName: Tag = Tag {
   element: 0x00FE,
   name: "BlockName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Block Name",
 };
 
@@ -30193,7 +30193,7 @@ pub const BlockThickness: Tag = Tag {
   element: 0x0100,
   name: "BlockThickness",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Block Thickness",
 };
 
@@ -30202,7 +30202,7 @@ pub const BlockTransmission: Tag = Tag {
   element: 0x0102,
   name: "BlockTransmission",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Block Transmission",
 };
 
@@ -30211,7 +30211,7 @@ pub const BlockNumberOfPoints: Tag = Tag {
   element: 0x0104,
   name: "BlockNumberOfPoints",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Block Number of Points",
 };
 
@@ -30229,7 +30229,7 @@ pub const ApplicatorSequence: Tag = Tag {
   element: 0x0107,
   name: "ApplicatorSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Applicator Sequence",
 };
 
@@ -30238,7 +30238,7 @@ pub const ApplicatorID: Tag = Tag {
   element: 0x0108,
   name: "ApplicatorID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Applicator ID",
 };
 
@@ -30247,7 +30247,7 @@ pub const ApplicatorType: Tag = Tag {
   element: 0x0109,
   name: "ApplicatorType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Applicator Type",
 };
 
@@ -30256,7 +30256,7 @@ pub const ApplicatorDescription: Tag = Tag {
   element: 0x010A,
   name: "ApplicatorDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Applicator Description",
 };
 
@@ -30265,7 +30265,7 @@ pub const CumulativeDoseReferenceCoefficient: Tag = Tag {
   element: 0x010C,
   name: "CumulativeDoseReferenceCoefficient",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Cumulative Dose Reference Coefficient",
 };
 
@@ -30274,7 +30274,7 @@ pub const FinalCumulativeMetersetWeight: Tag = Tag {
   element: 0x010E,
   name: "FinalCumulativeMetersetWeight",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Final Cumulative Meterset Weight",
 };
 
@@ -30283,7 +30283,7 @@ pub const NumberOfControlPoints: Tag = Tag {
   element: 0x0110,
   name: "NumberOfControlPoints",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Control Points",
 };
 
@@ -30292,7 +30292,7 @@ pub const ControlPointSequence: Tag = Tag {
   element: 0x0111,
   name: "ControlPointSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Control Point Sequence",
 };
 
@@ -30301,7 +30301,7 @@ pub const ControlPointIndex: Tag = Tag {
   element: 0x0112,
   name: "ControlPointIndex",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Control Point Index",
 };
 
@@ -30310,7 +30310,7 @@ pub const NominalBeamEnergy: Tag = Tag {
   element: 0x0114,
   name: "NominalBeamEnergy",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Nominal Beam Energy",
 };
 
@@ -30319,7 +30319,7 @@ pub const DoseRateSet: Tag = Tag {
   element: 0x0115,
   name: "DoseRateSet",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Dose Rate Set",
 };
 
@@ -30328,7 +30328,7 @@ pub const WedgePositionSequence: Tag = Tag {
   element: 0x0116,
   name: "WedgePositionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Wedge Position Sequence",
 };
 
@@ -30337,7 +30337,7 @@ pub const WedgePosition: Tag = Tag {
   element: 0x0118,
   name: "WedgePosition",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Wedge Position",
 };
 
@@ -30346,7 +30346,7 @@ pub const BeamLimitingDevicePositionSequence: Tag = Tag {
   element: 0x011A,
   name: "BeamLimitingDevicePositionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Beam Limiting Device Position Sequence",
 };
 
@@ -30364,7 +30364,7 @@ pub const GantryAngle: Tag = Tag {
   element: 0x011E,
   name: "GantryAngle",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Gantry Angle",
 };
 
@@ -30373,7 +30373,7 @@ pub const GantryRotationDirection: Tag = Tag {
   element: 0x011F,
   name: "GantryRotationDirection",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Gantry Rotation Direction",
 };
 
@@ -30382,7 +30382,7 @@ pub const BeamLimitingDeviceAngle: Tag = Tag {
   element: 0x0120,
   name: "BeamLimitingDeviceAngle",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Beam Limiting Device Angle",
 };
 
@@ -30391,7 +30391,7 @@ pub const BeamLimitingDeviceRotationDirection: Tag = Tag {
   element: 0x0121,
   name: "BeamLimitingDeviceRotationDirection",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Beam Limiting Device Rotation Direction",
 };
 
@@ -30400,7 +30400,7 @@ pub const PatientSupportAngle: Tag = Tag {
   element: 0x0122,
   name: "PatientSupportAngle",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Support Angle",
 };
 
@@ -30409,7 +30409,7 @@ pub const PatientSupportRotationDirection: Tag = Tag {
   element: 0x0123,
   name: "PatientSupportRotationDirection",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Support Rotation Direction",
 };
 
@@ -30418,7 +30418,7 @@ pub const TableTopEccentricAxisDistance: Tag = Tag {
   element: 0x0124,
   name: "TableTopEccentricAxisDistance",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Top Eccentric Axis Distance",
 };
 
@@ -30427,7 +30427,7 @@ pub const TableTopEccentricAngle: Tag = Tag {
   element: 0x0125,
   name: "TableTopEccentricAngle",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Top Eccentric Angle",
 };
 
@@ -30436,7 +30436,7 @@ pub const TableTopEccentricRotationDirection: Tag = Tag {
   element: 0x0126,
   name: "TableTopEccentricRotationDirection",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Top Eccentric Rotation Direction",
 };
 
@@ -30445,7 +30445,7 @@ pub const TableTopVerticalPosition: Tag = Tag {
   element: 0x0128,
   name: "TableTopVerticalPosition",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Top Vertical Position",
 };
 
@@ -30454,7 +30454,7 @@ pub const TableTopLongitudinalPosition: Tag = Tag {
   element: 0x0129,
   name: "TableTopLongitudinalPosition",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Top Longitudinal Position",
 };
 
@@ -30463,7 +30463,7 @@ pub const TableTopLateralPosition: Tag = Tag {
   element: 0x012A,
   name: "TableTopLateralPosition",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Top Lateral Position",
 };
 
@@ -30472,7 +30472,7 @@ pub const IsocenterPosition: Tag = Tag {
   element: 0x012C,
   name: "IsocenterPosition",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Isocenter Position",
 };
 
@@ -30481,7 +30481,7 @@ pub const SurfaceEntryPoint: Tag = Tag {
   element: 0x012E,
   name: "SurfaceEntryPoint",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Surface Entry Point",
 };
 
@@ -30490,7 +30490,7 @@ pub const SourceToSurfaceDistance: Tag = Tag {
   element: 0x0130,
   name: "SourceToSurfaceDistance",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source to Surface Distance",
 };
 
@@ -30499,7 +30499,7 @@ pub const CumulativeMetersetWeight: Tag = Tag {
   element: 0x0134,
   name: "CumulativeMetersetWeight",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Cumulative Meterset Weight",
 };
 
@@ -30508,7 +30508,7 @@ pub const TableTopPitchAngle: Tag = Tag {
   element: 0x0140,
   name: "TableTopPitchAngle",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Top Pitch Angle",
 };
 
@@ -30517,7 +30517,7 @@ pub const TableTopPitchRotationDirection: Tag = Tag {
   element: 0x0142,
   name: "TableTopPitchRotationDirection",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Top Pitch Rotation Direction",
 };
 
@@ -30526,7 +30526,7 @@ pub const TableTopRollAngle: Tag = Tag {
   element: 0x0144,
   name: "TableTopRollAngle",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Top Roll Angle",
 };
 
@@ -30535,7 +30535,7 @@ pub const TableTopRollRotationDirection: Tag = Tag {
   element: 0x0146,
   name: "TableTopRollRotationDirection",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Top Roll Rotation Direction",
 };
 
@@ -30544,7 +30544,7 @@ pub const HeadFixationAngle: Tag = Tag {
   element: 0x0148,
   name: "HeadFixationAngle",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Head Fixation Angle",
 };
 
@@ -30553,7 +30553,7 @@ pub const GantryPitchAngle: Tag = Tag {
   element: 0x014A,
   name: "GantryPitchAngle",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Gantry Pitch Angle",
 };
 
@@ -30562,7 +30562,7 @@ pub const GantryPitchRotationDirection: Tag = Tag {
   element: 0x014C,
   name: "GantryPitchRotationDirection",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Gantry Pitch Rotation Direction",
 };
 
@@ -30571,7 +30571,7 @@ pub const GantryPitchAngleTolerance: Tag = Tag {
   element: 0x014E,
   name: "GantryPitchAngleTolerance",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Gantry Pitch Angle Tolerance",
 };
 
@@ -30580,7 +30580,7 @@ pub const PatientSetupSequence: Tag = Tag {
   element: 0x0180,
   name: "PatientSetupSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Setup Sequence",
 };
 
@@ -30589,7 +30589,7 @@ pub const PatientSetupNumber: Tag = Tag {
   element: 0x0182,
   name: "PatientSetupNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Setup Number",
 };
 
@@ -30598,7 +30598,7 @@ pub const PatientSetupLabel: Tag = Tag {
   element: 0x0183,
   name: "PatientSetupLabel",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Setup Label",
 };
 
@@ -30607,7 +30607,7 @@ pub const PatientAdditionalPosition: Tag = Tag {
   element: 0x0184,
   name: "PatientAdditionalPosition",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Additional Position",
 };
 
@@ -30616,7 +30616,7 @@ pub const FixationDeviceSequence: Tag = Tag {
   element: 0x0190,
   name: "FixationDeviceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fixation Device Sequence",
 };
 
@@ -30625,7 +30625,7 @@ pub const FixationDeviceType: Tag = Tag {
   element: 0x0192,
   name: "FixationDeviceType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fixation Device Type",
 };
 
@@ -30634,7 +30634,7 @@ pub const FixationDeviceLabel: Tag = Tag {
   element: 0x0194,
   name: "FixationDeviceLabel",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fixation Device Label",
 };
 
@@ -30643,7 +30643,7 @@ pub const FixationDeviceDescription: Tag = Tag {
   element: 0x0196,
   name: "FixationDeviceDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fixation Device Description",
 };
 
@@ -30652,7 +30652,7 @@ pub const FixationDevicePosition: Tag = Tag {
   element: 0x0198,
   name: "FixationDevicePosition",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fixation Device Position",
 };
 
@@ -30661,7 +30661,7 @@ pub const FixationDevicePitchAngle: Tag = Tag {
   element: 0x0199,
   name: "FixationDevicePitchAngle",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fixation Device Pitch Angle",
 };
 
@@ -30670,7 +30670,7 @@ pub const FixationDeviceRollAngle: Tag = Tag {
   element: 0x019A,
   name: "FixationDeviceRollAngle",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fixation Device Roll Angle",
 };
 
@@ -30679,7 +30679,7 @@ pub const ShieldingDeviceSequence: Tag = Tag {
   element: 0x01A0,
   name: "ShieldingDeviceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Shielding Device Sequence",
 };
 
@@ -30688,7 +30688,7 @@ pub const ShieldingDeviceType: Tag = Tag {
   element: 0x01A2,
   name: "ShieldingDeviceType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Shielding Device Type",
 };
 
@@ -30697,7 +30697,7 @@ pub const ShieldingDeviceLabel: Tag = Tag {
   element: 0x01A4,
   name: "ShieldingDeviceLabel",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Shielding Device Label",
 };
 
@@ -30706,7 +30706,7 @@ pub const ShieldingDeviceDescription: Tag = Tag {
   element: 0x01A6,
   name: "ShieldingDeviceDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Shielding Device Description",
 };
 
@@ -30715,7 +30715,7 @@ pub const ShieldingDevicePosition: Tag = Tag {
   element: 0x01A8,
   name: "ShieldingDevicePosition",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Shielding Device Position",
 };
 
@@ -30724,7 +30724,7 @@ pub const SetupTechnique: Tag = Tag {
   element: 0x01B0,
   name: "SetupTechnique",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Setup Technique",
 };
 
@@ -30733,7 +30733,7 @@ pub const SetupTechniqueDescription: Tag = Tag {
   element: 0x01B2,
   name: "SetupTechniqueDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Setup Technique Description",
 };
 
@@ -30742,7 +30742,7 @@ pub const SetupDeviceSequence: Tag = Tag {
   element: 0x01B4,
   name: "SetupDeviceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Setup Device Sequence",
 };
 
@@ -30751,7 +30751,7 @@ pub const SetupDeviceType: Tag = Tag {
   element: 0x01B6,
   name: "SetupDeviceType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Setup Device Type",
 };
 
@@ -30760,7 +30760,7 @@ pub const SetupDeviceLabel: Tag = Tag {
   element: 0x01B8,
   name: "SetupDeviceLabel",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Setup Device Label",
 };
 
@@ -30769,7 +30769,7 @@ pub const SetupDeviceDescription: Tag = Tag {
   element: 0x01BA,
   name: "SetupDeviceDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Setup Device Description",
 };
 
@@ -30778,7 +30778,7 @@ pub const SetupDeviceParameter: Tag = Tag {
   element: 0x01BC,
   name: "SetupDeviceParameter",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Setup Device Parameter",
 };
 
@@ -30787,7 +30787,7 @@ pub const SetupReferenceDescription: Tag = Tag {
   element: 0x01D0,
   name: "SetupReferenceDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Setup Reference Description",
 };
 
@@ -30796,7 +30796,7 @@ pub const TableTopVerticalSetupDisplacement: Tag = Tag {
   element: 0x01D2,
   name: "TableTopVerticalSetupDisplacement",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Top Vertical Setup Displacement",
 };
 
@@ -30805,7 +30805,7 @@ pub const TableTopLongitudinalSetupDisplacement: Tag = Tag {
   element: 0x01D4,
   name: "TableTopLongitudinalSetupDisplacement",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Top Longitudinal Setup Displacement",
 };
 
@@ -30814,7 +30814,7 @@ pub const TableTopLateralSetupDisplacement: Tag = Tag {
   element: 0x01D6,
   name: "TableTopLateralSetupDisplacement",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Table Top Lateral Setup Displacement",
 };
 
@@ -30823,7 +30823,7 @@ pub const BrachyTreatmentTechnique: Tag = Tag {
   element: 0x0200,
   name: "BrachyTreatmentTechnique",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Brachy Treatment Technique",
 };
 
@@ -30832,7 +30832,7 @@ pub const BrachyTreatmentType: Tag = Tag {
   element: 0x0202,
   name: "BrachyTreatmentType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Brachy Treatment Type",
 };
 
@@ -30841,7 +30841,7 @@ pub const TreatmentMachineSequence: Tag = Tag {
   element: 0x0206,
   name: "TreatmentMachineSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Treatment Machine Sequence",
 };
 
@@ -30850,7 +30850,7 @@ pub const SourceSequence: Tag = Tag {
   element: 0x0210,
   name: "SourceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Sequence",
 };
 
@@ -30859,7 +30859,7 @@ pub const SourceNumber: Tag = Tag {
   element: 0x0212,
   name: "SourceNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Number",
 };
 
@@ -30868,7 +30868,7 @@ pub const SourceType: Tag = Tag {
   element: 0x0214,
   name: "SourceType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Type",
 };
 
@@ -30877,7 +30877,7 @@ pub const SourceManufacturer: Tag = Tag {
   element: 0x0216,
   name: "SourceManufacturer",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Manufacturer",
 };
 
@@ -30886,7 +30886,7 @@ pub const ActiveSourceDiameter: Tag = Tag {
   element: 0x0218,
   name: "ActiveSourceDiameter",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Active Source Diameter",
 };
 
@@ -30895,7 +30895,7 @@ pub const ActiveSourceLength: Tag = Tag {
   element: 0x021A,
   name: "ActiveSourceLength",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Active Source Length",
 };
 
@@ -30904,7 +30904,7 @@ pub const SourceModelID: Tag = Tag {
   element: 0x021B,
   name: "SourceModelID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Model ID",
 };
 
@@ -30913,7 +30913,7 @@ pub const SourceDescription: Tag = Tag {
   element: 0x021C,
   name: "SourceDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Description",
 };
 
@@ -30922,7 +30922,7 @@ pub const SourceEncapsulationNominalThickness: Tag = Tag {
   element: 0x0222,
   name: "SourceEncapsulationNominalThickness",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Encapsulation Nominal Thickness",
 };
 
@@ -30931,7 +30931,7 @@ pub const SourceEncapsulationNominalTransmission: Tag = Tag {
   element: 0x0224,
   name: "SourceEncapsulationNominalTransmission",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Encapsulation Nominal Transmission",
 };
 
@@ -30940,7 +30940,7 @@ pub const SourceIsotopeName: Tag = Tag {
   element: 0x0226,
   name: "SourceIsotopeName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Isotope Name",
 };
 
@@ -30949,7 +30949,7 @@ pub const SourceIsotopeHalfLife: Tag = Tag {
   element: 0x0228,
   name: "SourceIsotopeHalfLife",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Isotope Half Life",
 };
 
@@ -30958,7 +30958,7 @@ pub const SourceStrengthUnits: Tag = Tag {
   element: 0x0229,
   name: "SourceStrengthUnits",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Strength Units",
 };
 
@@ -30967,7 +30967,7 @@ pub const ReferenceAirKermaRate: Tag = Tag {
   element: 0x022A,
   name: "ReferenceAirKermaRate",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Reference Air Kerma Rate",
 };
 
@@ -30976,7 +30976,7 @@ pub const SourceStrength: Tag = Tag {
   element: 0x022B,
   name: "SourceStrength",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Strength",
 };
 
@@ -30985,7 +30985,7 @@ pub const SourceStrengthReferenceDate: Tag = Tag {
   element: 0x022C,
   name: "SourceStrengthReferenceDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Strength Reference Date",
 };
 
@@ -30994,7 +30994,7 @@ pub const SourceStrengthReferenceTime: Tag = Tag {
   element: 0x022E,
   name: "SourceStrengthReferenceTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Strength Reference Time",
 };
 
@@ -31003,7 +31003,7 @@ pub const ApplicationSetupSequence: Tag = Tag {
   element: 0x0230,
   name: "ApplicationSetupSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Application Setup Sequence",
 };
 
@@ -31012,7 +31012,7 @@ pub const ApplicationSetupType: Tag = Tag {
   element: 0x0232,
   name: "ApplicationSetupType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Application Setup Type",
 };
 
@@ -31021,7 +31021,7 @@ pub const ApplicationSetupNumber: Tag = Tag {
   element: 0x0234,
   name: "ApplicationSetupNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Application Setup Number",
 };
 
@@ -31030,7 +31030,7 @@ pub const ApplicationSetupName: Tag = Tag {
   element: 0x0236,
   name: "ApplicationSetupName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Application Setup Name",
 };
 
@@ -31039,7 +31039,7 @@ pub const ApplicationSetupManufacturer: Tag = Tag {
   element: 0x0238,
   name: "ApplicationSetupManufacturer",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Application Setup Manufacturer",
 };
 
@@ -31048,7 +31048,7 @@ pub const TemplateNumber: Tag = Tag {
   element: 0x0240,
   name: "TemplateNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Template Number",
 };
 
@@ -31057,7 +31057,7 @@ pub const TemplateType: Tag = Tag {
   element: 0x0242,
   name: "TemplateType",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Template Type",
 };
 
@@ -31066,7 +31066,7 @@ pub const TemplateName: Tag = Tag {
   element: 0x0244,
   name: "TemplateName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Template Name",
 };
 
@@ -31075,7 +31075,7 @@ pub const TotalReferenceAirKerma: Tag = Tag {
   element: 0x0250,
   name: "TotalReferenceAirKerma",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Total Reference Air Kerma",
 };
 
@@ -31084,7 +31084,7 @@ pub const BrachyAccessoryDeviceSequence: Tag = Tag {
   element: 0x0260,
   name: "BrachyAccessoryDeviceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Brachy Accessory Device Sequence",
 };
 
@@ -31093,7 +31093,7 @@ pub const BrachyAccessoryDeviceNumber: Tag = Tag {
   element: 0x0262,
   name: "BrachyAccessoryDeviceNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Brachy Accessory Device Number",
 };
 
@@ -31102,7 +31102,7 @@ pub const BrachyAccessoryDeviceID: Tag = Tag {
   element: 0x0263,
   name: "BrachyAccessoryDeviceID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Brachy Accessory Device ID",
 };
 
@@ -31111,7 +31111,7 @@ pub const BrachyAccessoryDeviceType: Tag = Tag {
   element: 0x0264,
   name: "BrachyAccessoryDeviceType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Brachy Accessory Device Type",
 };
 
@@ -31120,7 +31120,7 @@ pub const BrachyAccessoryDeviceName: Tag = Tag {
   element: 0x0266,
   name: "BrachyAccessoryDeviceName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Brachy Accessory Device Name",
 };
 
@@ -31129,7 +31129,7 @@ pub const BrachyAccessoryDeviceNominalThickness: Tag = Tag {
   element: 0x026A,
   name: "BrachyAccessoryDeviceNominalThickness",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Brachy Accessory Device Nominal Thickness",
 };
 
@@ -31138,7 +31138,7 @@ pub const BrachyAccessoryDeviceNominalTransmission: Tag = Tag {
   element: 0x026C,
   name: "BrachyAccessoryDeviceNominalTransmission",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Brachy Accessory Device Nominal Transmission",
 };
 
@@ -31147,7 +31147,7 @@ pub const ChannelSequence: Tag = Tag {
   element: 0x0280,
   name: "ChannelSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Sequence",
 };
 
@@ -31156,7 +31156,7 @@ pub const ChannelNumber: Tag = Tag {
   element: 0x0282,
   name: "ChannelNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Number",
 };
 
@@ -31165,7 +31165,7 @@ pub const ChannelLength: Tag = Tag {
   element: 0x0284,
   name: "ChannelLength",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Length",
 };
 
@@ -31174,7 +31174,7 @@ pub const ChannelTotalTime: Tag = Tag {
   element: 0x0286,
   name: "ChannelTotalTime",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Total Time",
 };
 
@@ -31183,7 +31183,7 @@ pub const SourceMovementType: Tag = Tag {
   element: 0x0288,
   name: "SourceMovementType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Movement Type",
 };
 
@@ -31192,7 +31192,7 @@ pub const NumberOfPulses: Tag = Tag {
   element: 0x028A,
   name: "NumberOfPulses",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Pulses",
 };
 
@@ -31201,7 +31201,7 @@ pub const PulseRepetitionInterval: Tag = Tag {
   element: 0x028C,
   name: "PulseRepetitionInterval",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pulse Repetition Interval",
 };
 
@@ -31210,7 +31210,7 @@ pub const SourceApplicatorNumber: Tag = Tag {
   element: 0x0290,
   name: "SourceApplicatorNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Applicator Number",
 };
 
@@ -31219,7 +31219,7 @@ pub const SourceApplicatorID: Tag = Tag {
   element: 0x0291,
   name: "SourceApplicatorID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Applicator ID",
 };
 
@@ -31228,7 +31228,7 @@ pub const SourceApplicatorType: Tag = Tag {
   element: 0x0292,
   name: "SourceApplicatorType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Applicator Type",
 };
 
@@ -31237,7 +31237,7 @@ pub const SourceApplicatorName: Tag = Tag {
   element: 0x0294,
   name: "SourceApplicatorName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Applicator Name",
 };
 
@@ -31246,7 +31246,7 @@ pub const SourceApplicatorLength: Tag = Tag {
   element: 0x0296,
   name: "SourceApplicatorLength",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Applicator Length",
 };
 
@@ -31255,7 +31255,7 @@ pub const SourceApplicatorManufacturer: Tag = Tag {
   element: 0x0298,
   name: "SourceApplicatorManufacturer",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Applicator Manufacturer",
 };
 
@@ -31264,7 +31264,7 @@ pub const SourceApplicatorWallNominalThickness: Tag = Tag {
   element: 0x029C,
   name: "SourceApplicatorWallNominalThickness",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Applicator Wall Nominal Thickness",
 };
 
@@ -31273,7 +31273,7 @@ pub const SourceApplicatorWallNominalTransmission: Tag = Tag {
   element: 0x029E,
   name: "SourceApplicatorWallNominalTransmission",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Applicator Wall Nominal Transmission",
 };
 
@@ -31282,7 +31282,7 @@ pub const SourceApplicatorStepSize: Tag = Tag {
   element: 0x02A0,
   name: "SourceApplicatorStepSize",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source Applicator Step Size",
 };
 
@@ -31291,7 +31291,7 @@ pub const TransferTubeNumber: Tag = Tag {
   element: 0x02A2,
   name: "TransferTubeNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Transfer Tube Number",
 };
 
@@ -31300,7 +31300,7 @@ pub const TransferTubeLength: Tag = Tag {
   element: 0x02A4,
   name: "TransferTubeLength",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Transfer Tube Length",
 };
 
@@ -31309,7 +31309,7 @@ pub const ChannelShieldSequence: Tag = Tag {
   element: 0x02B0,
   name: "ChannelShieldSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Shield Sequence",
 };
 
@@ -31318,7 +31318,7 @@ pub const ChannelShieldNumber: Tag = Tag {
   element: 0x02B2,
   name: "ChannelShieldNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Shield Number",
 };
 
@@ -31327,7 +31327,7 @@ pub const ChannelShieldID: Tag = Tag {
   element: 0x02B3,
   name: "ChannelShieldID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Shield ID",
 };
 
@@ -31336,7 +31336,7 @@ pub const ChannelShieldName: Tag = Tag {
   element: 0x02B4,
   name: "ChannelShieldName",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Shield Name",
 };
 
@@ -31345,7 +31345,7 @@ pub const ChannelShieldNominalThickness: Tag = Tag {
   element: 0x02B8,
   name: "ChannelShieldNominalThickness",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Shield Nominal Thickness",
 };
 
@@ -31354,7 +31354,7 @@ pub const ChannelShieldNominalTransmission: Tag = Tag {
   element: 0x02BA,
   name: "ChannelShieldNominalTransmission",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Shield Nominal Transmission",
 };
 
@@ -31363,7 +31363,7 @@ pub const FinalCumulativeTimeWeight: Tag = Tag {
   element: 0x02C8,
   name: "FinalCumulativeTimeWeight",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Final Cumulative Time Weight",
 };
 
@@ -31372,7 +31372,7 @@ pub const BrachyControlPointSequence: Tag = Tag {
   element: 0x02D0,
   name: "BrachyControlPointSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Brachy Control Point Sequence",
 };
 
@@ -31381,7 +31381,7 @@ pub const ControlPointRelativePosition: Tag = Tag {
   element: 0x02D2,
   name: "ControlPointRelativePosition",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Control Point Relative Position",
 };
 
@@ -31390,7 +31390,7 @@ pub const ControlPoint3DPosition: Tag = Tag {
   element: 0x02D4,
   name: "ControlPoint3DPosition",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Control Point 3D Position",
 };
 
@@ -31399,7 +31399,7 @@ pub const CumulativeTimeWeight: Tag = Tag {
   element: 0x02D6,
   name: "CumulativeTimeWeight",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Cumulative Time Weight",
 };
 
@@ -31408,7 +31408,7 @@ pub const CompensatorDivergence: Tag = Tag {
   element: 0x02E0,
   name: "CompensatorDivergence",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Compensator Divergence",
 };
 
@@ -31417,7 +31417,7 @@ pub const CompensatorMountingPosition: Tag = Tag {
   element: 0x02E1,
   name: "CompensatorMountingPosition",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Compensator Mounting Position",
 };
 
@@ -31435,7 +31435,7 @@ pub const TotalCompensatorTrayWaterEquivalentThickness: Tag = Tag {
   element: 0x02E3,
   name: "TotalCompensatorTrayWaterEquivalentThickness",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Total Compensator Tray Water-Equivalent Thickness",
 };
 
@@ -31444,7 +31444,7 @@ pub const IsocenterToCompensatorTrayDistance: Tag = Tag {
   element: 0x02E4,
   name: "IsocenterToCompensatorTrayDistance",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Isocenter to Compensator Tray Distance",
 };
 
@@ -31453,7 +31453,7 @@ pub const CompensatorColumnOffset: Tag = Tag {
   element: 0x02E5,
   name: "CompensatorColumnOffset",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Compensator Column Offset",
 };
 
@@ -31471,7 +31471,7 @@ pub const CompensatorRelativeStoppingPowerRatio: Tag = Tag {
   element: 0x02E7,
   name: "CompensatorRelativeStoppingPowerRatio",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Compensator Relative Stopping Power Ratio",
 };
 
@@ -31480,7 +31480,7 @@ pub const CompensatorMillingToolDiameter: Tag = Tag {
   element: 0x02E8,
   name: "CompensatorMillingToolDiameter",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Compensator Milling Tool Diameter",
 };
 
@@ -31489,7 +31489,7 @@ pub const IonRangeCompensatorSequence: Tag = Tag {
   element: 0x02EA,
   name: "IonRangeCompensatorSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ion Range Compensator Sequence",
 };
 
@@ -31498,7 +31498,7 @@ pub const CompensatorDescription: Tag = Tag {
   element: 0x02EB,
   name: "CompensatorDescription",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Compensator Description",
 };
 
@@ -31507,7 +31507,7 @@ pub const RadiationMassNumber: Tag = Tag {
   element: 0x0302,
   name: "RadiationMassNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Radiation Mass Number",
 };
 
@@ -31516,7 +31516,7 @@ pub const RadiationAtomicNumber: Tag = Tag {
   element: 0x0304,
   name: "RadiationAtomicNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Radiation Atomic Number",
 };
 
@@ -31525,7 +31525,7 @@ pub const RadiationChargeState: Tag = Tag {
   element: 0x0306,
   name: "RadiationChargeState",
   vr: "SS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Radiation Charge State",
 };
 
@@ -31534,7 +31534,7 @@ pub const ScanMode: Tag = Tag {
   element: 0x0308,
   name: "ScanMode",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scan Mode",
 };
 
@@ -31543,7 +31543,7 @@ pub const VirtualSourceAxisDistances: Tag = Tag {
   element: 0x030A,
   name: "VirtualSourceAxisDistances",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Virtual Source-Axis Distances",
 };
 
@@ -31552,7 +31552,7 @@ pub const SnoutSequence: Tag = Tag {
   element: 0x030C,
   name: "SnoutSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Snout Sequence",
 };
 
@@ -31561,7 +31561,7 @@ pub const SnoutPosition: Tag = Tag {
   element: 0x030D,
   name: "SnoutPosition",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Snout Position",
 };
 
@@ -31570,7 +31570,7 @@ pub const SnoutID: Tag = Tag {
   element: 0x030F,
   name: "SnoutID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Snout ID",
 };
 
@@ -31579,7 +31579,7 @@ pub const NumberOfRangeShifters: Tag = Tag {
   element: 0x0312,
   name: "NumberOfRangeShifters",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Range Shifters",
 };
 
@@ -31588,7 +31588,7 @@ pub const RangeShifterSequence: Tag = Tag {
   element: 0x0314,
   name: "RangeShifterSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Range Shifter Sequence",
 };
 
@@ -31597,7 +31597,7 @@ pub const RangeShifterNumber: Tag = Tag {
   element: 0x0316,
   name: "RangeShifterNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Range Shifter Number",
 };
 
@@ -31606,7 +31606,7 @@ pub const RangeShifterID: Tag = Tag {
   element: 0x0318,
   name: "RangeShifterID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Range Shifter ID",
 };
 
@@ -31615,7 +31615,7 @@ pub const RangeShifterType: Tag = Tag {
   element: 0x0320,
   name: "RangeShifterType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Range Shifter Type",
 };
 
@@ -31624,7 +31624,7 @@ pub const RangeShifterDescription: Tag = Tag {
   element: 0x0322,
   name: "RangeShifterDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Range Shifter Description",
 };
 
@@ -31633,7 +31633,7 @@ pub const NumberOfLateralSpreadingDevices: Tag = Tag {
   element: 0x0330,
   name: "NumberOfLateralSpreadingDevices",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Lateral Spreading Devices",
 };
 
@@ -31642,7 +31642,7 @@ pub const LateralSpreadingDeviceSequence: Tag = Tag {
   element: 0x0332,
   name: "LateralSpreadingDeviceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Lateral Spreading Device Sequence",
 };
 
@@ -31651,7 +31651,7 @@ pub const LateralSpreadingDeviceNumber: Tag = Tag {
   element: 0x0334,
   name: "LateralSpreadingDeviceNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Lateral Spreading Device Number",
 };
 
@@ -31660,7 +31660,7 @@ pub const LateralSpreadingDeviceID: Tag = Tag {
   element: 0x0336,
   name: "LateralSpreadingDeviceID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Lateral Spreading Device ID",
 };
 
@@ -31669,7 +31669,7 @@ pub const LateralSpreadingDeviceType: Tag = Tag {
   element: 0x0338,
   name: "LateralSpreadingDeviceType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Lateral Spreading Device Type",
 };
 
@@ -31678,7 +31678,7 @@ pub const LateralSpreadingDeviceDescription: Tag = Tag {
   element: 0x033A,
   name: "LateralSpreadingDeviceDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Lateral Spreading Device Description",
 };
 
@@ -31687,7 +31687,7 @@ pub const LateralSpreadingDeviceWaterEquivalentThickness: Tag = Tag {
   element: 0x033C,
   name: "LateralSpreadingDeviceWaterEquivalentThickness",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Lateral Spreading Device Water Equivalent Thickness",
 };
 
@@ -31696,7 +31696,7 @@ pub const NumberOfRangeModulators: Tag = Tag {
   element: 0x0340,
   name: "NumberOfRangeModulators",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Range Modulators",
 };
 
@@ -31705,7 +31705,7 @@ pub const RangeModulatorSequence: Tag = Tag {
   element: 0x0342,
   name: "RangeModulatorSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Range Modulator Sequence",
 };
 
@@ -31714,7 +31714,7 @@ pub const RangeModulatorNumber: Tag = Tag {
   element: 0x0344,
   name: "RangeModulatorNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Range Modulator Number",
 };
 
@@ -31723,7 +31723,7 @@ pub const RangeModulatorID: Tag = Tag {
   element: 0x0346,
   name: "RangeModulatorID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Range Modulator ID",
 };
 
@@ -31732,7 +31732,7 @@ pub const RangeModulatorType: Tag = Tag {
   element: 0x0348,
   name: "RangeModulatorType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Range Modulator Type",
 };
 
@@ -31741,7 +31741,7 @@ pub const RangeModulatorDescription: Tag = Tag {
   element: 0x034A,
   name: "RangeModulatorDescription",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Range Modulator Description",
 };
 
@@ -31750,7 +31750,7 @@ pub const BeamCurrentModulationID: Tag = Tag {
   element: 0x034C,
   name: "BeamCurrentModulationID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Beam Current Modulation ID",
 };
 
@@ -31759,7 +31759,7 @@ pub const PatientSupportType: Tag = Tag {
   element: 0x0350,
   name: "PatientSupportType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Support Type",
 };
 
@@ -31768,7 +31768,7 @@ pub const PatientSupportID: Tag = Tag {
   element: 0x0352,
   name: "PatientSupportID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Support ID",
 };
 
@@ -31777,7 +31777,7 @@ pub const PatientSupportAccessoryCode: Tag = Tag {
   element: 0x0354,
   name: "PatientSupportAccessoryCode",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Patient Support Accessory Code",
 };
 
@@ -31786,7 +31786,7 @@ pub const FixationLightAzimuthalAngle: Tag = Tag {
   element: 0x0356,
   name: "FixationLightAzimuthalAngle",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fixation Light Azimuthal Angle",
 };
 
@@ -31795,7 +31795,7 @@ pub const FixationLightPolarAngle: Tag = Tag {
   element: 0x0358,
   name: "FixationLightPolarAngle",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Fixation Light Polar Angle",
 };
 
@@ -31804,7 +31804,7 @@ pub const MetersetRate: Tag = Tag {
   element: 0x035A,
   name: "MetersetRate",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Meterset Rate",
 };
 
@@ -31813,7 +31813,7 @@ pub const RangeShifterSettingsSequence: Tag = Tag {
   element: 0x0360,
   name: "RangeShifterSettingsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Range Shifter Settings Sequence",
 };
 
@@ -31822,7 +31822,7 @@ pub const RangeShifterSetting: Tag = Tag {
   element: 0x0362,
   name: "RangeShifterSetting",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Range Shifter Setting",
 };
 
@@ -31831,7 +31831,7 @@ pub const IsocenterToRangeShifterDistance: Tag = Tag {
   element: 0x0364,
   name: "IsocenterToRangeShifterDistance",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Isocenter to Range Shifter Distance",
 };
 
@@ -31840,7 +31840,7 @@ pub const RangeShifterWaterEquivalentThickness: Tag = Tag {
   element: 0x0366,
   name: "RangeShifterWaterEquivalentThickness",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Range Shifter Water Equivalent Thickness",
 };
 
@@ -31849,7 +31849,7 @@ pub const LateralSpreadingDeviceSettingsSequence: Tag = Tag {
   element: 0x0370,
   name: "LateralSpreadingDeviceSettingsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Lateral Spreading Device Settings Sequence",
 };
 
@@ -31858,7 +31858,7 @@ pub const LateralSpreadingDeviceSetting: Tag = Tag {
   element: 0x0372,
   name: "LateralSpreadingDeviceSetting",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Lateral Spreading Device Setting",
 };
 
@@ -31867,7 +31867,7 @@ pub const IsocenterToLateralSpreadingDeviceDistance: Tag = Tag {
   element: 0x0374,
   name: "IsocenterToLateralSpreadingDeviceDistance",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Isocenter to Lateral Spreading Device Distance",
 };
 
@@ -31876,7 +31876,7 @@ pub const RangeModulatorSettingsSequence: Tag = Tag {
   element: 0x0380,
   name: "RangeModulatorSettingsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Range Modulator Settings Sequence",
 };
 
@@ -31885,7 +31885,7 @@ pub const RangeModulatorGatingStartValue: Tag = Tag {
   element: 0x0382,
   name: "RangeModulatorGatingStartValue",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Range Modulator Gating Start Value",
 };
 
@@ -31894,7 +31894,7 @@ pub const RangeModulatorGatingStopValue: Tag = Tag {
   element: 0x0384,
   name: "RangeModulatorGatingStopValue",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Range Modulator Gating Stop Value",
 };
 
@@ -31903,7 +31903,7 @@ pub const RangeModulatorGatingStartWaterEquivalentThickness: Tag = Tag {
   element: 0x0386,
   name: "RangeModulatorGatingStartWaterEquivalentThickness",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Range Modulator Gating Start Water Equivalent Thickness",
 };
 
@@ -31912,7 +31912,7 @@ pub const RangeModulatorGatingStopWaterEquivalentThickness: Tag = Tag {
   element: 0x0388,
   name: "RangeModulatorGatingStopWaterEquivalentThickness",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Range Modulator Gating Stop Water Equivalent Thickness",
 };
 
@@ -31921,7 +31921,7 @@ pub const IsocenterToRangeModulatorDistance: Tag = Tag {
   element: 0x038A,
   name: "IsocenterToRangeModulatorDistance",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Isocenter to Range Modulator Distance",
 };
 
@@ -31930,7 +31930,7 @@ pub const ScanSpotTuneID: Tag = Tag {
   element: 0x0390,
   name: "ScanSpotTuneID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scan Spot Tune ID",
 };
 
@@ -31939,7 +31939,7 @@ pub const NumberOfScanSpotPositions: Tag = Tag {
   element: 0x0392,
   name: "NumberOfScanSpotPositions",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Scan Spot Positions",
 };
 
@@ -31966,7 +31966,7 @@ pub const ScanningSpotSize: Tag = Tag {
   element: 0x0398,
   name: "ScanningSpotSize",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 2, end: 2 },
   description: "Scanning Spot Size",
 };
 
@@ -31975,7 +31975,7 @@ pub const NumberOfPaintings: Tag = Tag {
   element: 0x039A,
   name: "NumberOfPaintings",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Paintings",
 };
 
@@ -31984,7 +31984,7 @@ pub const IonToleranceTableSequence: Tag = Tag {
   element: 0x03A0,
   name: "IonToleranceTableSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ion Tolerance Table Sequence",
 };
 
@@ -31993,7 +31993,7 @@ pub const IonBeamSequence: Tag = Tag {
   element: 0x03A2,
   name: "IonBeamSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ion Beam Sequence",
 };
 
@@ -32002,7 +32002,7 @@ pub const IonBeamLimitingDeviceSequence: Tag = Tag {
   element: 0x03A4,
   name: "IonBeamLimitingDeviceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ion Beam Limiting Device Sequence",
 };
 
@@ -32011,7 +32011,7 @@ pub const IonBlockSequence: Tag = Tag {
   element: 0x03A6,
   name: "IonBlockSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ion Block Sequence",
 };
 
@@ -32020,7 +32020,7 @@ pub const IonControlPointSequence: Tag = Tag {
   element: 0x03A8,
   name: "IonControlPointSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ion Control Point Sequence",
 };
 
@@ -32029,7 +32029,7 @@ pub const IonWedgeSequence: Tag = Tag {
   element: 0x03AA,
   name: "IonWedgeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ion Wedge Sequence",
 };
 
@@ -32038,7 +32038,7 @@ pub const IonWedgePositionSequence: Tag = Tag {
   element: 0x03AC,
   name: "IonWedgePositionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Ion Wedge Position Sequence",
 };
 
@@ -32047,7 +32047,7 @@ pub const ReferencedSetupImageSequence: Tag = Tag {
   element: 0x0401,
   name: "ReferencedSetupImageSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Setup Image Sequence",
 };
 
@@ -32056,7 +32056,7 @@ pub const SetupImageComment: Tag = Tag {
   element: 0x0402,
   name: "SetupImageComment",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Setup Image Comment",
 };
 
@@ -32065,7 +32065,7 @@ pub const MotionSynchronizationSequence: Tag = Tag {
   element: 0x0410,
   name: "MotionSynchronizationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Motion Synchronization Sequence",
 };
 
@@ -32074,7 +32074,7 @@ pub const ControlPointOrientation: Tag = Tag {
   element: 0x0412,
   name: "ControlPointOrientation",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Control Point Orientation",
 };
 
@@ -32083,7 +32083,7 @@ pub const GeneralAccessorySequence: Tag = Tag {
   element: 0x0420,
   name: "GeneralAccessorySequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "General Accessory Sequence",
 };
 
@@ -32092,7 +32092,7 @@ pub const GeneralAccessoryID: Tag = Tag {
   element: 0x0421,
   name: "GeneralAccessoryID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "General Accessory ID",
 };
 
@@ -32101,7 +32101,7 @@ pub const GeneralAccessoryDescription: Tag = Tag {
   element: 0x0422,
   name: "GeneralAccessoryDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "General Accessory Description",
 };
 
@@ -32110,7 +32110,7 @@ pub const GeneralAccessoryType: Tag = Tag {
   element: 0x0423,
   name: "GeneralAccessoryType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "General Accessory Type",
 };
 
@@ -32119,7 +32119,7 @@ pub const GeneralAccessoryNumber: Tag = Tag {
   element: 0x0424,
   name: "GeneralAccessoryNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "General Accessory Number",
 };
 
@@ -32128,7 +32128,7 @@ pub const SourceToGeneralAccessoryDistance: Tag = Tag {
   element: 0x0425,
   name: "SourceToGeneralAccessoryDistance",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source to General Accessory Distance",
 };
 
@@ -32137,7 +32137,7 @@ pub const ApplicatorGeometrySequence: Tag = Tag {
   element: 0x0431,
   name: "ApplicatorGeometrySequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Applicator Geometry Sequence",
 };
 
@@ -32146,7 +32146,7 @@ pub const ApplicatorApertureShape: Tag = Tag {
   element: 0x0432,
   name: "ApplicatorApertureShape",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Applicator Aperture Shape",
 };
 
@@ -32155,7 +32155,7 @@ pub const ApplicatorOpening: Tag = Tag {
   element: 0x0433,
   name: "ApplicatorOpening",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Applicator Opening",
 };
 
@@ -32164,7 +32164,7 @@ pub const ApplicatorOpeningX: Tag = Tag {
   element: 0x0434,
   name: "ApplicatorOpeningX",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Applicator Opening X",
 };
 
@@ -32173,7 +32173,7 @@ pub const ApplicatorOpeningY: Tag = Tag {
   element: 0x0435,
   name: "ApplicatorOpeningY",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Applicator Opening Y",
 };
 
@@ -32182,7 +32182,7 @@ pub const SourceToApplicatorMountingPositionDistance: Tag = Tag {
   element: 0x0436,
   name: "SourceToApplicatorMountingPositionDistance",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Source to Applicator Mounting Position Distance",
 };
 
@@ -32191,7 +32191,7 @@ pub const ReferencedRTPlanSequence: Tag = Tag {
   element: 0x0002,
   name: "ReferencedRTPlanSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced RT Plan Sequence",
 };
 
@@ -32200,7 +32200,7 @@ pub const ReferencedBeamSequence: Tag = Tag {
   element: 0x0004,
   name: "ReferencedBeamSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Beam Sequence",
 };
 
@@ -32209,7 +32209,7 @@ pub const ReferencedBeamNumber: Tag = Tag {
   element: 0x0006,
   name: "ReferencedBeamNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Beam Number",
 };
 
@@ -32218,7 +32218,7 @@ pub const ReferencedReferenceImageNumber: Tag = Tag {
   element: 0x0007,
   name: "ReferencedReferenceImageNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Reference Image Number",
 };
 
@@ -32227,7 +32227,7 @@ pub const StartCumulativeMetersetWeight: Tag = Tag {
   element: 0x0008,
   name: "StartCumulativeMetersetWeight",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Start Cumulative Meterset Weight",
 };
 
@@ -32236,7 +32236,7 @@ pub const EndCumulativeMetersetWeight: Tag = Tag {
   element: 0x0009,
   name: "EndCumulativeMetersetWeight",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "End Cumulative Meterset Weight",
 };
 
@@ -32245,7 +32245,7 @@ pub const ReferencedBrachyApplicationSetupSequence: Tag = Tag {
   element: 0x000A,
   name: "ReferencedBrachyApplicationSetupSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Brachy Application Setup Sequence",
 };
 
@@ -32254,7 +32254,7 @@ pub const ReferencedBrachyApplicationSetupNumber: Tag = Tag {
   element: 0x000C,
   name: "ReferencedBrachyApplicationSetupNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Brachy Application Setup Number",
 };
 
@@ -32263,7 +32263,7 @@ pub const ReferencedSourceNumber: Tag = Tag {
   element: 0x000E,
   name: "ReferencedSourceNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Source Number",
 };
 
@@ -32272,7 +32272,7 @@ pub const ReferencedFractionGroupSequence: Tag = Tag {
   element: 0x0020,
   name: "ReferencedFractionGroupSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Fraction Group Sequence",
 };
 
@@ -32281,7 +32281,7 @@ pub const ReferencedFractionGroupNumber: Tag = Tag {
   element: 0x0022,
   name: "ReferencedFractionGroupNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Fraction Group Number",
 };
 
@@ -32290,7 +32290,7 @@ pub const ReferencedVerificationImageSequence: Tag = Tag {
   element: 0x0040,
   name: "ReferencedVerificationImageSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Verification Image Sequence",
 };
 
@@ -32299,7 +32299,7 @@ pub const ReferencedReferenceImageSequence: Tag = Tag {
   element: 0x0042,
   name: "ReferencedReferenceImageSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Reference Image Sequence",
 };
 
@@ -32308,7 +32308,7 @@ pub const ReferencedDoseReferenceSequence: Tag = Tag {
   element: 0x0050,
   name: "ReferencedDoseReferenceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Dose Reference Sequence",
 };
 
@@ -32317,7 +32317,7 @@ pub const ReferencedDoseReferenceNumber: Tag = Tag {
   element: 0x0051,
   name: "ReferencedDoseReferenceNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Dose Reference Number",
 };
 
@@ -32326,7 +32326,7 @@ pub const BrachyReferencedDoseReferenceSequence: Tag = Tag {
   element: 0x0055,
   name: "BrachyReferencedDoseReferenceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Brachy Referenced Dose Reference Sequence",
 };
 
@@ -32335,7 +32335,7 @@ pub const ReferencedStructureSetSequence: Tag = Tag {
   element: 0x0060,
   name: "ReferencedStructureSetSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Structure Set Sequence",
 };
 
@@ -32344,7 +32344,7 @@ pub const ReferencedPatientSetupNumber: Tag = Tag {
   element: 0x006A,
   name: "ReferencedPatientSetupNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Patient Setup Number",
 };
 
@@ -32353,7 +32353,7 @@ pub const ReferencedDoseSequence: Tag = Tag {
   element: 0x0080,
   name: "ReferencedDoseSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Dose Sequence",
 };
 
@@ -32362,7 +32362,7 @@ pub const ReferencedToleranceTableNumber: Tag = Tag {
   element: 0x00A0,
   name: "ReferencedToleranceTableNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Tolerance Table Number",
 };
 
@@ -32371,7 +32371,7 @@ pub const ReferencedBolusSequence: Tag = Tag {
   element: 0x00B0,
   name: "ReferencedBolusSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Bolus Sequence",
 };
 
@@ -32380,7 +32380,7 @@ pub const ReferencedWedgeNumber: Tag = Tag {
   element: 0x00C0,
   name: "ReferencedWedgeNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Wedge Number",
 };
 
@@ -32389,7 +32389,7 @@ pub const ReferencedCompensatorNumber: Tag = Tag {
   element: 0x00D0,
   name: "ReferencedCompensatorNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Compensator Number",
 };
 
@@ -32398,7 +32398,7 @@ pub const ReferencedBlockNumber: Tag = Tag {
   element: 0x00E0,
   name: "ReferencedBlockNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Block Number",
 };
 
@@ -32407,7 +32407,7 @@ pub const ReferencedControlPointIndex: Tag = Tag {
   element: 0x00F0,
   name: "ReferencedControlPointIndex",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Control Point Index",
 };
 
@@ -32416,7 +32416,7 @@ pub const ReferencedControlPointSequence: Tag = Tag {
   element: 0x00F2,
   name: "ReferencedControlPointSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Control Point Sequence",
 };
 
@@ -32425,7 +32425,7 @@ pub const ReferencedStartControlPointIndex: Tag = Tag {
   element: 0x00F4,
   name: "ReferencedStartControlPointIndex",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Start Control Point Index",
 };
 
@@ -32434,7 +32434,7 @@ pub const ReferencedStopControlPointIndex: Tag = Tag {
   element: 0x00F6,
   name: "ReferencedStopControlPointIndex",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Stop Control Point Index",
 };
 
@@ -32443,7 +32443,7 @@ pub const ReferencedRangeShifterNumber: Tag = Tag {
   element: 0x0100,
   name: "ReferencedRangeShifterNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Range Shifter Number",
 };
 
@@ -32452,7 +32452,7 @@ pub const ReferencedLateralSpreadingDeviceNumber: Tag = Tag {
   element: 0x0102,
   name: "ReferencedLateralSpreadingDeviceNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Lateral Spreading Device Number",
 };
 
@@ -32461,7 +32461,7 @@ pub const ReferencedRangeModulatorNumber: Tag = Tag {
   element: 0x0104,
   name: "ReferencedRangeModulatorNumber",
   vr: "IS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Range Modulator Number",
 };
 
@@ -32470,7 +32470,7 @@ pub const ApprovalStatus: Tag = Tag {
   element: 0x0002,
   name: "ApprovalStatus",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Approval Status",
 };
 
@@ -32479,7 +32479,7 @@ pub const ReviewDate: Tag = Tag {
   element: 0x0004,
   name: "ReviewDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Review Date",
 };
 
@@ -32488,7 +32488,7 @@ pub const ReviewTime: Tag = Tag {
   element: 0x0005,
   name: "ReviewTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Review Time",
 };
 
@@ -32497,7 +32497,7 @@ pub const ReviewerName: Tag = Tag {
   element: 0x0008,
   name: "ReviewerName",
   vr: "PN",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Reviewer Name",
 };
 
@@ -32506,7 +32506,7 @@ pub const Arbitrary: Tag = Tag {
   element: 0x0010,
   name: "Arbitrary",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Arbitrary",
 };
 
@@ -32515,7 +32515,7 @@ pub const TextComments: Tag = Tag {
   element: 0x4000,
   name: "TextComments",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Text Comments",
 };
 
@@ -32524,7 +32524,7 @@ pub const ResultsID: Tag = Tag {
   element: 0x0040,
   name: "ResultsID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Results ID",
 };
 
@@ -32533,7 +32533,7 @@ pub const ResultsIDIssuer: Tag = Tag {
   element: 0x0042,
   name: "ResultsIDIssuer",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Results ID Issuer",
 };
 
@@ -32542,7 +32542,7 @@ pub const ReferencedInterpretationSequence: Tag = Tag {
   element: 0x0050,
   name: "ReferencedInterpretationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced Interpretation Sequence",
 };
 
@@ -32551,7 +32551,7 @@ pub const ReportProductionStatusTrial: Tag = Tag {
   element: 0x00FF,
   name: "ReportProductionStatusTrial",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Report Production Status (Trial)",
 };
 
@@ -32560,7 +32560,7 @@ pub const InterpretationRecordedDate: Tag = Tag {
   element: 0x0100,
   name: "InterpretationRecordedDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Interpretation Recorded Date",
 };
 
@@ -32569,7 +32569,7 @@ pub const InterpretationRecordedTime: Tag = Tag {
   element: 0x0101,
   name: "InterpretationRecordedTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Interpretation Recorded Time",
 };
 
@@ -32578,7 +32578,7 @@ pub const InterpretationRecorder: Tag = Tag {
   element: 0x0102,
   name: "InterpretationRecorder",
   vr: "PN",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Interpretation Recorder",
 };
 
@@ -32587,7 +32587,7 @@ pub const ReferenceToRecordedSound: Tag = Tag {
   element: 0x0103,
   name: "ReferenceToRecordedSound",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Reference to Recorded Sound",
 };
 
@@ -32596,7 +32596,7 @@ pub const InterpretationTranscriptionDate: Tag = Tag {
   element: 0x0108,
   name: "InterpretationTranscriptionDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Interpretation Transcription Date",
 };
 
@@ -32605,7 +32605,7 @@ pub const InterpretationTranscriptionTime: Tag = Tag {
   element: 0x0109,
   name: "InterpretationTranscriptionTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Interpretation Transcription Time",
 };
 
@@ -32614,7 +32614,7 @@ pub const InterpretationTranscriber: Tag = Tag {
   element: 0x010A,
   name: "InterpretationTranscriber",
   vr: "PN",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Interpretation Transcriber",
 };
 
@@ -32623,7 +32623,7 @@ pub const InterpretationText: Tag = Tag {
   element: 0x010B,
   name: "InterpretationText",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Interpretation Text",
 };
 
@@ -32632,7 +32632,7 @@ pub const InterpretationAuthor: Tag = Tag {
   element: 0x010C,
   name: "InterpretationAuthor",
   vr: "PN",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Interpretation Author",
 };
 
@@ -32641,7 +32641,7 @@ pub const InterpretationApproverSequence: Tag = Tag {
   element: 0x0111,
   name: "InterpretationApproverSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Interpretation Approver Sequence",
 };
 
@@ -32650,7 +32650,7 @@ pub const InterpretationApprovalDate: Tag = Tag {
   element: 0x0112,
   name: "InterpretationApprovalDate",
   vr: "DA",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Interpretation Approval Date",
 };
 
@@ -32659,7 +32659,7 @@ pub const InterpretationApprovalTime: Tag = Tag {
   element: 0x0113,
   name: "InterpretationApprovalTime",
   vr: "TM",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Interpretation Approval Time",
 };
 
@@ -32668,7 +32668,7 @@ pub const PhysicianApprovingInterpretation: Tag = Tag {
   element: 0x0114,
   name: "PhysicianApprovingInterpretation",
   vr: "PN",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Physician Approving Interpretation",
 };
 
@@ -32677,7 +32677,7 @@ pub const InterpretationDiagnosisDescription: Tag = Tag {
   element: 0x0115,
   name: "InterpretationDiagnosisDescription",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Interpretation Diagnosis Description",
 };
 
@@ -32686,7 +32686,7 @@ pub const InterpretationDiagnosisCodeSequence: Tag = Tag {
   element: 0x0117,
   name: "InterpretationDiagnosisCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Interpretation Diagnosis Code Sequence",
 };
 
@@ -32695,7 +32695,7 @@ pub const ResultsDistributionListSequence: Tag = Tag {
   element: 0x0118,
   name: "ResultsDistributionListSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Results Distribution List Sequence",
 };
 
@@ -32704,7 +32704,7 @@ pub const DistributionName: Tag = Tag {
   element: 0x0119,
   name: "DistributionName",
   vr: "PN",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Distribution Name",
 };
 
@@ -32713,7 +32713,7 @@ pub const DistributionAddress: Tag = Tag {
   element: 0x011A,
   name: "DistributionAddress",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Distribution Address",
 };
 
@@ -32722,7 +32722,7 @@ pub const InterpretationID: Tag = Tag {
   element: 0x0200,
   name: "InterpretationID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Interpretation ID",
 };
 
@@ -32731,7 +32731,7 @@ pub const InterpretationIDIssuer: Tag = Tag {
   element: 0x0202,
   name: "InterpretationIDIssuer",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Interpretation ID Issuer",
 };
 
@@ -32740,7 +32740,7 @@ pub const InterpretationTypeID: Tag = Tag {
   element: 0x0210,
   name: "InterpretationTypeID",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Interpretation Type ID",
 };
 
@@ -32749,7 +32749,7 @@ pub const InterpretationStatusID: Tag = Tag {
   element: 0x0212,
   name: "InterpretationStatusID",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Interpretation Status ID",
 };
 
@@ -32758,7 +32758,7 @@ pub const Impressions: Tag = Tag {
   element: 0x0300,
   name: "Impressions",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Impressions",
 };
 
@@ -32767,7 +32767,7 @@ pub const ResultsComments: Tag = Tag {
   element: 0x4000,
   name: "ResultsComments",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Results Comments",
 };
 
@@ -32776,7 +32776,7 @@ pub const LowEnergyDetectors: Tag = Tag {
   element: 0x0001,
   name: "LowEnergyDetectors",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Low Energy Detectors",
 };
 
@@ -32785,7 +32785,7 @@ pub const HighEnergyDetectors: Tag = Tag {
   element: 0x0002,
   name: "HighEnergyDetectors",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "High Energy Detectors",
 };
 
@@ -32794,7 +32794,7 @@ pub const DetectorGeometrySequence: Tag = Tag {
   element: 0x0004,
   name: "DetectorGeometrySequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Detector Geometry Sequence",
 };
 
@@ -32803,7 +32803,7 @@ pub const ThreatROIVoxelSequence: Tag = Tag {
   element: 0x1001,
   name: "ThreatROIVoxelSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Threat ROI Voxel Sequence",
 };
 
@@ -32812,7 +32812,7 @@ pub const ThreatROIBase: Tag = Tag {
   element: 0x1004,
   name: "ThreatROIBase",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Threat ROI Base",
 };
 
@@ -32821,7 +32821,7 @@ pub const ThreatROIExtents: Tag = Tag {
   element: 0x1005,
   name: "ThreatROIExtents",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Threat ROI Extents",
 };
 
@@ -32830,7 +32830,7 @@ pub const ThreatROIBitmap: Tag = Tag {
   element: 0x1006,
   name: "ThreatROIBitmap",
   vr: "OB",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Threat ROI Bitmap",
 };
 
@@ -32839,7 +32839,7 @@ pub const RouteSegmentID: Tag = Tag {
   element: 0x1007,
   name: "RouteSegmentID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Route Segment ID",
 };
 
@@ -32848,7 +32848,7 @@ pub const GantryType: Tag = Tag {
   element: 0x1008,
   name: "GantryType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Gantry Type",
 };
 
@@ -32857,7 +32857,7 @@ pub const OOIOwnerType: Tag = Tag {
   element: 0x1009,
   name: "OOIOwnerType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "OOI Owner Type",
 };
 
@@ -32866,7 +32866,7 @@ pub const RouteSegmentSequence: Tag = Tag {
   element: 0x100A,
   name: "RouteSegmentSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Route Segment Sequence",
 };
 
@@ -32875,7 +32875,7 @@ pub const PotentialThreatObjectID: Tag = Tag {
   element: 0x1010,
   name: "PotentialThreatObjectID",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Potential Threat Object ID",
 };
 
@@ -32884,7 +32884,7 @@ pub const ThreatSequence: Tag = Tag {
   element: 0x1011,
   name: "ThreatSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Threat Sequence",
 };
 
@@ -32893,7 +32893,7 @@ pub const ThreatCategory: Tag = Tag {
   element: 0x1012,
   name: "ThreatCategory",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Threat Category",
 };
 
@@ -32902,7 +32902,7 @@ pub const ThreatCategoryDescription: Tag = Tag {
   element: 0x1013,
   name: "ThreatCategoryDescription",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Threat Category Description",
 };
 
@@ -32911,7 +32911,7 @@ pub const ATDAbilityAssessment: Tag = Tag {
   element: 0x1014,
   name: "ATDAbilityAssessment",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ATD Ability Assessment",
 };
 
@@ -32920,7 +32920,7 @@ pub const ATDAssessmentFlag: Tag = Tag {
   element: 0x1015,
   name: "ATDAssessmentFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ATD Assessment Flag",
 };
 
@@ -32929,7 +32929,7 @@ pub const ATDAssessmentProbability: Tag = Tag {
   element: 0x1016,
   name: "ATDAssessmentProbability",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ATD Assessment Probability",
 };
 
@@ -32938,7 +32938,7 @@ pub const Mass: Tag = Tag {
   element: 0x1017,
   name: "Mass",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Mass",
 };
 
@@ -32947,7 +32947,7 @@ pub const Density: Tag = Tag {
   element: 0x1018,
   name: "Density",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Density",
 };
 
@@ -32956,7 +32956,7 @@ pub const ZEffective: Tag = Tag {
   element: 0x1019,
   name: "ZEffective",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Z Effective",
 };
 
@@ -32965,7 +32965,7 @@ pub const BoardingPassID: Tag = Tag {
   element: 0x101A,
   name: "BoardingPassID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Boarding Pass ID",
 };
 
@@ -32974,7 +32974,7 @@ pub const CenterOfMass: Tag = Tag {
   element: 0x101B,
   name: "CenterOfMass",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Center of Mass",
 };
 
@@ -32983,7 +32983,7 @@ pub const CenterOfPTO: Tag = Tag {
   element: 0x101C,
   name: "CenterOfPTO",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Center of PTO",
 };
 
@@ -33001,7 +33001,7 @@ pub const RouteSegmentStartLocationID: Tag = Tag {
   element: 0x101E,
   name: "RouteSegmentStartLocationID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Route Segment Start Location ID",
 };
 
@@ -33010,7 +33010,7 @@ pub const RouteSegmentEndLocationID: Tag = Tag {
   element: 0x101F,
   name: "RouteSegmentEndLocationID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Route Segment End Location ID",
 };
 
@@ -33019,7 +33019,7 @@ pub const RouteSegmentLocationIDType: Tag = Tag {
   element: 0x1020,
   name: "RouteSegmentLocationIDType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Route Segment Location ID Type",
 };
 
@@ -33037,7 +33037,7 @@ pub const VolumeOfPTO: Tag = Tag {
   element: 0x1023,
   name: "VolumeOfPTO",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Volume of PTO",
 };
 
@@ -33046,7 +33046,7 @@ pub const AbortFlag: Tag = Tag {
   element: 0x1024,
   name: "AbortFlag",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Abort Flag",
 };
 
@@ -33055,7 +33055,7 @@ pub const RouteSegmentStartTime: Tag = Tag {
   element: 0x1025,
   name: "RouteSegmentStartTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Route Segment Start Time",
 };
 
@@ -33064,7 +33064,7 @@ pub const RouteSegmentEndTime: Tag = Tag {
   element: 0x1026,
   name: "RouteSegmentEndTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Route Segment End Time",
 };
 
@@ -33073,7 +33073,7 @@ pub const TDRType: Tag = Tag {
   element: 0x1027,
   name: "TDRType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "TDR Type",
 };
 
@@ -33082,7 +33082,7 @@ pub const InternationalRouteSegment: Tag = Tag {
   element: 0x1028,
   name: "InternationalRouteSegment",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "International Route Segment",
 };
 
@@ -33100,7 +33100,7 @@ pub const AssignedLocation: Tag = Tag {
   element: 0x102A,
   name: "AssignedLocation",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Assigned Location",
 };
 
@@ -33109,7 +33109,7 @@ pub const AlarmDecisionTime: Tag = Tag {
   element: 0x102B,
   name: "AlarmDecisionTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Alarm Decision Time",
 };
 
@@ -33118,7 +33118,7 @@ pub const AlarmDecision: Tag = Tag {
   element: 0x1031,
   name: "AlarmDecision",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Alarm Decision",
 };
 
@@ -33127,7 +33127,7 @@ pub const NumberOfTotalObjects: Tag = Tag {
   element: 0x1033,
   name: "NumberOfTotalObjects",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Total Objects",
 };
 
@@ -33136,7 +33136,7 @@ pub const NumberOfAlarmObjects: Tag = Tag {
   element: 0x1034,
   name: "NumberOfAlarmObjects",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Number of Alarm Objects",
 };
 
@@ -33145,7 +33145,7 @@ pub const PTORepresentationSequence: Tag = Tag {
   element: 0x1037,
   name: "PTORepresentationSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "PTO Representation Sequence",
 };
 
@@ -33154,7 +33154,7 @@ pub const ATDAssessmentSequence: Tag = Tag {
   element: 0x1038,
   name: "ATDAssessmentSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "ATD Assessment Sequence",
 };
 
@@ -33163,7 +33163,7 @@ pub const TIPType: Tag = Tag {
   element: 0x1039,
   name: "TIPType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "TIP Type",
 };
 
@@ -33172,7 +33172,7 @@ pub const DICOSVersion: Tag = Tag {
   element: 0x103A,
   name: "DICOSVersion",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "DICOS Version",
 };
 
@@ -33181,7 +33181,7 @@ pub const OOIOwnerCreationTime: Tag = Tag {
   element: 0x1041,
   name: "OOIOwnerCreationTime",
   vr: "DT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "OOI Owner Creation Time",
 };
 
@@ -33190,7 +33190,7 @@ pub const OOIType: Tag = Tag {
   element: 0x1042,
   name: "OOIType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "OOI Type",
 };
 
@@ -33199,7 +33199,7 @@ pub const OOISize: Tag = Tag {
   element: 0x1043,
   name: "OOISize",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "OOI Size",
 };
 
@@ -33208,7 +33208,7 @@ pub const AcquisitionStatus: Tag = Tag {
   element: 0x1044,
   name: "AcquisitionStatus",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Acquisition Status",
 };
 
@@ -33217,7 +33217,7 @@ pub const BasisMaterialsCodeSequence: Tag = Tag {
   element: 0x1045,
   name: "BasisMaterialsCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Basis Materials Code Sequence",
 };
 
@@ -33226,7 +33226,7 @@ pub const PhantomType: Tag = Tag {
   element: 0x1046,
   name: "PhantomType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Phantom Type",
 };
 
@@ -33235,7 +33235,7 @@ pub const OOIOwnerSequence: Tag = Tag {
   element: 0x1047,
   name: "OOIOwnerSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "OOI Owner Sequence",
 };
 
@@ -33244,7 +33244,7 @@ pub const ScanType: Tag = Tag {
   element: 0x1048,
   name: "ScanType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Scan Type",
 };
 
@@ -33253,7 +33253,7 @@ pub const ItineraryID: Tag = Tag {
   element: 0x1051,
   name: "ItineraryID",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Itinerary ID",
 };
 
@@ -33262,7 +33262,7 @@ pub const ItineraryIDType: Tag = Tag {
   element: 0x1052,
   name: "ItineraryIDType",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Itinerary ID Type",
 };
 
@@ -33271,7 +33271,7 @@ pub const ItineraryIDAssigningAuthority: Tag = Tag {
   element: 0x1053,
   name: "ItineraryIDAssigningAuthority",
   vr: "LO",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Itinerary ID Assigning Authority",
 };
 
@@ -33280,7 +33280,7 @@ pub const RouteID: Tag = Tag {
   element: 0x1054,
   name: "RouteID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Route ID",
 };
 
@@ -33289,7 +33289,7 @@ pub const RouteIDAssigningAuthority: Tag = Tag {
   element: 0x1055,
   name: "RouteIDAssigningAuthority",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Route ID Assigning Authority",
 };
 
@@ -33298,7 +33298,7 @@ pub const InboundArrivalType: Tag = Tag {
   element: 0x1056,
   name: "InboundArrivalType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Inbound Arrival Type",
 };
 
@@ -33307,7 +33307,7 @@ pub const CarrierID: Tag = Tag {
   element: 0x1058,
   name: "CarrierID",
   vr: "SH",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Carrier ID",
 };
 
@@ -33316,7 +33316,7 @@ pub const CarrierIDAssigningAuthority: Tag = Tag {
   element: 0x1059,
   name: "CarrierIDAssigningAuthority",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Carrier ID Assigning Authority",
 };
 
@@ -33325,7 +33325,7 @@ pub const SourceOrientation: Tag = Tag {
   element: 0x1060,
   name: "SourceOrientation",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Source Orientation",
 };
 
@@ -33334,7 +33334,7 @@ pub const SourcePosition: Tag = Tag {
   element: 0x1061,
   name: "SourcePosition",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Source Position",
 };
 
@@ -33343,7 +33343,7 @@ pub const BeltHeight: Tag = Tag {
   element: 0x1062,
   name: "BeltHeight",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Belt Height",
 };
 
@@ -33352,7 +33352,7 @@ pub const AlgorithmRoutingCodeSequence: Tag = Tag {
   element: 0x1064,
   name: "AlgorithmRoutingCodeSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Algorithm Routing Code Sequence",
 };
 
@@ -33361,7 +33361,7 @@ pub const TransportClassification: Tag = Tag {
   element: 0x1067,
   name: "TransportClassification",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Transport Classification",
 };
 
@@ -33370,7 +33370,7 @@ pub const OOITypeDescriptor: Tag = Tag {
   element: 0x1068,
   name: "OOITypeDescriptor",
   vr: "LT",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "OOI Type Descriptor",
 };
 
@@ -33379,7 +33379,7 @@ pub const TotalProcessingTime: Tag = Tag {
   element: 0x1069,
   name: "TotalProcessingTime",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Total Processing Time",
 };
 
@@ -33388,7 +33388,7 @@ pub const DetectorCalibrationData: Tag = Tag {
   element: 0x106C,
   name: "DetectorCalibrationData",
   vr: "OB",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Detector Calibration Data",
 };
 
@@ -33397,7 +33397,7 @@ pub const AdditionalScreeningPerformed: Tag = Tag {
   element: 0x106D,
   name: "AdditionalScreeningPerformed",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Additional Screening Performed",
 };
 
@@ -33406,7 +33406,7 @@ pub const AdditionalInspectionSelectionCriteria: Tag = Tag {
   element: 0x106E,
   name: "AdditionalInspectionSelectionCriteria",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Additional Inspection Selection Criteria",
 };
 
@@ -33415,7 +33415,7 @@ pub const AdditionalInspectionMethodSequence: Tag = Tag {
   element: 0x106F,
   name: "AdditionalInspectionMethodSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Additional Inspection Method Sequence",
 };
 
@@ -33424,7 +33424,7 @@ pub const AITDeviceType: Tag = Tag {
   element: 0x1070,
   name: "AITDeviceType",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "AIT Device Type",
 };
 
@@ -33433,7 +33433,7 @@ pub const QRMeasurementsSequence: Tag = Tag {
   element: 0x1071,
   name: "QRMeasurementsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "QR Measurements Sequence",
 };
 
@@ -33442,7 +33442,7 @@ pub const TargetMaterialSequence: Tag = Tag {
   element: 0x1072,
   name: "TargetMaterialSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Target Material Sequence",
 };
 
@@ -33451,7 +33451,7 @@ pub const SNRThreshold: Tag = Tag {
   element: 0x1073,
   name: "SNRThreshold",
   vr: "FD",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "SNR Threshold",
 };
 
@@ -33460,7 +33460,7 @@ pub const ImageScaleRepresentation: Tag = Tag {
   element: 0x1075,
   name: "ImageScaleRepresentation",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Image Scale Representation",
 };
 
@@ -33469,7 +33469,7 @@ pub const ReferencedPTOSequence: Tag = Tag {
   element: 0x1076,
   name: "ReferencedPTOSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced PTO Sequence",
 };
 
@@ -33478,7 +33478,7 @@ pub const ReferencedTDRInstanceSequence: Tag = Tag {
   element: 0x1077,
   name: "ReferencedTDRInstanceSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Referenced TDR Instance Sequence",
 };
 
@@ -33487,7 +33487,7 @@ pub const PTOLocationDescription: Tag = Tag {
   element: 0x1078,
   name: "PTOLocationDescription",
   vr: "ST",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "PTO Location Description",
 };
 
@@ -33496,7 +33496,7 @@ pub const AnomalyLocatorIndicatorSequence: Tag = Tag {
   element: 0x1079,
   name: "AnomalyLocatorIndicatorSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Anomaly Locator Indicator Sequence",
 };
 
@@ -33505,7 +33505,7 @@ pub const AnomalyLocatorIndicator: Tag = Tag {
   element: 0x107A,
   name: "AnomalyLocatorIndicator",
   vr: "FL",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 3, end: 3 },
   description: "Anomaly Locator Indicator",
 };
 
@@ -33514,7 +33514,7 @@ pub const PTORegionSequence: Tag = Tag {
   element: 0x107B,
   name: "PTORegionSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "PTO Region Sequence",
 };
 
@@ -33523,7 +33523,7 @@ pub const InspectionSelectionCriteria: Tag = Tag {
   element: 0x107C,
   name: "InspectionSelectionCriteria",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Inspection Selection Criteria",
 };
 
@@ -33532,7 +33532,7 @@ pub const SecondaryInspectionMethodSequence: Tag = Tag {
   element: 0x107D,
   name: "SecondaryInspectionMethodSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Secondary Inspection Method Sequence",
 };
 
@@ -33541,7 +33541,7 @@ pub const PRCSToRCSOrientation: Tag = Tag {
   element: 0x107E,
   name: "PRCSToRCSOrientation",
   vr: "DS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 6, end: 6 },
   description: "PRCS to RCS Orientation",
 };
 
@@ -33550,7 +33550,7 @@ pub const MACParametersSequence: Tag = Tag {
   element: 0x0001,
   name: "MACParametersSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "MAC Parameters Sequence",
 };
 
@@ -33559,7 +33559,7 @@ pub const SharedFunctionalGroupsSequence: Tag = Tag {
   element: 0x9229,
   name: "SharedFunctionalGroupsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Shared Functional Groups Sequence",
 };
 
@@ -33568,7 +33568,7 @@ pub const PerFrameFunctionalGroupsSequence: Tag = Tag {
   element: 0x9230,
   name: "PerFrameFunctionalGroupsSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Per-frame Functional Groups Sequence",
 };
 
@@ -33577,7 +33577,7 @@ pub const WaveformSequence: Tag = Tag {
   element: 0x0100,
   name: "WaveformSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Waveform Sequence",
 };
 
@@ -33586,7 +33586,7 @@ pub const ChannelMinimumValue: Tag = Tag {
   element: 0x0110,
   name: "ChannelMinimumValue",
   vr: "OB",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Minimum Value",
 };
 
@@ -33595,7 +33595,7 @@ pub const ChannelMaximumValue: Tag = Tag {
   element: 0x0112,
   name: "ChannelMaximumValue",
   vr: "OB",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Channel Maximum Value",
 };
 
@@ -33604,7 +33604,7 @@ pub const WaveformBitsAllocated: Tag = Tag {
   element: 0x1004,
   name: "WaveformBitsAllocated",
   vr: "US",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Waveform Bits Allocated",
 };
 
@@ -33613,7 +33613,7 @@ pub const WaveformSampleInterpretation: Tag = Tag {
   element: 0x1006,
   name: "WaveformSampleInterpretation",
   vr: "CS",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Waveform Sample Interpretation",
 };
 
@@ -33622,7 +33622,7 @@ pub const WaveformPaddingValue: Tag = Tag {
   element: 0x100A,
   name: "WaveformPaddingValue",
   vr: "OB",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Waveform Padding Value",
 };
 
@@ -33631,7 +33631,7 @@ pub const WaveformData: Tag = Tag {
   element: 0x1010,
   name: "WaveformData",
   vr: "OB",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Waveform Data",
 };
 
@@ -33640,7 +33640,7 @@ pub const FirstOrderPhaseCorrectionAngle: Tag = Tag {
   element: 0x0010,
   name: "FirstOrderPhaseCorrectionAngle",
   vr: "OF",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "First Order Phase Correction Angle",
 };
 
@@ -33649,7 +33649,7 @@ pub const SpectroscopyData: Tag = Tag {
   element: 0x0020,
   name: "SpectroscopyData",
   vr: "OF",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Spectroscopy Data",
 };
 
@@ -33658,7 +33658,7 @@ pub const PixelData: Tag = Tag {
   element: 0x0010,
   name: "PixelData",
   vr: "OB",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Pixel Data",
 };
 
@@ -33667,7 +33667,7 @@ pub const CoefficientsSDVN: Tag = Tag {
   element: 0x0020,
   name: "CoefficientsSDVN",
   vr: "OW",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Coefficients SDVN",
 };
 
@@ -33676,7 +33676,7 @@ pub const CoefficientsSDHN: Tag = Tag {
   element: 0x0030,
   name: "CoefficientsSDHN",
   vr: "OW",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Coefficients SDHN",
 };
 
@@ -33685,7 +33685,7 @@ pub const CoefficientsSDDN: Tag = Tag {
   element: 0x0040,
   name: "CoefficientsSDDN",
   vr: "OW",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Coefficients SDDN",
 };
 
@@ -33694,7 +33694,7 @@ pub const DigitalSignaturesSequence: Tag = Tag {
   element: 0xFFFA,
   name: "DigitalSignaturesSequence",
   vr: "SQ",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Digital Signatures Sequence",
 };
 
@@ -33703,7 +33703,7 @@ pub const DataSetTrailingPadding: Tag = Tag {
   element: 0xFFFC,
   name: "DataSetTrailingPadding",
   vr: "OB",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Data Set Trailing Padding",
 };
 
@@ -33712,7 +33712,7 @@ pub const Item: Tag = Tag {
   element: 0xE000,
   name: "Item",
   vr: "",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Item",
 };
 
@@ -33721,7 +33721,7 @@ pub const ItemDelimitationItem: Tag = Tag {
   element: 0xE00D,
   name: "ItemDelimitationItem",
   vr: "",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Item Delimitation Item",
 };
 
@@ -33730,7 +33730,7 @@ pub const SequenceDelimitationItem: Tag = Tag {
   element: 0xE0DD,
   name: "SequenceDelimitationItem",
   vr: "",
-  vm: core::ops::Range { start: 0, end: 0 },
+  vm: core::ops::Range { start: 1, end: 1 },
   description: "Sequence Delimitation Item",
 };
 
