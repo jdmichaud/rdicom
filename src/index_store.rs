@@ -46,7 +46,7 @@ impl<W: Write> CsvIndexStore<W> {
       .map(|s| String::from("\"") + s + "\"")
       .collect::<Vec<String>>()
       .join(",");
-    writeln!(writer).unwrap();
+    writeln!(writer, "{}", header).unwrap();
     CsvIndexStore { writer, fields }
   }
 }
