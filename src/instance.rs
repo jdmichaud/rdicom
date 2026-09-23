@@ -666,7 +666,7 @@ impl Instance {
     // group(u16),element(u16),vr(str[2]),length(u16)
     // println!("next_attribute: {:#04x?}", offset);
     let mut offset = offset;
-    if offset >= self.buffer.len() {
+    if offset + 4 >= self.buffer.len() {
       return Err(DicomError::new(&format!(
         "Trying to read out of file bound (offset: {}, file size: {})",
         offset,
