@@ -57,6 +57,7 @@ use std::io::{BufReader, BufWriter, Cursor, Read, Seek, Write};
 use std::path::PathBuf;
 use std::sync::Arc;
 use std::sync::Mutex;
+use tower_http::cors::{AllowOrigin, Any, CorsLayer};
 use tower_http::trace::{self, TraceLayer};
 use tracing::Level;
 
@@ -100,6 +101,7 @@ mod index_store;
 // r"^/studies/(?P<StudyInstanceUID>[^/?#]*)/series/(?P<SeriesInstanceUID>[^/?#]*)/instances/(?P<SOPInstanceUID>[^/?#]*)/thumbnail$",
 // r"^/studies/(?P<StudyInstanceUID>[^/?#]*)/series/(?P<SeriesInstanceUID>[^/?#]*)/rendered$",
 // r"^/studies/(?P<StudyInstanceUID>[^/?#]*)/series/(?P<SeriesInstanceUID>[^/?#]*)/thumbnail$",
+// r"^/studies/(?P<StudyInstanceUID>[^/?#]*)/instances$",
 // r"^/studies/(?P<StudyInstanceUID>[^/?#]*)/thumbnail$"
 
 // pub const CAPABILITIES_STR: &str = include_str!("capabilities.xml");
@@ -146,6 +148,10 @@ struct Opt {
   /// Insert a prefix between the base of the url and the path
   #[arg(short = 'x', long)]
   prefix: Option<String>,
+  /// Enable CORS for the given origins (comma separated or repeated).
+  /// Use '*' to allow any origin. CORS is disabled if not specified
+  #[arg(long, value_delimiter = ',', verbatim_doc_comment)]
+  cors: Vec<String>,
 }
 
 #[derive(Debug)]
@@ -1401,6 +1407,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     .route("/studies/{study_uid}", get(get_studies))
     .route("/studies/{study_uid}/series", get(get_series))
     .route("/studies/{study_uid}/series/{series_uid}", get(get_series))
+    .route("/studies/{study_uid}/instances", get(get_instances))
     .route(
       "/studies/{study_uid}/series/{series_uid}/instances",
       get(get_instances),
@@ -1454,6 +1461,33 @@ async fn main() -> Result<(), Box<dyn Error>> {
           .include_headers(true),
       ),
   );
+
+  // Configure CORS if any origins are specified
+  if !opt.cors.is_empty() {
+    let allow_origin = if opt.cors.iter().any(|o| o == "*") {
+      AllowOrigin::any()
+    } else {
+      AllowOrigin::list(
+        opt
+          .cors
+          .iter()
+          .map(|o| o.parse::<axum::http::HeaderValue>())
+          .collect::<Result<Vec<_>, _>>()?,
+      )
+    };
+    // Outermost layer so preflight requests are answered before routing
+    app = app.layer(
+      CorsLayer::new()
+        .allow_origin(allow_origin)
+        .allow_methods([
+          axum::http::Method::GET,
+          axum::http::Method::POST,
+          axum::http::Method::DELETE,
+          axum::http::Method::OPTIONS,
+        ])
+        .allow_headers(Any),
+    );
+  }
 
   // run our app with hyper
   let listener = tokio::net::TcpListener::bind(format!("{}:{}", host, opt.port))
