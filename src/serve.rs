@@ -67,7 +67,7 @@ use index_store::SqlIndexStoreWithMutex;
 use rdicom::config_file::{self, ConfigProvenance};
 use rdicom::dicom_tags;
 use rdicom::error::DicomError;
-use rdicom::instance::{DicomValue, Instance};
+use rdicom::instance::{DicomAttribute, DicomValue, Instance};
 use rdicom::tags::Tag;
 
 mod config;
@@ -92,10 +92,12 @@ mod index_store;
 // r"^/series/(?P<SeriesInstanceUID>[^/?#]*)/thumbnail$",
 // r"^/studies$",
 // r"^/studies/(?P<StudyInstanceUID>[^/?#]*)$",
+// r"^/studies/(?P<StudyInstanceUID>[^/?#]*)/metadata$",
 // r"^/studies/(?P<StudyInstanceUID>[^/?#]*)/series$",
 // r"^/studies/(?P<StudyInstanceUID>[^/?#]*)/series/(?P<SeriesInstanceUID>[^/?#]*)$",
 // r"^/studies/(?P<StudyInstanceUID>[^/?#]*)/series/(?P<SeriesInstanceUID>[^/?#]*)/instances$",
 // r"^/studies/(?P<StudyInstanceUID>[^/?#]*)/series/(?P<SeriesInstanceUID>[^/?#]*)/instances/(?P<SOPInstanceUID>[^/?#]*)$",
+// r"^/studies/(?P<StudyInstanceUID>[^/?#]*)/series/(?P<SeriesInstanceUID>[^/?#]*)/instances/(?P<SOPInstanceUID>[^/?#]*)/metadata$",
 // r"^/studies/(?P<StudyInstanceUID>[^/?#]*)/series/(?P<SeriesInstanceUID>[^/?#]*)/instances/(?P<SOPInstanceUID>[^/?#]*)/frames/(?P<uid>[^/?#]*)$",
 // r"^/studies/(?P<StudyInstanceUID>[^/?#]*)/series/(?P<SeriesInstanceUID>[^/?#]*)/instances/(?P<SOPInstanceUID>[^/?#]*)/rendered$",
 // r"^/studies/(?P<StudyInstanceUID>[^/?#]*)/series/(?P<SeriesInstanceUID>[^/?#]*)/instances/(?P<SOPInstanceUID>[^/?#]*)/thumbnail$",
@@ -794,6 +796,239 @@ async fn get_instances(
   }
 }
 
+const BULKDATA_VRS: [&str; 7] = ["OB", "OD", "OF", "OL", "OV", "OW", "UN"];
+
+/**
+ * Converts an attribute to the DICOM JSON model (PS3.18 F.2). Bulk data is
+ * replaced by a BulkDataURI when `bulkdata_base` is provided, omitted otherwise.
+ */
+fn metadata_attribute(
+  instance: &Instance,
+  attribute: &DicomAttribute,
+  bulkdata_base: Option<&str>,
+) -> serde_json::Value {
+  use serde_json::Value;
+
+  let vr = attribute.vr.as_ref();
+  let mut json = serde_json::Map::new();
+  json.insert("vr".to_string(), Value::from(vr));
+
+  let data = instance
+    .buffer
+    .get(attribute.data_offset..attribute.data_offset + attribute.data_length)
+    .unwrap_or(&[]);
+  let is_padding = |c: char| c == '\0' || c == ' ';
+
+  let values: Vec<Value> = match vr {
+    "SQ" => attribute
+      .subattributes
+      .iter()
+      .filter(|item| item.group == 0xFFFE && item.element == 0xE000)
+      .map(|item| Value::Object(metadata_dataset(instance, &item.subattributes, None)))
+      .collect(),
+    _ if BULKDATA_VRS.contains(&vr) => {
+      if let Some(base) = bulkdata_base {
+        json.insert(
+          "BulkDataURI".to_string(),
+          Value::from(format!(
+            "{}/{:04X}{:04X}",
+            base, attribute.group, attribute.element
+          )),
+        );
+      }
+      vec![]
+    }
+    // chunks_exact guarantees the slice sizes, so the unwraps below cannot fail
+    "US" => data
+      .chunks_exact(2)
+      .map(|b| Value::from(u16::from_le_bytes(b.try_into().unwrap())))
+      .collect(),
+    "SS" => data
+      .chunks_exact(2)
+      .map(|b| Value::from(i16::from_le_bytes(b.try_into().unwrap())))
+      .collect(),
+    "UL" => data
+      .chunks_exact(4)
+      .map(|b| Value::from(u32::from_le_bytes(b.try_into().unwrap())))
+      .collect(),
+    "SL" => data
+      .chunks_exact(4)
+      .map(|b| Value::from(i32::from_le_bytes(b.try_into().unwrap())))
+      .collect(),
+    "UV" => data
+      .chunks_exact(8)
+      .map(|b| Value::from(u64::from_le_bytes(b.try_into().unwrap())))
+      .collect(),
+    "SV" => data
+      .chunks_exact(8)
+      .map(|b| Value::from(i64::from_le_bytes(b.try_into().unwrap())))
+      .collect(),
+    "FL" => data
+      .chunks_exact(4)
+      .map(|b| Value::from(f32::from_le_bytes(b.try_into().unwrap()) as f64))
+      .collect(),
+    "FD" => data
+      .chunks_exact(8)
+      .map(|b| Value::from(f64::from_le_bytes(b.try_into().unwrap())))
+      .collect(),
+    "AT" => data
+      .chunks_exact(4)
+      .map(|b| {
+        Value::from(format!(
+          "{:04X}{:04X}",
+          u16::from_le_bytes([b[0], b[1]]),
+          u16::from_le_bytes([b[2], b[3]])
+        ))
+      })
+      .collect(),
+    _ if data.is_empty() => vec![],
+    // These VRs are single valued: backslash is not a delimiter and leading spaces are significant
+    "LT" | "ST" | "UT" | "UR" => vec![Value::from(
+      String::from_utf8_lossy(data).trim_end_matches(is_padding),
+    )],
+    _ => String::from_utf8_lossy(data)
+      .split('\\')
+      .map(|v| v.trim_matches(is_padding))
+      .map(|v| match vr {
+        _ if v.is_empty() => Value::Null,
+        "IS" => v.parse::<i64>().map(Value::from).unwrap_or(Value::Null),
+        "DS" => v.parse::<f64>().map(Value::from).unwrap_or(Value::Null),
+        "PN" => {
+          let mut name = serde_json::Map::new();
+          for (group, component) in ["Alphabetic", "Ideographic", "Phonetic"]
+            .iter()
+            .zip(v.split('='))
+          {
+            if !component.is_empty() {
+              name.insert(group.to_string(), Value::from(component));
+            }
+          }
+          Value::Object(name)
+        }
+        _ => Value::from(v),
+      })
+      .collect(),
+  };
+
+  if !values.is_empty() {
+    json.insert("Value".to_string(), Value::Array(values));
+  }
+  Value::Object(json)
+}
+
+fn metadata_dataset(
+  instance: &Instance,
+  attributes: &[DicomAttribute],
+  bulkdata_base: Option<&str>,
+) -> serde_json::Map<String, serde_json::Value> {
+  attributes
+    .iter()
+    .filter(|attribute| attribute.group != 0xFFFE)
+    .map(|attribute| {
+      (
+        format!("{:04X}{:04X}", attribute.group, attribute.element),
+        metadata_attribute(instance, attribute, bulkdata_base),
+      )
+    })
+    .collect()
+}
+
+fn instance_metadata(
+  instance_factory: &Box<dyn InstanceFactory + Send + Sync>,
+  entry: &HashMap<String, String>,
+) -> Result<serde_json::Value, Box<dyn Error>> {
+  let get = |field: &str| {
+    entry
+      .get(field)
+      .ok_or_else(|| format!("Missing {} in the index", field))
+  };
+  let bulkdata_base = format!(
+    "/studies/{}/series/{}/instances/{}/bulkdata",
+    get("StudyInstanceUID")?,
+    get("SeriesInstanceUID")?,
+    get("SOPInstanceUID")?,
+  );
+  let instance = Instance::from_reader(instance_factory.get_reader(get("filepath")?)?)?;
+  let attributes = instance.iter().collect::<Result<Vec<_>, _>>()?;
+  Ok(serde_json::Value::Object(metadata_dataset(
+    &instance,
+    &attributes,
+    Some(&bulkdata_base),
+  )))
+}
+
+#[axum_macros::debug_handler]
+async fn get_metadata(
+  axum::extract::State(state): axum::extract::State<Arc<AppState>>,
+  Path(SearchTerms {
+    instance_uid,
+    study_uid,
+    series_uid,
+  }): Path<SearchTerms>,
+  headers: HeaderMap,
+) -> Response {
+  if get_first_accept_formats(
+    &get_accept_formats(headers),
+    &["application/dicom+json", "application/json"],
+  )
+  .is_none()
+  {
+    return StatusCode::NOT_ACCEPTABLE.into_response();
+  }
+
+  let mut search_terms = HashMap::<Tag, String>::new();
+  if let Some(instance_uid) = instance_uid {
+    search_terms.insert(dicom_tags::SOPInstanceUID, instance_uid);
+  }
+  if let Some(series_uid) = series_uid {
+    search_terms.insert(dicom_tags::SeriesInstanceUID, series_uid);
+  }
+  if let Some(study_uid) = study_uid {
+    search_terms.insert(dicom_tags::StudyInstanceUID, study_uid);
+  }
+  let params = QidoQueryParameters {
+    limit: None,
+    offset: None,
+    fuzzymatching: None,
+    includefield: None,
+  };
+
+  let entries = match get_entries(
+    &state.connection.lock().unwrap(),
+    &state.instance_factory,
+    &params,
+    &search_terms,
+    "filepath",
+  ) {
+    Ok(entries) if !entries.is_empty() => entries,
+    Ok(_) => return StatusCode::NOT_FOUND.into_response(),
+    Err(e) => {
+      tracing::error!("Could not query the index: {}", e);
+      return StatusCode::INTERNAL_SERVER_ERROR.into_response();
+    }
+  };
+
+  let mut datasets = Vec::with_capacity(entries.len());
+  for entry in &entries {
+    match instance_metadata(&state.instance_factory, entry) {
+      Ok(dataset) => datasets.push(dataset),
+      Err(e) => {
+        tracing::error!("Could not read metadata of {:?}: {}", entry.get("filepath"), e);
+        return StatusCode::INTERNAL_SERVER_ERROR.into_response();
+      }
+    }
+  }
+
+  (
+    [(
+      axum::http::header::CONTENT_TYPE,
+      "application/dicom+json; charset=utf-8",
+    )],
+    Json(datasets),
+  )
+    .into_response()
+}
+
 #[axum_macros::debug_handler]
 async fn not_implemented(
   axum::extract::State(state): axum::extract::State<Arc<AppState>>,
@@ -1405,6 +1640,11 @@ async fn main() -> Result<(), Box<dyn Error>> {
     )
     .route("/studies", get(get_studies))
     .route("/studies/{study_uid}", get(get_studies))
+    .route("/studies/{study_uid}/metadata", get(get_metadata))
+    .route(
+      "/studies/{study_uid}/series/{series_uid}/metadata",
+      get(get_metadata),
+    )
     .route("/studies/{study_uid}/series", get(get_series))
     .route("/studies/{study_uid}/series/{series_uid}", get(get_series))
     .route("/studies/{study_uid}/instances", get(get_instances))
@@ -1415,6 +1655,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
     .route(
       "/studies/{study_uid}/series/{series_uid}/instances/{instance_uid}",
       get(get_instances),
+    )
+    .route(
+      "/studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/metadata",
+      get(get_metadata),
     )
     .route(
       "/studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/frames/{frame_uid}",
