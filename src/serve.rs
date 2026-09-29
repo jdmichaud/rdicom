@@ -1413,23 +1413,23 @@ async fn main() -> Result<(), Box<dyn Error>> {
       get(get_instances),
     )
     .route(
-      "/studies/{study_uid}/series/{series_uid}/instances/{instances_uid}",
+      "/studies/{study_uid}/series/{series_uid}/instances/{instance_uid}",
       get(get_instances),
     )
     .route(
-      "/studies/{study_uid}/series/{series_uid}/instances/{instances_uid}/frames/{frame_uid}",
+      "/studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/frames/{frame_uid}",
       get(not_implemented),
     )
     .route(
-      "/studies/{study_uid}/series/{series_uid}/instances/{instances_uid}/rendered",
+      "/studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/rendered",
       get(not_implemented),
     )
     .route(
-      "/studies/{study_uid}/series/{series_uid}/instances/{instances_uid}/thumbnail",
+      "/studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/thumbnail",
       get(not_implemented),
     )
     .route(
-      "/studies/{study_uid}/series/{series_uid}/instances/{instances_uid}/{tag_id}",
+      "/studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/{tag_id}",
       get(not_implemented),
     )
     // POST
