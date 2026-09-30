@@ -637,6 +637,32 @@ struct SearchTerms {
   instance_uid: Option<String>,
 }
 
+#[derive(Deserialize)]
+struct FramesPath {
+  study_uid: Option<String>,
+  series_uid: Option<String>,
+  instance_uid: Option<String>,
+  frames: String,
+}
+
+fn uid_search_terms(
+  study_uid: Option<String>,
+  series_uid: Option<String>,
+  instance_uid: Option<String>,
+) -> HashMap<Tag, String> {
+  let mut search_terms = HashMap::<Tag, String>::new();
+  if let Some(instance_uid) = instance_uid {
+    search_terms.insert(dicom_tags::SOPInstanceUID, instance_uid);
+  }
+  if let Some(series_uid) = series_uid {
+    search_terms.insert(dicom_tags::SeriesInstanceUID, series_uid);
+  }
+  if let Some(study_uid) = study_uid {
+    search_terms.insert(dicom_tags::StudyInstanceUID, study_uid);
+  }
+  search_terms
+}
+
 #[axum_macros::debug_handler]
 async fn get_studies(
   axum::extract::State(state): axum::extract::State<Arc<AppState>>,
@@ -982,6 +1008,18 @@ fn metadata_dataset(
     .collect()
 }
 
+fn load_instance(
+  instance_factory: &Box<dyn InstanceFactory + Send + Sync>,
+  entry: &HashMap<String, String>,
+) -> Result<Instance, Box<dyn Error>> {
+  let filepath = entry
+    .get("filepath")
+    .ok_or("Missing filepath in the index")?;
+  Ok(Instance::from_reader(
+    instance_factory.get_reader(filepath)?,
+  )?)
+}
+
 fn instance_metadata(
   instance_factory: &Box<dyn InstanceFactory + Send + Sync>,
   entry: &HashMap<String, String>,
@@ -997,7 +1035,7 @@ fn instance_metadata(
     get("SeriesInstanceUID")?,
     get("SOPInstanceUID")?,
   );
-  let instance = Instance::from_reader(instance_factory.get_reader(get("filepath")?)?)?;
+  let instance = load_instance(instance_factory, entry)?;
   let attributes = instance.iter().collect::<Result<Vec<_>, _>>()?;
   Ok(serde_json::Value::Object(metadata_dataset(
     &instance,
@@ -1029,16 +1067,7 @@ async fn get_metadata(
       .into_response();
   }
 
-  let mut search_terms = HashMap::<Tag, String>::new();
-  if let Some(instance_uid) = instance_uid {
-    search_terms.insert(dicom_tags::SOPInstanceUID, instance_uid);
-  }
-  if let Some(series_uid) = series_uid {
-    search_terms.insert(dicom_tags::SeriesInstanceUID, series_uid);
-  }
-  if let Some(study_uid) = study_uid {
-    search_terms.insert(dicom_tags::StudyInstanceUID, study_uid);
-  }
+  let search_terms = uid_search_terms(study_uid, series_uid, instance_uid);
   let params = QidoQueryParameters {
     limit: None,
     offset: None,
@@ -1083,6 +1112,332 @@ async fn get_metadata(
       "application/dicom+json; charset=utf-8",
     )],
     Json(datasets),
+  )
+    .into_response()
+}
+
+const NATIVE_TRANSFER_SYNTAXES: [&str; 2] = ["1.2.840.10008.1.2", "1.2.840.10008.1.2.1"];
+const EXPLICIT_VR_LITTLE_ENDIAN: &str = "1.2.840.10008.1.2.1";
+
+// PS3.18 Table 8.7.3-2
+fn encapsulated_media_type(transfer_syntax: &str) -> Option<&'static str> {
+  match transfer_syntax {
+    "1.2.840.10008.1.2.4.50"
+    | "1.2.840.10008.1.2.4.51"
+    | "1.2.840.10008.1.2.4.57"
+    | "1.2.840.10008.1.2.4.70" => Some("image/jpeg"),
+    "1.2.840.10008.1.2.4.80" | "1.2.840.10008.1.2.4.81" => Some("image/jls"),
+    "1.2.840.10008.1.2.4.90" | "1.2.840.10008.1.2.4.91" => Some("image/jp2"),
+    "1.2.840.10008.1.2.4.92" | "1.2.840.10008.1.2.4.93" => Some("image/jpx"),
+    "1.2.840.10008.1.2.4.201" | "1.2.840.10008.1.2.4.202" | "1.2.840.10008.1.2.4.203" => {
+      Some("image/jphc")
+    }
+    "1.2.840.10008.1.2.5" => Some("image/dicom-rle"),
+    _ => None,
+  }
+}
+
+/// Parses a 1-based comma separated frame list such as "1,3,5".
+fn parse_frame_list(frames: &str) -> Option<Vec<usize>> {
+  frames
+    .split(',')
+    .map(|n| n.trim().parse::<usize>().ok().filter(|&n| n >= 1))
+    .collect()
+}
+
+struct Frames {
+  media_type: &'static str,
+  transfer_syntax: String,
+  frames: Vec<Vec<u8>>,
+}
+
+/// Extracts the requested frames as stored in the instance (no transcoding).
+fn extract_frames(
+  instance: &Instance,
+  frame_numbers: &[usize],
+) -> Result<Frames, (StatusCode, String)> {
+  let internal = |e: DicomError| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string());
+  let unsupported = |msg: &str| (StatusCode::NOT_IMPLEMENTED, msg.to_string());
+  let get_us = |tag: &Tag| -> Result<Option<usize>, (StatusCode, String)> {
+    Ok(match instance.get_value(tag).map_err(internal)? {
+      Some(DicomValue::US(value)) => Some(value as usize),
+      _ => None,
+    })
+  };
+
+  let transfer_syntax = match instance
+    .get_value(&dicom_tags::TransferSyntaxUID)
+    .map_err(internal)?
+  {
+    Some(DicomValue::UI(transfer_syntax)) => transfer_syntax,
+    _ if instance.implicit => NATIVE_TRANSFER_SYNTAXES[0].to_string(),
+    _ => EXPLICIT_VR_LITTLE_ENDIAN.to_string(),
+  };
+  let number_of_frames = match instance
+    .get_value(&dicom_tags::NumberOfFrames)
+    .map_err(internal)?
+  {
+    Some(DicomValue::IS(value)) => value.first().and_then(|n| n.parse().ok()).unwrap_or(1),
+    _ => 1,
+  };
+  if let Some(n) = frame_numbers.iter().find(|&&n| n > number_of_frames) {
+    return Err((
+      StatusCode::NOT_FOUND,
+      format!("Frame {} out of range (1-{})", n, number_of_frames),
+    ));
+  }
+
+  let mut pixel_data = None;
+  for attribute in instance.iter() {
+    let attribute = attribute.map_err(internal)?;
+    if attribute.group == dicom_tags::PixelData.group
+      && attribute.element == dicom_tags::PixelData.element
+    {
+      pixel_data = Some(attribute);
+      break;
+    }
+  }
+  let pixel_data = pixel_data.ok_or((StatusCode::NOT_FOUND, "No pixel data".to_string()))?;
+  let bytes = |attribute: &DicomAttribute| {
+    instance
+      .buffer
+      .get(attribute.data_offset..attribute.data_offset + attribute.data_length)
+      .ok_or((
+        StatusCode::INTERNAL_SERVER_ERROR,
+        "Pixel data exceeds file size".to_string(),
+      ))
+  };
+
+  if pixel_data.length != 0xFFFFFFFF {
+    if !NATIVE_TRANSFER_SYNTAXES.contains(&transfer_syntax.as_str()) {
+      return Err(unsupported(&format!(
+        "Unsupported transfer syntax {}",
+        transfer_syntax
+      )));
+    }
+    let data = bytes(&pixel_data)?;
+    let frames = if number_of_frames == 1 {
+      vec![data.to_vec()]
+    } else {
+      let (Some(rows), Some(columns), Some(bits_allocated)) = (
+        get_us(&dicom_tags::Rows)?,
+        get_us(&dicom_tags::Columns)?,
+        get_us(&dicom_tags::BitsAllocated)?,
+      ) else {
+        return Err(internal(DicomError::new(
+          "Missing Rows, Columns or BitsAllocated",
+        )));
+      };
+      if bits_allocated % 8 != 0 {
+        return Err(unsupported("Multi-frame bit-packed pixel data"));
+      }
+      let samples_per_pixel = get_us(&dicom_tags::SamplesPerPixel)?.unwrap_or(1);
+      let frame_size = rows * columns * samples_per_pixel * bits_allocated / 8;
+      frame_numbers
+        .iter()
+        .map(|n| {
+          data
+            .get((n - 1) * frame_size..n * frame_size)
+            .map(<[u8]>::to_vec)
+            .ok_or(internal(DicomError::new(
+              "Pixel data shorter than expected",
+            )))
+        })
+        .collect::<Result<_, _>>()?
+    };
+    return Ok(Frames {
+      media_type: "application/octet-stream",
+      // Native pixel data bytes are identical in implicit and explicit little endian
+      transfer_syntax: EXPLICIT_VR_LITTLE_ENDIAN.to_string(),
+      frames,
+    });
+  }
+
+  let media_type = encapsulated_media_type(&transfer_syntax)
+    .ok_or_else(|| unsupported(&format!("Unsupported transfer syntax {}", transfer_syntax)))?;
+  let items: Vec<&DicomAttribute> = pixel_data
+    .subattributes
+    .iter()
+    .filter(|item| item.group == 0xFFFE && item.element == 0xE000)
+    .collect();
+  let (basic_offset_table, fragments) = items
+    .split_first()
+    .ok_or(internal(DicomError::new("Missing Basic Offset Table")))?;
+
+  let fragments_per_frame: Vec<Vec<&DicomAttribute>> = if number_of_frames == 1 {
+    vec![fragments.to_vec()]
+  } else if fragments.len() == number_of_frames {
+    fragments.iter().map(|fragment| vec![*fragment]).collect()
+  } else if basic_offset_table.data_length == 4 * number_of_frames {
+    let offsets: Vec<usize> = bytes(basic_offset_table)?
+      .chunks_exact(4)
+      .map(|b| u32::from_le_bytes(b.try_into().unwrap()) as usize)
+      .collect();
+    // Offsets are relative to the first fragment item, and so are the data offsets
+    let first = fragments.first().map_or(0, |fragment| fragment.data_offset);
+    (0..number_of_frames)
+      .map(|i| {
+        let range = offsets[i]..offsets.get(i + 1).copied().unwrap_or(usize::MAX);
+        fragments
+          .iter()
+          .copied()
+          .filter(|fragment| range.contains(&(fragment.data_offset - first)))
+          .collect()
+      })
+      .collect()
+  } else {
+    return Err(unsupported(
+      "Cannot locate frames without a Basic Offset Table",
+    ));
+  };
+
+  let frames = frame_numbers
+    .iter()
+    .map(|n| {
+      let mut frame = Vec::new();
+      for fragment in &fragments_per_frame[n - 1] {
+        frame.extend_from_slice(bytes(fragment)?);
+      }
+      Ok(frame)
+    })
+    .collect::<Result<_, (StatusCode, String)>>()?;
+  Ok(Frames {
+    media_type,
+    transfer_syntax,
+    frames,
+  })
+}
+
+/// Returns the media type of the parts if the client accepts the frames as stored.
+fn negotiate_frame_media_type(accepts: &[AcceptHeader], frames: &Frames) -> Option<String> {
+  for accept in accepts {
+    let (part_type, transfer_syntax) = match accept.format.as_str() {
+      "*/*" | "multipart/*" => return Some(frames.media_type.to_string()),
+      "multipart/related" => (
+        accept
+          .parameters
+          .get("type")
+          .map_or("application/octet-stream", String::as_str),
+        accept.parameters.get("transfer-syntax"),
+      ),
+      _ => continue,
+    };
+    let transfer_syntax_ok =
+      transfer_syntax.map_or(true, |ts| ts == "*" || *ts == frames.transfer_syntax);
+    let type_ok = match part_type {
+      "*/*" => true,
+      "image/*" => frames.media_type.starts_with("image/"),
+      // Compressed frames can be sent as octet-stream if a transfer syntax is negotiated
+      "application/octet-stream" => frames.media_type == part_type || transfer_syntax.is_some(),
+      _ => frames.media_type == part_type,
+    };
+    if type_ok && transfer_syntax_ok {
+      return Some(if part_type.contains('*') {
+        frames.media_type.to_string()
+      } else {
+        part_type.to_string()
+      });
+    }
+  }
+  None
+}
+
+#[axum_macros::debug_handler]
+async fn get_frames(
+  axum::extract::State(state): axum::extract::State<Arc<AppState>>,
+  Path(FramesPath {
+    instance_uid,
+    study_uid,
+    series_uid,
+    frames,
+  }): Path<FramesPath>,
+  headers: HeaderMap,
+) -> Response {
+  let Some(frame_numbers) = parse_frame_list(&frames) else {
+    return (StatusCode::BAD_REQUEST, "Invalid frame list").into_response();
+  };
+
+  let search_terms = uid_search_terms(study_uid, series_uid, instance_uid);
+  let params = QidoQueryParameters {
+    limit: Some(1),
+    offset: None,
+    fuzzymatching: None,
+    includefield: None,
+    matches: HashMap::new(),
+  };
+  let entry = match get_entries(
+    &state.connection.lock().unwrap(),
+    &state.instance_factory,
+    &params,
+    &search_terms,
+    "filepath",
+  ) {
+    Ok(mut entries) if !entries.is_empty() => entries.swap_remove(0),
+    Ok(_) => return StatusCode::NOT_FOUND.into_response(),
+    Err(e) => {
+      tracing::error!("Could not query the index: {}", e);
+      return StatusCode::INTERNAL_SERVER_ERROR.into_response();
+    }
+  };
+
+  let instance = match load_instance(&state.instance_factory, &entry) {
+    Ok(instance) => instance,
+    Err(e) => {
+      tracing::error!("Could not load {:?}: {}", entry.get("filepath"), e);
+      return StatusCode::INTERNAL_SERVER_ERROR.into_response();
+    }
+  };
+  let frames = match extract_frames(&instance, &frame_numbers) {
+    Ok(frames) => frames,
+    Err((status, message)) => {
+      tracing::warn!(
+        "Could not extract frames from {:?}: {}",
+        entry.get("filepath"),
+        message
+      );
+      return (status, message).into_response();
+    }
+  };
+  let Some(part_type) = negotiate_frame_media_type(&parse_accept_header(&headers), &frames) else {
+    return (
+      StatusCode::NOT_ACCEPTABLE,
+      format!(
+        "Frames are only available as {} (transfer syntax {})",
+        frames.media_type, frames.transfer_syntax
+      ),
+    )
+      .into_response();
+  };
+
+  let boundary = format!(
+    "rdicom-{:x}",
+    std::time::SystemTime::now()
+      .duration_since(std::time::UNIX_EPOCH)
+      .map_or(0, |d| d.as_nanos())
+  );
+  let mut body = Vec::with_capacity(frames.frames.iter().map(|f| f.len() + 256).sum());
+  for frame in &frames.frames {
+    body.extend_from_slice(
+      format!(
+        "--{}\r\nContent-Type: {}; transfer-syntax={}\r\n\r\n",
+        boundary, part_type, frames.transfer_syntax
+      )
+      .as_bytes(),
+    );
+    body.extend_from_slice(frame);
+    body.extend_from_slice(b"\r\n");
+  }
+  body.extend_from_slice(format!("--{}--\r\n", boundary).as_bytes());
+
+  (
+    [(
+      axum::http::header::CONTENT_TYPE,
+      format!(
+        "multipart/related; type=\"{}\"; boundary={}",
+        part_type, boundary
+      ),
+    )],
+    body,
   )
     .into_response()
 }
@@ -1439,6 +1794,30 @@ struct AcceptHeader {
   parameters: HashMap<String, String>,
 }
 
+/// Parses the accept header, keeping the client order (q-values are ignored).
+fn parse_accept_header(headers: &HeaderMap) -> Vec<AcceptHeader> {
+  headers
+    .get(ACCEPT)
+    .and_then(|accept| accept.to_str().ok())
+    .unwrap_or("*/*")
+    .split(',')
+    .map(|media_range| {
+      let mut elements = media_range.split(';').map(str::trim);
+      let format = elements.next().unwrap_or_default().to_ascii_lowercase();
+      let parameters = elements
+        .filter_map(|parameter| parameter.split_once('='))
+        .map(|(key, value)| {
+          (
+            key.trim().to_ascii_lowercase(),
+            value.trim().trim_matches('"').to_string(),
+          )
+        })
+        .collect();
+      AcceptHeader { format, parameters }
+    })
+    .collect()
+}
+
 /**
  * Returns the first entry in the request accept header that is available on the
  * server side.
@@ -1666,10 +2045,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // GET
     .route("/instances", get(get_instances))
     .route("/instances/{instance_uid}", get(get_instances))
-    .route(
-      "/instances/{instance_uid}/frames/{frame_uid}",
-      get(not_implemented),
-    )
+    .route("/instances/{instance_uid}/frames/{frames}", get(get_frames))
     .route("/instances/{instance_uid}/rendered", get(not_implemented))
     .route("/instances/{instance_uid}/thumbnail", get(not_implemented))
     .route("/instances/{instance_uid}/{tag_id}", get(not_found))
@@ -1681,8 +2057,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
       get(get_instances),
     )
     .route(
-      "/series/{series_uid}/instances/{instance_uid}/frames/{frame_uid}",
-      get(not_implemented),
+      "/series/{series_uid}/instances/{instance_uid}/frames/{frames}",
+      get(get_frames),
     )
     .route(
       "/series/{series_uid}/instances/{instance_uid}/rendered",
@@ -1719,8 +2095,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
       get(get_metadata),
     )
     .route(
-      "/studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/frames/{frame_uid}",
-      get(not_implemented),
+      "/studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/frames/{frames}",
+      get(get_frames),
     )
     .route(
       "/studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/rendered",
