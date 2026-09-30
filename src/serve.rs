@@ -402,40 +402,41 @@ fn map_to_entry(tag_map: &HashMap<String, String>) -> String {
     "{{ {} }}",
     tag_map
       .iter()
-      .map(|(key, value)| {
+      .filter_map(|(key, value)| {
         // Try to convert the column name to a tag
-        let tag_result: Result<Tag, DicomError> = key.try_into();
-        match tag_result {
-          Ok(tag) => {
-            match tag.vr {
-              "OB" | "OD" | "OF" | "OL" | "OV" | "OW" => {
-                format!(
-                  // Create a BulkdataURI
-                  // "00080030": "/bulkdata/{StudyInstanceUID}/{SeriesInstanceUID}/{SOPInstanceUID}/{tag}",
-                  "\"{:04X}{:04X}\": \"/bulkdata/{}\"",
-                  tag.group, tag.element, value,
-                )
-              }
-              _ => {
-                format!(
-                  // We have a Dicom that we will format according to the DicomWeb standard
-                  // "00080030": {
-                  //   "vr": "TM",
-                  //   "Value": ["131600.0000"]
-                  // },
-                  "\"{:04X}{:04X}\": {{ \"vr\": \"{}\", \"Value\": [ \"{}\" ] }}",
-                  // TODO: The replace here is an ugly workaround which is probably going to cause more
-                  // problem than it will solve.
-                  tag.group,
-                  tag.element,
-                  tag.vr,
-                  value.replace("\\", ","),
-                )
-              }
-            }
+        let tag: Result<Tag, DicomError> = key.try_into();
+        if let Ok(tag) = tag {
+          Some((tag, value))
+        } else {
+          None
+        }
+      }) // Only keep proper tags
+      .map(|(tag, value)| {
+        match tag.vr {
+          "OB" | "OD" | "OF" | "OL" | "OV" | "OW" => {
+            format!(
+              // Create a BulkdataURI
+              // "00080030": "/bulkdata/{StudyInstanceUID}/{SeriesInstanceUID}/{SOPInstanceUID}/{tag}",
+              "\"{:04X}{:04X}\": \"/bulkdata/{}\"",
+              tag.group, tag.element, value,
+            )
           }
-          // Otherwise, just dump the key in the object
-          _ => format!("\"{key}\": \"{value}\""),
+          _ => {
+            format!(
+              // We have a Dicom that we will format according to the DicomWeb standard
+              // "00080030": {
+              //   "vr": "TM",
+              //   "Value": ["131600.0000"]
+              // },
+              "\"{:04X}{:04X}\": {{ \"vr\": \"{}\", \"Value\": [ \"{}\" ] }}",
+              // TODO: The replace here is an ugly workaround which is probably going to cause more
+              // problem than it will solve.
+              tag.group,
+              tag.element,
+              tag.vr,
+              value.replace("\\", ","),
+            )
+          }
         }
       })
       .collect::<Vec<String>>()
