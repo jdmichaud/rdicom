@@ -568,13 +568,16 @@ impl Instance {
           offset += 4;
           u32::from_le_bytes(tmp) as usize
         };
-        let data: &[u32] = if length != 0 {
-          let tmp: &[u8] = self.buffer[offset..offset + length].try_into().unwrap();
-          offset += length;
-          unsafe { core::mem::transmute(tmp) } // Basic Offset Table data is 32bits unsigned
-        } else {
-          &[]
-        };
+        let data_offset = offset;
+        if offset + length > self.buffer.len() {
+          return Err(DicomError::new(&format!(
+            "Pixel data item at {:#x} of length {} exceeds file size {}",
+            offset,
+            length,
+            self.buffer.len()
+          )));
+        }
+        offset += length;
 
         let tag = (((group as u32) << 16) | element as u32)
           .try_into()
@@ -587,7 +590,13 @@ impl Instance {
             description: "Unknown Tag & Data",
           });
         items.push(DicomAttribute::new(
-          group, element, "OB", offset, length, length, tag,
+          group,
+          element,
+          "OB",
+          data_offset,
+          length,
+          length,
+          tag,
         ));
       } else {
         break;
