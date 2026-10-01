@@ -404,16 +404,6 @@ mod capabilities {
   pub const CAPABILITIES_STR: &str = include_str!("capabilities.xml");
 }
 
-// Retrieves the column present in the index
-fn get_indexed_fields(connection: &Connection) -> Result<Vec<String>, Box<dyn Error>> {
-  let result = connection
-    .prepare("PRAGMA table_info(dicom_index);")?
-    .into_iter()
-    .map(|row| row.map(|r| r.read::<&str, _>(1).to_string()))
-    .collect::<Result<Vec<String>, _>>()?;
-  Ok(result)
-}
-
 // `tags` caches the conversion of column names to tags, which is costly
 fn map_to_entry<'a>(
   tag_map: &'a HashMap<String, String>,
@@ -588,17 +578,17 @@ impl InstanceFactory for MemoryInstanceFactory {
  */
 fn get_entries(
   connection: &Connection,
+  indexed_fields: &[String],
   instance_factory: &Box<dyn InstanceFactory + Send + Sync>,
   params: &QidoQueryParameters,
   search_terms: &HashMap<Tag, String>,
   entry_type: &str,
 ) -> Result<Vec<HashMap<String, String>>, Box<dyn Error>> {
-  let indexed_fields = get_indexed_fields(connection)?;
   // First retrieve the indexed fields present in the DB
   let query = &format!(
     "SELECT * FROM dicom_index {} GROUP BY {} {};",
     // Will restrict the data to what is being searched
-    create_where_clause(params, search_terms, &indexed_fields),
+    create_where_clause(params, search_terms, indexed_fields),
     entry_type,
     create_limit_clause(params),
   );
@@ -702,6 +692,7 @@ async fn get_studies(
   let mut response_headers = HeaderMap::new();
   match get_entries(
     &state.connection.lock().unwrap(),
+    &state.indexed_fields,
     &state.instance_factory,
     &params,
     &search_terms,
@@ -772,6 +763,7 @@ async fn get_series(
   let mut response_headers = HeaderMap::new();
   match get_entries(
     &state.connection.lock().unwrap(),
+    &state.indexed_fields,
     &state.instance_factory,
     &params,
     &search_terms,
@@ -841,6 +833,7 @@ async fn get_instances(
   let mut response_headers = HeaderMap::new();
   match get_entries(
     &state.connection.lock().unwrap(),
+    &state.indexed_fields,
     &state.instance_factory,
     &params,
     &search_terms,
@@ -1086,6 +1079,7 @@ async fn get_metadata(
 
   let entries = match get_entries(
     &state.connection.lock().unwrap(),
+    &state.indexed_fields,
     &state.instance_factory,
     &params,
     &search_terms,
@@ -1375,6 +1369,7 @@ async fn get_frames(
   };
   let entry = match get_entries(
     &state.connection.lock().unwrap(),
+    &state.indexed_fields,
     &state.instance_factory,
     &params,
     &search_terms,
@@ -1863,6 +1858,8 @@ fn get_accept_formats(headers: HeaderMap) -> Vec<String> {
 struct AppState {
   // TODO: Rework index_store so that we do not need an Arc Mutex here
   connection: Arc<Mutex<ConnectionThreadSafe>>,
+  // Columns of the index, read once at startup
+  indexed_fields: Vec<String>,
   index_store: Arc<Mutex<SqlIndexStoreWithMutex>>,
   instance_factory: Box<dyn InstanceFactory + Sync + Send>,
   config: config::Config,
@@ -2025,6 +2022,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
   let connection = Arc::new(Mutex::new(connection));
   let index_store =
     SqlIndexStoreWithMutex::new(connection.clone(), &config.table_name, indexable_fields)?;
+  let indexed_fields = db::column_names(&connection.lock().unwrap(), "dicom_index")?;
 
   let instance_factory: Box<dyn InstanceFactory + Sync + Send> = if opt.dcmpath == ":memory:" {
     Box::new(MemoryInstanceFactory::new())
@@ -2042,6 +2040,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
   let app_state = AppState {
     connection: connection,
+    indexed_fields,
     index_store: Arc::new(Mutex::new(index_store)),
     instance_factory: instance_factory,
     config: config,
