@@ -45,7 +45,7 @@ use once_cell::sync::Lazy;
 use serde::ser::SerializeMap;
 use serde::Serializer;
 use serde::{de, Deserialize, Deserializer, Serialize};
-use sqlite::{Connection, ConnectionThreadSafe};
+use sqlite::{Connection, ConnectionThreadSafe, OpenFlags};
 use std::collections::BTreeMap;
 use std::collections::HashMap;
 use std::convert::TryInto;
@@ -55,8 +55,9 @@ use std::fmt;
 use std::fs::File;
 use std::io::{BufReader, BufWriter, Cursor, Read, Seek, Write};
 use std::path::PathBuf;
+use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::Arc;
-use std::sync::Mutex;
+use std::sync::{Mutex, MutexGuard, PoisonError};
 use tower_http::cors::{AllowOrigin, Any, CorsLayer};
 use tower_http::trace::{self, TraceLayer};
 use tracing::Level;
@@ -404,6 +405,55 @@ mod capabilities {
   pub const CAPABILITIES_STR: &str = include_str!("capabilities.xml");
 }
 
+/**
+ * A fixed set of read-only SQLite connections so that read requests are served
+ * concurrently instead of waiting on a single connection.
+ */
+struct ReadConnections {
+  connections: Vec<Arc<Mutex<ConnectionThreadSafe>>>,
+  next: AtomicUsize,
+}
+
+impl ReadConnections {
+  fn new(
+    sqlfile: &str,
+    write_connection: &Arc<Mutex<ConnectionThreadSafe>>,
+    size: usize,
+  ) -> Result<Self, Box<dyn Error>> {
+    let connections = if sqlfile.is_empty() || sqlfile == ":memory:" {
+      // An in-memory database only exists within the connection that created it
+      vec![write_connection.clone()]
+    } else {
+      (0..size)
+        .map(|_| {
+          let mut connection =
+            Connection::open_thread_safe_with_flags(sqlfile, OpenFlags::new().with_read_only())?;
+          // Wait for a STORE or DELETE in progress instead of failing
+          connection.set_busy_timeout(5000)?;
+          Ok(Arc::new(Mutex::new(connection)))
+        })
+        .collect::<Result<_, Box<dyn Error>>>()?
+    };
+    Ok(ReadConnections {
+      connections,
+      next: AtomicUsize::new(0),
+    })
+  }
+
+  // Returns an idle connection if any, otherwise waits for one in turn
+  fn get(&self) -> MutexGuard<'_, ConnectionThreadSafe> {
+    for connection in &self.connections {
+      if let Ok(guard) = connection.try_lock() {
+        return guard;
+      }
+    }
+    let index = self.next.fetch_add(1, Ordering::Relaxed) % self.connections.len();
+    self.connections[index]
+      .lock()
+      .unwrap_or_else(PoisonError::into_inner)
+  }
+}
+
 // `tags` caches the conversion of column names to tags, which is costly
 fn map_to_entry<'a>(
   tag_map: &'a HashMap<String, String>,
@@ -577,7 +627,7 @@ impl InstanceFactory for MemoryInstanceFactory {
  * the data from the index with the data from the DICOM files if necessary.
  */
 fn get_entries(
-  connection: &Connection,
+  readers: &ReadConnections,
   indexed_fields: &[String],
   instance_factory: &Box<dyn InstanceFactory + Send + Sync>,
   params: &QidoQueryParameters,
@@ -593,7 +643,8 @@ fn get_entries(
     create_limit_clause(params),
   );
   tracing::debug!("query: {}", query);
-  let mut entries = db::query(connection, query)?;
+  // The connection is only held for the query, not while reading the files
+  let mut entries = db::query(&readers.get(), query)?;
   // println!("entries {:?}", entries);
   // Get the includefields not present in the index
   if let Some(includefield) = &params.includefield {
@@ -626,6 +677,69 @@ fn get_entries(
     }
   }
   Ok(entries)
+}
+
+/**
+ * Performs a QIDO search and builds the response. The database queries, file
+ * reads and JSON generation are blocking, so they run on tokio's blocking
+ * thread pool to keep the async workers available.
+ */
+async fn qido_response(
+  state: Arc<AppState>,
+  params: QidoQueryParameters,
+  search_terms: HashMap<Tag, String>,
+  entry_type: &'static str,
+  headers: HeaderMap,
+) -> (HeaderMap, Response) {
+  let acceptable = get_accept_formats(headers)
+    .iter()
+    .any(|e| e == "application/json" || e == "application/dicom+json");
+  // Ok(None) when nothing matched, otherwise the JSON response (empty if it will not be sent)
+  let result = tokio::task::spawn_blocking(move || {
+    let entries = get_entries(
+      &state.readers,
+      &state.indexed_fields,
+      &state.instance_factory,
+      &params,
+      &search_terms,
+      entry_type,
+    )
+    .map_err(|e| e.to_string())?;
+    Ok::<_, String>(match entries.is_empty() {
+      true => None,
+      false if acceptable => Some(generate_json_response(&entries)),
+      false => Some(String::new()),
+    })
+  })
+  .await
+  .unwrap_or_else(|e| Err(e.to_string()));
+
+  let mut response_headers = HeaderMap::new();
+  match result {
+    Ok(Some(json)) if acceptable => {
+      response_headers.insert(
+        "content-type",
+        "application/dicom+json; charset=utf-8".parse().unwrap(),
+      );
+      (response_headers, json.into_response())
+    }
+    Ok(Some(_)) => (
+      response_headers,
+      (
+        StatusCode::NOT_ACCEPTABLE,
+        "Unsupported or missing accept header",
+      )
+        .into_response(),
+    ),
+    Ok(None) => (response_headers, StatusCode::NOT_FOUND.into_response()),
+    Err(e) => {
+      tracing::error!("Could not perform the search: {}", e);
+      (
+        response_headers,
+        StatusCode::INTERNAL_SERVER_ERROR.into_response(),
+      )
+    }
+  }
 }
 
 #[derive(Deserialize)]
@@ -664,7 +778,7 @@ fn uid_search_terms(
 #[axum_macros::debug_handler]
 async fn get_studies(
   axum::extract::State(state): axum::extract::State<Arc<AppState>>,
-  params: axum::extract::Query<QidoQueryParameters>,
+  axum::extract::Query(params): axum::extract::Query<QidoQueryParameters>,
   Path(SearchTerms {
     instance_uid,
     study_uid,
@@ -689,53 +803,13 @@ async fn get_studies(
     search_terms.insert(dicom_tags::StudyInstanceUID, study_uid);
   }
 
-  let mut response_headers = HeaderMap::new();
-  match get_entries(
-    &state.connection.lock().unwrap(),
-    &state.indexed_fields,
-    &state.instance_factory,
-    &params,
-    &search_terms,
-    "StudyInstanceUID",
-  ) {
-    Ok(result) if result.len() > 0 => {
-      let accept_formats = get_accept_formats(headers);
-      if accept_formats
-        .iter()
-        .any(|e| e == "application/json" || e == "application/dicom+json")
-      {
-        response_headers.insert(
-          "content-type",
-          "application/dicom+json; charset=utf-8".parse().unwrap(),
-        );
-        // 🤮 TODO: need to replace generate_json_response
-        (
-          response_headers,
-          generate_json_response(&result).into_response(),
-        )
-      } else {
-        (
-          response_headers,
-          (
-            StatusCode::NOT_ACCEPTABLE,
-            "Unsupported or missing accept header",
-          )
-            .into_response(),
-        )
-      }
-    }
-    Ok(_) => (response_headers, StatusCode::NOT_FOUND.into_response()),
-    Err(_) => (
-      response_headers,
-      StatusCode::INTERNAL_SERVER_ERROR.into_response(),
-    ),
-  }
+  qido_response(state, params, search_terms, "StudyInstanceUID", headers).await
 }
 
 #[axum_macros::debug_handler]
 async fn get_series(
   axum::extract::State(state): axum::extract::State<Arc<AppState>>,
-  params: axum::extract::Query<QidoQueryParameters>,
+  axum::extract::Query(params): axum::extract::Query<QidoQueryParameters>,
   Path(SearchTerms {
     instance_uid,
     study_uid,
@@ -760,52 +834,13 @@ async fn get_series(
     search_terms.insert(dicom_tags::StudyInstanceUID, study_uid);
   }
 
-  let mut response_headers = HeaderMap::new();
-  match get_entries(
-    &state.connection.lock().unwrap(),
-    &state.indexed_fields,
-    &state.instance_factory,
-    &params,
-    &search_terms,
-    "SeriesInstanceUID",
-  ) {
-    Ok(result) if result.len() > 0 => {
-      let accept_formats = get_accept_formats(headers);
-      if accept_formats
-        .iter()
-        .any(|e| e == "application/json" || e == "application/dicom+json")
-      {
-        response_headers.insert(
-          "content-type",
-          "application/dicom+json; charset=utf-8".parse().unwrap(),
-        );
-        (
-          response_headers,
-          generate_json_response(&result).into_response(),
-        )
-      } else {
-        (
-          response_headers,
-          (
-            StatusCode::NOT_ACCEPTABLE,
-            "Unsupported or missing accept header",
-          )
-            .into_response(),
-        )
-      }
-    }
-    Ok(_) => (response_headers, StatusCode::NOT_FOUND.into_response()),
-    Err(_) => (
-      response_headers,
-      StatusCode::INTERNAL_SERVER_ERROR.into_response(),
-    ),
-  }
+  qido_response(state, params, search_terms, "SeriesInstanceUID", headers).await
 }
 
 #[axum_macros::debug_handler]
 async fn get_instances(
   axum::extract::State(state): axum::extract::State<Arc<AppState>>,
-  params: axum::extract::Query<QidoQueryParameters>,
+  axum::extract::Query(params): axum::extract::Query<QidoQueryParameters>,
   Path(SearchTerms {
     instance_uid,
     study_uid,
@@ -830,46 +865,7 @@ async fn get_instances(
     search_terms.insert(dicom_tags::StudyInstanceUID, study_uid);
   }
 
-  let mut response_headers = HeaderMap::new();
-  match get_entries(
-    &state.connection.lock().unwrap(),
-    &state.indexed_fields,
-    &state.instance_factory,
-    &params,
-    &search_terms,
-    "filepath",
-  ) {
-    Ok(result) if result.len() > 0 => {
-      let accept_formats = get_accept_formats(headers);
-      if accept_formats
-        .iter()
-        .any(|e| e == "application/json" || e == "application/dicom+json")
-      {
-        response_headers.insert(
-          "content-type",
-          "application/dicom+json; charset=utf-8".parse().unwrap(),
-        );
-        (
-          response_headers,
-          generate_json_response(&result).into_response(),
-        )
-      } else {
-        (
-          response_headers,
-          (
-            StatusCode::NOT_ACCEPTABLE,
-            "Unsupported or missing accept header",
-          )
-            .into_response(),
-        )
-      }
-    }
-    Ok(_) => (response_headers, StatusCode::NOT_FOUND.into_response()),
-    Err(_) => (
-      response_headers,
-      StatusCode::INTERNAL_SERVER_ERROR.into_response(),
-    ),
-  }
+  qido_response(state, params, search_terms, "filepath", headers).await
 }
 
 const BULKDATA_VRS: [&str; 7] = ["OB", "OD", "OF", "OL", "OV", "OW", "UN"];
@@ -1077,45 +1073,55 @@ async fn get_metadata(
     matches: HashMap::new(),
   };
 
-  let entries = match get_entries(
-    &state.connection.lock().unwrap(),
-    &state.indexed_fields,
-    &state.instance_factory,
-    &params,
-    &search_terms,
-    "filepath",
-  ) {
-    Ok(entries) if !entries.is_empty() => entries,
-    Ok(_) => return StatusCode::NOT_FOUND.into_response(),
-    Err(e) => {
-      tracing::error!("Could not query the index: {}", e);
-      return StatusCode::INTERNAL_SERVER_ERROR.into_response();
+  // Querying, reading the files and serializing are blocking: run them on
+  // tokio's blocking thread pool. Ok(None) when nothing matched.
+  let result = tokio::task::spawn_blocking(move || -> Result<Option<Vec<u8>>, String> {
+    let entries = get_entries(
+      &state.readers,
+      &state.indexed_fields,
+      &state.instance_factory,
+      &params,
+      &search_terms,
+      "filepath",
+    )
+    .map_err(|e| format!("Could not query the index: {}", e))?;
+    if entries.is_empty() {
+      return Ok(None);
     }
-  };
+    let datasets = entries
+      .iter()
+      .map(|entry| {
+        instance_metadata(&state.instance_factory, entry).map_err(|e| {
+          format!(
+            "Could not read metadata of {:?}: {}",
+            entry.get("filepath"),
+            e
+          )
+        })
+      })
+      .collect::<Result<Vec<_>, _>>()?;
+    serde_json::to_vec(&datasets)
+      .map(Some)
+      .map_err(|e| e.to_string())
+  })
+  .await
+  .unwrap_or_else(|e| Err(e.to_string()));
 
-  let mut datasets = Vec::with_capacity(entries.len());
-  for entry in &entries {
-    match instance_metadata(&state.instance_factory, entry) {
-      Ok(dataset) => datasets.push(dataset),
-      Err(e) => {
-        tracing::error!(
-          "Could not read metadata of {:?}: {}",
-          entry.get("filepath"),
-          e
-        );
-        return StatusCode::INTERNAL_SERVER_ERROR.into_response();
-      }
+  match result {
+    Ok(Some(body)) => (
+      [(
+        axum::http::header::CONTENT_TYPE,
+        "application/dicom+json; charset=utf-8",
+      )],
+      body,
+    )
+      .into_response(),
+    Ok(None) => StatusCode::NOT_FOUND.into_response(),
+    Err(e) => {
+      tracing::error!("{}", e);
+      StatusCode::INTERNAL_SERVER_ERROR.into_response()
     }
   }
-
-  (
-    [(
-      axum::http::header::CONTENT_TYPE,
-      "application/dicom+json; charset=utf-8",
-    )],
-    Json(datasets),
-  )
-    .into_response()
 }
 
 const NATIVE_TRANSFER_SYNTAXES: [&str; 2] = ["1.2.840.10008.1.2", "1.2.840.10008.1.2.1"];
@@ -1368,7 +1374,7 @@ async fn get_frames(
     matches: HashMap::new(),
   };
   let entry = match get_entries(
-    &state.connection.lock().unwrap(),
+    &state.readers,
     &state.indexed_fields,
     &state.instance_factory,
     &params,
@@ -1763,7 +1769,9 @@ fn check_db(
   opt: &Opt,
   config: &config::Config,
 ) -> Result<(Vec<String>, ConnectionThreadSafe), Box<dyn Error>> {
-  let connection = Connection::open_thread_safe(&opt.sqlfile)?;
+  let mut connection = Connection::open_thread_safe(&opt.sqlfile)?;
+  // Wait for the read connections to release their locks instead of failing
+  connection.set_busy_timeout(5000)?;
 
   let mut indexable_fields = config.get_indexable_fields();
   indexable_fields.push("filepath".to_string());
@@ -1857,7 +1865,10 @@ fn get_accept_formats(headers: HeaderMap) -> Vec<String> {
 
 struct AppState {
   // TODO: Rework index_store so that we do not need an Arc Mutex here
+  // Connection used to modify the index (STORE, DELETE)
   connection: Arc<Mutex<ConnectionThreadSafe>>,
+  // Connections used to serve searches concurrently
+  readers: ReadConnections,
   // Columns of the index, read once at startup
   indexed_fields: Vec<String>,
   index_store: Arc<Mutex<SqlIndexStoreWithMutex>>,
@@ -2022,6 +2033,12 @@ async fn main() -> Result<(), Box<dyn Error>> {
   let connection = Arc::new(Mutex::new(connection));
   let index_store =
     SqlIndexStoreWithMutex::new(connection.clone(), &config.table_name, indexable_fields)?;
+  // Opened after the index store, which creates the table and its SQL indexes
+  let readers = ReadConnections::new(
+    &opt.sqlfile,
+    &connection,
+    std::thread::available_parallelism().map_or(4, |n| n.get()),
+  )?;
   let indexed_fields = db::column_names(&connection.lock().unwrap(), "dicom_index")?;
 
   let instance_factory: Box<dyn InstanceFactory + Sync + Send> = if opt.dcmpath == ":memory:" {
@@ -2040,6 +2057,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
   let app_state = AppState {
     connection: connection,
+    readers,
     indexed_fields,
     index_store: Arc::new(Mutex::new(index_store)),
     instance_factory: instance_factory,
