@@ -665,11 +665,20 @@ fn get_entries(
         .iter()
         .map(|field| Ok((field, Tag::try_from(field)?)))
         .collect::<Result<Vec<(&String, Tag)>, DicomError>>()?;
+      // Reading the pixel data is most of the cost of loading a file
+      let needs_pixel_data = tags_to_fetch
+        .iter()
+        .any(|(_, tag)| tag.group == 0x7FE0 && [0x0008, 0x0009, 0x0010].contains(&tag.element));
       for item in &mut entries {
         if let Some(rfilepath) = item.get("filepath") {
           let reader = instance_factory.get_reader(rfilepath)?;
+          let instance = if needs_pixel_data {
+            Instance::from_reader(reader)?
+          } else {
+            Instance::from_reader_without_pixel_data(reader)?
+          };
           // Several fields are fetched from the same file: cache what is parsed
-          let instance = CachedInstance::new(Instance::from_reader(reader)?);
+          let instance = CachedInstance::new(instance);
           // Go through those missing fields from the index and enrich the data from the index
           for (field, tag) in &tags_to_fetch {
             if let Some(field_value) = instance.get_value(tag)? {
@@ -1037,7 +1046,9 @@ fn instance_metadata(
     get("SeriesInstanceUID")?,
     get("SOPInstanceUID")?,
   );
-  let instance = load_instance(instance_factory, entry)?;
+  // Bulk data is only referenced by URI: no need to read the pixel data
+  let instance =
+    Instance::from_reader_without_pixel_data(instance_factory.get_reader(get("filepath")?)?)?;
   let attributes = instance.iter().collect::<Result<Vec<_>, _>>()?;
   Ok(serde_json::Value::Object(metadata_dataset(
     &instance,
