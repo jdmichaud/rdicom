@@ -2126,8 +2126,12 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // DELETE (not part of DICOMWeb)
     .route("/studies", delete(delete_studies))
     .route("/studies/{study_uid}", delete(delete_studies))
-    .layer(middleware::from_fn(print_request_response))
     .with_state(Arc::new(app_state));
+
+  // Bodies are only logged in verbose mode: do not pay for buffering them otherwise
+  if opt.verbose {
+    app = app.layer(middleware::from_fn(print_request_response));
+  }
 
   let host = opt.host;
   println!(
