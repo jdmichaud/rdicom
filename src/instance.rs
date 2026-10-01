@@ -33,6 +33,8 @@ use std::io::BufReader;
 use std::io::Read;
 #[cfg(not(target_arch = "wasm32"))]
 use std::io::Seek;
+#[cfg(not(target_arch = "wasm32"))]
+use std::io::SeekFrom;
 
 use alloc::borrow::Cow;
 use alloc::ffi::CString;
@@ -54,6 +56,10 @@ use crate::dicom_tags::SequenceDelimitationItem;
 use crate::error::DicomError;
 use crate::misc::has_dicom_header;
 use crate::tags::Tag;
+
+// VRs which, in explicit VR, have 2 reserved bytes and a length on 4 bytes.
+// https://dicom.nema.org/dicom/2013/output/chtml/part05/chapter_7.html#sect_7.1.2
+const LONG_LENGTH_VRS: [&str; 10] = ["OB", "OD", "OF", "OL", "OW", "SQ", "UC", "UR", "UT", "UN"];
 
 #[derive(Debug)]
 pub struct Instance {
@@ -449,6 +455,29 @@ impl Instance {
   }
 
   /**
+   * Same as from_reader, except that the values of the top-level pixel data
+   * elements ((7FE0,0008), (7FE0,0009) and (7FE0,0010)) are not read. When the
+   * pixel data is the last element of the file, which is the usual case, the
+   * buffer ends where its value starts (getting the value returns an error).
+   * Otherwise its bytes are zeros. Everything else, including the structure of
+   * the pixel data (the item headers of encapsulated fragments), is identical
+   * to from_reader. Use it when the pixel data values are not needed: reading
+   * them is usually most of the cost of loading a file.
+   */
+  #[cfg(not(target_arch = "wasm32"))]
+  pub fn from_reader_without_pixel_data<T: Read + Seek>(mut reader: T) -> Result<Self, DicomError> {
+    let size = reader.seek(SeekFrom::End(0))?;
+    reader.seek(SeekFrom::Start(0))?;
+    let loader = SparseLoader {
+      reader,
+      size: usize::try_from(size).map_err(|_| "File too large")?,
+      buffer: vec![],
+      read_ahead: SPARSE_LOADER_READ_AHEAD,
+    };
+    Instance::from_vec(loader.load()?)
+  }
+
+  /**
    * Returns an instance from a file path.
    */
   #[cfg(not(target_arch = "wasm32"))]
@@ -791,7 +820,7 @@ impl Instance {
     };
 
     let length: usize;
-    if ["OB", "OD", "OF", "OL", "OW", "SQ", "UC", "UR", "UT", "UN"].contains(&vr) {
+    if LONG_LENGTH_VRS.contains(&vr) {
       // These VR types handles themselves differently. They have 2 reserved bytes
       // that need to be skipped and their data length is on 4 bytes.
       // https://dicom.nema.org/dicom/2013/output/chtml/part05/chapter_7.html#sect_7.1.2
@@ -883,6 +912,238 @@ impl Instance {
     } else {
       Err(DicomError::new("Transfer Syntax UID not found"))
     }
+  }
+}
+
+// Minimum size of a read when loading a file without its pixel data. Big
+// enough to get most headers at once, small enough not to read much pixel data.
+#[cfg(not(target_arch = "wasm32"))]
+const SPARSE_LOADER_READ_AHEAD: usize = 16 * 1024;
+
+/**
+ * Loads a DICOM file in a buffer, skipping the values of the top-level pixel
+ * data elements (see Instance::from_reader_without_pixel_data). The skipped
+ * bytes are zeros, unless the pixel data ends the file, in which case the
+ * buffer stops where its value starts. The elements are walked the same way
+ * Instance::next_attribute does, but nothing is assumed about the content: on
+ * anything unexpected (truncated file, unknown structure, unsupported transfer
+ * syntax) the rest of the file is simply loaded as is.
+ */
+#[cfg(not(target_arch = "wasm32"))]
+struct SparseLoader<T: Read + Seek> {
+  // Positioned at the end of the buffer
+  reader: T,
+  // Size of the file
+  size: usize,
+  // The beginning of the file, with the skipped bytes set to zero
+  buffer: Vec<u8>,
+  read_ahead: usize,
+}
+
+#[cfg(not(target_arch = "wasm32"))]
+impl<T: Read + Seek> SparseLoader<T> {
+  fn load(mut self) -> Result<Vec<u8>, DicomError> {
+    let mut offset = 128 + "DICM".len();
+    let mut explicit = true;
+    while offset < self.size {
+      let Some((group, element, value_offset, length)) = self.header(offset, explicit)? else {
+        break;
+      };
+      if group == 0x7FE0 && [0x0008, 0x0009, 0x0010].contains(&element) {
+        if length != 0xFFFFFFFF && value_offset + length as usize == self.size {
+          // The pixel data ends the file: no need to go further
+          self.buffer.truncate(value_offset);
+          return Ok(self.buffer);
+        }
+        // Fragment headers are read one by one: do not read ahead in the pixel data
+        let read_ahead = core::mem::replace(&mut self.read_ahead, 0);
+        let end = self.skip_pixel_data(value_offset, length, explicit);
+        self.read_ahead = read_ahead;
+        match end? {
+          Some(end) => {
+            offset = end;
+            continue;
+          }
+          None => break,
+        }
+      }
+      let Some(end) = self.load_element(offset, explicit)? else {
+        break;
+      };
+      if (group, element) == (0x0002, 0x0010) {
+        // The transfer syntax tells how the rest of the dataset is encoded
+        let transfer_syntax_uid = from_utf8(&self.buffer[value_offset..end])
+          .unwrap_or("")
+          .trim_matches(|c| c == '\0' || c == ' ');
+        if transfer_syntax_uid == "1.2.840.10008.1.2.2"
+          || transfer_syntax_uid == "1.2.840.10008.1.2.1.99"
+        {
+          // Big endian or deflated: not walked
+          break;
+        }
+        explicit = transfer_syntax_uid != "1.2.840.10008.1.2";
+      }
+      offset = end;
+    }
+    // Whatever was not walked is loaded as is
+    let size = self.size;
+    self.ensure(size)?;
+    Ok(self.buffer)
+  }
+
+  // Makes sure the bytes before `end` are loaded. Returns None if `end` is past
+  // the end of the file.
+  fn ensure(&mut self, end: usize) -> Result<Option<()>, DicomError> {
+    if end > self.size {
+      return Ok(None);
+    }
+    let loaded = self.buffer.len();
+    if end > loaded {
+      let wanted = (loaded + self.read_ahead).max(end).min(self.size) - loaded;
+      self.buffer.reserve_exact(wanted);
+      let read = (&mut self.reader)
+        .take(wanted as u64)
+        .read_to_end(&mut self.buffer)?;
+      if read != wanted {
+        return Err(DicomError::new("Unexpected end of file"));
+      }
+    }
+    Ok(Some(()))
+  }
+
+  fn u16_at(&self, offset: usize) -> u16 {
+    u16::from_le_bytes([self.buffer[offset], self.buffer[offset + 1]])
+  }
+
+  fn u32_at(&self, offset: usize) -> u32 {
+    u32::from_le_bytes([
+      self.buffer[offset],
+      self.buffer[offset + 1],
+      self.buffer[offset + 2],
+      self.buffer[offset + 3],
+    ])
+  }
+
+  // Loads the header of the element at `offset`. Returns its group, element,
+  // the offset of its value and its length (0xFFFFFFFF if undefined), or None
+  // if the file ends within the header.
+  fn header(
+    &mut self,
+    offset: usize,
+    explicit: bool,
+  ) -> Result<Option<(u16, u16, usize, u32)>, DicomError> {
+    if self.ensure(offset + 8)?.is_none() {
+      return Ok(None);
+    }
+    let group = self.u16_at(offset);
+    let element = self.u16_at(offset + 2);
+    // Items, delimiters and implicit VR elements have a length on 4 bytes
+    if group == 0xFFFE || !(explicit || group == 0x0002) {
+      return Ok(Some((group, element, offset + 8, self.u32_at(offset + 4))));
+    }
+    let vr = &self.buffer[offset + 4..offset + 6];
+    if LONG_LENGTH_VRS.iter().any(|long| long.as_bytes() == vr) {
+      if self.ensure(offset + 12)?.is_none() {
+        return Ok(None);
+      }
+      Ok(Some((group, element, offset + 12, self.u32_at(offset + 8))))
+    } else {
+      Ok(Some((
+        group,
+        element,
+        offset + 8,
+        self.u16_at(offset + 6) as u32,
+      )))
+    }
+  }
+
+  // Loads the element at `offset` and returns the offset of its end, or None if
+  // it does not have the expected structure.
+  fn load_element(&mut self, offset: usize, explicit: bool) -> Result<Option<usize>, DicomError> {
+    let Some((_, _, value_offset, length)) = self.header(offset, explicit)? else {
+      return Ok(None);
+    };
+    if length != 0xFFFFFFFF {
+      let end = value_offset + length as usize;
+      return Ok(self.ensure(end)?.map(|_| end));
+    }
+    // Undefined length: items up to a sequence delimitation item
+    let mut offset = value_offset;
+    loop {
+      let Some((group, element, value_offset, length)) = self.header(offset, explicit)? else {
+        return Ok(None);
+      };
+      match (group, element) {
+        (0xFFFE, 0xE0DD) => return Ok(Some(value_offset)),
+        (0xFFFE, 0xE000) if length != 0xFFFFFFFF => {
+          offset = value_offset + length as usize;
+          if self.ensure(offset)?.is_none() {
+            return Ok(None);
+          }
+        }
+        (0xFFFE, 0xE000) => {
+          // Undefined length item: elements up to an item delimitation item
+          offset = value_offset;
+          loop {
+            let Some((group, element, value_offset, _)) = self.header(offset, explicit)? else {
+              return Ok(None);
+            };
+            if (group, element) == (0xFFFE, 0xE00D) {
+              offset = value_offset;
+              break;
+            }
+            let Some(end) = self.load_element(offset, explicit)? else {
+              return Ok(None);
+            };
+            offset = end;
+          }
+        }
+        _ => return Ok(None),
+      }
+    }
+  }
+
+  // Skips the value of a pixel data element. For encapsulated pixel data, the
+  // item headers of the fragments are loaded so that it can still be parsed.
+  // Returns the offset of the end of the element.
+  fn skip_pixel_data(
+    &mut self,
+    value_offset: usize,
+    length: u32,
+    explicit: bool,
+  ) -> Result<Option<usize>, DicomError> {
+    if length != 0xFFFFFFFF {
+      return self.skip_to(value_offset + length as usize);
+    }
+    let mut offset = value_offset;
+    loop {
+      let Some((group, element, value_offset, length)) = self.header(offset, explicit)? else {
+        return Ok(None);
+      };
+      match (group, element) {
+        (0xFFFE, 0xE0DD) => return Ok(Some(value_offset)),
+        (0xFFFE, 0xE000) if length != 0xFFFFFFFF => {
+          offset = match self.skip_to(value_offset + length as usize)? {
+            Some(end) => end,
+            None => return Ok(None),
+          };
+        }
+        _ => return Ok(None),
+      }
+    }
+  }
+
+  // Moves to `end` without reading what has not been loaded yet
+  fn skip_to(&mut self, end: usize) -> Result<Option<usize>, DicomError> {
+    if end > self.size {
+      return Ok(None);
+    }
+    if end > self.buffer.len() {
+      self.reader.seek(SeekFrom::Start(end as u64))?;
+      // Keep the offsets of what follows: the skipped bytes are zeros
+      self.buffer.resize(end, 0);
+    }
+    Ok(Some(end))
   }
 }
 
