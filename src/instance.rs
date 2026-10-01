@@ -39,9 +39,11 @@ use alloc::ffi::CString;
 use alloc::string::String;
 use alloc::string::ToString;
 use alloc::vec::Vec;
+use core::cell::RefCell;
 use core::convert::TryInto;
 use core::error::Error;
 use core::fmt;
+use core::ops::Deref;
 use core::str::from_utf8;
 use core::str::Utf8Error;
 
@@ -939,5 +941,241 @@ impl<'a> Iterator for InstanceIter<'a> {
     } else {
       None
     }
+  }
+}
+
+/**
+ * A facade over Instance which remembers where each tag is located so that the
+ * file is walked at most once, whatever the number of get_value calls.
+ *
+ * The index is built lazily: get_value parses top-level elements, resuming
+ * where the previous call stopped, until the requested tag is found. Each
+ * parsed element, and what get_value would find nested in it, is recorded with
+ * the offset of its top-level element.
+ *
+ * The index only contains integers and no pointer, so it can be dumped as raw
+ * bytes with `index_dump` and restored with `from_index_dump`. A complete dump
+ * of a CachedInstance is its DICOM buffer plus its index dump.
+ *
+ * The rest of the Instance API is available through Deref. Note that code
+ * receiving a CachedInstance as an &Instance uses the uncached get_value.
+ */
+#[derive(Debug)]
+pub struct CachedInstance {
+  instance: Instance,
+  index: RefCell<Index>,
+}
+
+// The in-memory layout of the index is also its dump format: a header followed
+// by the entries. Both are repr(C), made of integers only and without padding
+// (checked below), so their memory can be copied as is. The integers are in
+// native byte order.
+#[repr(C)]
+#[derive(Debug, Clone, Copy)]
+struct IndexHeader {
+  magic: u32,
+  version: u32,
+  // Length of the DICOM buffer the index was built from
+  buffer_len: u64,
+  // Offset of the first top-level element not indexed yet
+  next_offset: u64,
+}
+
+#[repr(C)]
+#[derive(Debug, Clone, Copy)]
+struct IndexEntry {
+  // group << 16 | element
+  tag: u32,
+  // Offset of the top-level element containing the tag
+  offset: u32,
+}
+
+const _: () = assert!(core::mem::size_of::<IndexHeader>() == 24);
+const _: () = assert!(core::mem::size_of::<IndexEntry>() == 8);
+
+const INDEX_MAGIC: u32 = u32::from_le_bytes(*b"RDIX");
+const INDEX_VERSION: u32 = 1;
+
+#[derive(Debug)]
+struct Index {
+  header: IndexHeader,
+  // Sorted by tag, one entry per tag
+  entries: Vec<IndexEntry>,
+}
+
+fn tag_id(group: u16, element: u16) -> u32 {
+  (group as u32) << 16 | element as u32
+}
+
+// Keeps the first entry registered for a tag. Elements are registered in file
+// order, so the first occurrence wins like in Instance::get_value.
+fn insert_entry(entries: &mut Vec<IndexEntry>, group: u16, element: u16, offset: u32) {
+  let tag = tag_id(group, element);
+  // Tags are sorted in a DICOM file, so this is almost always an append
+  if let Err(position) = entries.binary_search_by_key(&tag, |entry| entry.tag) {
+    entries.insert(position, IndexEntry { tag, offset });
+  }
+}
+
+// Registers a top-level element and what Instance::get_value would find in it.
+fn register(entries: &mut Vec<IndexEntry>, attribute: &DicomAttribute, offset: u32) {
+  insert_entry(entries, attribute.group, attribute.element, offset);
+  if attribute.vr == "SQ" {
+    register_nested(entries, attribute, offset);
+  }
+}
+
+// Mirrors Instance::get_value_sq: sequences and items are searched, but never
+// matched themselves.
+fn register_nested(entries: &mut Vec<IndexEntry>, attribute: &DicomAttribute, offset: u32) {
+  for subattribute in &attribute.subattributes {
+    if subattribute.vr == "SQ"
+      || (subattribute.group == Item.group && subattribute.element == Item.element)
+    {
+      register_nested(entries, subattribute, offset);
+    } else {
+      insert_entry(entries, subattribute.group, subattribute.element, offset);
+    }
+  }
+}
+
+// Views a slice as raw bytes.
+// Safety: T must not contain any padding so that all its bytes are initialized.
+unsafe fn as_bytes<T>(values: &[T]) -> &[u8] {
+  core::slice::from_raw_parts(values.as_ptr() as *const u8, core::mem::size_of_val(values))
+}
+
+impl CachedInstance {
+  pub fn new(instance: Instance) -> Self {
+    let header = IndexHeader {
+      magic: INDEX_MAGIC,
+      version: INDEX_VERSION,
+      buffer_len: instance.buffer.len() as u64,
+      next_offset: (128 + "DICM".len()) as u64,
+    };
+    CachedInstance {
+      instance,
+      index: RefCell::new(Index {
+        header,
+        entries: vec![],
+      }),
+    }
+  }
+
+  /**
+   * Same as Instance::get_value, but only parses the part of the file not
+   * indexed yet.
+   */
+  pub fn get_value(&self, tag: &Tag) -> Result<Option<DicomValue<'_>>, DicomError> {
+    let id = tag_id(tag.group, tag.element);
+    let mut index = self.index.borrow_mut();
+    loop {
+      if let Ok(position) = index.entries.binary_search_by_key(&id, |entry| entry.tag) {
+        let offset = index.entries[position].offset as usize;
+        let attribute = self.instance.next_attribute(offset)?;
+        let found = if attribute.group == tag.group && attribute.element == tag.element {
+          Some(attribute)
+        } else {
+          // The tag is nested in this top-level sequence
+          Instance::get_value_sq(tag, &attribute)?
+        };
+        return found
+          .map(|attribute| DicomValue::from_dicom_attribute(&attribute, &self.instance))
+          .transpose();
+      }
+
+      let offset = index.header.next_offset as usize;
+      if offset >= self.instance.buffer.len() {
+        // The whole file is indexed: the tag is not present
+        return Ok(None);
+      }
+      let Ok(top_offset) = u32::try_from(offset) else {
+        // Offsets beyond 4 GiB do not fit in the index
+        return self.instance.get_value(tag);
+      };
+      let attribute = self.instance.next_attribute(offset)?;
+      register(&mut index.entries, &attribute, top_offset);
+      index.header.next_offset = (attribute.data_offset
+        + if attribute.data_length == 0xFFFFFFFF {
+          0
+        } else {
+          attribute.data_length
+        }) as u64;
+    }
+  }
+
+  /**
+   * Returns the index as raw bytes: its header followed by its entries, copied
+   * from memory as is. Restore it with `from_index_dump` along with the same
+   * DICOM buffer. The dump is only valid on a machine with the same byte order.
+   */
+  pub fn index_dump(&self) -> Vec<u8> {
+    let index = self.index.borrow();
+    // Safety: IndexHeader and IndexEntry have no padding (see the asserts above)
+    let (header, entries) = unsafe {
+      (
+        as_bytes(core::slice::from_ref(&index.header)),
+        as_bytes(&index.entries),
+      )
+    };
+    [header, entries].concat()
+  }
+
+  /**
+   * Restores a CachedInstance from an Instance and the dump produced by
+   * `index_dump` on the same DICOM buffer. The dump must come from a trusted
+   * source: entries pointing in the middle of an element will make get_value
+   * fail or panic, as a malformed DICOM file would.
+   */
+  pub fn from_index_dump(instance: Instance, dump: &[u8]) -> Result<Self, DicomError> {
+    let header_size = core::mem::size_of::<IndexHeader>();
+    let entry_size = core::mem::size_of::<IndexEntry>();
+    if dump.len() < header_size || (dump.len() - header_size) % entry_size != 0 {
+      return Err(DicomError::new("Invalid index dump size"));
+    }
+    // Safety: the dump is long enough and any bit pattern is a valid IndexHeader
+    let header = unsafe { core::ptr::read_unaligned(dump.as_ptr() as *const IndexHeader) };
+    if header.magic != INDEX_MAGIC || header.version != INDEX_VERSION {
+      return Err(DicomError::new(
+        "Invalid index dump header (wrong format, version or byte order)",
+      ));
+    }
+    if header.buffer_len != instance.buffer.len() as u64 {
+      return Err(DicomError::new(
+        "Index dump does not match the DICOM buffer",
+      ));
+    }
+    let count = (dump.len() - header_size) / entry_size;
+    let mut entries = Vec::<IndexEntry>::with_capacity(count);
+    // Safety: entries has room for count elements and any bit pattern is a
+    // valid IndexEntry
+    unsafe {
+      core::ptr::copy_nonoverlapping(
+        dump[header_size..].as_ptr(),
+        entries.as_mut_ptr() as *mut u8,
+        count * entry_size,
+      );
+      entries.set_len(count);
+    }
+    // Lookups rely on binary search
+    let sorted = entries.windows(2).all(|pair| pair[0].tag < pair[1].tag);
+    let in_bounds = entries
+      .iter()
+      .all(|entry| (entry.offset as u64) < header.buffer_len);
+    if !sorted || !in_bounds {
+      return Err(DicomError::new("Invalid index dump entries"));
+    }
+    Ok(CachedInstance {
+      instance,
+      index: RefCell::new(Index { header, entries }),
+    })
+  }
+}
+
+impl Deref for CachedInstance {
+  type Target = Instance;
+
+  fn deref(&self) -> &Instance {
+    &self.instance
   }
 }

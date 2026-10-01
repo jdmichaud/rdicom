@@ -67,7 +67,7 @@ use index_store::SqlIndexStoreWithMutex;
 use rdicom::config_file::{self, ConfigProvenance};
 use rdicom::dicom_tags;
 use rdicom::error::DicomError;
-use rdicom::instance::{DicomAttribute, DicomValue, Instance};
+use rdicom::instance::{CachedInstance, DicomAttribute, DicomValue, Instance};
 use rdicom::tags::Tag;
 
 mod config;
@@ -614,7 +614,8 @@ fn get_entries(
       for item in &mut entries {
         if let Some(rfilepath) = item.get("filepath") {
           let reader = instance_factory.get_reader(rfilepath)?;
-          let instance = Instance::from_reader(reader)?;
+          // Several fields are fetched from the same file: cache what is parsed
+          let instance = CachedInstance::new(Instance::from_reader(reader)?);
           // Go through those missing fields from the index and enrich the data from the index
           for field in &fields_to_fetch {
             if let Some(field_value) = instance.get_value(&field.try_into()?)? {
