@@ -76,6 +76,8 @@ axum-macros = { version = "0.5.0", optional = true }
 axum-xml = { version = "0.2.0", optional = true }
 axum-extra = { version = "0.10.0", optional = true }
 http-body-util = { version = "0.1.2", optional = true }
+# musl's allocator does not scale with threads: serve uses mimalloc instead.
+mimalloc = { version = "0.1", optional = true }
 
 [features]
 tools = [
@@ -103,6 +105,7 @@ tools = [
   "dep:axum-macros",
   "dep:axum-xml",
   "dep:http-body-util",
+  "dep:mimalloc",
 ]
 
 test = [

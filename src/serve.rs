@@ -107,6 +107,11 @@ mod index_store;
 // r"^/studies/(?P<StudyInstanceUID>[^/?#]*)/instances$",
 // r"^/studies/(?P<StudyInstanceUID>[^/?#]*)/thumbnail$"
 
+// musl's allocator takes a global lock and maps/unmaps memory for every large
+// buffer (e.g. each DICOM file read), which serializes concurrent requests.
+#[global_allocator]
+static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
+
 // pub const CAPABILITIES_STR: &str = include_str!("capabilities.xml");
 pub const SERVER_HEADER: &str = concat!("rdicomweb/", env!("CARGO_PKG_VERSION"));
 
