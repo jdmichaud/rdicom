@@ -335,6 +335,8 @@ mod capabilities {
     NotModified,
     #[serde(rename = "400")]
     BadRequest,
+    #[serde(rename = "406")]
+    NotAcceptable,
     #[serde(rename = "409")]
     Conflict,
     #[serde(rename = "415")]
@@ -667,7 +669,11 @@ async fn get_studies(
       } else {
         (
           response_headers,
-          StatusCode::UNSUPPORTED_MEDIA_TYPE.into_response(),
+          (
+            StatusCode::NOT_ACCEPTABLE,
+            "Unsupported or missing accept header",
+          )
+            .into_response(),
         )
       }
     }
@@ -726,7 +732,11 @@ async fn get_series(
       } else {
         (
           response_headers,
-          StatusCode::UNSUPPORTED_MEDIA_TYPE.into_response(),
+          (
+            StatusCode::NOT_ACCEPTABLE,
+            "Unsupported or missing accept header",
+          )
+            .into_response(),
         )
       }
     }
@@ -785,7 +795,11 @@ async fn get_instances(
       } else {
         (
           response_headers,
-          StatusCode::UNSUPPORTED_MEDIA_TYPE.into_response(),
+          (
+            StatusCode::NOT_ACCEPTABLE,
+            "Unsupported or missing accept header",
+          )
+            .into_response(),
         )
       }
     }
@@ -974,7 +988,11 @@ async fn get_metadata(
   )
   .is_none()
   {
-    return StatusCode::NOT_ACCEPTABLE.into_response();
+    return (
+      StatusCode::NOT_ACCEPTABLE,
+      "Unsupported or missing accept header",
+    )
+      .into_response();
   }
 
   let mut search_terms = HashMap::<Tag, String>::new();
@@ -1014,7 +1032,11 @@ async fn get_metadata(
     match instance_metadata(&state.instance_factory, entry) {
       Ok(dataset) => datasets.push(dataset),
       Err(e) => {
-        tracing::error!("Could not read metadata of {:?}: {}", entry.get("filepath"), e);
+        tracing::error!(
+          "Could not read metadata of {:?}: {}",
+          entry.get("filepath"),
+          e
+        );
         return StatusCode::INTERNAL_SERVER_ERROR.into_response();
       }
     }
