@@ -155,7 +155,47 @@ pub fn prepare_db(
     "CREATE TABLE IF NOT EXISTS {} ({});",
     table_name, table
   ))?;
+  create_indexes(connection, table_name);
   Ok(())
+}
+
+// Columns on which an SQL index is created when present in the table: the UIDs
+// used to navigate the study/series/instance hierarchy (and to check whether an
+// entry already exists on insert) and the usual exact-match search keys.
+const SQL_INDEXED_COLUMNS: [&str; 5] = [
+  "StudyInstanceUID",
+  "SeriesInstanceUID",
+  "SOPInstanceUID",
+  "PatientID",
+  "AccessionNumber",
+];
+
+// Without these indexes every query scans (and GROUP BY sorts) the whole table.
+// Best effort: a read-only database is still usable without them.
+fn create_indexes(connection: &ConnectionThreadSafe, table_name: &str) {
+  let columns = match db::column_names(connection, table_name) {
+    Ok(columns) => columns,
+    Err(e) => {
+      eprintln!(
+        "warning: could not list the columns of {}: {}",
+        table_name, e
+      );
+      return;
+    }
+  };
+  for column in SQL_INDEXED_COLUMNS
+    .iter()
+    .filter(|column| columns.iter().any(|c| c == *column))
+  {
+    if let Err(e) = connection.execute(format!(
+      "CREATE INDEX IF NOT EXISTS {table_name}_{column} ON {table_name}({column});"
+    )) {
+      eprintln!(
+        "warning: could not create the SQL index on {}: {}",
+        column, e
+      );
+    }
+  }
 }
 
 impl SqlIndexStore {

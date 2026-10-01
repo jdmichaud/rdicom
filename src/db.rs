@@ -22,3 +22,16 @@ pub fn query(
 
   Ok(result)
 }
+
+// Returns the names of the columns of a table
+pub fn column_names(
+  connection: &Connection,
+  table_name: &str,
+) -> Result<Vec<String>, Box<dyn Error>> {
+  let mut statement = connection.prepare(format!("PRAGMA table_info({});", table_name))?;
+  let mut result = Vec::new();
+  while let State::Row = statement.next()? {
+    result.push(statement.read::<String, _>("name")?);
+  }
+  Ok(result)
+}
