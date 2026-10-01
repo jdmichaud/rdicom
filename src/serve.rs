@@ -414,19 +414,22 @@ fn get_indexed_fields(connection: &Connection) -> Result<Vec<String>, Box<dyn Er
   Ok(result)
 }
 
-fn map_to_entry(tag_map: &HashMap<String, String>) -> String {
+// `tags` caches the conversion of column names to tags, which is costly
+fn map_to_entry<'a>(
+  tag_map: &'a HashMap<String, String>,
+  tags: &mut HashMap<&'a str, Option<Tag>>,
+) -> String {
   format!(
     "{{ {} }}",
     tag_map
       .iter()
       .filter_map(|(key, value)| {
         // Try to convert the column name to a tag
-        let tag: Result<Tag, DicomError> = key.try_into();
-        if let Ok(tag) = tag {
-          Some((tag, value))
-        } else {
-          None
-        }
+        tags
+          .entry(key.as_str())
+          .or_insert_with(|| Tag::try_from(key).ok())
+          .clone()
+          .map(|tag| (tag, value))
       }) // Only keep proper tags
       .map(|(tag, value)| {
         match tag.vr {
@@ -610,15 +613,20 @@ fn get_entries(
       .cloned()
       .collect::<_>();
     // println!("fields_to_fetch {:?}", fields_to_fetch);
-    if !fields_to_fetch.is_empty() {
+    if !fields_to_fetch.is_empty() && !entries.is_empty() {
+      // Convert the field names once rather than for every entry
+      let tags_to_fetch = fields_to_fetch
+        .iter()
+        .map(|field| Ok((field, Tag::try_from(field)?)))
+        .collect::<Result<Vec<(&String, Tag)>, DicomError>>()?;
       for item in &mut entries {
         if let Some(rfilepath) = item.get("filepath") {
           let reader = instance_factory.get_reader(rfilepath)?;
           // Several fields are fetched from the same file: cache what is parsed
           let instance = CachedInstance::new(Instance::from_reader(reader)?);
           // Go through those missing fields from the index and enrich the data from the index
-          for field in &fields_to_fetch {
-            if let Some(field_value) = instance.get_value(&field.try_into()?)? {
+          for (field, tag) in &tags_to_fetch {
+            if let Some(field_value) = instance.get_value(tag)? {
               // TODO: Manage nested fields
               item.insert(field.to_string(), field_value.to_string());
             }
@@ -1585,11 +1593,13 @@ fn get_bulk_tag<T: InstanceFactory>(
 }
 
 fn generate_json_response(data: &[HashMap<String, String>]) -> String {
+  // All the entries have the same columns: convert each column name only once
+  let mut tags = HashMap::new();
   format!(
     "[{}]",
     data
       .iter()
-      .map(map_to_entry)
+      .map(|entry| map_to_entry(entry, &mut tags))
       .collect::<Vec<String>>()
       .join(",")
   )
