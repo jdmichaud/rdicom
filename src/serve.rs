@@ -258,6 +258,18 @@ where
   deserializer.deserialize_any(VectorStringVisitor)
 }
 
+#[derive(Debug, PartialEq, Eq, Hash)]
+struct MatchKey(Tag);
+
+impl<'de> Deserialize<'de> for MatchKey {
+  fn deserialize<D: Deserializer<'de>>(d: D) -> Result<Self, D::Error> {
+    let s = String::deserialize(d)?;
+    Tag::try_from(s.as_str())
+      .map(MatchKey)
+      .map_err(|_| de::Error::custom(format!("unknown attribute: {s}")))
+  }
+}
+
 #[derive(Debug, Deserialize)]
 struct QidoQueryParameters {
   limit: Option<usize>,
@@ -267,6 +279,9 @@ struct QidoQueryParameters {
   #[serde(default)] // Allow the value to not be present in the url
   #[serde(deserialize_with = "deserialize_array")] // Help Serde to deserialize an array...
   includefield: Option<Vec<String>>,
+  // additional query params
+  #[serde(flatten)]
+  matches: HashMap<MatchKey, String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -633,6 +648,12 @@ async fn get_studies(
   headers: HeaderMap,
 ) -> impl IntoResponse {
   let mut search_terms = HashMap::<Tag, String>::new();
+  search_terms.extend(
+    params
+      .matches
+      .iter()
+      .map(|(key, value)| (key.0.clone(), value.clone())),
+  );
   if let Some(instance_uid) = instance_uid {
     search_terms.insert(dicom_tags::SOPInstanceUID, instance_uid);
   }
@@ -697,6 +718,12 @@ async fn get_series(
   headers: HeaderMap,
 ) -> impl IntoResponse {
   let mut search_terms = HashMap::<Tag, String>::new();
+  search_terms.extend(
+    params
+      .matches
+      .iter()
+      .map(|(key, value)| (key.0.clone(), value.clone())),
+  );
   if let Some(instance_uid) = instance_uid {
     search_terms.insert(dicom_tags::SOPInstanceUID, instance_uid);
   }
@@ -760,6 +787,12 @@ async fn get_instances(
   headers: HeaderMap,
 ) -> impl IntoResponse {
   let mut search_terms = HashMap::<Tag, String>::new();
+  search_terms.extend(
+    params
+      .matches
+      .iter()
+      .map(|(key, value)| (key.0.clone(), value.clone())),
+  );
   if let Some(instance_uid) = instance_uid {
     search_terms.insert(dicom_tags::SOPInstanceUID, instance_uid);
   }
@@ -1010,6 +1043,7 @@ async fn get_metadata(
     offset: None,
     fuzzymatching: None,
     includefield: None,
+    matches: HashMap::new(),
   };
 
   let entries = match get_entries(
