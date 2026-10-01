@@ -420,7 +420,7 @@ impl Instance {
     // TODO: Do not read the whole buffer. Use an abstraction in order to allow
     // opening file that would not hold in memory.
     buf_reader.read_to_end(&mut buffer)?;
-    Instance::from(&buffer)
+    Instance::from_vec(buffer)
   }
 
   /**
@@ -434,7 +434,7 @@ impl Instance {
     // TODO: Do not read the whole buffer. Use an abstraction in order to allow
     // opening file that would not hold in memory.
     reader.read_to_end(&mut buffer)?;
-    Instance::from(&buffer)
+    Instance::from_vec(buffer)
   }
 
   /**
@@ -451,6 +451,19 @@ impl Instance {
    */
   // pub fn from(buffer: Vec<u8>) -> Result<Self, DicomError> {
   pub fn from(buffer: &[u8]) -> Result<Self, DicomError> {
+    // Check before copying the buffer
+    if !has_dicom_header(buffer) {
+      return Err(DicomError::new("Not a DICOM file"));
+    }
+    // TODO: Change API to use &[u8]
+    Instance::from_vec(Vec::from(buffer))
+  }
+
+  /**
+   * Returns an instance from a Vec<u8>, taking ownership of the buffer instead
+   * of copying it.
+   */
+  pub fn from_vec(buffer: Vec<u8>) -> Result<Self, DicomError> {
     // Check it's a DICOM file
     // TODO: Manage headerless DICOM files
     if !has_dicom_header(&buffer) {
@@ -458,8 +471,7 @@ impl Instance {
     }
 
     let mut instance = Instance {
-      // TODO: Change API to use &[u8]
-      buffer: Vec::from(buffer),
+      buffer,
       implicit: false,
     };
 
