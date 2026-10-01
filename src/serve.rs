@@ -653,7 +653,7 @@ async fn get_studies(
       let accept_formats = get_accept_formats(headers);
       if accept_formats
         .iter()
-        .any(|e| e == "application/json" || e == "application/json+dicom")
+        .any(|e| e == "application/json" || e == "application/dicom+json")
       {
         response_headers.insert(
           "content-type",
@@ -713,7 +713,7 @@ async fn get_series(
       let accept_formats = get_accept_formats(headers);
       if accept_formats
         .iter()
-        .any(|e| e == "application/json" || e == "application/json+dicom")
+        .any(|e| e == "application/json" || e == "application/dicom+json")
       {
         response_headers.insert(
           "content-type",
@@ -772,7 +772,7 @@ async fn get_instances(
       let accept_formats = get_accept_formats(headers);
       if accept_formats
         .iter()
-        .any(|e| e == "application/json" || e == "application/json+dicom")
+        .any(|e| e == "application/json" || e == "application/dicom+json")
       {
         response_headers.insert(
           "content-type",
