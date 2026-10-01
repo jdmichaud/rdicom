@@ -259,6 +259,17 @@ impl<'a> DicomValue<'a> {
     length: usize,
     buffer: &'b [u8],
   ) -> Result<DicomValue<'b>, DicomError> {
+    // The buffer may end before the value (truncated file, instance loaded
+    // without its pixel data): fail instead of panicking
+    if offset
+      .checked_add(length)
+      .map_or(true, |end| end > buffer.len())
+    {
+      return Err(DicomError::new(&format!(
+        "{} value at {:#x} is out of the buffer",
+        vr, offset
+      )));
+    }
     Ok(match vr {
       "AE" => DicomValue::AE(to_string_array(vr, offset, length, buffer)?),
       "AS" => DicomValue::AS(to_string_array(vr, offset, length, buffer)?),
