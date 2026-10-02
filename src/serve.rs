@@ -1472,6 +1472,154 @@ fn multipart_response(part_type: &str, frames: &Frames) -> Response {
     .into_response()
 }
 
+#[derive(Deserialize)]
+struct BulkdataPath {
+  study_uid: String,
+  series_uid: String,
+  instance_uid: String,
+  tag: String,
+}
+
+/**
+ * Returns the value of a top-level bulk data attribute (see BULKDATA_VRS) of an
+ * instance, as referenced by the BulkDataURI of its metadata (PS3.18
+ * 10.4.1.1.5). Uncompressed values are sent as stored (little endian) in an
+ * application/octet-stream part. Encapsulated pixel data is sent as its frames,
+ * as the frames resource does.
+ */
+fn retrieve_bulkdata(
+  state: &AppState,
+  search_terms: &HashMap<Tag, String>,
+  (group, element): (u16, u16),
+) -> Result<Frames, (StatusCode, String)> {
+  let internal = |e: &dyn fmt::Display| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string());
+  let params = QidoQueryParameters {
+    limit: Some(1),
+    offset: None,
+    fuzzymatching: None,
+    includefield: None,
+    matches: HashMap::new(),
+  };
+  let entry = get_entries(
+    &state.readers,
+    &state.indexed_fields,
+    &state.instance_factory,
+    &params,
+    search_terms,
+    "filepath",
+  )
+  .map_err(|e| internal(&e))?
+  .pop()
+  .ok_or((StatusCode::NOT_FOUND, "No such instance".to_string()))?;
+
+  // Only read the pixel data when it is what is asked for
+  let filepath = entry.get("filepath").ok_or((
+    StatusCode::INTERNAL_SERVER_ERROR,
+    "Missing filepath".to_string(),
+  ))?;
+  let reader = state
+    .instance_factory
+    .get_reader(filepath)
+    .map_err(|e| internal(&e))?;
+  let is_pixel_data = group == 0x7FE0 && [0x0008, 0x0009, 0x0010].contains(&element);
+  let instance = if is_pixel_data {
+    Instance::from_reader(reader)
+  } else {
+    Instance::from_reader_without_pixel_data(reader)
+  }
+  .map_err(|e| internal(&e))?;
+
+  let mut found = None;
+  for attribute in instance.iter() {
+    let attribute = attribute.map_err(|e| internal(&e))?;
+    if attribute.group == group && attribute.element == element {
+      found = Some(attribute);
+      break;
+    }
+  }
+  let attribute = found
+    .filter(|attribute| BULKDATA_VRS.contains(&attribute.vr.as_ref()))
+    .ok_or((StatusCode::NOT_FOUND, "No such bulk data".to_string()))?;
+
+  if (group, element) == (0x7FE0, 0x0010) && attribute.length == 0xFFFFFFFF {
+    // Encapsulated pixel data: all its frames
+    let number_of_frames = match instance
+      .get_value(&dicom_tags::NumberOfFrames)
+      .map_err(|e| internal(&e))?
+    {
+      Some(DicomValue::IS(value)) => value.first().and_then(|n| n.parse().ok()).unwrap_or(1),
+      _ => 1,
+    };
+    return extract_frames(&instance, &(1..=number_of_frames).collect::<Vec<_>>());
+  }
+  let value = instance
+    .buffer
+    .get(attribute.data_offset..attribute.data_offset + attribute.data_length)
+    .ok_or((
+      StatusCode::INTERNAL_SERVER_ERROR,
+      "Bulk data exceeds file size".to_string(),
+    ))?;
+  Ok(Frames {
+    media_type: "application/octet-stream",
+    // Little endian bytes, as in explicit VR little endian
+    transfer_syntax: EXPLICIT_VR_LITTLE_ENDIAN.to_string(),
+    frames: vec![value.to_vec()],
+  })
+}
+
+#[axum_macros::debug_handler]
+async fn get_bulkdata(
+  axum::extract::State(state): axum::extract::State<Arc<AppState>>,
+  Path(BulkdataPath {
+    study_uid,
+    series_uid,
+    instance_uid,
+    tag,
+  }): Path<BulkdataPath>,
+  headers: HeaderMap,
+) -> Response {
+  // The tag as in the BulkDataURI: 8 hexadecimal digits
+  let Some(tag) = (tag.len() == 8)
+    .then(|| u32::from_str_radix(&tag, 16).ok())
+    .flatten()
+    .map(|tag| ((tag >> 16) as u16, tag as u16))
+  else {
+    return (StatusCode::BAD_REQUEST, "Invalid tag").into_response();
+  };
+  let search_terms = uid_search_terms(Some(study_uid), Some(series_uid), Some(instance_uid));
+
+  // Querying and reading the file are blocking
+  let result = tokio::task::spawn_blocking(move || retrieve_bulkdata(&state, &search_terms, tag))
+    .await
+    .unwrap_or_else(|e| Err((StatusCode::INTERNAL_SERVER_ERROR, e.to_string())));
+  let bulkdata = match result {
+    Ok(bulkdata) => bulkdata,
+    Err((status, message)) => {
+      if status == StatusCode::INTERNAL_SERVER_ERROR {
+        tracing::error!(
+          "Could not retrieve bulk data {:04X}{:04X}: {}",
+          tag.0,
+          tag.1,
+          message
+        );
+      }
+      return (status, message).into_response();
+    }
+  };
+  let Some(part_type) = negotiate_frame_media_type(&parse_accept_header(&headers), &bulkdata)
+  else {
+    return (
+      StatusCode::NOT_ACCEPTABLE,
+      format!(
+        "Bulk data is only available as {} (transfer syntax {})",
+        bulkdata.media_type, bulkdata.transfer_syntax
+      ),
+    )
+      .into_response();
+  };
+  multipart_response(&part_type, &bulkdata)
+}
+
 #[axum_macros::debug_handler]
 async fn not_implemented(
   axum::extract::State(state): axum::extract::State<Arc<AppState>>,
@@ -1492,28 +1640,6 @@ fn get_study(ui: &str) -> HashMap<String, String> {
 
 fn get_serie(ui: &str) -> HashMap<String, String> {
   HashMap::from([(String::from("link"), ui.to_string())])
-}
-
-fn get_filepath(
-  connection: &Connection,
-  study_instance_uid: &str,
-  series_instance_uid: &str,
-  sop_instance_uid: &str,
-) -> Result<String, Box<dyn Error>> {
-  let query = &format!(
-    "SELECT filepath FROM dicom_index WHERE StudyInstanceUID='{}' AND SeriesInstanceUID='{}' AND SOPInstanceUID='{}';",
-    // Will restrict the data to what is being searched
-    study_instance_uid,
-    series_instance_uid,
-    sop_instance_uid,
-  );
-  // println!("query: {}", query);
-  return Ok(
-    db::query(connection, query)?[0]
-      .get("filepath")
-      .ok_or("Entry not found")?
-      .to_string(),
-  );
 }
 
 // fn get_instance<T: InstanceFactory>(
@@ -1576,43 +1702,6 @@ fn get_filepath(
 //   }
 //   Ok(vec![result])
 // }
-
-fn get_bulk_tag<T: InstanceFactory>(
-  connection: &Connection,
-  instance_factory: &T,
-  search_terms: &HashMap<Tag, String>,
-  tag: Tag,
-) -> Result<Vec<u8>, Box<dyn Error>> {
-  let study_instance_uid = search_terms
-    .get(&Tag::try_from("StudyInstanceUID")?)
-    .ok_or("Missing StudyInstanceUID in search terms")?;
-  let series_instance_uid = search_terms
-    .get(&Tag::try_from("SeriesInstanceUID")?)
-    .ok_or("Missing SeriesInstanceUID in search terms")?;
-  let sop_instance_uid = search_terms
-    .get(&Tag::try_from("SOPInstanceUID")?)
-    .ok_or("Missing SOPInstanceUID in search terms")?;
-  let filepath = get_filepath(
-    connection,
-    study_instance_uid,
-    series_instance_uid,
-    sop_instance_uid,
-  )?;
-  let instance = Instance::from_reader(instance_factory.get_reader(&filepath)?)?;
-  match instance.get_value(&tag) {
-    Ok(Some(dicom_value)) => match dicom_value {
-      DicomValue::OB(value) => Ok(value.to_owned()),
-      DicomValue::OD(_) => Ok(vec![]),
-      DicomValue::OF(_) => Ok(vec![]),
-      DicomValue::OL(_) => Ok(vec![]),
-      DicomValue::OV(_) => Ok(vec![]),
-      DicomValue::OW(value) => Ok(vec![]),
-      _ => Err(format!("Unsupported bulkdata tag {:?}", tag).into()),
-    },
-    Ok(None) => Err(format!("No such tag {:?}", tag).into()),
-    Err(e) => Err(Box::new(e)),
-  }
-}
 
 fn generate_json_response(data: &[HashMap<String, String>]) -> String {
   // All the entries have the same columns: convert each column name only once
@@ -2153,6 +2242,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
     .route(
       "/studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/thumbnail",
       get(not_implemented),
+    )
+    .route(
+      "/studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/bulkdata/{tag}",
+      get(get_bulkdata),
     )
     .route(
       "/studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/{tag_id}",
