@@ -1434,6 +1434,11 @@ async fn get_frames(
       .into_response();
   };
 
+  multipart_response(&part_type, &frames)
+}
+
+/// Sends each frame (or bulk data value) as a part of a multipart/related response.
+fn multipart_response(part_type: &str, frames: &Frames) -> Response {
   let boundary = format!(
     "rdicom-{:x}",
     std::time::SystemTime::now()
